@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'smart-desk-frontend';
+  title = 'Welcome to magic Smart Desk';
 }
