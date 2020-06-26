@@ -1,7 +1,7 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { By } from '@angular/platform-browser';
 
 describe('AppComponent', () => {
     let fixture: ComponentFixture<AppComponent>;
@@ -10,12 +10,8 @@ describe('AppComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                RouterTestingModule
-            ],
-            declarations: [
-                AppComponent
-            ],
+            imports: [RouterTestingModule],
+            declarations: [AppComponent],
         }).compileComponents();
     }));
 
