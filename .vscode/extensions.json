@@ -3,6 +3,7 @@
         "sibiraj-s.vscode-scss-formatter",
         "mrmlnc.vscode-scss",
         "gruntfuggly.todo-tree",
-        "rbbit.typescript-hero"
+        "rbbit.typescript-hero",
+        "esbenp.prettier-vscode"
     ]
 }
