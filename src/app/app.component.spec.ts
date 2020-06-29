@@ -1,35 +1,40 @@
-import { TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
-  }));
+    let fixture: ComponentFixture<AppComponent>;
+    let component: AppComponent;
+    let element: HTMLElement;
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [RouterTestingModule],
+            declarations: [AppComponent],
+        }).compileComponents();
+    }));
 
-  it(`should have as title 'smart-desk-frontend'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('smart-desk-frontend');
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(AppComponent);
+        component = fixture.componentInstance;
+        element = fixture.nativeElement;
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('smart-desk-frontend app is running!');
-  });
+        fixture.detectChanges();
+    });
+
+    it('should create the app', () => {
+        expect(component).toBeTruthy();
+    });
+
+    it(`should have as title 'Welcome to magic Smart Desk'`, () => {
+        expect(component.title).toContain('Welcome to magic Smart Desk');
+    });
+
+    it('should render title', () => {
+        const titleDe = fixture.debugElement.query(By.css('[data-test-app-title]'));
+
+        expect(titleDe).toBeTruthy('App title should be in the DOM');
+        expect(titleDe.nativeElement.textContent).toContain('Welcome to magic Smart Desk');
+    });
 });
