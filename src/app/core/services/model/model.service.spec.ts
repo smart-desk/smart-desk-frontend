@@ -36,6 +36,7 @@ describe('ModelService', () => {
     });
 
     it('should get extended model', () => {
+        // todo move to models.mocks.ts
         const expectedModel: ModelExtended = {
             id: '1',
             name: 'Test',
