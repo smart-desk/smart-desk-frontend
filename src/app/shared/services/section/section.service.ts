@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Section } from '../../models/models';
+import { Section } from '../../models/models.dto';
 import { environment } from '../../../../environments/environment';
 
 // todo move adding environment api variable to interceptor
