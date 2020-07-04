@@ -2,6 +2,9 @@ import { of } from 'rxjs';
 import { ModelService } from './model.service';
 import { Model, ModelExtended } from '../../models/models.dto';
 
+// todo replace with HttpClientTestingModule
+// https://angular.io/api/common/http/testing/HttpClientTestingModule
+// https://angular.io/guide/http#testing-http-requests
 let httpClientSpy: {
     get: jasmine.Spy;
     post: jasmine.Spy;
@@ -30,7 +33,6 @@ describe('ModelService', () => {
         httpClientSpy.get.and.returnValue(of(expectedModels));
 
         service.getModels().subscribe(models => expect(models).toEqual(expectedModels, 'expected models'), fail);
-        expect(httpClientSpy.get.calls.count()).toBe(1, 'one call');
     });
 
     it('should get extended model', () => {
@@ -60,6 +62,5 @@ describe('ModelService', () => {
         httpClientSpy.get.and.returnValue(of(expectedModel));
 
         service.getModel('1').subscribe(models => expect(models).toEqual(expectedModel, 'expected model'), fail);
-        expect(httpClientSpy.get.calls.count()).toBe(1, 'one call');
     });
 });

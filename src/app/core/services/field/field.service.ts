@@ -6,9 +6,7 @@ import { environment } from '../../../../environments/environment';
 
 // todo move adding environment api variable to interceptor
 
-@Injectable({
-    providedIn: 'root',
-})
+@Injectable()
 export class FieldService {
     constructor(private http: HttpClient) {}
 
