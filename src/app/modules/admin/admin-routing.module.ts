@@ -4,6 +4,7 @@ import { AdminComponent } from './admin.component';
 
 import { CreateModelComponent } from './pages/create-model/create-model.component';
 import { ModelsComponent } from './pages/models/models.component';
+import { EditModelComponent } from './pages/edit-model/edit-model.component';
 
 const routes: Routes = [
     {
@@ -17,6 +18,10 @@ const routes: Routes = [
             {
                 path: 'models/create',
                 component: CreateModelComponent,
+            },
+            {
+                path: 'models/edit/:id',
+                component: EditModelComponent,
             },
         ],
     },
