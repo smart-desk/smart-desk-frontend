@@ -1,7 +1,7 @@
 <nz-layout>
     <nz-header></nz-header>
     <nz-layout>
-        <nz-sider>
+        <nz-sider nzTheme="light">
             <ul nz-menu>
                 <li nz-menu-item routerLink="/admin/models">
                     <i nz-icon nzType="apartment" nzTheme="outline"></i>
@@ -9,7 +9,7 @@
                 </li>
             </ul>
         </nz-sider>
-        <nz-content>
+        <nz-content class="admin__content">
             <router-outlet></router-outlet>
         </nz-content>
     </nz-layout>

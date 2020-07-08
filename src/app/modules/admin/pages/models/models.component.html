@@ -1,1 +1,11 @@
-<p>models works!</p>
+<h1>Модели</h1>
+
+<nz-card *ngFor="let model of models$ | async" style="width: 300px;" [nzActions]="[actionEdit, actionDelete]">
+    <nz-card-meta [nzTitle]="model.name"></nz-card-meta>
+    <ng-template #actionEdit>
+        <i nz-icon nzType="edit" (click)="editModel(model)"></i>
+    </ng-template>
+    <ng-template #actionDelete>
+        <i nz-icon nzType="delete" (click)="deleteModel(model)"></i>
+    </ng-template>
+</nz-card>

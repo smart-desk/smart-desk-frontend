@@ -7,6 +7,8 @@ import { CreateModelComponent } from './pages/create-model/create-model.componen
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzGridModule } from 'ng-zorro-antd/grid';
 import { IconDefinition } from '@ant-design/icons-angular';
 import { ApartmentOutline } from '@ant-design/icons-angular/icons';
 import { ModelsComponent } from './pages/models/models.component';
@@ -14,7 +16,7 @@ import { ModelsComponent } from './pages/models/models.component';
 const icons: IconDefinition[] = [ApartmentOutline];
 
 @NgModule({
-    imports: [AdminRoutingModule, CommonModule, NzLayoutModule, NzMenuModule, NzIconModule.forRoot(icons)],
+    imports: [AdminRoutingModule, CommonModule, NzLayoutModule, NzMenuModule, NzIconModule.forRoot(icons), NzCardModule, NzGridModule],
     declarations: [AdminComponent, EditModelComponent, CreateModelComponent, ModelsComponent],
 })
 export class AdminModule {}
