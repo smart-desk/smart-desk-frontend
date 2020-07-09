@@ -1,1 +1,30 @@
-<p>create-model works!</p>
+<h1 nz-typography>Создание модели объявления</h1>
+
+<form *ngIf="!model" nz-form [formGroup]="modelForm" (submit)="createModel()">
+    <h4 nz-typography>Имя модели</h4>
+    <nz-form-item>
+        <nz-form-control>
+            <div nz-row [nzGutter]="8">
+                <div nz-col [nzSpan]="12">
+                    <input nz-input formControlName="name" id="name" />
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <button nz-button nzType="primary" (click)="createModel()">Создать</button>
+                </div>
+            </div>
+        </nz-form-control>
+    </nz-form-item>
+</form>
+
+<ng-container *ngIf="model">
+    <h4 nz-typography>{{ model.name }}</h4>
+    <form nz-form [formGroup]="sectionForm" (submit)="createModel()">
+        <p *ngFor="let field of getSectionFieldsControls().controls; index as i">Тут должен быть контрол {{ i }}</p>
+    </form>
+
+    <nz-select ngModel="currentFieldType">
+        <nz-option nzValue="input_text" nzLabel="Текстовое поле"></nz-option>
+        <nz-option nzValue="text" nzLabel="Поле для текста"></nz-option>
+    </nz-select>
+    <button nz-button nzType="primary" (click)="addFieldToSectionForm()">Добавить новое поле</button>
+</ng-container>
