@@ -1,0 +1,8 @@
+@import '~src/assets/styles/variables';
+
+.models {
+    &__content {
+        padding: $base * 3;
+        background-color: $base-bg;
+    }
+}

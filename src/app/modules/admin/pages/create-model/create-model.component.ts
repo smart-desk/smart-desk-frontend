@@ -4,6 +4,7 @@ import { ModelService } from '../../../../core/services/model/model.service';
 import { switchMap } from 'rxjs/operators';
 import { Model, Section } from '../../../../core/models/models.dto';
 import { SectionService } from '../../../../core/services/section/section.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-create-model',
@@ -18,7 +19,7 @@ export class CreateModelComponent {
 
     // todo вывести ошибки
     public modelForm = new FormGroup({
-        name: new FormControl('', Validators.required),
+        name: new FormControl((this.model && this.model.name) || '', Validators.required),
     });
 
     // todo вывести ошибки
@@ -26,9 +27,9 @@ export class CreateModelComponent {
         fields: new FormArray([]),
     });
 
-    constructor(private modelsService: ModelService, private sectionService: SectionService) {}
+    constructor(private modelsService: ModelService, private sectionService: SectionService, private router: Router) {}
 
-    public createModel() {
+    public createModel(): void {
         this.modelsService
             .createModel({
                 name: this.modelForm.get('name').value,
@@ -50,9 +51,13 @@ export class CreateModelComponent {
         return this.sectionForm.get('fields') as FormArray;
     }
 
-    public addFieldToSectionForm() {
+    public addFieldToSectionForm(): void {
         // todo use this.currentTypeField
         const fields = this.sectionForm.get('fields') as FormArray;
         fields.push(new FormControl(''));
+    }
+
+    public onBack(): void {
+        this.router.navigate(['./admin/models']);
     }
 }

@@ -10,22 +10,23 @@ import { Router } from '@angular/router';
     styleUrls: ['./models.component.scss'],
 })
 export class ModelsComponent {
-    public models$: Observable<Model[]>;
+    public models: Model[] = [];
 
     constructor(private modelService: ModelService, private router: Router) {
-        this.models$ = this.modelService.getModels();
+        this.updateModels();
+    }
+
+    public updateModels(): void {
+        this.modelService.getModels().subscribe(models => {
+            this.models = models;
+        });
     }
 
     public createModel(): void {
         this.router.navigate(['admin/models/create']);
     }
 
-    public editModel(model: Model): void {
-        // todo do not ignore navigate promise
-        this.router.navigate(['admin/models/edit', model.id]);
-    }
-
     public deleteModel(model: Model): void {
-        console.log(model);
+        this.modelService.deleteModel(model.id).subscribe(() => this.updateModels());
     }
 }

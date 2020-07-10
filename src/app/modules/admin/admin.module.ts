@@ -7,13 +7,16 @@ import { CreateModelComponent } from './pages/create-model/create-model.componen
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzListModule } from 'ng-zorro-antd/list';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { IconDefinition } from '@ant-design/icons-angular';
 import { ApartmentOutline } from '@ant-design/icons-angular/icons';
 import { ModelsComponent } from './pages/models/models.component';
@@ -26,13 +29,16 @@ const uiModules = [
     NzLayoutModule,
     NzMenuModule,
     NzIconModule.forRoot(icons),
-    NzCardModule,
     NzGridModule,
     NzFormModule,
     NzInputModule,
     NzTypographyModule,
     NzButtonModule,
     NzSelectModule,
+    NzListModule,
+    NzPopconfirmModule,
+    NzPageHeaderModule,
+    NzPopoverModule,
 ];
 
 @NgModule({

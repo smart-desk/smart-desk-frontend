@@ -1,40 +1,33 @@
-<h1 nz-typography>Создание модели объявления</h1>
+<nz-page-header nzBackIcon (nzBack)="onBack()">
+    <nz-page-header-title>Создание модели</nz-page-header-title>
+    <nz-page-header-subtitle>Добавляйте и удаляйте поля которые будут отображены для того чтобы создать объявление</nz-page-header-subtitle>
+</nz-page-header>
 
-<form *ngIf="!model" nz-form [formGroup]="modelForm" (submit)="createModel()">
-    <h4 nz-typography>Имя модели</h4>
-    <nz-form-item>
-        <nz-form-control>
-            <div nz-row [nzGutter]="8">
-                <div nz-col [nzSpan]="12">
-                    <input nz-input formControlName="name" id="name" />
-                </div>
-                <div nz-col [nzSpan]="12">
-                    <button nz-button nzType="primary">Создать</button>
-                </div>
-            </div>
-        </nz-form-control>
-    </nz-form-item>
-</form>
+<div class="create-model__content">
+    <form *ngIf="!model" nz-form [formGroup]="modelForm" (submit)="createModel()">
+        <nz-form-item [nzGutter]="8">
+            <nz-form-control nzHasFeedback [nzSpan]="6" nzErrorTip="Обязательное поле">
+                <input nzSize="large" nz-input formControlName="name" name="required" required placeholder="Имя модели" />
+            </nz-form-control>
+            <button nz-button nzType="primary" nzSize="large">Сохранить</button>
+        </nz-form-item>
+    </form>
 
-<ng-container *ngIf="model">
-    <h4 nz-typography>{{ model.name }}</h4>
+    <h1 nz-typography *ngIf="model">{{ model.name }}</h1>
+
     <form nz-form [formGroup]="sectionForm" (submit)="createModel()">
         <p *ngFor="let field of getSectionFieldsControls().controls; index as i">Тут должен быть контрол {{ i }}</p>
     </form>
 
-    <nz-form-item>
-        <nz-form-control>
-            <div nz-row [nzGutter]="8">
-                <div nz-col [nzSpan]="12">
-                    <nz-select ngModel="currentFieldType">
-                        <nz-option nzValue="input_text" nzLabel="Текстовое поле"></nz-option>
-                        <nz-option nzValue="text" nzLabel="Поле для текста"></nz-option>
-                    </nz-select>
-                </div>
-                <div nz-col [nzSpan]="12">
-                    <button nz-button nzType="primary" (click)="addFieldToSectionForm()">Добавить новое поле</button>
-                </div>
-            </div>
+    <nz-form-item [nzGutter]="8">
+        <nz-form-control [nzSpan]="6">
+            <nz-select [nzDisabled]="!model" ngModel="currentFieldType" nzPlaceHolder="Выберите тип поля">
+                <nz-option nzValue="input_text" nzLabel="Текстовое поле"></nz-option>
+                <nz-option nzValue="text" nzLabel="Поле для текста"></nz-option>
+            </nz-select>
         </nz-form-control>
+        <button [disabled]="!model" nz-button nzType="primary" (click)="addFieldToSectionForm()">
+            Добавить новое поле
+        </button>
     </nz-form-item>
-</ng-container>
+</div>
