@@ -1,5 +1,7 @@
+@import './src/assets/styles/variables';
+
 .admin {
     &__content {
-        padding: 24px;
+        padding: $base * 3;
     }
 }

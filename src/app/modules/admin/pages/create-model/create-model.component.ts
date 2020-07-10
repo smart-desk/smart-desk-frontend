@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Form, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModelService } from '../../../../core/services/model/model.service';
-import { switchMap, take } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { Model, Section } from '../../../../core/models/models.dto';
 import { SectionService } from '../../../../core/services/section/section.service';
 
