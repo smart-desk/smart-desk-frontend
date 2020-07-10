@@ -18,26 +18,25 @@ import { IconDefinition } from '@ant-design/icons-angular';
 import { ApartmentOutline } from '@ant-design/icons-angular/icons';
 import { ModelsComponent } from './pages/models/models.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 const icons: IconDefinition[] = [ApartmentOutline];
 
+const uiModules = [
+    NzLayoutModule,
+    NzMenuModule,
+    NzIconModule.forRoot(icons),
+    NzCardModule,
+    NzGridModule,
+    NzFormModule,
+    NzInputModule,
+    NzTypographyModule,
+    NzButtonModule,
+    NzSelectModule,
+];
+
 @NgModule({
-    imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        AdminRoutingModule,
-        CommonModule,
-        NzLayoutModule,
-        NzMenuModule,
-        NzIconModule.forRoot(icons),
-        NzCardModule,
-        NzGridModule,
-        NzFormModule,
-        NzInputModule,
-        NzTypographyModule,
-        NzButtonModule,
-        NzSelectModule,
-    ],
+    imports: [...uiModules, FormsModule, HttpClientModule, ReactiveFormsModule, AdminRoutingModule, CommonModule],
     declarations: [AdminComponent, EditModelComponent, CreateModelComponent, ModelsComponent],
 })
 export class AdminModule {}

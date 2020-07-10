@@ -39,8 +39,7 @@ export class CreateModelComponent {
                     return this.sectionService.createSection({
                         model_id: this.model.id,
                     });
-                }),
-                take(1)
+                })
             )
             .subscribe(section => {
                 this.section = section;
