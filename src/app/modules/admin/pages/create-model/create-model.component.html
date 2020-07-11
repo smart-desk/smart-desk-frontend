@@ -20,15 +20,14 @@
 
     <ng-container #fields></ng-container>
 
-    <nz-form-item [nzGutter]="8">
-        <nz-form-control [nzSpan]="6">
-            <nz-select [nzDisabled]="!model" [(ngModel)]="currentFieldType" nzPlaceHolder="Выберите тип поля">
-                <nz-option nzValue="input_text" nzLabel="Текстовое поле"></nz-option>
-                <nz-option nzValue="text" nzLabel="Поле для текста"></nz-option>
-            </nz-select>
-        </nz-form-control>
-        <button [disabled]="!model" nz-button nzType="primary" (click)="addField()">
-            Добавить новое поле
-        </button>
-    </nz-form-item>
+    <button nz-dropdown [disabled]="!model" [nzDisabled]="!model" nz-button [nzDropdownMenu]="menu" nzType="dashed">
+        <i nz-icon nzType="plus"></i>
+        Add field
+    </button>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+            <li nz-menu-item (click)="addField('input_text')">Текстовое поле</li>
+            <li nz-menu-item (click)="addField('text')">Поле для большого текста</li>
+        </ul>
+    </nz-dropdown-menu>
 </div>

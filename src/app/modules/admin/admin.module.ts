@@ -18,15 +18,11 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
-import { IconDefinition } from '@ant-design/icons-angular';
-import { ApartmentOutline } from '@ant-design/icons-angular/icons';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { ModelsComponent } from './pages/models/models.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { InputTextComponent } from './core/components/input-text/input-text.component';
-
-// todo do we need it?
-// const icons: IconDefinition[] = [ApartmentOutline];
 
 const uiModules = [
     NzLayoutModule,
@@ -43,6 +39,7 @@ const uiModules = [
     NzPageHeaderModule,
     NzPopoverModule,
     NzCheckboxModule,
+    NzDropDownModule,
 ];
 
 const creatorInputs = [InputTextComponent];

@@ -52,12 +52,13 @@ export class CreateModelComponent {
             });
     }
 
-    public addField(): void {
-        // todo pass field type as a param
+    public addField(type: string): void {
         let resolver: ComponentFactory<any>;
-        if (this.currentFieldType === 'input_text') {
+
+        if (type === 'input_text') {
             resolver = this.componentFactoryResolver.resolveComponentFactory(InputTextComponent);
         }
+
         const component = this.fieldsFormContainerRef.createComponent(resolver);
         this.components.push(component);
     }
