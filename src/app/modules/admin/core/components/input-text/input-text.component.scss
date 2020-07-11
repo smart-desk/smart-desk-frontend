@@ -1,0 +1,7 @@
+@import '~src/assets/styles/variables';
+
+.input-text {
+    &__item {
+        margin-bottom: $base;
+    }
+}

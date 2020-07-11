@@ -1,6 +1,9 @@
 <nz-page-header nzBackIcon (nzBack)="onBack()">
     <nz-page-header-title>Создание модели</nz-page-header-title>
     <nz-page-header-subtitle>Добавляйте и удаляйте поля которые будут отображены для того чтобы создать объявление</nz-page-header-subtitle>
+    <nz-page-header-extra>
+        <button (click)="save()" nz-button nzType="primary" nzShape="round"><i nz-icon nzType="save"></i>Сохранить</button>
+    </nz-page-header-extra>
 </nz-page-header>
 
 <div class="create-model__content">
@@ -15,18 +18,16 @@
 
     <h1 nz-typography *ngIf="model">{{ model.name }}</h1>
 
-    <form nz-form [formGroup]="sectionForm" (submit)="createModel()">
-        <p *ngFor="let field of getSectionFieldsControls().controls; index as i">Тут должен быть контрол {{ i }}</p>
-    </form>
+    <ng-container #fields></ng-container>
 
     <nz-form-item [nzGutter]="8">
         <nz-form-control [nzSpan]="6">
-            <nz-select [nzDisabled]="!model" ngModel="currentFieldType" nzPlaceHolder="Выберите тип поля">
+            <nz-select [nzDisabled]="!model" [(ngModel)]="currentFieldType" nzPlaceHolder="Выберите тип поля">
                 <nz-option nzValue="input_text" nzLabel="Текстовое поле"></nz-option>
                 <nz-option nzValue="text" nzLabel="Поле для текста"></nz-option>
             </nz-select>
         </nz-form-control>
-        <button [disabled]="!model" nz-button nzType="primary" (click)="addFieldToSectionForm()">
+        <button [disabled]="!model" nz-button nzType="primary" (click)="addField()">
             Добавить новое поле
         </button>
     </nz-form-item>

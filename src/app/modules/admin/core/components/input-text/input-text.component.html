@@ -1,0 +1,18 @@
+<h4 nz-typography>Текстовое поле</h4>
+<form nz-form nzLayout="vertical" [formGroup]="inputTextForm">
+    <nz-form-item class="input-text__item">
+        <nz-form-control [nzSpan]="6" nzErrorTip="Обязательное поле">
+            <input nz-input formControlName="label" name="label" required placeholder="Заголовок" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="input-text__item">
+        <nz-form-control [nzSpan]="6">
+            <input nz-input formControlName="placeholder" name="placeholder" placeholder="Плейсхолдер" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-row class="input-text__item">
+        <nz-col [nzSpan]="6">
+            <label nz-checkbox formControlName="required">Обязательное поле</label>
+        </nz-col>
+    </nz-row>
+</form>

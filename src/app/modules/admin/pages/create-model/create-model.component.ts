@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ModelService } from '../../../../core/services/model/model.service';
+import { Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+import { ModelService } from '../../../../core/services/model/model.service';
 import { Model, Section } from '../../../../core/models/models.dto';
 import { SectionService } from '../../../../core/services/section/section.service';
-import { Router } from '@angular/router';
+import { InputTextComponent } from '../../core/components/input-text/input-text.component';
 
 @Component({
     selector: 'app-create-model',
@@ -14,6 +15,7 @@ import { Router } from '@angular/router';
 export class CreateModelComponent {
     public model: Model;
     public section: Section;
+    private components: ComponentRef<any>[] = [];
 
     public currentFieldType: string; // todo enum
 
@@ -22,12 +24,15 @@ export class CreateModelComponent {
         name: new FormControl((this.model && this.model.name) || '', Validators.required),
     });
 
-    // todo вывести ошибки
-    public sectionForm = new FormGroup({
-        fields: new FormArray([]),
-    });
+    @ViewChild('fields', { read: ViewContainerRef })
+    private fieldsFormContainerRef: ViewContainerRef;
 
-    constructor(private modelsService: ModelService, private sectionService: SectionService, private router: Router) {}
+    constructor(
+        private componentFactoryResolver: ComponentFactoryResolver,
+        private modelsService: ModelService,
+        private sectionService: SectionService,
+        private router: Router
+    ) {}
 
     public createModel(): void {
         this.modelsService
@@ -47,17 +52,32 @@ export class CreateModelComponent {
             });
     }
 
-    public getSectionFieldsControls(): FormArray {
-        return this.sectionForm.get('fields') as FormArray;
-    }
-
-    public addFieldToSectionForm(): void {
-        // todo use this.currentTypeField
-        const fields = this.sectionForm.get('fields') as FormArray;
-        fields.push(new FormControl(''));
+    public addField(): void {
+        // todo pass field type as a param
+        let resolver: ComponentFactory<any>;
+        if (this.currentFieldType === 'input_text') {
+            resolver = this.componentFactoryResolver.resolveComponentFactory(InputTextComponent);
+        }
+        const component = this.fieldsFormContainerRef.createComponent(resolver);
+        this.components.push(component);
     }
 
     public onBack(): void {
         this.router.navigate(['./admin/models']);
+    }
+
+    public save(): void {
+        /*
+            todo:
+                каждая компонента сама себя сохраняет, ей на вход нужно передать только section id
+                так же у нее есть observable метод в который она передает информацию в родительскую компоненту
+                о текущем статусе сохранения
+
+         */
+        // todo create abstract class
+        this.components.forEach((component: any) => {
+            const value = component.instance.getValue && component.instance.getValue();
+            console.log(value);
+        });
     }
 }

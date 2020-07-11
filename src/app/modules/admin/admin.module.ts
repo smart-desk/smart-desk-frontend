@@ -17,18 +17,21 @@ import { NzListModule } from 'ng-zorro-antd/list';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { IconDefinition } from '@ant-design/icons-angular';
 import { ApartmentOutline } from '@ant-design/icons-angular/icons';
 import { ModelsComponent } from './pages/models/models.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { InputTextComponent } from './core/components/input-text/input-text.component';
 
-const icons: IconDefinition[] = [ApartmentOutline];
+// todo do we need it?
+// const icons: IconDefinition[] = [ApartmentOutline];
 
 const uiModules = [
     NzLayoutModule,
     NzMenuModule,
-    NzIconModule.forRoot(icons),
+    NzIconModule,
     NzGridModule,
     NzFormModule,
     NzInputModule,
@@ -39,10 +42,13 @@ const uiModules = [
     NzPopconfirmModule,
     NzPageHeaderModule,
     NzPopoverModule,
+    NzCheckboxModule,
 ];
+
+const creatorInputs = [InputTextComponent];
 
 @NgModule({
     imports: [...uiModules, FormsModule, HttpClientModule, ReactiveFormsModule, AdminRoutingModule, CommonModule],
-    declarations: [AdminComponent, EditModelComponent, CreateModelComponent, ModelsComponent],
+    declarations: [...creatorInputs, AdminComponent, EditModelComponent, CreateModelComponent, ModelsComponent],
 })
 export class AdminModule {}
