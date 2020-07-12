@@ -27,7 +27,7 @@ export class FieldService {
     /**
      * Create field
      */
-    public createField(field: Field): Observable<Field> {
+    public createField(field: Partial<Field>): Observable<Field> {
         return this.http.post<Field>(`${environment.apiURL}fields`, field);
     }
 

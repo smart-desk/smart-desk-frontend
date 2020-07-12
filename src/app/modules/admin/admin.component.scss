@@ -2,10 +2,11 @@
 
 .admin {
     &__logo {
-        width: 80px;
+        display: inline-block;
+        color: white;
     }
 
     &__content {
-        padding: 0 $base * 3 $base * 3;
+        padding: 0 $base-unit * 3 $base-unit * 3;
     }
 }

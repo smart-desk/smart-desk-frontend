@@ -26,8 +26,7 @@
     </button>
     <nz-dropdown-menu #menu="nzDropdownMenu">
         <ul nz-menu>
-            <li nz-menu-item (click)="addField('input_text')">Текстовое поле</li>
-            <li nz-menu-item (click)="addField('text')">Поле для большого текста</li>
+            <li nz-menu-item (click)="createField(input.value)" *ngFor="let input of availableInputs">{{ input.label }}</li>
         </ul>
     </nz-dropdown-menu>
 </div>

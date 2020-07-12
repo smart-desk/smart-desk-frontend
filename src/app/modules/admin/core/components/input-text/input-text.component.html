@@ -10,9 +10,12 @@
             <input nz-input formControlName="placeholder" name="placeholder" placeholder="Плейсхолдер" />
         </nz-form-control>
     </nz-form-item>
-    <nz-row class="input-text__item">
-        <nz-col [nzSpan]="6">
+    <nz-row class="input-text__item" nzAlign="middle">
+        <nz-col [nzSpan]="4">
             <label nz-checkbox formControlName="required">Обязательное поле</label>
+        </nz-col>
+        <nz-col [nzSpan]="2" class="input-text__save-button">
+            <button nz-button nzType="primary" (click)="save()" [nzLoading]="state === OperationState.LOADING">OK</button>
         </nz-col>
     </nz-row>
 </form>

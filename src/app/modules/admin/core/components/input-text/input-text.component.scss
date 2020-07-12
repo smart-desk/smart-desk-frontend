@@ -1,7 +1,11 @@
 @import '~src/assets/styles/variables';
 
 .input-text {
+    &__save-button {
+        text-align: right;
+    }
+
     &__item {
-        margin-bottom: $base;
+        margin-bottom: $base-unit;
     }
 }
