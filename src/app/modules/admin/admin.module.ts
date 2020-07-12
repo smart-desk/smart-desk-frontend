@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AdminComponent } from './admin.component';
-import { AdminRoutingModule } from './admin-routing.module';
-import { EditModelComponent } from './pages/edit-model/edit-model.component';
-import { CreateModelComponent } from './pages/create-model/create-model.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -19,9 +18,13 @@ import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+
+import { AdminComponent } from './admin.component';
+import { AdminRoutingModule } from './admin-routing.module';
+import { EditModelComponent } from './pages/edit-model/edit-model.component';
+import { CreateModelComponent } from './pages/create-model/create-model.component';
 import { ModelsComponent } from './pages/models/models.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { InputTextComponent } from './core/components/input-text/input-text.component';
 
 const uiModules = [
@@ -40,6 +43,7 @@ const uiModules = [
     NzPopoverModule,
     NzCheckboxModule,
     NzDropDownModule,
+    NzDividerModule,
 ];
 
 const creatorInputs = [InputTextComponent];

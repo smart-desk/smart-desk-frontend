@@ -1,6 +1,10 @@
 @import './src/assets/styles/variables';
 
 .admin {
+    &__logo {
+        width: 80px;
+    }
+
     &__content {
         padding: 0 $base * 3 $base * 3;
     }

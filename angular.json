@@ -24,7 +24,7 @@
                         "tsConfig": "tsconfig.app.json",
                         "aot": true,
                         "assets": [
-                            "src/favicon.ico",
+                            "src/favicon.png",
                             "src/assets",
                             {
                                 "glob": "**/*",
@@ -90,7 +90,7 @@
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "tsconfig.spec.json",
                         "karmaConfig": "karma.conf.js",
-                        "assets": ["src/favicon.ico", "src/assets"],
+                        "assets": ["src/favicon.png", "src/assets"],
                         "styles": ["./node_modules/ng-zorro-antd/ng-zorro-antd.min.css", "src/styles.scss"],
                         "scripts": []
                     }
