@@ -1,0 +1,24 @@
+<nz-page-header nzBackIcon (nzBack)="onBack()">
+    <nz-page-header-title>Редактирование модели</nz-page-header-title>
+    <nz-page-header-subtitle>
+        Добавляйте, удаляйте и редактируйте поля которые будут отображены для того чтобы создать объявление
+    </nz-page-header-subtitle>
+</nz-page-header>
+
+<div *ngIf="model" class="edit-model__content">
+    <h1 nz-typography>{{ model.name }}</h1>
+
+    <ng-container *ngFor="let section of model.sections">
+        <ng-container #fields></ng-container>
+
+        <button nz-dropdown [disabled]="!model" [nzDisabled]="!model" nz-button [nzDropdownMenu]="menu" nzType="dashed">
+            <i nz-icon nzType="plus"></i>
+            Добавить поле
+        </button>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu>
+                <li nz-menu-item (click)="createField(input.value, section)" *ngFor="let input of availableInputs">{{ input.label }}</li>
+            </ul>
+        </nz-dropdown-menu>
+    </ng-container>
+</div>

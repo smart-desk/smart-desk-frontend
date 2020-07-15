@@ -1,0 +1,15 @@
+<nz-page-header nzBackIcon (nzBack)="onBack()">
+    <nz-page-header-title>Создание модели</nz-page-header-title>
+    <nz-page-header-subtitle>Для начала дайте имя будущей модели объявления</nz-page-header-subtitle>
+</nz-page-header>
+
+<div class="create-model__content">
+    <form *ngIf="!model" nz-form [formGroup]="modelForm" (submit)="createModel()">
+        <nz-form-item [nzGutter]="8">
+            <nz-form-control nzHasFeedback [nzSpan]="6" nzErrorTip="Обязательное поле">
+                <input nzSize="large" nz-input formControlName="name" name="required" required placeholder="Имя модели" />
+            </nz-form-control>
+            <button nz-button nzType="primary" nzSize="large">Сохранить</button>
+        </nz-form-item>
+    </form>
+</div>

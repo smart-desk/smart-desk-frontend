@@ -1,0 +1,12 @@
+@import './src/assets/styles/variables';
+
+.admin {
+    &__logo {
+        display: inline-block;
+        color: white;
+    }
+
+    &__content {
+        padding: 0 $base-unit * 3 $base-unit * 3;
+    }
+}

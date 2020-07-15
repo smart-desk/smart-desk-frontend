@@ -27,14 +27,14 @@ export class SectionService {
     /**
      * Create section
      */
-    public createSection(section: Section): Observable<Section> {
+    public createSection(section: Partial<Section>): Observable<Section> {
         return this.http.post<Section>(`${environment.apiURL}sections`, section);
     }
 
     /**
      * Update section by id
      */
-    public updateSection(id, section: Section): Observable<Section> {
+    public updateSection(id, section: Partial<Section>): Observable<Section> {
         return this.http.put<Section>(`${environment.apiURL}sections/${id}`, section);
     }
 

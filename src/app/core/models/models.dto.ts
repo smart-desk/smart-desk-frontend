@@ -4,15 +4,16 @@ export class Model {
     id: string;
     name: string;
 }
-export class Field {
+export class ExtendedField {
     id: string;
     section_id: string;
     type: string;
+    data: unknown;
 }
 export class SectionExtended {
     id: string;
     model_id: string;
-    fields: Field[];
+    fields: ExtendedField[];
 }
 export class ModelExtended {
     id: string;
@@ -24,6 +25,11 @@ export class Section {
     model_id: string;
 }
 
+export class Field {
+    id: string;
+    section_id: string;
+    type: string;
+}
 export class UserFieldInputText {
     id: string;
     field_id: string;

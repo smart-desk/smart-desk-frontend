@@ -1,0 +1,18 @@
+<nz-layout>
+    <nz-header>
+        <a routerLink="/admin" class="admin__logo">Smart Desk</a>
+    </nz-header>
+    <nz-layout>
+        <nz-sider nzTheme="light">
+            <ul nz-menu>
+                <li nz-menu-item routerLink="/admin/models">
+                    <i nz-icon nzType="apartment" nzTheme="outline"></i>
+                    <span>Модели</span>
+                </li>
+            </ul>
+        </nz-sider>
+        <nz-content class="admin__content">
+            <router-outlet></router-outlet>
+        </nz-content>
+    </nz-layout>
+</nz-layout>

@@ -5,7 +5,6 @@ import { Model, ModelExtended } from '../../models/models.dto';
 import { environment } from '../../../../environments/environment';
 
 // todo move adding environment api variable to interceptor
-
 @Injectable()
 export class ModelService {
     constructor(private http: HttpClient) {}
@@ -27,14 +26,14 @@ export class ModelService {
     /**
      * Create model
      */
-    public createModel(model: Model): Observable<Model> {
+    public createModel(model: Partial<Model>): Observable<Model> {
         return this.http.post<Model>(`${environment.apiURL}models`, model);
     }
 
     /**
      * Update model by id
      */
-    public updateModel(id, model: Model): Observable<Model> {
+    public updateModel(id, model: Partial<Model>): Observable<Model> {
         return this.http.put<Model>(`${environment.apiURL}models/${id}`, model);
     }
 

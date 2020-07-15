@@ -1,0 +1,34 @@
+<nz-page-header>
+    <nz-page-header-title>Модели</nz-page-header-title>
+    <nz-page-header-subtitle>Тут вы можете создать, отредактировать или удалить модель</nz-page-header-subtitle>
+    <nz-page-header-extra>
+        <button routerLink="create" nz-button nzType="primary" nzShape="round"><i nz-icon nzType="plus"></i>Создать новую модель</button>
+    </nz-page-header-extra>
+</nz-page-header>
+
+<div class="models__content">
+    <ul nz-list nzSize="large">
+        <li nz-list-item *ngFor="let model of models" nzNoFlex>
+            <ul nz-list-item-actions>
+                <nz-list-item-action>
+                    <a nz-button nzType="link" [routerLink]="['edit', model.id]">edit</a>
+                </nz-list-item-action>
+                <nz-list-item-action>
+                    <a
+                        nz-popconfirm
+                        nzPopconfirmTitle="Вы уверены что хотите удалить модель?"
+                        nzPopconfirmPlacement="top"
+                        (nzOnConfirm)="deleteModel(model)"
+                        nz-button
+                        nzType="link"
+                        nzDanger
+                        nzCancelText="Отмена"
+                        nzOkText="Удалить"
+                        >delete</a
+                    >
+                </nz-list-item-action>
+            </ul>
+            {{ model.name }}
+        </li>
+    </ul>
+</div>
