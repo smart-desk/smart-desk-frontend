@@ -1,6 +1,6 @@
 <nz-page-header nzBackIcon (nzBack)="onBack()">
     <nz-page-header-title>Создание модели</nz-page-header-title>
-    <nz-page-header-subtitle>Добавляйте и удаляйте поля которые будут отображены для того чтобы создать объявление</nz-page-header-subtitle>
+    <nz-page-header-subtitle>Для начала дайте имя будущей модели объявления</nz-page-header-subtitle>
 </nz-page-header>
 
 <div class="create-model__content">
@@ -12,18 +12,4 @@
             <button nz-button nzType="primary" nzSize="large">Сохранить</button>
         </nz-form-item>
     </form>
-
-    <h1 nz-typography *ngIf="model">{{ model.name }}</h1>
-
-    <ng-container #fields></ng-container>
-
-    <button nz-dropdown [disabled]="!model" [nzDisabled]="!model" nz-button [nzDropdownMenu]="menu" nzType="dashed">
-        <i nz-icon nzType="plus"></i>
-        Add field
-    </button>
-    <nz-dropdown-menu #menu="nzDropdownMenu">
-        <ul nz-menu>
-            <li nz-menu-item (click)="createField(input.value)" *ngFor="let input of availableInputs">{{ input.label }}</li>
-        </ul>
-    </nz-dropdown-menu>
 </div>

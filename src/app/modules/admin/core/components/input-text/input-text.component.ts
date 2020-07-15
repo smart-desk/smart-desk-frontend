@@ -1,34 +1,24 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CreatorFieldInputText, Field } from '../../../../../core/models/models.dto';
 import { InputBase, OperationState } from '../input-base/input-base';
 import { Observable, Subject } from 'rxjs';
 import { CreatorFieldInputTextService } from '../../../../../core/services/creator/input-text';
 
-export interface IInputText {
-    id?: string;
-    label?: string;
-    placeholder?: string;
-    required?: boolean;
-}
-
 @Component({
     selector: 'app-input-text',
     templateUrl: './input-text.component.html',
     styleUrls: ['./input-text.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputTextComponent extends InputBase {
+export class InputTextComponent extends InputBase implements OnInit {
     @Input() public data: Partial<CreatorFieldInputText> = {};
     @Input() public field: Field;
 
     public OperationState = OperationState;
     public state: OperationState;
 
-    public inputTextForm = new FormGroup({
-        label: new FormControl(this.data.label || ''),
-        placeholder: new FormControl(this.data.placeholder || ''),
-        required: new FormControl(this.data.required || false),
-    });
+    public inputTextForm: FormGroup;
 
     private save$ = new Subject<OperationState>();
 
@@ -36,11 +26,19 @@ export class InputTextComponent extends InputBase {
         super();
     }
 
+    public ngOnInit(): void {
+        this.inputTextForm = new FormGroup({
+            label: new FormControl(this.data.label || ''),
+            placeholder: new FormControl(this.data.placeholder || ''),
+            required: new FormControl(this.data.required || false),
+        });
+    }
+
     public onSave$(): Observable<OperationState> {
         return this.save$.asObservable();
     }
 
-    save(): void {
+    public save(): void {
         this.state = OperationState.LOADING;
         this.save$.next(this.state);
 
