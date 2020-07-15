@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { CreatorFieldInputText, Field } from '../../../../../core/models/models.dto';
 import { InputBase, OperationState } from '../input-base/input-base';
 import { Observable, Subject } from 'rxjs';
+import { CreatorFieldInputTextService } from '../../../../../core/services/creator/input-text';
 
 export interface IInputText {
     id?: string;
@@ -31,7 +32,7 @@ export class InputTextComponent extends InputBase {
 
     private save$ = new Subject<OperationState>();
 
-    constructor() {
+    constructor(private creatorFieldInputTextService: CreatorFieldInputTextService) {
         super();
     }
 
@@ -43,16 +44,22 @@ export class InputTextComponent extends InputBase {
         this.state = OperationState.LOADING;
         this.save$.next(this.state);
 
-        // todo add service call
+        const input: CreatorFieldInputText = this.inputTextForm.getRawValue();
+        input.field_id = this.field.id;
+
+        let request: Observable<CreatorFieldInputText>;
+
         if (!this.data.id) {
-            console.log('Create new field with id: ', this.field.id);
-            console.log('Value', this.inputTextForm.getRawValue());
             this.state = OperationState.SUCCESS;
+            request = this.creatorFieldInputTextService.createInputText(input);
         } else {
-            console.log('Update existing input with id: ', this.data.id);
-            console.log('Value', this.inputTextForm.getRawValue());
+            request = this.creatorFieldInputTextService.updateInputText(this.data.id, input);
             this.state = OperationState.SUCCESS;
         }
-        setTimeout(() => this.save$.next(this.state), 1500);
+
+        request.subscribe(res => {
+            this.data = res;
+            this.save$.next(this.state);
+        });
     }
 }
