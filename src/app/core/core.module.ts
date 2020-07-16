@@ -1,8 +1,6 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { ModelService } from './services/model/model.service';
-import { SectionService } from './services/section/section.service';
-import { FieldService } from './services/field/field.service';
-import { CreatorFieldInputTextService } from './services/creator/input-text';
+import { FieldService, ModelService, SectionService } from './services';
+import { CreatorFieldInputTextService } from './services/creator/input-text.service';
 
 const creatorFieldServices = [CreatorFieldInputTextService];
 

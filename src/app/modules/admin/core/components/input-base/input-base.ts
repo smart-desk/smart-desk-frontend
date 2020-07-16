@@ -1,19 +1,16 @@
-import { Input } from '@angular/core';
+import { Directive, Input } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { Field } from '../../../../../core/models/models.dto';
-import { Observable } from 'rxjs';
+import { OperationState } from './operation-state.enum';
 
-export enum OperationState {
-    LOADING,
-    ERROR,
-    SUCCESS,
-}
+@Directive()
+export abstract class InputBaseDirective<T> {
+    @Input() field: Field;
+    @Input() data: T;
 
-export abstract class InputBase {
-    // Must be an angular Input
-    public field: Field;
+    protected save$ = new Subject<OperationState>();
 
-    // Must be an angular Input
-    public data: any;
-
-    public abstract onSave$(): Observable<OperationState>;
+    get onSave$(): Observable<OperationState> {
+        return this.save$.asObservable();
+    }
 }
