@@ -1,20 +1,20 @@
 import {
+    ChangeDetectorRef,
     Component,
     ComponentFactory,
     ComponentFactoryResolver,
     ComponentRef,
+    OnInit,
     ViewChild,
     ViewContainerRef,
-    OnInit,
-    ChangeDetectorRef,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModelService } from '../../../../core/services/model/model.service';
-import { Field, Model, ModelExtended, Section } from '../../../../core/models/models.dto';
-import { InputTextComponent } from '../../core/components/input-text/input-text.component';
-import { FieldService } from '../../../../core/services/field/field.service';
-import { InputBase } from '../../core/components/input-base/input-base';
 import { switchMap } from 'rxjs/operators';
+import { Field, ModelExtended, Section, SectionExtended } from '../../../../core/models/models.dto';
+import { FieldService } from '../../../../core/services/field/field.service';
+import { ModelService } from '../../../../core/services/model/model.service';
+import { InputBaseDirective } from '../../core/components/input-base';
+import { InputTextComponent } from '../../core/components/input-text/input-text.component';
 
 @Component({
     selector: 'app-edit-model',
@@ -22,10 +22,11 @@ import { switchMap } from 'rxjs/operators';
     styleUrls: ['./edit-model.component.scss'],
 })
 export class EditModelComponent implements OnInit {
-    public model: ModelExtended;
+    model: ModelExtended;
+
     private components: ComponentRef<any>[] = [];
 
-    public availableInputs = [
+    availableInputs = [
         {
             value: 'input_text',
             label: 'Текстовое поле',
@@ -45,10 +46,10 @@ export class EditModelComponent implements OnInit {
         private fieldService: FieldService,
         private router: Router,
         private route: ActivatedRoute,
-        private ref: ChangeDetectorRef
+        private cd: ChangeDetectorRef
     ) {}
 
-    public ngOnInit(): void {
+    ngOnInit(): void {
         this.route.paramMap
             .pipe(
                 switchMap(params => {
@@ -57,12 +58,13 @@ export class EditModelComponent implements OnInit {
             )
             .subscribe(model => {
                 this.model = model;
-                this.ref.detectChanges();
-                this.populateFormWithInputs();
+                this.cd.detectChanges();
+
+                this.populateFormWithInputs(model.sections);
             });
     }
 
-    public createField(type: string, section: Section): void {
+    createField(type: string, section: Section): void {
         this.fieldService
             .createField({
                 type,
@@ -74,22 +76,24 @@ export class EditModelComponent implements OnInit {
             });
     }
 
-    public onBack(): void {
+    onBack(): void {
         this.router.navigate(['./admin/models']);
     }
 
-    private populateFormWithInputs(): void {
+    private populateFormWithInputs(sections: SectionExtended[]): void {
         // todo check if section is created and create in case not
-        this.model.sections.forEach(section => {
-            section.fields.forEach(field => {
-                const component = this.resolveFieldComponent(field);
-                component.instance.data = field.data;
-            });
+        sections.forEach(section => {
+            if (section.fields) {
+                section.fields.forEach(field => {
+                    const component = this.resolveFieldComponent(field);
+                    component.instance.data = field.data;
+                });
+            }
         });
     }
 
-    private resolveFieldComponent(field: Field): ComponentRef<InputBase> {
-        let resolver: ComponentFactory<InputBase>;
+    private resolveFieldComponent(field: Field): ComponentRef<InputBaseDirective<any>> {
+        let resolver: ComponentFactory<InputBaseDirective<any>>;
 
         if (field.type === 'input_text') {
             resolver = this.componentFactoryResolver.resolveComponentFactory(InputTextComponent);

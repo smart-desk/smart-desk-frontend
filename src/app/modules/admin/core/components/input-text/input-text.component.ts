@@ -1,9 +1,14 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { CreatorFieldInputText, Field } from '../../../../../core/models/models.dto';
-import { InputBase, OperationState } from '../input-base/input-base';
-import { Observable, Subject } from 'rxjs';
-import { CreatorFieldInputTextService } from '../../../../../core/services/creator/input-text';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { CreatorFieldInputText } from '../../../../../core/models/models.dto';
+import { CreatorFieldInputTextService } from '../../../../../core/services';
+import { InputBaseDirective, OperationState } from '../input-base';
+
+enum Mode {
+    EDIT,
+    VIEW,
+}
 
 @Component({
     selector: 'app-input-text',
@@ -11,34 +16,34 @@ import { CreatorFieldInputTextService } from '../../../../../core/services/creat
     styleUrls: ['./input-text.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputTextComponent extends InputBase implements OnInit {
-    @Input() public data: Partial<CreatorFieldInputText> = {};
-    @Input() public field: Field;
+export class InputTextComponent extends InputBaseDirective<Partial<CreatorFieldInputText>> implements OnInit {
+    OperationState = OperationState;
+    state: OperationState;
 
-    public OperationState = OperationState;
-    public state: OperationState;
+    inputTextForm: FormGroup;
 
-    public inputTextForm: FormGroup;
+    mode: Mode;
+    Mode = Mode;
 
-    private save$ = new Subject<OperationState>();
-
-    constructor(private creatorFieldInputTextService: CreatorFieldInputTextService) {
+    constructor(
+        private creatorFieldInputTextService: CreatorFieldInputTextService,
+        private fb: FormBuilder,
+        private cd: ChangeDetectorRef
+    ) {
         super();
     }
 
-    public ngOnInit(): void {
-        this.inputTextForm = new FormGroup({
-            label: new FormControl(this.data.label || ''),
-            placeholder: new FormControl(this.data.placeholder || ''),
-            required: new FormControl(this.data.required || false),
+    ngOnInit(): void {
+        this.mode = this.data && this.data.id ? Mode.VIEW : Mode.EDIT;
+
+        this.inputTextForm = this.fb.group({
+            label: [(this.data && this.data.label) || '', Validators.required],
+            placeholder: [(this.data && this.data.placeholder) || ''],
+            required: [(this.data && this.data.required) || false],
         });
     }
 
-    public onSave$(): Observable<OperationState> {
-        return this.save$.asObservable();
-    }
-
-    public save(): void {
+    save(): void {
         this.state = OperationState.LOADING;
         this.save$.next(this.state);
 
@@ -47,7 +52,7 @@ export class InputTextComponent extends InputBase implements OnInit {
 
         let request: Observable<CreatorFieldInputText>;
 
-        if (!this.data.id) {
+        if (!(this.data && this.data.id)) {
             this.state = OperationState.SUCCESS;
             request = this.creatorFieldInputTextService.createInputText(input);
         } else {
@@ -57,7 +62,14 @@ export class InputTextComponent extends InputBase implements OnInit {
 
         request.subscribe(res => {
             this.data = res;
+            this.toggleMode();
             this.save$.next(this.state);
+
+            this.cd.detectChanges();
         });
+    }
+
+    private toggleMode(): void {
+        this.mode = this.mode === Mode.EDIT ? Mode.VIEW : Mode.EDIT;
     }
 }

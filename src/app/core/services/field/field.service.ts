@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Field, Model, ModelExtended } from '../../models/models.dto';
 import { environment } from '../../../../environments/environment';
+import { Field } from '../../models/models.dto';
 
 // todo move adding environment api variable to interceptor
 
@@ -13,35 +13,35 @@ export class FieldService {
     /**
      * Returns array of fields for specified section id
      */
-    public getFieldsBySectionID(sectionID: string): Observable<Field[]> {
+    getFieldsBySectionID(sectionID: string): Observable<Field[]> {
         return this.http.get<Field[]>(`${environment.apiURL}fields?section_id=${sectionID}`);
     }
 
     /**
      * Return field by id
      */
-    public getField(id: string): Observable<Field> {
+    getField(id: string): Observable<Field> {
         return this.http.get<Field>(`${environment.apiURL}fields/${id}`);
     }
 
     /**
      * Create field
      */
-    public createField(field: Partial<Field>): Observable<Field> {
+    createField(field: Partial<Field>): Observable<Field> {
         return this.http.post<Field>(`${environment.apiURL}fields`, field);
     }
 
     /**
      * Update field by id
      */
-    public updateField(id, field: Field): Observable<Field> {
+    updateField(id, field: Field): Observable<Field> {
         return this.http.put<Field>(`${environment.apiURL}fields/${id}`, field);
     }
 
     /**
      * Delete field by id
      */
-    public deleteField(id): Observable<unknown> {
+    deleteField(id): Observable<unknown> {
         return this.http.delete<Field>(`${environment.apiURL}fields/${id}`);
     }
 }
