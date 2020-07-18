@@ -65,6 +65,7 @@ export class EditModelComponent implements OnInit {
     }
 
     createField(type: string, section: Section): void {
+        // @TODO: We need to create field afer we clicks OK, not before.
         this.fieldService
             .createField({
                 type,

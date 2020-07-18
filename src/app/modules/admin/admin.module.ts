@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -13,7 +12,7 @@ import { ModelsComponent } from './pages/models/models.component';
 const creatorInputs = [InputTextComponent];
 
 @NgModule({
-    imports: [SharedModule, FormsModule, HttpClientModule, ReactiveFormsModule, AdminRoutingModule, CommonModule],
+    imports: [SharedModule, FormsModule, ReactiveFormsModule, AdminRoutingModule, CommonModule],
     declarations: [...creatorInputs, AdminComponent, EditModelComponent, CreateModelComponent, ModelsComponent],
 })
 export class AdminModule {}
