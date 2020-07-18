@@ -1,6 +1,5 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { SharedModule } from './../shared/shared.module';
 import { ApiHostInterceptor, ErrorsInterceptor } from './interceptors';
 import { CreatorFieldInputTextService, FieldService, ModelService, SectionService } from './services';
 
@@ -18,7 +17,7 @@ const interceptors = [
 ];
 
 @NgModule({
-    imports: [HttpClientModule, SharedModule],
+    imports: [HttpClientModule],
     exports: [],
     declarations: [],
     providers: [CreatorFieldInputTextService, ModelService, SectionService, FieldService, ...interceptors],
