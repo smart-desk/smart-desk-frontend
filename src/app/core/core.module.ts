@@ -1,14 +1,21 @@
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { FieldService, ModelService, SectionService } from './services';
-import { CreatorFieldInputTextService } from './services/creator/input-text.service';
+import { ApiHostInterceptor } from './interceptors';
+import { CreatorFieldInputTextService, FieldService, ModelService, SectionService } from './services';
 
-const creatorFieldServices = [CreatorFieldInputTextService];
+const interceptors = [
+    {
+        provide: HTTP_INTERCEPTORS,
+        useClass: ApiHostInterceptor,
+        multi: true,
+    },
+];
 
 @NgModule({
-    imports: [],
+    imports: [HttpClientModule],
     exports: [],
     declarations: [],
-    providers: [...creatorFieldServices, ModelService, SectionService, FieldService],
+    providers: [CreatorFieldInputTextService, ModelService, SectionService, FieldService, ...interceptors],
 })
 export class CoreModule {
     constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
