@@ -9,6 +9,7 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Field, Model, Section } from '../../../../core/models/models.dto';
 import { FieldService, ModelService } from '../../../../core/services';
@@ -23,7 +24,8 @@ import { InputTextComponent } from '../../core/components/input-text/input-text.
 export class EditModelComponent implements OnInit {
     model: Model;
 
-    private components: ComponentRef<any>[] = [];
+    private components: ComponentRef<InputBaseDirective<unknown>>[] = [];
+    private deleteSubs = new Map<ComponentRef<InputBaseDirective<unknown>>, Subscription>();
 
     availableInputs = [
         {
@@ -71,6 +73,9 @@ export class EditModelComponent implements OnInit {
             })
             .subscribe(field => {
                 const component = this.resolveFieldComponent(field);
+                const deleteSub = component.instance.onDelete.subscribe(instance => this.onDelete(instance));
+
+                this.deleteSubs.set(component, deleteSub);
                 this.components.push(component);
             });
     }
@@ -106,5 +111,15 @@ export class EditModelComponent implements OnInit {
         component.instance.field = field;
 
         return component;
+    }
+
+    private onDelete(instance: InputBaseDirective<unknown>): void {
+        const targetComponent = this.components.find(component => component.instance === instance);
+
+        this.deleteSubs.get(targetComponent).unsubscribe();
+        this.deleteSubs.delete(targetComponent);
+
+        this.fieldsFormContainerRef.remove(this.fieldsFormContainerRef.indexOf(targetComponent.hostView));
+        this.cd.detectChanges();
     }
 }
