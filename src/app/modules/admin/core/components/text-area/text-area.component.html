@@ -1,0 +1,29 @@
+<nz-divider nzText="Текстовая область" nzOrientation="left"></nz-divider>
+<ng-container [ngSwitch]="mode">
+    <div *ngSwitchCase="Mode.EDIT">
+        <form nz-form nzLayout="vertical" [formGroup]="textAreaForm">
+            <nz-form-item class="text-area__item">
+                <nz-form-control [nzSpan]="6" nzErrorTip="Обязательное поле">
+                    <input nz-input formControlName="label" name="label" required placeholder="Заголовок" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item class="text-area__item">
+                <nz-form-control [nzSpan]="6">
+                    <input nz-input formControlName="placeholder" name="placeholder" placeholder="Плейсхолдер" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-row class="text-area__item" nzAlign="middle">
+                <nz-col [nzSpan]="4">
+                    <label nz-checkbox formControlName="required">Обязательное поле</label>
+                </nz-col>
+                <nz-col [nzSpan]="2" class="text-area__save-button">
+                    <button nz-button nzType="primary" (click)="save()" [nzLoading]="state === OperationState.LOADING">OK</button>
+                </nz-col>
+            </nz-row>
+        </form>
+    </div>
+    <div *ngSwitchCase="Mode.VIEW">
+        <h2>{{ data.label }}</h2>
+        <h3>{{ data.placeholder }}</h3>
+    </div>
+</ng-container>
