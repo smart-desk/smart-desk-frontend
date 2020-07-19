@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { Model, ModelExtended } from '../../models/models.dto';
+import { Model } from '../../models/models.dto';
 
 // todo move adding environment api variable to interceptor
 @Injectable()
@@ -19,8 +19,8 @@ export class ModelService {
     /**
      * Return model by id
      */
-    getModel(id: string): Observable<ModelExtended> {
-        return this.http.get<ModelExtended>(`${environment.apiURL}models/${id}/full`);
+    getModel(id: string): Observable<Model> {
+        return this.http.get<Model>(`${environment.apiURL}models/${id}/full`);
     }
 
     /**
