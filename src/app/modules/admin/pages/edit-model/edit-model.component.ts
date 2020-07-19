@@ -10,9 +10,8 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { Field, ModelExtended, Section, SectionExtended } from '../../../../core/models/models.dto';
-import { FieldService } from '../../../../core/services/field/field.service';
-import { ModelService } from '../../../../core/services/model/model.service';
+import { Field, Model, Section } from '../../../../core/models/models.dto';
+import { FieldService, ModelService } from '../../../../core/services';
 import { InputBaseDirective } from '../../core/components/input-base';
 import { InputTextComponent } from '../../core/components/input-text/input-text.component';
 
@@ -22,7 +21,7 @@ import { InputTextComponent } from '../../core/components/input-text/input-text.
     styleUrls: ['./edit-model.component.scss'],
 })
 export class EditModelComponent implements OnInit {
-    model: ModelExtended;
+    model: Model;
 
     private components: ComponentRef<any>[] = [];
 
@@ -80,7 +79,7 @@ export class EditModelComponent implements OnInit {
         this.router.navigate(['./admin/models']);
     }
 
-    private populateFormWithInputs(sections: SectionExtended[]): void {
+    private populateFormWithInputs(sections: Section[]): void {
         // todo check if section is created and create in case not
         sections.forEach(section => {
             if (section.fields) {
