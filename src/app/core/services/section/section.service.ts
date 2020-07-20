@@ -13,34 +13,34 @@ export class SectionService {
      * Returns array of sections for specified model
      */
     getSectionsByModelID(modelID: string): Observable<Section[]> {
-        return this.http.get<Section[]>(`sections?model_id=${modelID}`);
+        return this.http.get<Section[]>(`/sections?model_id=${modelID}`);
     }
 
     /**
      * Return section by id
      */
     getSection(id: string): Observable<Section> {
-        return this.http.get<Section>(`sections/${id}`);
+        return this.http.get<Section>(`/sections/${id}`);
     }
 
     /**
      * Create section
      */
     createSection(section: Partial<Section>): Observable<Section> {
-        return this.http.post<Section>(`sections`, section);
+        return this.http.post<Section>(`/sections`, section);
     }
 
     /**
      * Update section by id
      */
     updateSection(id, section: Partial<Section>): Observable<Section> {
-        return this.http.put<Section>(`sections/${id}`, section);
+        return this.http.put<Section>(`/sections/${id}`, section);
     }
 
     /**
      * Delete section by id
      */
     deleteSection(id): Observable<unknown> {
-        return this.http.delete<Section>(`sections/${id}`);
+        return this.http.delete<Section>(`/sections/${id}`);
     }
 }
