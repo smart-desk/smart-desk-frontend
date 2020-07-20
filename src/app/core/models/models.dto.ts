@@ -1,35 +1,22 @@
 /* Do not change, this code is generated from Golang structs */
 
-export class Model {
-    id: string;
-    name: string;
-}
-export class ExtendedField {
+export class Field {
     id: string;
     section_id: string;
     type: string;
     data: unknown;
 }
-export class SectionExtended {
-    id: string;
-    model_id: string;
-    fields: ExtendedField[];
-}
-export class ModelExtended {
-    id: string;
-    name: string;
-    sections: SectionExtended[];
-}
 export class Section {
     id: string;
     model_id: string;
+    fields: Field[];
+}
+export class Model {
+    id: string;
+    name: string;
+    sections: Section[];
 }
 
-export class Field {
-    id: string;
-    section_id: string;
-    type: string;
-}
 export class UserFieldInputText {
     id: string;
     field_id: string;

@@ -1,0 +1,26 @@
+name: Build
+on:
+    pull_request:
+        type: [opened]
+
+jobs:
+    build:
+        name: Build
+
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                node-version: [10.x]
+
+        steps:
+            - uses: actions/checkout@v1
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v1
+              with:
+                  node-version: ${{ matrix.node-version }}
+            - run: npm install -g yarn
+            - name: yarn install and build
+              run: |
+                  yarn
+                  yarn build
