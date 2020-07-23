@@ -17,6 +17,12 @@ export class Model {
     sections: Section[];
 }
 
+export class Category {
+    id: string;
+    model_id: string;
+    parent_id: string;
+    name: string;
+}
 export class UserFieldInputText {
     id: string;
     field_id: string;
