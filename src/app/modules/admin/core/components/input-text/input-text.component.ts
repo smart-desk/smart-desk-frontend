@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { CreatorFieldInputText } from '../../../../../core/models/models.dto';
-import { CreatorFieldInputTextService } from '../../../../../core/services';
+import { CreatorFieldInputTextService, FieldService } from '../../../../../core/services';
 import { InputBaseDirective, OperationState } from '../input-base';
 
 enum Mode {
@@ -27,6 +27,7 @@ export class InputTextComponent extends InputBaseDirective<Partial<CreatorFieldI
 
     constructor(
         private creatorFieldInputTextService: CreatorFieldInputTextService,
+        private fieldService: FieldService,
         private fb: FormBuilder,
         private cd: ChangeDetectorRef
     ) {
@@ -69,7 +70,23 @@ export class InputTextComponent extends InputBaseDirective<Partial<CreatorFieldI
         });
     }
 
-    private toggleMode(): void {
+    toggleMode(): void {
         this.mode = this.mode === Mode.EDIT ? Mode.VIEW : Mode.EDIT;
+    }
+
+    cancel(): void {
+        if (this.data && this.data.id) {
+            this.toggleMode();
+        } else {
+            // todo remove if field is created after hitting the OK button
+            this.delete();
+        }
+    }
+
+    delete(): void {
+        // in order to delete InputText it would be sufficient to remove corresponding field
+        this.fieldService.deleteField(this.field.id).subscribe(() => {
+            this.delete$.next(this);
+        });
     }
 }
