@@ -13,7 +13,7 @@ export class ModelService {
      * Returns array of existing models
      */
     getModels(): Observable<Model[]> {
-        return this.http.get<Model[]>(`${environment.apiURL}models`);
+        return this.http.get<Model[]>(`/models`);
     }
 
     /**
@@ -27,20 +27,20 @@ export class ModelService {
      * Create model
      */
     createModel(model: Partial<Model>): Observable<Model> {
-        return this.http.post<Model>(`${environment.apiURL}models`, model);
+        return this.http.post<Model>(`/models`, model);
     }
 
     /**
      * Update model by id
      */
     updateModel(id, model: Partial<Model>): Observable<Model> {
-        return this.http.put<Model>(`${environment.apiURL}models/${id}`, model);
+        return this.http.put<Model>(`/models/${id}`, model);
     }
 
     /**
      * Delete model by id
      */
     deleteModel(id): Observable<unknown> {
-        return this.http.delete<Model>(`${environment.apiURL}models/${id}`);
+        return this.http.delete<Model>(`/models/${id}`);
     }
 }
