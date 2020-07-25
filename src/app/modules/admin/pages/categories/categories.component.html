@@ -1,0 +1,69 @@
+<nz-page-header>
+    <nz-page-header-title>Категории</nz-page-header-title>
+    <nz-page-header-subtitle>Тут вы можете управлять категориями</nz-page-header-subtitle>
+</nz-page-header>
+
+<div class="categories__content">
+    <div class="categories__tree">
+        <nz-tree [nzData]="categoryTree$ | async" nzShowLine [nzTreeTemplate]="nzTreeTemplate"></nz-tree>
+        <ng-template #nzTreeTemplate let-node let-origin="origin">
+            <span nz-typography>{{ node.title }}</span>
+            <span nz-typography nzType="secondary">{{ getModelName(node) }}</span>
+            <button
+                nz-popover
+                nzPopoverTitle="Edit category"
+                [nzPopoverContent]="editForm"
+                nzPopoverTrigger="click"
+                nz-button
+                nzType="link"
+                nzSize="small"
+                nzShape="circle"
+            >
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+            </button>
+            <button
+                nz-popconfirm
+                nzPopconfirmTitle="Вы уверены что хотите удалить категорию?"
+                nzPopconfirmPlacement="top"
+                nzCancelText="Отмена"
+                nzOkText="Удалить"
+                (nzOnConfirm)="delete(node)"
+                nz-button
+                nzType="link"
+                nzSize="small"
+                nzShape="circle"
+            >
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+            </button>
+            <button
+                nz-popover
+                nzPopoverTitle="Add category"
+                [nzPopoverContent]="addForm"
+                nzPopoverTrigger="click"
+                nz-button
+                nzType="link"
+                nzSize="small"
+                nzShape="circle"
+            >
+                <i nz-icon nzType="plus-circle" nzTheme="outline"></i>
+            </button>
+
+            <ng-template #editForm>
+                <app-category-form [category]="origin.category" [models]="models" (save)="edit(node, $event)"></app-category-form>
+            </ng-template>
+
+            <ng-template #addForm>
+                <app-category-form [models]="models" (save)="add(node, $event)"></app-category-form>
+            </ng-template>
+        </ng-template>
+    </div>
+
+    <button nz-popover nzPopoverTitle="Add category" [nzPopoverContent]="addRootForm" nzPopoverTrigger="click" nz-button nzType="dashed">
+        <i nz-icon nzType="plus"></i>
+        Добавить категорию
+    </button>
+
+    <ng-template #addRootForm>
+        <app-category-form [models]="models" (save)="add(null, $event)"></app-category-form>
+    </ng-template>
+</div>

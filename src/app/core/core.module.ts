@@ -1,7 +1,8 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { NzMessageModule } from 'ng-zorro-antd';
 import { ApiHostInterceptor, ErrorsInterceptor } from './interceptors';
-import { CreatorFieldInputTextService, FieldService, ModelService, SectionService } from './services';
+import { CreatorFieldInputTextService, FieldService, ModelService, SectionService, CategoryService } from './services';
 
 const interceptors = [
     {
@@ -17,10 +18,10 @@ const interceptors = [
 ];
 
 @NgModule({
-    imports: [HttpClientModule],
+    imports: [HttpClientModule, NzMessageModule],
     exports: [],
     declarations: [],
-    providers: [CreatorFieldInputTextService, ModelService, SectionService, FieldService, ...interceptors],
+    providers: [CreatorFieldInputTextService, ModelService, SectionService, FieldService, CategoryService, ...interceptors],
 })
 export class CoreModule {
     constructor(@Optional() @SkipSelf() parentModule: CoreModule) {

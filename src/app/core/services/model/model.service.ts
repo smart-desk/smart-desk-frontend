@@ -20,7 +20,7 @@ export class ModelService {
      * Return model by id
      */
     getModel(id: string): Observable<Model> {
-        return this.http.get<Model>(`${environment.apiURL}models/${id}/full`);
+        return this.http.get<Model>(`/models/${id}/full`);
     }
 
     /**
