@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { map, switchMap, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import { NzTreeNode } from 'ng-zorro-antd';
 import arrayToTree from 'array-to-tree';
-import { ModelService, CategoryService } from '../../../../core/services/';
+import { BehaviorSubject } from 'rxjs';
+import { CategoryService, ModelService } from '../../../../core/services/';
 import { Category, Model } from '../../../../core/models/models.dto';
 
 /**
  * Todo:
  *  - close tooltip after save/update
+ *  - fix adding node to root
+ *  - apply OnPush strategy
+ *  - fix multiple adding if form wasn't closed
  */
 
 @Component({
@@ -18,16 +21,21 @@ import { Category, Model } from '../../../../core/models/models.dto';
 })
 export class CategoriesComponent implements OnInit {
     models: Model[] = [];
-    categoryTree$: Observable<NzTreeNode[]>;
+    categoryTree$ = new BehaviorSubject<NzTreeNode[]>([]);
 
     constructor(private modelsService: ModelService, private categoryService: CategoryService) {}
 
     ngOnInit() {
-        this.categoryTree$ = this.modelsService.getModels().pipe(
-            tap(models => (this.models = models)),
-            switchMap(() => this.categoryService.getCategories()),
-            map(categories => this.transformArrayToTree(categories))
-        );
+        this.modelsService
+            .getModels()
+            .pipe(
+                tap(models => (this.models = models)),
+                switchMap(() => this.categoryService.getCategories()),
+                map(categories => this.transformArrayToTree(categories))
+            )
+            .subscribe(tree => {
+                this.categoryTree$.next(tree);
+            });
     }
 
     getModelName(node: NzTreeNode): string {
@@ -41,7 +49,13 @@ export class CategoriesComponent implements OnInit {
         }
         this.categoryService.createCategory(newCategory).subscribe(res => {
             const node = this.createNodeFromCategory(res);
-            parentNode.addChildren([...parentNode.getChildren(), node]);
+            if (parentNode) {
+                parentNode.addChildren([...parentNode.getChildren(), node]);
+            } else {
+                const tree = this.categoryTree$.getValue();
+                tree.push(node);
+                this.categoryTree$.next(tree);
+            }
         });
     }
 
