@@ -22,7 +22,7 @@ export class CategoryService {
     }
 
     /**
-     * Create model
+     * Create сategory
      */
     createCategory(category: Partial<Category>): Observable<Category> {
         return this.http.post<Category>(`/categories`, category);
