@@ -49,11 +49,16 @@
             </button>
 
             <ng-template #editForm>
-                <app-category-form [category]="origin.category" [models]="models" (save)="edit(node, $event)"></app-category-form>
+                <app-category-form
+                    [category]="origin.category"
+                    [models]="models"
+                    (save)="edit(node, $event)"
+                    (cancel)="cancel()"
+                ></app-category-form>
             </ng-template>
 
             <ng-template #addForm>
-                <app-category-form [models]="models" (save)="add(node, $event)"></app-category-form>
+                <app-category-form [models]="models" (save)="add(node, $event)" (cancel)="cancel()"></app-category-form>
             </ng-template>
         </ng-template>
     </div>
@@ -64,6 +69,6 @@
     </button>
 
     <ng-template #addRootForm>
-        <app-category-form [models]="models" (save)="add(null, $event)"></app-category-form>
+        <app-category-form [models]="models" (save)="add(null, $event)" (cancel)="cancel()"></app-category-form>
     </ng-template>
 </div>

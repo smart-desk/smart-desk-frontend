@@ -1,27 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChildren } from '@angular/core';
 import { map, switchMap, tap } from 'rxjs/operators';
-import { NzTreeNode } from 'ng-zorro-antd';
+import { NzPopoverDirective, NzTreeNode } from 'ng-zorro-antd';
 import arrayToTree from 'array-to-tree';
 import { BehaviorSubject } from 'rxjs';
 import { CategoryService, ModelService } from '../../../../core/services/';
 import { Category, Model } from '../../../../core/models/models.dto';
 
-/**
- * Todo:
- *  - close tooltip after save/update
- *  - fix adding node to root
- *  - apply OnPush strategy
- *  - fix multiple adding if form wasn't closed
- */
-
 @Component({
     selector: 'app-models',
     templateUrl: './categories.component.html',
     styleUrls: ['./categories.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoriesComponent implements OnInit {
     models: Model[] = [];
     categoryTree$ = new BehaviorSubject<NzTreeNode[]>([]);
+
+    @ViewChildren(NzPopoverDirective)
+    private popovers: NzPopoverDirective[];
 
     constructor(private modelsService: ModelService, private categoryService: CategoryService) {}
 
@@ -50,12 +46,11 @@ export class CategoriesComponent implements OnInit {
         this.categoryService.createCategory(newCategory).subscribe(res => {
             const node = this.createNodeFromCategory(res);
             if (parentNode) {
-                parentNode.addChildren([...parentNode.getChildren(), node]);
+                parentNode.addChildren([node]);
             } else {
-                const tree = this.categoryTree$.getValue();
-                tree.push(node);
-                this.categoryTree$.next(tree);
+                this.categoryTree$.next([...this.categoryTree$.getValue(), node]);
             }
+            this.closeForms();
         });
     }
 
@@ -63,14 +58,25 @@ export class CategoriesComponent implements OnInit {
         this.categoryService.updateCategory(updatedCategory.id, updatedCategory).subscribe(res => {
             node.title = res.name;
             node.origin.category = res;
+            this.closeForms();
         });
     }
 
     delete(node: NzTreeNode): void {
         const category = node.origin.category as Category;
         this.categoryService.deleteCategory(category.id).subscribe(() => {
-            node.remove();
+            if (node.getParentNode()) {
+                node.remove();
+            } else {
+                node.remove();
+                const tree = this.categoryTree$.getValue();
+                this.categoryTree$.next(tree.filter(branch => branch !== node));
+            }
         });
+    }
+
+    cancel(): void {
+        this.closeForms();
     }
 
     private transformArrayToTree(categories: Category[]): NzTreeNode[] {
@@ -89,7 +95,7 @@ export class CategoriesComponent implements OnInit {
         return createNodesTree(arrayToTree(categories));
     }
 
-    private createNodeFromCategory(category: Category, edit?: boolean): NzTreeNode {
+    private createNodeFromCategory(category: Category): NzTreeNode {
         return new NzTreeNode({
             title: category.name,
             key: category.id,
@@ -97,5 +103,9 @@ export class CategoriesComponent implements OnInit {
             expanded: true,
             category,
         });
+    }
+
+    private closeForms(): void {
+        this.popovers.forEach(popover => popover.hide());
     }
 }
