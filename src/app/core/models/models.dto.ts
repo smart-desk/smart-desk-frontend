@@ -23,16 +23,6 @@ export class Category {
     parent_id: string;
     name: string;
 }
-export class UserFieldInputText {
-    id: string;
-    field_id: string;
-    value: string;
-}
-export class UserFieldText {
-    id: string;
-    section_id: string;
-    value: string;
-}
 export class CreatorFieldInputText {
     id: string;
     field_id: string;
