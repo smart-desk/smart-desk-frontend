@@ -14,34 +14,34 @@ export class CreatorFieldTextAreaService {
      * Returns array with one element of input text for specified field id
      */
     getTextAreasByFieldID(fieldID: string): Observable<CreatorFieldTextArea[]> {
-        return this.http.get<CreatorFieldTextArea[]>(`${environment.apiURL}fields/creator/text-area?field_id=${fieldID}`);
+        return this.http.get<CreatorFieldTextArea[]>(`${environment.apiURL}fields/creator/text?field_id=${fieldID}`);
     }
 
     /**
      * Returns input text by id
      */
     getTextArea(id: string): Observable<CreatorFieldTextArea> {
-        return this.http.get<CreatorFieldTextArea>(`${environment.apiURL}fields/creator/text-area/${id}`);
+        return this.http.get<CreatorFieldTextArea>(`${environment.apiURL}fields/creator/text/${id}`);
     }
 
     /**
      * Create input text
      */
     createTextArea(textArea: Partial<CreatorFieldTextArea>): Observable<CreatorFieldTextArea> {
-        return this.http.post<CreatorFieldTextArea>(`${environment.apiURL}fields/creator/text-area`, textArea);
+        return this.http.post<CreatorFieldTextArea>(`${environment.apiURL}fields/creator/text`, textArea);
     }
 
     /**
      * Update input text
      */
     updateTextArea(id, textArea: CreatorFieldTextArea): Observable<CreatorFieldTextArea> {
-        return this.http.put<CreatorFieldTextArea>(`${environment.apiURL}fields/creator/TextArea/${id}`, textArea);
+        return this.http.put<CreatorFieldTextArea>(`${environment.apiURL}fields/creator/text/${id}`, textArea);
     }
 
     /**
      * Delete input text by id
      */
     deleteTextArea(id): Observable<unknown> {
-        return this.http.delete<Field>(`${environment.apiURL}fields/creator/TextArea/${id}`);
+        return this.http.delete<Field>(`${environment.apiURL}fields/creator/text/${id}`);
     }
 }
