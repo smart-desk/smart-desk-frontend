@@ -1,0 +1,22 @@
+<form nz-form nzLayout="vertical" [formGroup]="form">
+    <nz-form-item class="category-form__item">
+        <nz-form-label class="category-form__label">Название категории</nz-form-label>
+        <nz-form-control nzErrorTip="Обязательное поле">
+            <input nz-input formControlName="name" required placeholder="Введите название" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="category-form__item">
+        <nz-form-label class="category-form__label">Модель объявления</nz-form-label>
+        <nz-select formControlName="model">
+            <nz-option *ngFor="let model of models" [nzValue]="model" [nzLabel]="model.name"></nz-option>
+        </nz-select>
+    </nz-form-item>
+    <nz-row class="category-form__item" nzAlign="middle">
+        <nz-col nzSpan="12">
+            <button nz-button type="button" nzType="link" (click)="onCancel()">Отмена</button>
+        </nz-col>
+        <nz-col nzSpan="12" class="input-text__action-buttons">
+            <button nz-button nzType="primary" (click)="submit()">Сохранить</button>
+        </nz-col>
+    </nz-row>
+</form>

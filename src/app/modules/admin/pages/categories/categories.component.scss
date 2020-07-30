@@ -1,0 +1,12 @@
+@import '~src/assets/styles/variables';
+
+.categories {
+    &__content {
+        padding: $base-unit * 3;
+        background-color: $base-bg;
+    }
+
+    &__tree {
+        margin-bottom: $base-unit;
+    }
+}

@@ -1,6 +1,10 @@
 @import './src/assets/styles/variables';
 
 .admin {
+    &__layout {
+        height: 100%;
+    }
+
     &__logo {
         display: inline-block;
         color: white;
