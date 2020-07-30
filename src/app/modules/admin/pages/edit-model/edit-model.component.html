@@ -8,31 +8,36 @@
 <ng-container *ngIf="model">
     <div class="edit-model__content">
         <h1 nz-typography>{{ model.name }}</h1>
-
-        <ng-container *ngIf="model.sections">
-            <ng-container *ngFor="let section of model.sections">
-                <ng-container #fields></ng-container>
-
-                <button
-                    nz-dropdown
-                    [disabled]="!model"
-                    [nzDisabled]="!model"
-                    nz-button
-                    [nzDropdownMenu]="menu"
-                    nzType="dashed"
-                    nzTrigger="click"
-                >
-                    <i nz-icon nzType="plus"></i>
-                    Добавить поле
-                </button>
-                <nz-dropdown-menu #menu="nzDropdownMenu">
-                    <ul nz-menu>
-                        <li nz-menu-item (click)="createField(input.value, section)" *ngFor="let input of availableInputs">
-                            {{ input.label }}
-                        </li>
-                    </ul>
-                </nz-dropdown-menu>
-            </ng-container>
-        </ng-container>
+        <nz-row nzGutter="16">
+            <nz-col nzSpan="12">
+                <ng-container *ngIf="model.sections">
+                    <ng-container *ngFor="let section of model.sections">
+                        <ng-container #fields></ng-container>
+                        <button
+                            nz-dropdown
+                            [disabled]="!model"
+                            [nzDisabled]="!model"
+                            nz-button
+                            [nzDropdownMenu]="menu"
+                            nzType="dashed"
+                            nzTrigger="click"
+                        >
+                            <i nz-icon nzType="plus"></i>
+                            Добавить поле
+                        </button>
+                        <nz-dropdown-menu #menu="nzDropdownMenu">
+                            <ul nz-menu>
+                                <li nz-menu-item (click)="createField(input.value, section)" *ngFor="let input of availableInputs">
+                                    {{ input.label }}
+                                </li>
+                            </ul>
+                        </nz-dropdown-menu>
+                    </ng-container>
+                </ng-container>
+            </nz-col>
+            <nz-col nzSpan="12">
+                <app-preview [modelId]="model.id"></app-preview>
+            </nz-col>
+        </nz-row>
     </div>
 </ng-container>
