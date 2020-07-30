@@ -37,3 +37,9 @@ export class CreatorFieldText {
     placeholder: string;
     required: boolean;
 }
+export class CreatorFieldRadio {
+    id: string;
+    field_id: string;
+    label: string;
+    value: string;
+}
