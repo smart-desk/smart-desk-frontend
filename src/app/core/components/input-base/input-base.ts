@@ -1,4 +1,4 @@
-import { Directive, Input, OnDestroy } from '@angular/core';
+import { Directive, Input } from '@angular/core';
 import { Field } from '../../models/models.dto';
 
 @Directive()
