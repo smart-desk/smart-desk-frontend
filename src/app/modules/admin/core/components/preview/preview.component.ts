@@ -68,7 +68,6 @@ export class PreviewComponent implements OnInit {
 
         // add inputs
         component.instance.field = field;
-        component.instance.data = field.data;
         component.instance.preview = true;
 
         // run onInit

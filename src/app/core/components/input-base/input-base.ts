@@ -1,10 +1,8 @@
 import { Directive, Input } from '@angular/core';
-import { Field } from '../../models/models.dto';
+import { FieldWithData } from '../../models/field-with-data';
 
 @Directive()
 export abstract class InputBaseDirective<T> {
-    @Input() field: Field;
-    // todo data already in Field
-    @Input() data: T;
+    @Input() field: FieldWithData<T>;
     @Input() preview: boolean;
 }

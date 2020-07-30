@@ -112,7 +112,6 @@ export class EditModelComponent implements OnInit {
 
         // add inputs
         component.instance.field = field;
-        component.instance.data = field.data;
 
         // subscribe on events
         const saveSub = component.instance.onSave$.subscribe(state => this.onSave(state));
