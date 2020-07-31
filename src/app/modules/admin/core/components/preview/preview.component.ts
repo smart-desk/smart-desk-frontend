@@ -1,7 +1,6 @@
 import {
     ChangeDetectionStrategy,
     Component,
-    ComponentFactory,
     ComponentFactoryResolver,
     ComponentRef,
     Input,
@@ -11,8 +10,9 @@ import {
 } from '@angular/core';
 import { ModelService } from '../../../../../core/services';
 import { Field, Section } from '../../../../../core/models/models.dto';
-import { InputTextComponent } from '../../../../../core/components/input-text/input-text.component';
 import { InputBaseDirective } from '../../../../../core/components/input-base';
+import { getFieldComponentResolver } from '../../../../../core/services/field-resolvers/field-resolvers';
+import { FieldTypes } from '../../../../../core/models/field-metadata';
 
 @Component({
     selector: 'app-preview',
@@ -53,17 +53,7 @@ export class PreviewComponent implements OnInit {
     }
 
     private resolveFieldComponent(field: Field): ComponentRef<InputBaseDirective<unknown>> {
-        let resolver: ComponentFactory<InputBaseDirective<any>>;
-
-        if (field.type === 'input_text') {
-            resolver = this.componentFactoryResolver.resolveComponentFactory(InputTextComponent);
-        }
-
-        if (field.type === 'text') {
-            resolver = this.componentFactoryResolver.resolveComponentFactory(InputTextComponent);
-        }
-
-        // create component
+        const resolver = getFieldComponentResolver(this.componentFactoryResolver, field.type as FieldTypes);
         const component = this.fieldsFormContainerRef.createComponent(resolver);
 
         // add inputs

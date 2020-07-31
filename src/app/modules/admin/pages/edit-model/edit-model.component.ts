@@ -1,22 +1,13 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactory,
-    ComponentFactoryResolver,
-    ComponentRef,
-    OnInit,
-    ViewChild,
-    ViewContainerRef,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Field, Model, Section } from '../../../../core/models/models.dto';
 
 import { FieldService, ModelService } from '../../../../core/services';
 import { InputBaseDirective, OperationState } from '../../core/components/input-base';
-import { InputTextComponent } from '../../core/components/input-text/input-text.component';
 import { PreviewComponent } from '../../core/components/preview/preview.component';
+import { fieldMetadataList, FieldTypes } from '../../../../core/models/field-metadata';
+import { getCreatorFieldComponentResolver } from '../../../../core/services/field-resolvers/field-resolvers';
 
 @Component({
     selector: 'app-edit-model',
@@ -27,18 +18,8 @@ export class EditModelComponent implements OnInit {
     model: Model;
 
     private components: ComponentRef<InputBaseDirective<unknown>>[] = [];
-    private deleteSubs = new Map<ComponentRef<InputBaseDirective<unknown>>, Subscription>();
 
-    availableInputs = [
-        {
-            value: 'input_text',
-            label: 'Текстовое поле',
-        },
-        {
-            value: 'text',
-            label: 'Поле для длинного текста',
-        },
-    ];
+    availableInputTypes = fieldMetadataList;
 
     @ViewChild('fields', { read: ViewContainerRef })
     private fieldsFormContainerRef: ViewContainerRef;
@@ -70,7 +51,7 @@ export class EditModelComponent implements OnInit {
             });
     }
 
-    createField(type: string, section: Section): void {
+    createField(type: FieldTypes, section: Section): void {
         // @TODO: We need to create field afer we clicks OK, not before.
         this.fieldService
             .createField({
@@ -97,17 +78,7 @@ export class EditModelComponent implements OnInit {
     }
 
     private resolveFieldComponent(field: Field): ComponentRef<InputBaseDirective<unknown>> {
-        let resolver: ComponentFactory<InputBaseDirective<any>>;
-
-        if (field.type === 'input_text') {
-            resolver = this.componentFactoryResolver.resolveComponentFactory(InputTextComponent);
-        }
-
-        if (field.type === 'text') {
-            resolver = this.componentFactoryResolver.resolveComponentFactory(InputTextComponent);
-        }
-
-        // create component
+        const resolver = getCreatorFieldComponentResolver(this.componentFactoryResolver, field.type as FieldTypes);
         const component = this.fieldsFormContainerRef.createComponent(resolver);
 
         // add inputs

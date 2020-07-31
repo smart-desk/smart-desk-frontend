@@ -27,8 +27,8 @@
                         </button>
                         <nz-dropdown-menu #menu="nzDropdownMenu">
                             <ul nz-menu>
-                                <li nz-menu-item (click)="createField(input.value, section)" *ngFor="let input of availableInputs">
-                                    {{ input.label }}
+                                <li nz-menu-item (click)="createField(input.type, section)" *ngFor="let input of availableInputTypes">
+                                    {{ input.title }}
                                 </li>
                             </ul>
                         </nz-dropdown-menu>
