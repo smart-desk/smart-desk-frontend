@@ -3,8 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Field } from '../../models/models.dto';
 
-// todo move adding environment api variable to interceptor
-
 @Injectable()
 export class FieldService {
     constructor(private http: HttpClient) {}

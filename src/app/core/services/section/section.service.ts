@@ -3,8 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Section } from '../../models/models.dto';
 
-// todo move adding environment api variable to interceptor
-
 @Injectable()
 export class SectionService {
     constructor(private http: HttpClient) {}

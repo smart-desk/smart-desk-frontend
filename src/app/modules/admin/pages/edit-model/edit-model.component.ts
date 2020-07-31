@@ -114,11 +114,8 @@ export class EditModelComponent implements OnInit {
         component.instance.field = field;
 
         // subscribe on events
-        const saveSub = component.instance.onSave$.subscribe(state => this.onSave(state));
-        const deleteSub = component.instance.onDelete.subscribe(instance => this.onDelete(instance));
-
-        // save subs
-        this.deleteSubs.set(component, deleteSub);
+        component.instance.onSave$.subscribe(state => this.onSave(state));
+        component.instance.onDelete.subscribe(instance => this.onDelete(instance));
 
         // run onInit
         component.changeDetectorRef.detectChanges();
@@ -128,9 +125,6 @@ export class EditModelComponent implements OnInit {
 
     private onDelete(instance: InputBaseDirective<unknown>): void {
         const targetComponent = this.components.find(component => component.instance === instance);
-
-        this.deleteSubs.get(targetComponent).unsubscribe();
-        this.deleteSubs.delete(targetComponent);
 
         this.fieldsFormContainerRef.remove(this.fieldsFormContainerRef.indexOf(targetComponent.hostView));
 
