@@ -4,9 +4,12 @@ import { InputBaseDirective } from '../components/input-base';
 import { InputBaseDirective as CreatorInputBaseDirective } from '../../modules/admin/core/components/input-base';
 import { InputTextComponent } from '../components/input-text/input-text.component';
 import { InputTextComponent as CreatorInputTextComponent } from '../../modules/admin/core/components/input-text/input-text.component';
+import { RadioComponent } from '../components/radio/radio.component';
+import { RadioComponent as CreatorRadioComponent } from '../../modules/admin/core/components/radio/radio.component';
 
 export enum FieldTypes {
     INPUT_TEXT = 'input_text',
+    RADIO = 'radio',
 }
 
 export interface FieldMetadata {
@@ -24,4 +27,11 @@ fieldMetadataList.add({
     title: 'Текстовое поле',
     component: InputTextComponent,
     creatorComponent: CreatorInputTextComponent,
+});
+
+fieldMetadataList.add({
+    type: FieldTypes.RADIO,
+    title: 'Радиокнопка',
+    component: RadioComponent,
+    creatorComponent: CreatorRadioComponent,
 });

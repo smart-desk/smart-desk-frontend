@@ -1,0 +1,12 @@
+<div class="radio">
+    <p nz-typography nzType="secondary" class="radio__title">Радиокнопки</p>
+    <p *ngFor="let control of controls">
+        <span nz-typography nzEditable [nzContent]="control.label" (nzContentChange)="change(control, $event)"></span>
+        <button nz-button nzType="link" nzSize="small" nzShape="circle" (click)="add()">
+            <i nz-icon nzType="plus-circle" nzTheme="outline"></i>
+        </button>
+        <button nz-button nzType="link" nzSize="small" nzShape="circle" (click)="delete(control)">
+            <i nz-icon nzType="delete" nzTheme="outline"></i>
+        </button>
+    </p>
+</div>

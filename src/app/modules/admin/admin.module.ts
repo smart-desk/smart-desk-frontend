@@ -31,6 +31,7 @@ import { CategoriesComponent } from './pages/categories/categories.component';
 import { AdminMenuComponent } from './core/components/admin-menu/admin-menu.component';
 import { CategoryFormComponent } from './core/components/category-form/category-form.component';
 import { PreviewComponent } from './core/components/preview/preview.component';
+import { RadioComponent } from './core/components/radio/radio.component';
 
 const creatorInputs = [InputTextComponent];
 
@@ -68,6 +69,7 @@ const uiModules = [
         AdminMenuComponent,
         CategoryFormComponent,
         PreviewComponent,
+        RadioComponent,
     ],
 })
 export class AdminModule {}
