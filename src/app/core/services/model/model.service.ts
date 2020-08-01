@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Model } from '../../models/models.dto';
 
-// todo move adding environment api variable to interceptor
 @Injectable()
 export class ModelService {
     constructor(private http: HttpClient) {}

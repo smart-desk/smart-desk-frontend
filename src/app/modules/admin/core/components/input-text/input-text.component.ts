@@ -35,12 +35,12 @@ export class InputTextComponent extends InputBaseDirective<Partial<CreatorFieldI
     }
 
     ngOnInit(): void {
-        this.mode = this.data && this.data.id ? Mode.VIEW : Mode.EDIT;
+        this.mode = this.field && this.field.data && this.field.data.id ? Mode.VIEW : Mode.EDIT;
 
         this.inputTextForm = this.fb.group({
-            label: [(this.data && this.data.label) || '', Validators.required],
-            placeholder: [(this.data && this.data.placeholder) || ''],
-            required: [(this.data && this.data.required) || false],
+            label: [(this.field.data && this.field.data.label) || '', Validators.required],
+            placeholder: [(this.field.data && this.field.data.placeholder) || ''],
+            required: [(this.field.data && this.field.data.required) || false],
         });
     }
 
@@ -53,16 +53,16 @@ export class InputTextComponent extends InputBaseDirective<Partial<CreatorFieldI
 
         let request: Observable<CreatorFieldInputText>;
 
-        if (!(this.data && this.data.id)) {
+        if (!(this.field.data && this.field.data.id)) {
             this.state = OperationState.SUCCESS;
             request = this.creatorFieldInputTextService.createInputText(input);
         } else {
-            request = this.creatorFieldInputTextService.updateInputText(this.data.id, input);
+            request = this.creatorFieldInputTextService.updateInputText(this.field.data.id, input);
             this.state = OperationState.SUCCESS;
         }
 
         request.subscribe(res => {
-            this.data = res;
+            this.field.data = res;
             this.toggleMode();
             this.save$.next(this.state);
 
@@ -75,7 +75,7 @@ export class InputTextComponent extends InputBaseDirective<Partial<CreatorFieldI
     }
 
     cancel(): void {
-        if (this.data && this.data.id) {
+        if (this.field.data && this.field.data.id) {
             this.toggleMode();
         } else {
             // todo remove if field is created after hitting the OK button

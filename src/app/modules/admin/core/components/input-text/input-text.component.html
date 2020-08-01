@@ -4,23 +4,25 @@
             <p nz-typography nzType="secondary" class="input-text__title">Текстовое поле</p>
             <form nz-form nzLayout="vertical" [formGroup]="inputTextForm">
                 <nz-form-item class="input-text__item">
-                    <nz-form-control [nzSpan]="6" nzErrorTip="Обязательное поле">
+                    <nz-form-control nzErrorTip="Обязательное поле">
                         <input nz-input formControlName="label" name="label" required placeholder="Заголовок" />
                     </nz-form-control>
                 </nz-form-item>
                 <nz-form-item class="input-text__item">
-                    <nz-form-control [nzSpan]="6">
+                    <nz-form-control>
                         <input nz-input formControlName="placeholder" name="placeholder" placeholder="Плейсхолдер" />
                     </nz-form-control>
                 </nz-form-item>
                 <nz-row class="input-text__item" nzAlign="middle">
-                    <nz-col [nzSpan]="6">
+                    <nz-col>
                         <label nz-checkbox formControlName="required">Обязательное поле</label>
                     </nz-col>
                 </nz-row>
                 <nz-row class="input-text__item" nzAlign="middle">
-                    <nz-col [nzSpan]="6" class="input-text__action-buttons">
+                    <nz-col nzSpan="12">
                         <button nz-button nzType="link" (click)="cancel()">Отмена</button>
+                    </nz-col>
+                    <nz-col nzSpan="12" class="input-text__action-buttons input-text__action-buttons--align-right">
                         <button nz-button nzType="primary" (click)="save()" [nzLoading]="state === OperationState.LOADING">OK</button>
                     </nz-col>
                 </nz-row>
@@ -46,10 +48,10 @@
                 <i nz-icon nzType="delete" nzTheme="outline"></i>
             </button>
             <h4 nz-typography class="input-text__label">
-                {{ data.label }}
-                <span class="input-text__label-additional" nz-typography nzType="secondary" *ngIf="data.required"> обязательное</span>
+                {{ field.data.label }}
+                <span class="input-text__label-additional" nz-typography nzType="secondary" *ngIf="field.data.required"> обязательное</span>
             </h4>
-            <span nz-typography nzType="secondary">{{ data.placeholder }}</span>
+            <span nz-typography nzType="secondary">{{ field.data.placeholder }}</span>
         </ng-container>
     </ng-container>
 </div>

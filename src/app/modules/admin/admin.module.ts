@@ -30,6 +30,7 @@ import { ModelsComponent } from './pages/models/models.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { AdminMenuComponent } from './core/components/admin-menu/admin-menu.component';
 import { CategoryFormComponent } from './core/components/category-form/category-form.component';
+import { PreviewComponent } from './core/components/preview/preview.component';
 
 const creatorInputs = [InputTextComponent];
 
@@ -54,8 +55,9 @@ const uiModules = [
     NzMessageModule,
     NzTreeModule,
 ];
+
 @NgModule({
-    imports: [SharedModule, FormsModule, ReactiveFormsModule, AdminRoutingModule, CommonModule, ...uiModules],
+    imports: [...uiModules, SharedModule, FormsModule, ReactiveFormsModule, AdminRoutingModule, CommonModule],
     declarations: [
         ...creatorInputs,
         AdminComponent,
@@ -65,6 +67,7 @@ const uiModules = [
         CategoriesComponent,
         AdminMenuComponent,
         CategoryFormComponent,
+        PreviewComponent,
     ],
 })
 export class AdminModule {}

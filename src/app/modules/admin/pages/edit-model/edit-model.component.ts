@@ -1,21 +1,13 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    ComponentFactory,
-    ComponentFactoryResolver,
-    ComponentRef,
-    OnInit,
-    ViewChild,
-    ViewContainerRef,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Field, Model, Section } from '../../../../core/models/models.dto';
 
 import { FieldService, ModelService } from '../../../../core/services';
-import { InputBaseDirective } from '../../core/components/input-base';
-import { InputTextComponent } from '../../core/components/input-text/input-text.component';
+import { InputBaseDirective, OperationState } from '../../core/components/input-base';
+import { PreviewComponent } from '../../core/components/preview/preview.component';
+import { fieldMetadataList, FieldTypes } from '../../../../core/models/field-metadata';
+import { getCreatorFieldComponentResolver } from '../../../../core/services/field-resolvers/field-resolvers';
 
 @Component({
     selector: 'app-edit-model',
@@ -26,21 +18,14 @@ export class EditModelComponent implements OnInit {
     model: Model;
 
     private components: ComponentRef<InputBaseDirective<unknown>>[] = [];
-    private deleteSubs = new Map<ComponentRef<InputBaseDirective<unknown>>, Subscription>();
 
-    availableInputs = [
-        {
-            value: 'input_text',
-            label: 'Текстовое поле',
-        },
-        {
-            value: 'text',
-            label: 'Поле для длинного текста',
-        },
-    ];
+    availableInputTypes = fieldMetadataList;
 
     @ViewChild('fields', { read: ViewContainerRef })
     private fieldsFormContainerRef: ViewContainerRef;
+
+    @ViewChild(PreviewComponent)
+    private preview: PreviewComponent;
 
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,
@@ -66,7 +51,7 @@ export class EditModelComponent implements OnInit {
             });
     }
 
-    createField(type: string, section: Section): void {
+    createField(type: FieldTypes, section: Section): void {
         // @TODO: We need to create field afer we clicks OK, not before.
         this.fieldService
             .createField({
@@ -75,9 +60,6 @@ export class EditModelComponent implements OnInit {
             })
             .subscribe(field => {
                 const component = this.resolveFieldComponent(field);
-                const deleteSub = component.instance.onDelete.subscribe(instance => this.onDelete(instance));
-
-                this.deleteSubs.set(component, deleteSub);
                 this.components.push(component);
             });
     }
@@ -90,27 +72,24 @@ export class EditModelComponent implements OnInit {
         // todo check if section is created and create in case not
         sections.forEach(section => {
             if (section.fields) {
-                section.fields.forEach(field => {
-                    const component = this.resolveFieldComponent(field);
-                    component.instance.data = field.data;
-                });
+                section.fields.forEach(field => this.resolveFieldComponent(field));
             }
         });
     }
 
-    private resolveFieldComponent(field: Field): ComponentRef<InputBaseDirective<any>> {
-        let resolver: ComponentFactory<InputBaseDirective<any>>;
-
-        if (field.type === 'input_text') {
-            resolver = this.componentFactoryResolver.resolveComponentFactory(InputTextComponent);
-        }
-
-        if (field.type === 'text') {
-            resolver = this.componentFactoryResolver.resolveComponentFactory(InputTextComponent);
-        }
-
+    private resolveFieldComponent(field: Field): ComponentRef<InputBaseDirective<unknown>> {
+        const resolver = getCreatorFieldComponentResolver(this.componentFactoryResolver, field.type as FieldTypes);
         const component = this.fieldsFormContainerRef.createComponent(resolver);
+
+        // add inputs
         component.instance.field = field;
+
+        // subscribe on events
+        component.instance.onSave$.subscribe(state => this.onSave(state));
+        component.instance.onDelete.subscribe(instance => this.onDelete(instance));
+
+        // run onInit
+        component.changeDetectorRef.detectChanges();
 
         return component;
     }
@@ -118,10 +97,21 @@ export class EditModelComponent implements OnInit {
     private onDelete(instance: InputBaseDirective<unknown>): void {
         const targetComponent = this.components.find(component => component.instance === instance);
 
-        this.deleteSubs.get(targetComponent).unsubscribe();
-        this.deleteSubs.delete(targetComponent);
-
         this.fieldsFormContainerRef.remove(this.fieldsFormContainerRef.indexOf(targetComponent.hostView));
+
+        this.updatePreview();
+
         this.cd.detectChanges();
+    }
+
+    private onSave(state: OperationState): void {
+        // todo update only changed field
+        if (state === OperationState.SUCCESS) {
+            this.updatePreview();
+        }
+    }
+
+    private updatePreview(): void {
+        this.preview.update();
     }
 }

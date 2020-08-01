@@ -2,6 +2,7 @@
 
 .input-text {
     margin-bottom: $base-unit * 3;
+    max-width: $base-unit * 40;
 
     &__title {
         margin-bottom: $base-unit;
@@ -24,7 +25,9 @@
     }
 
     &__action-buttons {
-        text-align: right;
+        &--align-right {
+            text-align: right;
+        }
     }
 
     &__item {

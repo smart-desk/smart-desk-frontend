@@ -1,12 +1,12 @@
-import { ComponentRef, Directive, Input, ViewContainerRef, ViewRef } from '@angular/core';
+import { Directive, Input, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Field } from '../../../../../core/models/models.dto';
 import { OperationState } from './operation-state.enum';
+import { FieldWithData } from '../../../../../core/models/field-with-data';
 
 @Directive()
-export abstract class InputBaseDirective<T> {
-    @Input() field: Field;
-    @Input() data: T;
+export abstract class InputBaseDirective<T> implements OnDestroy {
+    @Input() field: FieldWithData<T>;
 
     protected save$ = new Subject<OperationState>();
     protected delete$ = new Subject<InputBaseDirective<unknown>>();
@@ -17,5 +17,10 @@ export abstract class InputBaseDirective<T> {
 
     get onDelete(): Observable<InputBaseDirective<unknown>> {
         return this.delete$.asObservable();
+    }
+
+    ngOnDestroy() {
+        this.delete$.complete();
+        this.save$.complete();
     }
 }
