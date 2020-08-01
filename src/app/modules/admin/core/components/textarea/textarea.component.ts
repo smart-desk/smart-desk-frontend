@@ -49,14 +49,13 @@ export class TextAreaComponent extends InputBaseDirective<Partial<CreatorFieldIn
         let request: Observable<CreatorFieldTextArea>;
 
         if (!(this.data && this.data.id)) {
-            this.state = OperationState.SUCCESS;
-            request = this.creatorFieldTextAreaService.createTextArea(textArea);
+            request = this.creatorFieldTextAreaService.createTextArea(input);
         } else {
-            request = this.creatorFieldTextAreaService.updateTextArea(this.data.id, textArea);
-            this.state = OperationState.SUCCESS;
+            request = this.creatorFieldTextAreaService.updateTextArea(this.data.id, input);
         }
 
         request.subscribe(res => {
+            this.state = OperationState.SUCCESS;
             this.data = res;
             this.toggleMode();
             this.save$.next(this.state);

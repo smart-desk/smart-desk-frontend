@@ -1,6 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { TextAreaComponent } from './text-area.component';
+import { TextAreaComponent } from './textarea.component';
 
 describe('TextAreaComponent', () => {
     let component: TextAreaComponent;
