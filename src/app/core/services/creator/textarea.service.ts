@@ -6,26 +6,26 @@ import { CreatorFieldText, Field } from '../../models/models.dto';
 // todo move adding environment api variable to interceptor
 
 @Injectable()
-export class CreatorFieldTextAreaService {
-    constructor(private http: HttpClient) { }
+export class CreatorFieldTextareaService {
+    constructor(private http: HttpClient) {}
 
     getTextAreasByFieldID(fieldID: string): Observable<CreatorFieldText[]> {
-        return this.http.get<CreatorFieldText[]>(`fields/creator/text?field_id=${fieldID}`);
+        return this.http.get<CreatorFieldText[]>(`/fields/creator/text?field_id=${fieldID}`);
     }
 
     getTextArea(id: string): Observable<CreatorFieldText> {
-        return this.http.get<CreatorFieldText>(`fields/creator/text/${id}`);
+        return this.http.get<CreatorFieldText>(`/fields/creator/text/${id}`);
     }
 
     createTextArea(textArea: Partial<CreatorFieldText>): Observable<CreatorFieldText> {
-        return this.http.post<CreatorFieldText>(`fields/creator/text`, textArea);
+        return this.http.post<CreatorFieldText>(`/fields/creator/text`, textArea);
     }
 
     updateTextArea(id, textArea: CreatorFieldText): Observable<CreatorFieldText> {
-        return this.http.put<CreatorFieldText>(`fields/creator/text/${id}`, textArea);
+        return this.http.put<CreatorFieldText>(`/fields/creator/text/${id}`, textArea);
     }
 
     deleteTextArea(id): Observable<unknown> {
-        return this.http.delete<Field>(`fields/creator/text/${id}`);
+        return this.http.delete<Field>(`/fields/creator/text/${id}`);
     }
 }

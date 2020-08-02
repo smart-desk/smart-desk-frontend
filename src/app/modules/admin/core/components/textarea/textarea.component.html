@@ -2,7 +2,7 @@
     <ng-container [ngSwitch]="mode">
         <div class="text-area__form-container" *ngSwitchCase="Mode.EDIT">
             <p nz-typography nzType="secondary" class="text-area__title">Текстовая область</p>
-            <form nz-form nzLayout="vertical" [formGroup]="textAreaForm">
+            <form nz-form nzLayout="vertical" [formGroup]="form">
                 <nz-form-item class="text-area__item">
                     <nz-form-control [nzSpan]="6" nzErrorTip="Обязательное поле">
                         <input nz-input formControlName="label" name="label" required placeholder="Заголовок" />
@@ -46,10 +46,10 @@
                 <i nz-icon nzType="delete" nzTheme="outline"></i>
             </button>
             <h4 nz-typography class="text-area__label">
-                {{ data.label }}
-                <span class="text-area__label-additional" nz-typography nzType="secondary" *ngIf="data.required"> обязательное</span>
+                {{ field.data.label }}
+                <span class="text-area__label-additional" nz-typography nzType="secondary" *ngIf="field.data.required"> обязательное</span>
             </h4>
-            <span nz-typography nzType="secondary">{{ data.placeholder }}</span>
+            <span nz-typography nzType="secondary">{{ field.data.placeholder }}</span>
         </ng-container>
     </ng-container>
 </div>

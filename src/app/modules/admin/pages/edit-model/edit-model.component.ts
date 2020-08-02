@@ -70,7 +70,6 @@ export class EditModelComponent implements OnInit {
     private populateFormWithInputs(sections: Section[]): void {
         // todo check if section is created and create in case not
         sections.forEach(section => {
-            console.log('section', section);
             if (section.fields) {
                 section.fields.forEach(field => this.resolveFieldComponent(field));
             }

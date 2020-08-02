@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { CreatorFieldText } from '../../../../../core/models/models.dto';
-import { CreatorFieldTextAreaService } from '../../../../../core/services';
+import { CreatorFieldTextareaService, FieldService } from '../../../../../core/services';
 import { InputBaseDirective, OperationState } from '../input-base';
 
 enum Mode {
@@ -16,27 +16,31 @@ enum Mode {
     styleUrls: ['./textarea.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TextAreaComponent extends InputBaseDirective<Partial<CreatorFieldText>> implements OnInit {
+export class TextareaComponent extends InputBaseDirective<Partial<CreatorFieldText>> implements OnInit {
     OperationState = OperationState;
     state: OperationState;
 
-    textAreaForm: FormGroup;
+    form: FormGroup;
 
     mode: Mode;
     Mode = Mode;
 
-    constructor(private creatorFieldTextAreaService: CreatorFieldTextAreaService, private fb: FormBuilder, private cd: ChangeDetectorRef) {
+    constructor(
+        private creatorFieldTextAreaService: CreatorFieldTextareaService,
+        private fb: FormBuilder,
+        private cd: ChangeDetectorRef,
+        private fieldService: FieldService
+    ) {
         super();
     }
 
     ngOnInit(): void {
-        console.log('START TextAreaComponent');
-        this.mode = this.data && this.data.id ? Mode.VIEW : Mode.EDIT;
+        this.mode = this.field && this.field.data && this.field.data.id ? Mode.VIEW : Mode.EDIT;
 
-        this.textAreaForm = this.fb.group({
-            label: [(this.data && this.data.label) || '', Validators.required],
-            placeholder: [(this.data && this.data.placeholder) || ''],
-            required: [(this.data && this.data.required) || false],
+        this.form = this.fb.group({
+            label: [(this.field.data && this.field.data.label) || '', Validators.required],
+            placeholder: [(this.field.data && this.field.data.placeholder) || ''],
+            required: [(this.field.data && this.field.data.required) || false],
         });
     }
 
@@ -44,20 +48,20 @@ export class TextAreaComponent extends InputBaseDirective<Partial<CreatorFieldTe
         this.state = OperationState.LOADING;
         this.save$.next(this.state);
 
-        const input: CreatorFieldText = this.textAreaForm.getRawValue();
+        const input: CreatorFieldText = this.form.getRawValue();
         input.field_id = this.field.id;
 
         let request: Observable<CreatorFieldText>;
 
-        if (!(this.data && this.data.id)) {
+        if (!(this.field.data && this.field.data.id)) {
             request = this.creatorFieldTextAreaService.createTextArea(input);
         } else {
-            request = this.creatorFieldTextAreaService.updateTextArea(this.data.id, input);
+            request = this.creatorFieldTextAreaService.updateTextArea(this.field.data.id, input);
         }
 
         request.subscribe(res => {
             this.state = OperationState.SUCCESS;
-            this.data = res;
+            this.field.data = res;
             this.toggleMode();
             this.save$.next(this.state);
 
@@ -65,7 +69,23 @@ export class TextAreaComponent extends InputBaseDirective<Partial<CreatorFieldTe
         });
     }
 
-    private toggleMode(): void {
+    cancel(): void {
+        if (this.field.data && this.field.data.id) {
+            this.toggleMode();
+        } else {
+            // todo remove if field is created after hitting the OK button
+            this.delete();
+        }
+    }
+
+    delete(): void {
+        // in order to delete InputText it would be sufficient to remove corresponding field
+        this.fieldService.deleteField(this.field.id).subscribe(() => {
+            this.delete$.next(this);
+        });
+    }
+
+    toggleMode(): void {
         this.mode = this.mode === Mode.EDIT ? Mode.VIEW : Mode.EDIT;
     }
 }

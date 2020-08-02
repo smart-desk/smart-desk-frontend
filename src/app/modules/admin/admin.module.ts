@@ -25,15 +25,16 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 import { AdminMenuComponent } from './core/components/admin-menu/admin-menu.component';
 import { CategoryFormComponent } from './core/components/category-form/category-form.component';
-import { InputTextComponent } from './core/components/input-text/input-text.component';
 import { PreviewComponent } from './core/components/preview/preview.component';
-import { TextAreaComponent } from './core/components/textarea/textarea.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { CreateModelComponent } from './pages/create-model/create-model.component';
 import { EditModelComponent } from './pages/edit-model/edit-model.component';
 import { ModelsComponent } from './pages/models/models.component';
 
-const creatorInputs = [InputTextComponent, TextAreaComponent];
+import { InputTextComponent } from './core/components/input-text/input-text.component';
+import { TextareaComponent } from './core/components/textarea/textarea.component';
+
+const creatorInputs = [InputTextComponent, TextareaComponent];
 
 const uiModules = [
     NzLayoutModule,
