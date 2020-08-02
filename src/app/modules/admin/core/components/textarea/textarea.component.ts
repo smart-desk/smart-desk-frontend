@@ -1,8 +1,8 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { CreatorFieldInputText, CreatorFieldTextArea } from 'src/app/core/models/models.dto';
-import { CreatorFieldTextAreaService } from 'src/app/core/services/creator/text-area.service';
+import { CreatorFieldText } from '../../../../../core/models/models.dto';
+import { CreatorFieldTextAreaService } from '../../../../../core/services';
 import { InputBaseDirective, OperationState } from '../input-base';
 
 enum Mode {
@@ -11,11 +11,12 @@ enum Mode {
 }
 
 @Component({
-    selector: 'app-text-area',
-    templateUrl: './text-area.component.html',
-    styleUrls: ['./text-area.component.scss'],
+    selector: 'app-textarea',
+    templateUrl: './textarea.component.html',
+    styleUrls: ['./textarea.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TextAreaComponent extends InputBaseDirective<Partial<CreatorFieldInputText>> implements OnInit {
+export class TextAreaComponent extends InputBaseDirective<Partial<CreatorFieldText>> implements OnInit {
     OperationState = OperationState;
     state: OperationState;
 
@@ -43,10 +44,10 @@ export class TextAreaComponent extends InputBaseDirective<Partial<CreatorFieldIn
         this.state = OperationState.LOADING;
         this.save$.next(this.state);
 
-        const textArea: CreatorFieldTextArea = this.textAreaForm.getRawValue();
-        textArea.field_id = this.field.id;
+        const input: CreatorFieldText = this.textAreaForm.getRawValue();
+        input.field_id = this.field.id;
 
-        let request: Observable<CreatorFieldTextArea>;
+        let request: Observable<CreatorFieldText>;
 
         if (!(this.data && this.data.id)) {
             request = this.creatorFieldTextAreaService.createTextArea(input);
