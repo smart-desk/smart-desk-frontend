@@ -5,6 +5,10 @@ import { CreatorFieldRadio } from '../../../../../core/models/models.dto';
 import { CreatorFieldRadioService } from '../../../../../core/services/creator';
 import { FieldService } from '../../../../../core/services';
 
+class CreatorFieldRadioControl extends CreatorFieldRadio {
+    edit: boolean;
+}
+
 @Component({
     selector: 'app-radio',
     templateUrl: './radio.component.html',
@@ -14,7 +18,7 @@ import { FieldService } from '../../../../../core/services';
 export class RadioComponent extends InputBaseDirective<CreatorFieldRadio[]> implements OnInit {
     state: OperationState;
 
-    controls: CreatorFieldRadio[] = [];
+    controls: CreatorFieldRadioControl[] = [];
 
     constructor(
         private creatorFieldRadioService: CreatorFieldRadioService,
@@ -26,43 +30,40 @@ export class RadioComponent extends InputBaseDirective<CreatorFieldRadio[]> impl
 
     ngOnInit(): void {
         if (this.field.data) {
-            this.controls = [...this.field.data];
+            this.controls = [...(this.field.data as CreatorFieldRadioControl[])];
         } else {
-            // todo focus on newly added input
             this.add();
         }
     }
 
     add(): void {
-        const radio = new CreatorFieldRadio();
+        const radio = new CreatorFieldRadioControl();
+        radio.edit = true;
         this.controls.push(radio);
     }
 
-    change(control: CreatorFieldRadio, newLabel: string): void {
-        if (control.label === newLabel) {
-            return;
-        }
+    edit(control: CreatorFieldRadioControl): void {
+        control.edit = true;
+    }
 
-        if (!newLabel) {
-            this.delete(control);
-        }
+    change(control: CreatorFieldRadioControl): void {
+        control.edit = false;
 
         this.updateState(OperationState.LOADING);
 
         let request: Observable<CreatorFieldRadio>;
 
-        control.label = newLabel;
-
         if (control.id && control.field_id) {
             request = this.creatorFieldRadioService.updateRadio(control.id, control);
         } else {
-            control.value = newLabel.replace(' ', '_');
+            control.value = control.label.replace(' ', '_');
             control.field_id = this.field.id;
             request = this.creatorFieldRadioService.createRadio(control);
         }
 
         request.subscribe(
             res => {
+                control.id = res.id;
                 this.updateState(OperationState.SUCCESS);
                 this.cd.detectChanges();
             },
@@ -75,17 +76,30 @@ export class RadioComponent extends InputBaseDirective<CreatorFieldRadio[]> impl
     delete(control: CreatorFieldRadio): void {
         this.updateState(OperationState.LOADING);
 
-        console.log('Удалить только один пункт');
-        console.log(control);
-
-        this.updateState(OperationState.SUCCESS);
+        this.creatorFieldRadioService.deleteRadio(control.id).subscribe(
+            () => {
+                this.controls = this.controls.filter(c => c.id !== control.id);
+                this.updateState(OperationState.SUCCESS);
+                this.cd.detectChanges();
+            },
+            () => {
+                this.updateState(OperationState.ERROR);
+            }
+        );
     }
 
     deleteField(): void {
+        this.updateState(OperationState.LOADING);
+
         // in order to delete all data it would be sufficient to remove corresponding field
-        this.fieldService.deleteField(this.field.id).subscribe(() => {
-            this.delete$.next(this);
-        });
+        this.fieldService.deleteField(this.field.id).subscribe(
+            () => {
+                this.delete$.next(this);
+            },
+            () => {
+                this.updateState(OperationState.ERROR);
+            }
+        );
     }
 
     private updateState(state: OperationState): void {

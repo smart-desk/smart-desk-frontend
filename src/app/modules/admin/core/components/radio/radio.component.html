@@ -1,12 +1,48 @@
 <div class="radio">
-    <p nz-typography nzType="secondary" class="radio__title">Радиокнопки</p>
-    <p *ngFor="let control of controls">
-        <span nz-typography nzEditable [nzContent]="control.label" (nzContentChange)="change(control, $event)"></span>
+    <div class="radio__title">
+        <span nz-typography nzType="secondary">Радиокнопки</span>
         <button nz-button nzType="link" nzSize="small" nzShape="circle" (click)="add()">
             <i nz-icon nzType="plus-circle" nzTheme="outline"></i>
         </button>
-        <button nz-button nzType="link" nzSize="small" nzShape="circle" (click)="delete(control)">
+        <button
+            nz-popconfirm
+            nzPopconfirmTitle="Вы уверены что хотите удалить поле?"
+            nzPopconfirmPlacement="top"
+            nzCancelText="Отмена"
+            nzOkText="Удалить"
+            (nzOnConfirm)="deleteField()"
+            nz-button
+            nzType="link"
+            nzSize="small"
+            nzShape="circle"
+        >
             <i nz-icon nzType="delete" nzTheme="outline"></i>
         </button>
-    </p>
+    </div>
+
+    <ng-container *ngFor="let control of controls">
+        <ng-container *ngIf="control.edit">
+            <form nz-form [nzLayout]="'inline'">
+                <nz-form-item>
+                    <nz-form-control>
+                        <input nz-input placeholder="Введите значение" name="label" [(ngModel)]="control.label" />
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-control>
+                        <button nz-button nzType="primary" (click)="change(control)">OK</button>
+                    </nz-form-control>
+                </nz-form-item>
+            </form>
+        </ng-container>
+        <div *ngIf="!control.edit">
+            <span nz-typography>{{ control.label }}</span>
+            <button nz-button nzType="link" nzSize="small" nzShape="circle" (click)="edit(control)">
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+            </button>
+            <button nz-button nzType="link" nzSize="small" nzShape="circle" (click)="delete(control)">
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+            </button>
+        </div>
+    </ng-container>
 </div>
