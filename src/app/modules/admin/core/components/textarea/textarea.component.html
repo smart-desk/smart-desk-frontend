@@ -1,26 +1,28 @@
-<div class="text-area">
+<div class="textarea">
     <ng-container [ngSwitch]="mode">
-        <div class="text-area__form-container" *ngSwitchCase="Mode.EDIT">
-            <p nz-typography nzType="secondary" class="text-area__title">Текстовая область</p>
+        <div class="textarea__form-container" *ngSwitchCase="Mode.EDIT">
+            <p nz-typography nzType="secondary" class="textarea__title">Текстовая область</p>
             <form nz-form nzLayout="vertical" [formGroup]="form">
-                <nz-form-item class="text-area__item">
-                    <nz-form-control [nzSpan]="6" nzErrorTip="Обязательное поле">
+                <nz-form-item class="textarea__item">
+                    <nz-form-control nzErrorTip="Обязательное поле">
                         <input nz-input formControlName="label" name="label" required placeholder="Заголовок" />
                     </nz-form-control>
                 </nz-form-item>
-                <nz-form-item class="text-area__item">
-                    <nz-form-control [nzSpan]="6">
+                <nz-form-item class="textarea__item">
+                    <nz-form-control>
                         <input nz-input formControlName="placeholder" name="placeholder" placeholder="Плейсхолдер" />
                     </nz-form-control>
                 </nz-form-item>
-                <nz-row class="text-area__item" nzAlign="middle">
-                    <nz-col [nzSpan]="6">
+                <nz-row class="textarea__item" nzAlign="middle">
+                    <nz-col>
                         <label nz-checkbox formControlName="required">Обязательное поле</label>
                     </nz-col>
                 </nz-row>
-                <nz-row class="text-area__item" nzAlign="middle">
-                    <nz-col [nzSpan]="6" class="text-area__action-buttons">
+                <nz-row class="textarea__item" nzAlign="middle">
+                    <nz-col class="textarea__action-buttons" nzSpan="12">
                         <button nz-button nzType="link" (click)="cancel()">Отмена</button>
+                    </nz-col>
+                    <nz-col nzSpan="12" class="textarea__action-buttons textarea__action-buttons--align-right">
                         <button nz-button nzType="primary" (click)="save()" [nzLoading]="state === OperationState.LOADING">OK</button>
                     </nz-col>
                 </nz-row>
@@ -45,9 +47,9 @@
             >
                 <i nz-icon nzType="delete" nzTheme="outline"></i>
             </button>
-            <h4 nz-typography class="text-area__label">
+            <h4 nz-typography class="textarea__label">
                 {{ field.data.label }}
-                <span class="text-area__label-additional" nz-typography nzType="secondary" *ngIf="field.data.required"> обязательное</span>
+                <span class="textarea__label-additional" nz-typography nzType="secondary" *ngIf="field.data.required"> обязательное</span>
             </h4>
             <span nz-typography nzType="secondary">{{ field.data.placeholder }}</span>
         </ng-container>

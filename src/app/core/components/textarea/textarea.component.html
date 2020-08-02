@@ -1,1 +1,8 @@
-<p>textarea works!</p>
+<form nz-form nzLayout="vertical" class="textarea">
+    <nz-form-item>
+        <nz-form-label [nzRequired]="field.data.required">{{ field.data.label }}</nz-form-label>
+        <nz-form-control>
+            <textarea rows="4" nz-input [required]="field.data.required" [placeholder]="field.data.placeholder"></textarea>
+        </nz-form-control>
+    </nz-form-item>
+</form>
