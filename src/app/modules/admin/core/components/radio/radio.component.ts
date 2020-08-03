@@ -6,7 +6,7 @@ import { CreatorFieldRadioService } from '../../../../../core/services/creator';
 import { FieldService } from '../../../../../core/services';
 
 class CreatorFieldRadioControl extends CreatorFieldRadio {
-    edit: boolean;
+    edit?: boolean;
 }
 
 @Component({
@@ -30,7 +30,7 @@ export class RadioComponent extends InputBaseDirective<CreatorFieldRadio[]> impl
 
     ngOnInit(): void {
         if (this.field.data) {
-            this.controls = [...(this.field.data as CreatorFieldRadioControl[])];
+            this.controls = [...this.field.data];
         } else {
             this.add();
         }
