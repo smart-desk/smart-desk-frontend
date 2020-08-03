@@ -1,7 +1,7 @@
 import { Type } from '@angular/core';
 
-import { InputBaseDirective } from '../components/input-base';
-import { InputBaseDirective as CreatorInputBaseDirective } from '../../modules/admin/core/components/input-base';
+import { FormInputBaseDirective } from '../components/input-base';
+import { InputBaseDirective } from '../../modules/admin/core/components/input-base';
 import { InputTextComponent } from '../components/input-text/input-text.component';
 import { InputTextComponent as CreatorInputTextComponent } from '../../modules/admin/core/components/input-text/input-text.component';
 import { RadioComponent } from '../components/radio/radio.component';
@@ -16,8 +16,8 @@ export interface FieldMetadata {
     type: FieldTypes;
     title: string;
     description?: string;
-    component: Type<InputBaseDirective<unknown>>;
-    creatorComponent: Type<CreatorInputBaseDirective<unknown>>;
+    component: Type<FormInputBaseDirective<unknown>>;
+    creatorComponent: Type<InputBaseDirective<unknown>>;
 }
 
 export const fieldMetadataList = new Set<FieldMetadata>();

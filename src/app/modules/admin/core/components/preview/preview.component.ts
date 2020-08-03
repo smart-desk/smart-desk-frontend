@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { ModelService } from '../../../../../core/services';
 import { Field, Section } from '../../../../../core/models/models.dto';
-import { InputBaseDirective } from '../../../../../core/components/input-base';
+import { FormInputBaseDirective } from '../../../../../core/components/input-base';
 import { getFieldComponentResolver } from '../../../../../core/services/field-resolvers/field-resolvers';
 import { FieldTypes } from '../../../../../core/models/field-metadata';
 
@@ -52,7 +52,7 @@ export class PreviewComponent implements OnInit {
         });
     }
 
-    private resolveFieldComponent(field: Field): ComponentRef<InputBaseDirective<unknown>> {
+    private resolveFieldComponent(field: Field): ComponentRef<FormInputBaseDirective<unknown>> {
         const resolver = getFieldComponentResolver(this.componentFactoryResolver, field.type as FieldTypes);
         const component = this.fieldsFormContainerRef.createComponent(resolver);
 
