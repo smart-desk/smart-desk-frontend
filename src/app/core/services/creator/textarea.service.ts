@@ -3,8 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CreatorFieldText, Field } from '../../models/models.dto';
 
-// todo move adding environment api variable to interceptor
-
 @Injectable()
 export class CreatorFieldTextareaService {
     constructor(private http: HttpClient) {}
