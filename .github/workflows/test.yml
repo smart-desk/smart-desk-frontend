@@ -25,5 +25,3 @@ jobs:
               run: yarn run build --prod
             - name: Test
               run: yarn test --browsers ChromeHeadless --watch=false
-            - name: E2E
-              run: yarn run e2e
