@@ -30,7 +30,7 @@ export class CreatorFieldInputText {
     placeholder: string;
     required: boolean;
 }
-export class CreatorFieldText {
+export class CreatorFieldTextarea {
     id: string;
     field_id: string;
     label: string;
