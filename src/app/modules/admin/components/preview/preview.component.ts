@@ -8,11 +8,11 @@ import {
     ViewChild,
     ViewContainerRef,
 } from '@angular/core';
-import { ModelService } from '../../../../../core/services';
-import { Field, Section } from '../../../../../core/models/models.dto';
-import { FormInputBaseDirective } from '../../../../../core/components/input-base';
-import { getFieldComponentResolver } from '../../../../../core/services/field-resolvers/field-resolvers';
-import { FieldTypes } from '../../../../../core/models/field-metadata';
+import { ModelService } from '../../../../shared/services';
+import { Field, Section } from '../../../../shared/models/models.dto';
+import { FormInputBaseDirective } from '../../../../shared/components/input-base';
+import { getFieldComponentResolver } from '../../../../shared/services/field-resolvers/field-resolvers';
+import { FieldTypes } from '../../../../shared/models/field-metadata';
 
 @Component({
     selector: 'app-preview',

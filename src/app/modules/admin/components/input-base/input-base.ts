@@ -1,8 +1,7 @@
 import { Directive, Input, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { Field } from '../../../../../core/models/models.dto';
 import { OperationState } from './operation-state.enum';
-import { FieldWithData } from '../../../../../core/models/field-with-data';
+import { FieldWithData } from '../../../../shared/models/field-with-data';
 
 @Directive()
 export abstract class InputBaseDirective<T> implements OnDestroy {

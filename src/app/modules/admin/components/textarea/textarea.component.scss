@@ -1,6 +1,6 @@
-@import '~src/assets/styles/variables';
+@import '../../../../../assets/styles/variables';
 
-.input-text {
+.textarea {
     margin-bottom: $base-unit * 3;
     max-width: $base-unit * 40;
 
@@ -9,7 +9,7 @@
     }
 
     // redefine ng.ant styles
-    h4.input-text__label {
+    h4.textarea__label {
         margin-top: 0;
         margin-bottom: 0;
     }

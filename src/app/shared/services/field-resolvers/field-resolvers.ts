@@ -1,6 +1,6 @@
 import { fieldMetadataList, FieldTypes } from '../../models/field-metadata';
 import { ComponentFactory, ComponentFactoryResolver } from '@angular/core';
-import { InputBaseDirective as CreatorInputBaseDirective } from '../../../modules/admin/core/components/input-base';
+import { InputBaseDirective as CreatorInputBaseDirective } from '../../../modules/admin/components/input-base';
 import { FormInputBaseDirective } from '../../components/input-base';
 
 export const getCreatorFieldComponentResolver = (

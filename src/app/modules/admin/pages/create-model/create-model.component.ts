@@ -2,9 +2,8 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { Model } from '../../../../core/models/models.dto';
-import { ModelService } from '../../../../core/services/model/model.service';
-import { SectionService } from '../../../../core/services/section/section.service';
+import { Model } from '../../../../shared/models/models.dto';
+import { ModelService, SectionService } from '../../../../shared/services';
 
 @Component({
     selector: 'app-create-model',
@@ -34,7 +33,7 @@ export class CreateModelComponent {
                     });
                 })
             )
-            .subscribe(section => {
+            .subscribe(() => {
                 this.router.navigate(['admin', 'models', 'edit', this.model.id]);
             });
     }

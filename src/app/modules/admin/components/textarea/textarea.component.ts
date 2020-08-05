@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { CreatorFieldTextarea } from '../../../../../core/models/models.dto';
-import { CreatorFieldTextareaService, FieldService } from '../../../../../core/services';
+import { CreatorFieldTextarea } from '../../../../shared/models/models.dto';
+import { CreatorFieldTextareaService, FieldService } from '../../../../shared/services';
 import { InputBaseDirective, OperationState } from '../input-base';
 
 enum Mode {

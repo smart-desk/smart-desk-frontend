@@ -1,12 +1,12 @@
 import { Type } from '@angular/core';
 
 import { FormInputBaseDirective } from '../components/input-base';
-import { InputBaseDirective as CreatorInputBaseDirective } from '../../modules/admin/core/components/input-base';
+import { InputBaseDirective as CreatorInputBaseDirective } from '../../modules/admin/components/input-base';
 import { InputTextComponent } from '../components/input-text/input-text.component';
-import { InputTextComponent as CreatorInputTextComponent } from '../../modules/admin/core/components/input-text/input-text.component';
+import { InputTextComponent as CreatorInputTextComponent } from '../../modules/admin/components/input-text/input-text.component';
 import { RadioComponent } from '../components/radio/radio.component';
-import { RadioComponent as CreatorRadioComponent } from '../../modules/admin/core/components/radio/radio.component';
-import { TextareaComponent as CreatorTextareaComponent } from '../../modules/admin/core/components/textarea/textarea.component';
+import { RadioComponent as CreatorRadioComponent } from '../../modules/admin/components/radio/radio.component';
+import { TextareaComponent as CreatorTextareaComponent } from '../../modules/admin/components/textarea/textarea.component';
 import { TextareaComponent } from '../components/textarea/textarea.component';
 
 export enum FieldTypes {

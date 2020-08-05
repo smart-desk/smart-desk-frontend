@@ -3,8 +3,8 @@ import { map, switchMap, tap } from 'rxjs/operators';
 import { NzPopoverDirective, NzTreeNode } from 'ng-zorro-antd';
 import arrayToTree from 'array-to-tree';
 import { BehaviorSubject } from 'rxjs';
-import { CategoryService, ModelService } from '../../../../core/services/';
-import { Category, Model } from '../../../../core/models/models.dto';
+import { CategoryService, ModelService } from '../../../../shared/services/';
+import { Category, Model } from '../../../../shared/models/models.dto';
 
 @Component({
     selector: 'app-models',

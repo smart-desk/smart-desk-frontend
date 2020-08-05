@@ -1,12 +1,12 @@
 import { ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { fieldMetadataList, FieldTypes } from '../../../../core/models/field-metadata';
-import { Field, Model, Section } from '../../../../core/models/models.dto';
-import { FieldService, ModelService } from '../../../../core/services';
-import { getCreatorFieldComponentResolver } from '../../../../core/services/field-resolvers/field-resolvers';
-import { InputBaseDirective, OperationState } from '../../core/components/input-base';
-import { PreviewComponent } from '../../core/components/preview/preview.component';
+import { fieldMetadataList, FieldTypes } from '../../../../shared/models/field-metadata';
+import { Field, Model, Section } from '../../../../shared/models/models.dto';
+import { FieldService, ModelService } from '../../../../shared/services';
+import { getCreatorFieldComponentResolver } from '../../../../shared/services/field-resolvers/field-resolvers';
+import { InputBaseDirective, OperationState } from '../../components/input-base';
+import { PreviewComponent } from '../../components/preview/preview.component';
 
 @Component({
     selector: 'app-edit-model',
