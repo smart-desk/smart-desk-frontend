@@ -1,22 +1,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { UIComponentsForTests } from 'src/app/spec/admin';
-import { CategoryFormComponent } from './category-form.component';
+import { TextareaComponent } from './textarea.component';
 
-describe('CategoryFormComponent', () => {
-    let component: CategoryFormComponent;
-    let fixture: ComponentFixture<CategoryFormComponent>;
+describe('TextareaComponent', () => {
+    let component: TextareaComponent;
+    let fixture: ComponentFixture<TextareaComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [ReactiveFormsModule, FormsModule, ...UIComponentsForTests, NoopAnimationsModule],
-            declarations: [CategoryFormComponent],
+            declarations: [TextareaComponent],
+            imports: [ReactiveFormsModule, FormsModule, ...UIComponentsForTests],
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(CategoryFormComponent);
+        fixture = TestBed.createComponent(TextareaComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

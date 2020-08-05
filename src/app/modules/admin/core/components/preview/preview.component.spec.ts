@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ModelService, ModelServiceFake } from 'src/app/core/services';
+import { UIComponentsForTests } from 'src/app/spec/admin';
 import { PreviewComponent } from './preview.component';
 
 describe('PreviewComponent', () => {
@@ -9,6 +10,8 @@ describe('PreviewComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [PreviewComponent],
+            providers: [{ provide: ModelService, useClass: ModelServiceFake }],
+            imports: [...UIComponentsForTests],
         }).compileComponents();
     }));
 
