@@ -9,8 +9,7 @@ import { TextareaComponent } from '../components/textarea/textarea.component';
 
 export enum FieldTypes {
     INPUT_TEXT = 'input_text',
-    // todo rename text -> textarea on backend
-    TEXTAREA = 'text',
+    TEXTAREA = 'textarea',
 }
 
 export interface FieldMetadata {

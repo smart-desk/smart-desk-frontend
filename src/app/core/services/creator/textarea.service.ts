@@ -1,29 +1,29 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CreatorFieldText, Field } from '../../models/models.dto';
+import { CreatorFieldTextarea, Field } from '../../models/models.dto';
 
 @Injectable()
 export class CreatorFieldTextareaService {
     constructor(private http: HttpClient) {}
 
-    getTextAreasByFieldID(fieldID: string): Observable<CreatorFieldText[]> {
-        return this.http.get<CreatorFieldText[]>(`/fields/creator/text?field_id=${fieldID}`);
+    getTextareasByFieldID(fieldID: string): Observable<CreatorFieldTextarea[]> {
+        return this.http.get<CreatorFieldTextarea[]>(`/fields/creator/textarea?field_id=${fieldID}`);
     }
 
-    getTextArea(id: string): Observable<CreatorFieldText> {
-        return this.http.get<CreatorFieldText>(`/fields/creator/text/${id}`);
+    getTextarea(id: string): Observable<CreatorFieldTextarea> {
+        return this.http.get<CreatorFieldTextarea>(`/fields/creator/textarea/${id}`);
     }
 
-    createTextArea(textArea: Partial<CreatorFieldText>): Observable<CreatorFieldText> {
-        return this.http.post<CreatorFieldText>(`/fields/creator/text`, textArea);
+    createTextarea(textArea: Partial<CreatorFieldTextarea>): Observable<CreatorFieldTextarea> {
+        return this.http.post<CreatorFieldTextarea>(`/fields/creator/textarea`, textArea);
     }
 
-    updateTextArea(id, textArea: CreatorFieldText): Observable<CreatorFieldText> {
-        return this.http.put<CreatorFieldText>(`/fields/creator/text/${id}`, textArea);
+    updateTextarea(id, textArea: CreatorFieldTextarea): Observable<CreatorFieldTextarea> {
+        return this.http.put<CreatorFieldTextarea>(`/fields/creator/textarea/${id}`, textArea);
     }
 
-    deleteTextArea(id): Observable<unknown> {
-        return this.http.delete<Field>(`/fields/creator/text/${id}`);
+    deleteTextarea(id): Observable<unknown> {
+        return this.http.delete<Field>(`/fields/creator/textarea/${id}`);
     }
 }
