@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { NzFormModule, NzInputModule, NzMessageModule, NzRadioModule } from 'ng-zorro-antd';
-import { InputTextComponent } from './components/input-text/input-text.component';
-import { TextareaComponent } from './components/textarea/textarea.component';
-import { RadioComponent } from './components/radio/radio.component';
+import { InputTextFormComponent } from './components/input-text-form/input-text-form.component';
+import { TextareaFormComponent } from './components/textarea-form/textarea-form.component';
+import { RadioFormComponent } from './components/radio-form/radio-form.component';
 import {
     CategoryService,
     CreatorFieldInputTextService,
@@ -37,7 +37,7 @@ const services = [
 /**
  * Components from `./components` directory
  */
-const components = [InputTextComponent, TextareaComponent, RadioComponent];
+const components = [InputTextFormComponent, TextareaFormComponent, RadioFormComponent];
 
 /**
  * Interceptors from `./interceptors` directory

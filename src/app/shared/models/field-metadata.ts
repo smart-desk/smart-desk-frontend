@@ -2,12 +2,12 @@ import { Type } from '@angular/core';
 
 import { FieldFormComponent } from '../components/field-form/field-form.component';
 import { FieldSettingsComponent as CreatorInputBaseDirective } from '../../modules/admin/components/field-settings';
-import { InputTextComponent } from '../components/input-text/input-text.component';
-import { InputTextComponent as CreatorInputTextComponent } from '../../modules/admin/components/input-text/input-text.component';
-import { RadioComponent } from '../components/radio/radio.component';
-import { RadioComponent as CreatorRadioComponent } from '../../modules/admin/components/radio/radio.component';
-import { TextareaComponent as CreatorTextareaComponent } from '../../modules/admin/components/textarea/textarea.component';
-import { TextareaComponent } from '../components/textarea/textarea.component';
+import { InputTextFormComponent } from '../components/input-text-form/input-text-form.component';
+import { InputTextSettingsComponent as CreatorInputTextComponent } from '../../modules/admin/components/input-text-settings/input-text-settings.component';
+import { RadioFormComponent } from '../components/radio-form/radio-form.component';
+import { RadioSettingsComponent as CreatorRadioComponent } from '../../modules/admin/components/radio-settings/radio-settings.component';
+import { TextareaSettingsComponent as CreatorTextareaComponent } from '../../modules/admin/components/textarea-settings/textarea-settings.component';
+import { TextareaFormComponent } from '../components/textarea-form/textarea-form.component';
 
 export enum FieldTypes {
     INPUT_TEXT = 'input_text',
@@ -19,8 +19,8 @@ export interface FieldMetadata {
     type: FieldTypes;
     title: string;
     description?: string;
-    component: Type<FieldFormComponent<unknown>>;
-    creatorComponent: Type<CreatorInputBaseDirective<unknown>>;
+    formComponent: Type<FieldFormComponent<unknown>>;
+    settingsComponent: Type<CreatorInputBaseDirective<unknown>>;
 }
 
 export const fieldMetadataList = new Set<FieldMetadata>();
@@ -28,20 +28,20 @@ export const fieldMetadataList = new Set<FieldMetadata>();
 fieldMetadataList.add({
     type: FieldTypes.INPUT_TEXT,
     title: 'Текстовое поле',
-    component: InputTextComponent,
-    creatorComponent: CreatorInputTextComponent,
+    formComponent: InputTextFormComponent,
+    settingsComponent: CreatorInputTextComponent,
 });
 
 fieldMetadataList.add({
     type: FieldTypes.RADIO,
     title: 'Радиокнопка',
-    component: RadioComponent,
-    creatorComponent: CreatorRadioComponent,
+    formComponent: RadioFormComponent,
+    settingsComponent: CreatorRadioComponent,
 });
 
 fieldMetadataList.add({
     type: FieldTypes.TEXTAREA,
     title: 'Большое текстовое поле',
-    component: TextareaComponent,
-    creatorComponent: CreatorTextareaComponent,
+    formComponent: TextareaFormComponent,
+    settingsComponent: CreatorTextareaComponent,
 });

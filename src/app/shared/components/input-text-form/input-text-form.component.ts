@@ -4,11 +4,11 @@ import { CreatorFieldInputText } from '../../models/models.dto';
 
 @Component({
     selector: 'app-input-text',
-    templateUrl: './input-text.component.html',
-    styleUrls: ['./input-text.component.scss'],
+    templateUrl: './input-text-form.component.html',
+    styleUrls: ['./input-text-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputTextComponent extends FieldFormComponent<CreatorFieldInputText> {
+export class InputTextFormComponent extends FieldFormComponent<CreatorFieldInputText> {
     constructor() {
         super();
     }

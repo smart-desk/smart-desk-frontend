@@ -11,11 +11,11 @@ class CreatorFieldRadioControl extends CreatorFieldRadio {
 
 @Component({
     selector: 'app-radio',
-    templateUrl: './radio.component.html',
-    styleUrls: ['./radio.component.scss'],
+    templateUrl: './radio-settings.component.html',
+    styleUrls: ['./radio-settings.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RadioComponent extends FieldSettingsComponent<CreatorFieldRadio[]> implements OnInit {
+export class RadioSettingsComponent extends FieldSettingsComponent<CreatorFieldRadio[]> implements OnInit {
     state: OperationState;
 
     controls: CreatorFieldRadioControl[] = [];

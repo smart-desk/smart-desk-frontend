@@ -4,10 +4,10 @@ import { CreatorFieldTextarea } from '../../models/models.dto';
 
 @Component({
     selector: 'app-textarea',
-    templateUrl: './textarea.component.html',
-    styleUrls: ['./textarea.component.scss'],
+    templateUrl: './textarea-form.component.html',
+    styleUrls: ['./textarea-form.component.scss'],
 })
-export class TextareaComponent extends FieldFormComponent<CreatorFieldTextarea> implements OnInit {
+export class TextareaFormComponent extends FieldFormComponent<CreatorFieldTextarea> implements OnInit {
     constructor() {
         super();
     }

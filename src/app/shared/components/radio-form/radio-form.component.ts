@@ -4,8 +4,8 @@ import { CreatorFieldRadio } from '../../models/models.dto';
 
 @Component({
     selector: 'app-radio',
-    templateUrl: './radio.component.html',
-    styleUrls: ['./radio.component.scss'],
+    templateUrl: './radio-form.component.html',
+    styleUrls: ['./radio-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RadioComponent extends FieldFormComponent<CreatorFieldRadio[]> {}
+export class RadioFormComponent extends FieldFormComponent<CreatorFieldRadio[]> {}

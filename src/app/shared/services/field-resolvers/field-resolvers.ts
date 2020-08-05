@@ -8,7 +8,7 @@ export const getCreatorFieldComponentResolver = (
     type: FieldTypes
 ): ComponentFactory<CreatorInputBaseDirective<unknown>> => {
     const targetFieldMetadata = Array.from(fieldMetadataList).find(fieldMetadata => fieldMetadata.type === type);
-    return componentFactoryResolver.resolveComponentFactory(targetFieldMetadata.creatorComponent);
+    return componentFactoryResolver.resolveComponentFactory(targetFieldMetadata.settingsComponent);
 };
 
 export const getFieldComponentResolver = (
@@ -16,5 +16,5 @@ export const getFieldComponentResolver = (
     type: FieldTypes
 ): ComponentFactory<FieldFormComponent<unknown>> => {
     const targetFieldMetadata = Array.from(fieldMetadataList).find(fieldMetadata => fieldMetadata.type === type);
-    return componentFactoryResolver.resolveComponentFactory(targetFieldMetadata.component);
+    return componentFactoryResolver.resolveComponentFactory(targetFieldMetadata.formComponent);
 };

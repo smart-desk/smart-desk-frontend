@@ -31,11 +31,18 @@ import { CreateModelComponent } from './pages/create-model/create-model.componen
 import { EditModelComponent } from './pages/edit-model/edit-model.component';
 import { ModelsComponent } from './pages/models/models.component';
 
-import { InputTextComponent } from './components/input-text/input-text.component';
-import { TextareaComponent } from './components/textarea/textarea.component';
-import { RadioComponent } from './components/radio/radio.component';
+import { InputTextSettingsComponent } from './components/input-text-settings/input-text-settings.component';
+import { TextareaSettingsComponent } from './components/textarea-settings/textarea-settings.component';
+import { RadioSettingsComponent } from './components/radio-settings/radio-settings.component';
 
-const components = [InputTextComponent, TextareaComponent, RadioComponent, PreviewComponent, CategoryFormComponent, AdminMenuComponent];
+const components = [
+    InputTextSettingsComponent,
+    TextareaSettingsComponent,
+    RadioSettingsComponent,
+    PreviewComponent,
+    CategoryFormComponent,
+    AdminMenuComponent,
+];
 
 const pages = [AdminComponent, EditModelComponent, CreateModelComponent, ModelsComponent, CategoriesComponent];
 
