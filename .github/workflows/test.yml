@@ -1,0 +1,28 @@
+on:
+    push:
+        branches:
+            - master
+    pull_request:
+        types: [opened, synchronize, reopened]
+name: Test
+jobs:
+    test:
+        name: Run Unit Tests
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [13.x]
+        steps:
+            - uses: actions/checkout@v1
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v1
+              with:
+                node-version: ${{ matrix.node-version }}
+            - name: Install yarn
+              run: npm install -g yarn
+            - name: Install dependencies
+              run: yarn install
+            - name: Build
+              run: yarn run build --prod
+            - name: Test
+              run: yarn test --no-watch --no-progress --browsers=ChromeHeadless

@@ -1,8 +1,10 @@
-<form nz-form nzLayout="vertical" class="input-text">
-    <nz-form-item>
-        <nz-form-label [nzRequired]="field.data.required">{{ field.data.label }}</nz-form-label>
-        <nz-form-control>
-            <input nz-input [required]="field.data.required" [placeholder]="field.data.placeholder" />
-        </nz-form-control>
-    </nz-form-item>
-</form>
+<ng-container *ngIf="field?.data as data">
+    <form nz-form nzLayout="vertical" class="input-text">
+        <nz-form-item>
+            <nz-form-label [nzRequired]="data.required">{{ data.label }}</nz-form-label>
+            <nz-form-control>
+                <input nz-input [required]="data.required" [placeholder]="data.placeholder" />
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</ng-container>
