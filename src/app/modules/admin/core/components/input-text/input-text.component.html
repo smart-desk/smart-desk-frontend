@@ -51,7 +51,7 @@
                 {{ field.data.label }}
                 <span class="input-text__label-additional" nz-typography nzType="secondary" *ngIf="field.data.required"> обязательное</span>
             </h4>
-            <span nz-typography nzType="secondary">{{ field.data.placeholder }}</span>
+            <span nz-typography nzType="secondary">{{ field?.data?.placeholder }}</span>
         </ng-container>
     </ng-container>
 </div>

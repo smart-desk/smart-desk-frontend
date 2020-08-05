@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Category, Model } from '../../../../../core/models/models.dto';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Category, Model } from '../../../../../core/models/models.dto';
 
 @Component({
     selector: 'app-category-form',
@@ -9,17 +9,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryFormComponent implements OnInit {
-    @Input()
-    category: Category;
+    @Input() category: Category;
+    @Input() models: Model[] = [];
 
-    @Input()
-    models: Model[];
-
-    @Output()
-    save = new EventEmitter<Category>();
-
-    @Output()
-    cancel = new EventEmitter<void>();
+    @Output() save = new EventEmitter<Category>();
+    @Output() cancel = new EventEmitter<void>();
 
     form: FormGroup;
 
