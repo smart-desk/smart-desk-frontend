@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormInputBaseDirective } from '../input-base';
+import { FieldFormComponent } from '../field-form/field-form.component';
 import { CreatorFieldTextarea } from '../../models/models.dto';
 
 @Component({
@@ -7,7 +7,7 @@ import { CreatorFieldTextarea } from '../../models/models.dto';
     templateUrl: './textarea.component.html',
     styleUrls: ['./textarea.component.scss'],
 })
-export class TextareaComponent extends FormInputBaseDirective<CreatorFieldTextarea> implements OnInit {
+export class TextareaComponent extends FieldFormComponent<CreatorFieldTextarea> implements OnInit {
     constructor() {
         super();
     }

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { CreatorFieldTextarea } from '../../../../shared/models/models.dto';
 import { CreatorFieldTextareaService, FieldService } from '../../../../shared/services';
-import { InputBaseDirective, OperationState } from '../input-base';
+import { FieldSettingsComponent, OperationState } from '../field-settings';
 
 enum Mode {
     EDIT,
@@ -16,7 +16,7 @@ enum Mode {
     styleUrls: ['./textarea.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TextareaComponent extends InputBaseDirective<Partial<CreatorFieldTextarea>> implements OnInit {
+export class TextareaComponent extends FieldSettingsComponent<Partial<CreatorFieldTextarea>> implements OnInit {
     OperationState = OperationState;
     state: OperationState;
 

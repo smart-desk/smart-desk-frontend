@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { CreatorFieldInputText } from '../../../../shared/models/models.dto';
 import { CreatorFieldInputTextService, FieldService } from '../../../../shared/services';
-import { InputBaseDirective, OperationState } from '../input-base';
+import { FieldSettingsComponent, OperationState } from '../field-settings';
 
 enum Mode {
     EDIT,
@@ -16,7 +16,7 @@ enum Mode {
     styleUrls: ['./input-text.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputTextComponent extends InputBaseDirective<Partial<CreatorFieldInputText>> implements OnInit {
+export class InputTextComponent extends FieldSettingsComponent<Partial<CreatorFieldInputText>> implements OnInit {
     OperationState = OperationState;
     state: OperationState;
 

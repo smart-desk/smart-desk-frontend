@@ -4,17 +4,18 @@ import { OperationState } from './operation-state.enum';
 import { FieldWithData } from '../../../../shared/models/field-with-data';
 
 @Directive()
-export abstract class InputBaseDirective<T> implements OnDestroy {
+// tslint:disable-next-line:directive-class-suffix
+export abstract class FieldSettingsComponent<T> implements OnDestroy {
     @Input() field: FieldWithData<T>;
 
     protected save$ = new Subject<OperationState>();
-    protected delete$ = new Subject<InputBaseDirective<unknown>>();
+    protected delete$ = new Subject<FieldSettingsComponent<unknown>>();
 
     get onSave$(): Observable<OperationState> {
         return this.save$.asObservable();
     }
 
-    get onDelete(): Observable<InputBaseDirective<unknown>> {
+    get onDelete(): Observable<FieldSettingsComponent<unknown>> {
         return this.delete$.asObservable();
     }
 

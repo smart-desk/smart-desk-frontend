@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { InputBaseDirective, OperationState } from '../input-base';
+import { FieldSettingsComponent, OperationState } from '../field-settings';
 import { CreatorFieldRadio } from '../../../../shared/models/models.dto';
 import { CreatorFieldRadioService } from '../../../../shared/services/creator';
 import { FieldService } from '../../../../shared/services';
@@ -15,7 +15,7 @@ class CreatorFieldRadioControl extends CreatorFieldRadio {
     styleUrls: ['./radio.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RadioComponent extends InputBaseDirective<CreatorFieldRadio[]> implements OnInit {
+export class RadioComponent extends FieldSettingsComponent<CreatorFieldRadio[]> implements OnInit {
     state: OperationState;
 
     controls: CreatorFieldRadioControl[] = [];

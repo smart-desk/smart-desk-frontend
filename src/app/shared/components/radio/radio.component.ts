@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormInputBaseDirective } from '../input-base';
+import { FieldFormComponent } from '../field-form/field-form.component';
 import { CreatorFieldRadio } from '../../models/models.dto';
 
 @Component({
@@ -8,4 +8,4 @@ import { CreatorFieldRadio } from '../../models/models.dto';
     styleUrls: ['./radio.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RadioComponent extends FormInputBaseDirective<CreatorFieldRadio[]> {}
+export class RadioComponent extends FieldFormComponent<CreatorFieldRadio[]> {}

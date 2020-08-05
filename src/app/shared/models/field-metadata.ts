@@ -1,7 +1,7 @@
 import { Type } from '@angular/core';
 
-import { FormInputBaseDirective } from '../components/input-base';
-import { InputBaseDirective as CreatorInputBaseDirective } from '../../modules/admin/components/input-base';
+import { FieldFormComponent } from '../components/field-form/field-form.component';
+import { FieldSettingsComponent as CreatorInputBaseDirective } from '../../modules/admin/components/field-settings';
 import { InputTextComponent } from '../components/input-text/input-text.component';
 import { InputTextComponent as CreatorInputTextComponent } from '../../modules/admin/components/input-text/input-text.component';
 import { RadioComponent } from '../components/radio/radio.component';
@@ -19,7 +19,7 @@ export interface FieldMetadata {
     type: FieldTypes;
     title: string;
     description?: string;
-    component: Type<FormInputBaseDirective<unknown>>;
+    component: Type<FieldFormComponent<unknown>>;
     creatorComponent: Type<CreatorInputBaseDirective<unknown>>;
 }
 
