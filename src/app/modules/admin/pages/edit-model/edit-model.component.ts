@@ -71,7 +71,10 @@ export class EditModelComponent implements OnInit {
         // todo check if section is created and create in case not
         sections.forEach(section => {
             if (section.fields) {
-                section.fields.forEach(field => this.resolveFieldComponent(field));
+                section.fields.forEach(field => {
+                    const component = this.resolveFieldComponent(field);
+                    this.components.push(component);
+                });
             }
         });
     }

@@ -4,6 +4,7 @@ export * from './creator/input-text.service';
 export * from './creator/input-text.service.fake';
 export * from './creator/textarea.service';
 export * from './creator/textarea.service.fake';
+export * from './creator/radio.service';
 export * from './field/field.service';
 export * from './field/field.service.fake';
 export * from './model/model.service';

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { InputBaseDirective } from '../input-base';
+import { FormInputBaseDirective } from '../input-base';
 import { CreatorFieldInputText } from '../../models/models.dto';
 
 @Component({
@@ -8,7 +8,7 @@ import { CreatorFieldInputText } from '../../models/models.dto';
     styleUrls: ['./input-text.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputTextComponent extends InputBaseDirective<CreatorFieldInputText> {
+export class InputTextComponent extends FormInputBaseDirective<CreatorFieldInputText> {
     constructor() {
         super();
     }

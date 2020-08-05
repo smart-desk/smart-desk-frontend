@@ -33,8 +33,9 @@ import { ModelsComponent } from './pages/models/models.component';
 
 import { InputTextComponent } from './core/components/input-text/input-text.component';
 import { TextareaComponent } from './core/components/textarea/textarea.component';
+import { RadioComponent } from './core/components/radio/radio.component';
 
-const creatorInputs = [InputTextComponent, TextareaComponent];
+const creatorInputs = [InputTextComponent, TextareaComponent, RadioComponent];
 
 const uiModules = [
     NzLayoutModule,
