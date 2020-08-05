@@ -38,9 +38,9 @@ export class InputTextComponent extends InputBaseDirective<Partial<CreatorFieldI
         this.mode = this.field && this.field.data && this.field.data.id ? Mode.VIEW : Mode.EDIT;
 
         this.inputTextForm = this.fb.group({
-            label: [(this.field.data && this.field.data.label) || '', Validators.required],
-            placeholder: [(this.field.data && this.field.data.placeholder) || ''],
-            required: [(this.field.data && this.field.data.required) || false],
+            label: [(this.field && this.field.data && this.field.data.label) || '', Validators.required],
+            placeholder: [(this.field && this.field.data && this.field.data.placeholder) || ''],
+            required: [(this.field && this.field.data && this.field.data.required) || false],
         });
     }
 
@@ -53,7 +53,7 @@ export class InputTextComponent extends InputBaseDirective<Partial<CreatorFieldI
 
         let request: Observable<CreatorFieldInputText>;
 
-        if (!(this.field.data && this.field.data.id)) {
+        if (!(this.field && this.field.data && this.field.data.id)) {
             this.state = OperationState.SUCCESS;
             request = this.creatorFieldInputTextService.createInputText(input);
         } else {

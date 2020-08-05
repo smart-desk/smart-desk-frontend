@@ -21,8 +21,8 @@ export class CategoryFormComponent implements OnInit {
 
     ngOnInit() {
         this.form = this.fb.group({
-            name: this.fb.control((this.category && this.category.name) || ''),
-            model: this.fb.control(this.getModelByCategory(this.category) || null),
+            name: [(this.category && this.category.name) || ''],
+            model: [this.getModelByCategory(this.category) || null],
         });
     }
 
@@ -45,9 +45,6 @@ export class CategoryFormComponent implements OnInit {
     }
 
     private getModelByCategory(category: Category): Model {
-        if (!this.category) {
-            return this.models[0];
-        }
-        return this.models.find(model => model.id === category.model_id);
+        return !this.category ? this.models[0] : this.models.find(model => model.id === category.model_id);
     }
 }

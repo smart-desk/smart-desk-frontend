@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { UIComponentsForTests } from 'src/app/spec/admin';
 import { AdminMenuComponent } from './admin-menu.component';
 
 describe('AdminMenuComponent', () => {
@@ -9,6 +9,7 @@ describe('AdminMenuComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [AdminMenuComponent],
+            imports: [...UIComponentsForTests],
         }).compileComponents();
     }));
 
