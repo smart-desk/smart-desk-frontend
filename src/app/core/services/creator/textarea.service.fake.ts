@@ -1,5 +1,5 @@
 import { Observable, of } from 'rxjs';
-import { CreatorFieldText } from '../../models/models.dto';
+import { CreatorFieldTextarea } from '../../models/models.dto';
 
 const creatorFieldTextFake = {
     id: '000',
@@ -10,19 +10,19 @@ const creatorFieldTextFake = {
 };
 
 export class CreatorFieldTextareaServiceFake {
-    getTextAreasByFieldID(fieldID: string): Observable<CreatorFieldText[]> {
+    getTextAreasByFieldID(fieldID: string): Observable<CreatorFieldTextarea[]> {
         return of([]);
     }
 
-    getTextArea(id: string): Observable<CreatorFieldText> {
+    getTextArea(id: string): Observable<CreatorFieldTextarea> {
         return of(creatorFieldTextFake);
     }
 
-    createTextArea(textArea: Partial<CreatorFieldText>): Observable<CreatorFieldText> {
+    createTextArea(textArea: Partial<CreatorFieldTextarea>): Observable<CreatorFieldTextarea> {
         return of(creatorFieldTextFake);
     }
 
-    updateTextArea(id, textArea: CreatorFieldText): Observable<CreatorFieldText> {
+    updateTextArea(id, textArea: CreatorFieldTextarea): Observable<CreatorFieldTextarea> {
         return of(creatorFieldTextFake);
     }
 

@@ -1,23 +1,21 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { NzFormModule, NzMessageModule } from 'ng-zorro-antd';
 import { ApiHostInterceptor, ErrorsInterceptor } from './interceptors';
 import {
     CreatorFieldTextareaService,
     CreatorFieldInputTextService,
+    CreatorFieldRadioService,
     FieldService,
     ModelService,
     SectionService,
     CategoryService,
 } from './services';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzInputModule } from 'ng-zorro-antd/input';
 import { CommonModule } from '@angular/common';
+
 import { InputTextComponent } from './components/input-text/input-text.component';
 import { TextareaComponent } from './components/textarea/textarea.component';
-
-const uiModules = [NzIconModule, NzGridModule, NzFormModule, NzInputModule, NzMessageModule, NzRadioModule];
+import { RadioComponent } from './components/radio/radio.component';
+import { NzFormModule, NzMessageModule, NzRadioModule, NzInputModule } from 'ng-zorro-antd';
 
 const interceptors = [
     {
@@ -32,12 +30,12 @@ const interceptors = [
     },
 ];
 
-const creatorFieldServices = [CreatorFieldInputTextService, CreatorFieldTextareaService];
+const creatorFieldServices = [CreatorFieldInputTextService, CreatorFieldTextareaService, CreatorFieldRadioService];
 
 @NgModule({
-    imports: [...uiModules, HttpClientModule, CommonModule],
+    imports: [HttpClientModule, CommonModule, NzFormModule, NzRadioModule, NzMessageModule, NzInputModule],
     exports: [],
-    declarations: [InputTextComponent, TextareaComponent],
+    declarations: [InputTextComponent, TextareaComponent, RadioComponent],
     providers: [...creatorFieldServices, ModelService, SectionService, FieldService, CategoryService, ...interceptors],
 })
 export class CoreModule {

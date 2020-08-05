@@ -1,6 +1,6 @@
 import { Type } from '@angular/core';
 
-import { InputBaseDirective } from '../components/input-base';
+import { FormInputBaseDirective } from '../components/input-base';
 import { InputBaseDirective as CreatorInputBaseDirective } from '../../modules/admin/core/components/input-base';
 import { InputTextComponent } from '../components/input-text/input-text.component';
 import { InputTextComponent as CreatorInputTextComponent } from '../../modules/admin/core/components/input-text/input-text.component';
@@ -19,7 +19,7 @@ export interface FieldMetadata {
     type: FieldTypes;
     title: string;
     description?: string;
-    component: Type<InputBaseDirective<unknown>>;
+    component: Type<FormInputBaseDirective<unknown>>;
     creatorComponent: Type<CreatorInputBaseDirective<unknown>>;
 }
 
