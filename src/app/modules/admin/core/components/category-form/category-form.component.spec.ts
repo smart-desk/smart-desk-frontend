@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { UIComponentsForTests } from 'src/app/spec/admin';
 import { CategoryFormComponent } from './category-form.component';
 
 describe('CategoryFormComponent', () => {
@@ -8,7 +10,7 @@ describe('CategoryFormComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [ReactiveFormsModule],
+            imports: [ReactiveFormsModule, FormsModule, ...UIComponentsForTests, NoopAnimationsModule],
             declarations: [CategoryFormComponent],
         }).compileComponents();
     }));

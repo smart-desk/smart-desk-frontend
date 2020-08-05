@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UIComponentsForTests } from 'src/app/spec/admin';
 import { InputTextComponent } from './input-text.component';
 
 describe('InputTextComponent', () => {
@@ -9,7 +10,7 @@ describe('InputTextComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [InputTextComponent],
-            imports: [ReactiveFormsModule],
+            imports: [ReactiveFormsModule, FormsModule, ...UIComponentsForTests],
         }).compileComponents();
     }));
 

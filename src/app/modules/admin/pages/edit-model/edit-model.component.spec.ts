@@ -1,5 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { FieldService, FieldServiceFake, ModelService, ModelServiceFake } from 'src/app/core/services';
+import { UIComponentsForTests } from 'src/app/spec/admin';
+import { PreviewComponent } from '../../core/components/preview/preview.component';
 import { EditModelComponent } from './edit-model.component';
 
 describe('EditModelComponent', () => {
@@ -8,7 +11,8 @@ describe('EditModelComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [EditModelComponent],
+            declarations: [EditModelComponent, PreviewComponent],
+            imports: [RouterTestingModule, ...UIComponentsForTests],
             providers: [
                 { provide: ModelService, useClass: ModelServiceFake },
                 { provide: FieldService, useClass: FieldServiceFake },
