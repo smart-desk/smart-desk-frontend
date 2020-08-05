@@ -87,7 +87,8 @@
         "template-no-negated-async": true,
         "use-lifecycle-interface": true,
         "use-pipe-transform-interface": true,
-        "no-focused-test": true
+        "no-focused-test": true,
+        "no-consecutive-blank-lines": true
     },
     "rulesDirectory": ["codelyzer", "tslint-no-focused-test"]
 }

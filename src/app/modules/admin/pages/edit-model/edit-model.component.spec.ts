@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { FieldService, FieldServiceFake, ModelService, ModelServiceFake } from 'src/app/core/services';
 import { EditModelComponent } from './edit-model.component';
 
 describe('EditModelComponent', () => {
@@ -9,6 +9,10 @@ describe('EditModelComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [EditModelComponent],
+            providers: [
+                { provide: ModelService, useClass: ModelServiceFake },
+                { provide: FieldService, useClass: FieldServiceFake },
+            ],
         }).compileComponents();
     }));
 
