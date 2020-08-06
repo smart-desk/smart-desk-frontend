@@ -1,12 +1,12 @@
 import { ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { fieldMetadataList, FieldTypes } from '../../../../core/models/field-metadata';
-import { Field, Model, Section } from '../../../../core/models/models.dto';
-import { FieldService, ModelService } from '../../../../core/services';
-import { getCreatorFieldComponentResolver } from '../../../../core/services/field-resolvers/field-resolvers';
-import { InputBaseDirective, OperationState } from '../../core/components/input-base';
-import { PreviewComponent } from '../../core/components/preview/preview.component';
+import { fieldMetadataList, FieldTypes } from '../../../../shared/models/field-metadata';
+import { Field, Model, Section } from '../../../../shared/models/models.dto';
+import { FieldService, ModelService } from '../../../../shared/services';
+import { getCreatorFieldComponentResolver } from '../../../../shared/services/field-resolvers/field-resolvers';
+import { FieldSettingsComponent, OperationState } from '../../components/field-settings';
+import { PreviewComponent } from '../../components/preview/preview.component';
 
 @Component({
     selector: 'app-edit-model',
@@ -16,7 +16,7 @@ import { PreviewComponent } from '../../core/components/preview/preview.componen
 export class EditModelComponent implements OnInit {
     model: Model;
 
-    private components: ComponentRef<InputBaseDirective<unknown>>[] = [];
+    private components: ComponentRef<FieldSettingsComponent<unknown>>[] = [];
 
     availableInputTypes = fieldMetadataList;
 
@@ -79,7 +79,7 @@ export class EditModelComponent implements OnInit {
         });
     }
 
-    private resolveFieldComponent(field: Field): ComponentRef<InputBaseDirective<unknown>> {
+    private resolveFieldComponent(field: Field): ComponentRef<FieldSettingsComponent<unknown>> {
         const resolver = getCreatorFieldComponentResolver(this.componentFactoryResolver, field.type as FieldTypes);
         const component = this.fieldsFormContainerRef.createComponent(resolver);
 
@@ -96,7 +96,7 @@ export class EditModelComponent implements OnInit {
         return component;
     }
 
-    private onDelete(instance: InputBaseDirective<unknown>): void {
+    private onDelete(instance: FieldSettingsComponent<unknown>): void {
         const targetComponent = this.components.find(component => component.instance === instance);
 
         this.fieldsFormContainerRef.remove(this.fieldsFormContainerRef.indexOf(targetComponent.hostView));

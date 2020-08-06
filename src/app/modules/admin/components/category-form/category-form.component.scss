@@ -1,0 +1,12 @@
+@import '../../../../../assets/styles/variables';
+
+.category-form {
+    &__item {
+        margin-bottom: $base-unit;
+    }
+
+    &__label {
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+}
