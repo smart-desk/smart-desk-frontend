@@ -20,6 +20,7 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTreeModule } from 'ng-zorro-antd/tree';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { EditorModule } from 'primeng/editor';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
@@ -34,6 +35,7 @@ import { ModelsComponent } from './pages/models/models.component';
 import { InputTextSettingsComponent } from './components/input-text-settings/input-text-settings.component';
 import { TextareaSettingsComponent } from './components/textarea-settings/textarea-settings.component';
 import { RadioSettingsComponent } from './components/radio-settings/radio-settings.component';
+import { TextEditorSettingsComponent } from './components/text-editor-settings/text-editor-settings.component';
 
 const components = [
     InputTextSettingsComponent,
@@ -44,7 +46,7 @@ const components = [
     AdminMenuComponent,
 ];
 
-const pages = [AdminComponent, EditModelComponent, CreateModelComponent, ModelsComponent, CategoriesComponent];
+const pages = [AdminComponent, EditModelComponent, CreateModelComponent, ModelsComponent, CategoriesComponent, TextEditorSettingsComponent];
 
 const NZModules = [
     NzLayoutModule,
@@ -69,7 +71,7 @@ const NZModules = [
 ];
 
 @NgModule({
-    imports: [...NZModules, SharedModule, FormsModule, ReactiveFormsModule, AdminRoutingModule, CommonModule],
+    imports: [...NZModules, EditorModule, SharedModule, FormsModule, ReactiveFormsModule, AdminRoutingModule, CommonModule],
     declarations: [...pages, ...components],
 })
 export class AdminModule {}

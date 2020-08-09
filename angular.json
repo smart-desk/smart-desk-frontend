@@ -32,7 +32,12 @@
                                 "output": "/assets/"
                             }
                         ],
-                        "styles": ["./node_modules/ng-zorro-antd/ng-zorro-antd.min.css", "src/styles.scss"],
+                        "styles": [
+                            "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
+                            "./node_modules/quill/dist/quill.core.css",
+                            "./node_modules/quill/dist/quill.snow.css",
+                            "src/styles.scss"
+                        ],
                         "scripts": []
                     },
                     "configurations": {
@@ -91,7 +96,12 @@
                         "tsConfig": "tsconfig.spec.json",
                         "karmaConfig": "karma.conf.js",
                         "assets": ["src/favicon.png", "src/assets"],
-                        "styles": ["./node_modules/ng-zorro-antd/ng-zorro-antd.min.css", "src/styles.scss"],
+                        "styles": [
+                            "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
+                            "./node_modules/quill/dist/quill.core.css",
+                            "./node_modules/quill/dist/quill.snow.css",
+                            "src/styles.scss"
+                        ],
                         "scripts": []
                     }
                 },
