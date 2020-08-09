@@ -5,6 +5,7 @@ import { NzFormModule, NzInputModule, NzMessageModule, NzRadioModule } from 'ng-
 import { InputTextFormComponent } from './components/input-text-form/input-text-form.component';
 import { TextareaFormComponent } from './components/textarea-form/textarea-form.component';
 import { RadioFormComponent } from './components/radio-form/radio-form.component';
+import { EditorModule } from 'primeng/editor';
 import {
     CategoryService,
     CreatorFieldInputTextService,
@@ -15,6 +16,8 @@ import {
     SectionService,
 } from './services';
 import { ApiHostInterceptor, ErrorsInterceptor } from './interceptors';
+import { TextEditorComponent } from './components/text-editor-settings/text-editor.component';
+import { FormsModule } from '@angular/forms';
 
 /**
  * Import here all modules which are used on app side
@@ -37,7 +40,7 @@ const services = [
 /**
  * Components from `./components` directory
  */
-const components = [InputTextFormComponent, TextareaFormComponent, RadioFormComponent];
+const components = [InputTextFormComponent, TextareaFormComponent, RadioFormComponent, TextEditorComponent];
 
 /**
  * Interceptors from `./interceptors` directory
@@ -56,7 +59,7 @@ const interceptors = [
 ];
 
 @NgModule({
-    imports: [...NZModules, HttpClientModule, CommonModule],
+    imports: [...NZModules, EditorModule, HttpClientModule, CommonModule, FormsModule],
     exports: [],
     declarations: [...components],
     providers: [...services, ...interceptors],
