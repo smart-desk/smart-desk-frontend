@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Field } from '../../models/models.dto';
+import { CreatorFieldText, Field } from '../../models/models.dto';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -7,23 +7,23 @@ import { Observable } from 'rxjs';
 export class CreatorFieldTextEditorService {
     constructor(private http: HttpClient) {}
 
-    getRadioByFieldID(fieldID: string): Observable<any[]> {
-        return this.http.get<any[]>(`/fields/creator/textEditor?field_id=${fieldID}`);
+    getTextByFieldID(fieldID: string): Observable<CreatorFieldText[]> {
+        return this.http.get<CreatorFieldText[]>(`/fields/creator/text?field_id=${fieldID}`);
     }
 
-    getRadio(id: string): Observable<any> {
-        return this.http.get<any>(`/fields/creator/textEditor/${id}`);
+    getText(id: string): Observable<CreatorFieldText> {
+        return this.http.get<CreatorFieldText>(`/fields/creator/text/${id}`);
     }
 
-    createRadio(field: Partial<any>): Observable<any> {
-        return this.http.post<any>(`/fields/creator/textEditor`, field);
+    createText(field: Partial<CreatorFieldText>): Observable<CreatorFieldText> {
+        return this.http.post<CreatorFieldText>(`/fields/creator/text`, field);
     }
 
-    updateRadio(id, field: any): Observable<any> {
-        return this.http.put<any>(`/fields/creator/textEditor/${id}`, field);
+    updateText(id, field: CreatorFieldText): Observable<CreatorFieldText> {
+        return this.http.put<CreatorFieldText>(`/fields/creator/text/${id}`, field);
     }
 
-    deleteRadio(id): Observable<unknown> {
-        return this.http.delete<Field>(`/fields/creator/textEditor/${id}`);
+    deleteText(id): Observable<unknown> {
+        return this.http.delete<Field>(`/fields/creator/text/${id}`);
     }
 }
