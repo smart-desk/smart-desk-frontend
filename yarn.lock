@@ -7152,18 +7152,6 @@ pretty-quick@^2.0.1:
     mri "^1.1.4"
     multimatch "^4.0.0"
 
-primeicons@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/primeicons/-/primeicons-4.0.0.tgz#a3594b3af213dcf8c4c3d6fc99eea05b7c92f57c"
-  integrity sha512-JQBIswGSItn8I0Pq21RchENpKJxSi1MjfBDfggMQpXtoKNKblJoHmol/7tCV3CAV2Dlb94ht8TD8qdIAW01pGg==
-
-primeng@^10.0.0-rc.2:
-  version "10.0.0-rc.3"
-  resolved "https://registry.yarnpkg.com/primeng/-/primeng-10.0.0-rc.3.tgz#2c4988437d24cc93d5494d90ed833f56d2159958"
-  integrity sha512-/C24HmNaU0lQxQpjJlNd/LwM5UiBCOQZWsh5OZ/CUx9e6fdwckz7sBS4wbJIwAK+hovcAg8OBf70QdYojaARPA==
-  dependencies:
-    tslib "^2.0.0"
-
 private@^0.1.8:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/private/-/private-0.1.8.tgz#2381edb3689f7a53d653190060fcf822d2f368ff"

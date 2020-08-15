@@ -20,7 +20,7 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTreeModule } from 'ng-zorro-antd/tree';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
-import { EditorModule } from 'primeng/editor';
+import { QuillModule } from 'ngx-quill';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
@@ -35,7 +35,6 @@ import { InputTextSettingsComponent } from './components/input-text-settings/inp
 import { TextareaSettingsComponent } from './components/textarea-settings/textarea-settings.component';
 import { RadioSettingsComponent } from './components/radio-settings/radio-settings.component';
 import { TextSettingsComponent } from './components/text-settings/text-settings.component';
-import { QuillModule } from 'ngx-quill';
 
 const components = [
     TextSettingsComponent,
@@ -72,16 +71,7 @@ const NZModules = [
 ];
 
 @NgModule({
-    imports: [
-        ...NZModules,
-        EditorModule,
-        SharedModule,
-        FormsModule,
-        ReactiveFormsModule,
-        AdminRoutingModule,
-        CommonModule,
-        QuillModule.forRoot(),
-    ],
+    imports: [...NZModules, SharedModule, FormsModule, ReactiveFormsModule, AdminRoutingModule, CommonModule, QuillModule.forRoot()],
     declarations: [...pages, ...components],
 })
 export class AdminModule {}

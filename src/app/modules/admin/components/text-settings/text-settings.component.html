@@ -17,6 +17,6 @@
                 <i nz-icon nzType="delete" nzTheme="outline"></i>
             </button>
         </p>
-        <quill-editor (onContentChanged)="save($event)"></quill-editor>
+        <quill-editor [ngModel]="content" (onContentChanged)="save($event)"></quill-editor>
     </div>
 </div>

@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { Subject } from 'rxjs';
 import { ContentChange } from 'ngx-quill/lib/quill-editor.component';
 import { FieldSettingsComponent, OperationState } from '../field-settings';
-import { CreatorFieldText, CreatorFieldTextarea } from '../../../../shared/models/models.dto';
-import { FieldService, CreatorFieldTextService } from '../../../../shared/services';
+import { CreatorFieldText } from '../../../../shared/models/models.dto';
+import { CreatorFieldTextService, FieldService } from '../../../../shared/services';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 @Component({
@@ -12,9 +12,11 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
     styleUrls: ['./text-settings.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TextSettingsComponent extends FieldSettingsComponent<Partial<CreatorFieldTextarea>> implements OnInit {
+export class TextSettingsComponent extends FieldSettingsComponent<Partial<CreatorFieldText>> implements OnInit {
     state: OperationState;
     saveContent$ = new Subject<string>();
+
+    content = '';
 
     constructor(
         private creatorFieldTextService: CreatorFieldTextService,
@@ -39,10 +41,22 @@ export class TextSettingsComponent extends FieldSettingsComponent<Partial<Creato
                     return this.creatorFieldTextService.createText(input);
                 })
             )
-            .subscribe();
+            .subscribe(
+                res => {
+                    this.field.data = res;
+                    this.state = OperationState.SUCCESS;
+                    this.save$.next(this.state);
+                },
+                error => {
+                    this.state = OperationState.ERROR;
+                    this.save$.next(this.state);
+                }
+            );
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.content = (this.field.data && this.field.data.value) || '';
+    }
 
     save(change: ContentChange): void {
         this.saveContent$.next(change.html);
