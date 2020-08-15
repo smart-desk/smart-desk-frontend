@@ -35,6 +35,7 @@ import { InputTextSettingsComponent } from './components/input-text-settings/inp
 import { TextareaSettingsComponent } from './components/textarea-settings/textarea-settings.component';
 import { RadioSettingsComponent } from './components/radio-settings/radio-settings.component';
 import { TextSettingsComponent } from './components/text-settings/text-settings.component';
+import { editorSettings } from '../../app.config';
 
 const components = [
     TextSettingsComponent,
@@ -71,7 +72,15 @@ const NZModules = [
 ];
 
 @NgModule({
-    imports: [...NZModules, SharedModule, FormsModule, ReactiveFormsModule, AdminRoutingModule, CommonModule, QuillModule.forRoot()],
+    imports: [
+        ...NZModules,
+        SharedModule,
+        FormsModule,
+        ReactiveFormsModule,
+        AdminRoutingModule,
+        CommonModule,
+        QuillModule.forRoot(editorSettings),
+    ],
     declarations: [...pages, ...components],
 })
 export class AdminModule {}
