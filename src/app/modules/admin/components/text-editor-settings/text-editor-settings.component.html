@@ -1,38 +1,7 @@
 <div class="text_editor">
-    <ng-container [ngSwitch]="mode">
-        <div class="text_editor__form-container" *ngSwitchCase="Mode.EDIT">
-            <p nz-typography nzType="secondary" class="text_editor__title">Текстовая область</p>
-            <form nz-form nzLayout="vertical" [formGroup]="form">
-                <nz-form-item class="text_editor__item">
-                    <nz-form-control nzErrorTip="Обязательное поле">
-                        <input nz-input formControlName="label" name="label" required placeholder="Заголовок" />
-                    </nz-form-control>
-                </nz-form-item>
-                <nz-form-item class="text_editor__item">
-                    <nz-form-control>
-                        <input nz-input formControlName="placeholder" name="placeholder" placeholder="Плейсхолдер" />
-                    </nz-form-control>
-                </nz-form-item>
-                <nz-row class="text_editor__item" nzAlign="middle">
-                    <nz-col>
-                        <label nz-checkbox formControlName="required">Обязательное поле</label>
-                    </nz-col>
-                </nz-row>
-                <nz-row class="text_editor__item" nzAlign="middle">
-                    <nz-col class="text_editor__action-buttons" nzSpan="12">
-                        <button nz-button nzType="link" (click)="cancel()">Отмена</button>
-                    </nz-col>
-                    <nz-col nzSpan="12" class="text_editor__action-buttons text_editor__action-buttons--align-right">
-                        <button nz-button nzType="primary" (click)="save()" [nzLoading]="state === OperationState.LOADING">OK</button>
-                    </nz-col>
-                </nz-row>
-            </form>
-        </div>
-        <ng-container *ngSwitchCase="Mode.VIEW">
-            <span nz-typography nzType="secondary">Текстовая область</span>
-            <button nz-button nzType="link" nzSize="small" nzShape="circle" (click)="toggleMode()">
-                <i nz-icon nzType="edit" nzTheme="outline"></i>
-            </button>
+    <div class="text_editor__form-container">
+        <p nz-typography nzType="secondary" class="text_editor__title">
+            <span>Текст</span>
             <button
                 nz-popconfirm
                 nzPopconfirmTitle="Вы уверены что хотите удалить поле?"
@@ -47,13 +16,13 @@
             >
                 <i nz-icon nzType="delete" nzTheme="outline"></i>
             </button>
-            <h4 nz-typography class="text_editor__label">
-                {{ field.data.label }}
-                <span class="text_editor__label-additional" nz-typography nzType="secondary" *ngIf="field.data.required">
-                    обязательное</span
-                >
-            </h4>
-            <span nz-typography nzType="secondary">{{ field.data.placeholder }}</span>
-        </ng-container>
-    </ng-container>
+        </p>
+
+        <quill-editor></quill-editor>
+        <nz-row class="text_editor__item" nzAlign="middle">
+            <nz-col nzSpan="12" class="text_editor__action-buttons text_editor__action-buttons--align-right">
+                <button nz-button nzType="primary" (click)="save()" [nzLoading]="state === OperationState.LOADING">OK</button>
+            </nz-col>
+        </nz-row>
+    </div>
 </div>

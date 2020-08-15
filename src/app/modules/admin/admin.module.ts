@@ -31,13 +31,14 @@ import { CategoriesComponent } from './pages/categories/categories.component';
 import { CreateModelComponent } from './pages/create-model/create-model.component';
 import { EditModelComponent } from './pages/edit-model/edit-model.component';
 import { ModelsComponent } from './pages/models/models.component';
-
 import { InputTextSettingsComponent } from './components/input-text-settings/input-text-settings.component';
 import { TextareaSettingsComponent } from './components/textarea-settings/textarea-settings.component';
 import { RadioSettingsComponent } from './components/radio-settings/radio-settings.component';
 import { TextEditorSettingsComponent } from './components/text-editor-settings/text-editor-settings.component';
+import { QuillModule } from 'ngx-quill';
 
 const components = [
+    TextEditorSettingsComponent,
     InputTextSettingsComponent,
     TextareaSettingsComponent,
     RadioSettingsComponent,
@@ -46,7 +47,7 @@ const components = [
     AdminMenuComponent,
 ];
 
-const pages = [AdminComponent, EditModelComponent, CreateModelComponent, ModelsComponent, CategoriesComponent, TextEditorSettingsComponent];
+const pages = [AdminComponent, EditModelComponent, CreateModelComponent, ModelsComponent, CategoriesComponent];
 
 const NZModules = [
     NzLayoutModule,
@@ -71,7 +72,16 @@ const NZModules = [
 ];
 
 @NgModule({
-    imports: [...NZModules, EditorModule, SharedModule, FormsModule, ReactiveFormsModule, AdminRoutingModule, CommonModule],
+    imports: [
+        ...NZModules,
+        EditorModule,
+        SharedModule,
+        FormsModule,
+        ReactiveFormsModule,
+        AdminRoutingModule,
+        CommonModule,
+        QuillModule.forRoot(),
+    ],
     declarations: [...pages, ...components],
 })
 export class AdminModule {}
