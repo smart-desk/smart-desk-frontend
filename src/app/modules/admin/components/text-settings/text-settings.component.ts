@@ -4,7 +4,7 @@ import { ContentChange } from 'ngx-quill/lib/quill-editor.component';
 import { FieldSettingsComponent, OperationState } from '../field-settings';
 import { CreatorFieldText } from '../../../../shared/models/models.dto';
 import { CreatorFieldTextService, FieldService } from '../../../../shared/services';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-text-editor',
@@ -27,6 +27,7 @@ export class TextSettingsComponent extends FieldSettingsComponent<Partial<Creato
 
         this.saveContent$
             .pipe(
+                filter(content => !!content),
                 distinctUntilChanged(),
                 debounceTime(500),
                 switchMap(content => {
