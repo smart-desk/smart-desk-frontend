@@ -8,11 +8,14 @@ import { RadioFormComponent } from '../components/radio-form/radio-form.componen
 import { RadioSettingsComponent as CreatorRadioComponent } from '../../modules/admin/components/radio-settings/radio-settings.component';
 import { TextareaSettingsComponent as CreatorTextareaComponent } from '../../modules/admin/components/textarea-settings/textarea-settings.component';
 import { TextareaFormComponent } from '../components/textarea-form/textarea-form.component';
+import { TextComponent } from '../components/text-form/text.component';
+import { TextSettingsComponent } from '../../modules/admin/components/text-settings/text-settings.component';
 
 export enum FieldTypes {
     INPUT_TEXT = 'input_text',
     RADIO = 'radio',
     TEXTAREA = 'textarea',
+    TEXT = 'text',
 }
 
 export interface FieldMetadata {
@@ -44,4 +47,11 @@ fieldMetadataList.add({
     title: 'Большое текстовое поле',
     formComponent: TextareaFormComponent,
     settingsComponent: CreatorTextareaComponent,
+});
+
+fieldMetadataList.add({
+    type: FieldTypes.TEXT,
+    title: 'Текст',
+    formComponent: TextComponent,
+    settingsComponent: TextSettingsComponent,
 });

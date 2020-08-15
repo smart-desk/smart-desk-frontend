@@ -10,11 +10,14 @@ import {
     CreatorFieldInputTextService,
     CreatorFieldRadioService,
     CreatorFieldTextareaService,
+    CreatorFieldTextService,
     FieldService,
     ModelService,
     SectionService,
 } from './services';
 import { ApiHostInterceptor, ErrorsInterceptor } from './interceptors';
+import { TextComponent } from './components/text-form/text.component';
+import { FormsModule } from '@angular/forms';
 
 /**
  * Import here all modules which are used on app side
@@ -25,6 +28,7 @@ const NZModules = [NzFormModule, NzRadioModule, NzMessageModule, NzInputModule];
  * Services from `./services` directory
  */
 const services = [
+    CreatorFieldTextService,
     CreatorFieldInputTextService,
     CreatorFieldTextareaService,
     CreatorFieldRadioService,
@@ -37,7 +41,7 @@ const services = [
 /**
  * Components from `./components` directory
  */
-const components = [InputTextFormComponent, TextareaFormComponent, RadioFormComponent];
+const components = [InputTextFormComponent, TextareaFormComponent, RadioFormComponent, TextComponent];
 
 /**
  * Interceptors from `./interceptors` directory
@@ -56,7 +60,7 @@ const interceptors = [
 ];
 
 @NgModule({
-    imports: [...NZModules, HttpClientModule, CommonModule],
+    imports: [...NZModules, HttpClientModule, CommonModule, FormsModule],
     exports: [],
     declarations: [...components],
     providers: [...services, ...interceptors],

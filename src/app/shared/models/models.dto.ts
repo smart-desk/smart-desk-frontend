@@ -43,3 +43,8 @@ export class CreatorFieldRadio {
     label: string;
     value: string;
 }
+export class CreatorFieldText {
+    id: string;
+    field_id: string;
+    value: string;
+}

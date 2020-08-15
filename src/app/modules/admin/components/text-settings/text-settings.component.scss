@@ -1,0 +1,9 @@
+@import '../../../../../assets/styles/variables';
+
+.text {
+    margin-bottom: $base-unit * 3;
+
+    &__title {
+        margin-bottom: $base-unit;
+    }
+}
