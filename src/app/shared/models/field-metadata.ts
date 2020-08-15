@@ -9,7 +9,7 @@ import { RadioSettingsComponent as CreatorRadioComponent } from '../../modules/a
 import { TextareaSettingsComponent as CreatorTextareaComponent } from '../../modules/admin/components/textarea-settings/textarea-settings.component';
 import { TextareaFormComponent } from '../components/textarea-form/textarea-form.component';
 import { TextEditorComponent } from '../components/text-editor-form/text-editor.component';
-import { TextEditorSettingsComponent } from '../../modules/admin/components/text-editor-settings/text-editor-settings.component';
+import { TextSettingsComponent } from '../../modules/admin/components/text-settings/text-settings.component';
 
 export enum FieldTypes {
     INPUT_TEXT = 'input_text',
@@ -53,5 +53,5 @@ fieldMetadataList.add({
     type: FieldTypes.TEXT,
     title: 'Текст',
     formComponent: TextEditorComponent,
-    settingsComponent: TextEditorSettingsComponent,
+    settingsComponent: TextSettingsComponent,
 });

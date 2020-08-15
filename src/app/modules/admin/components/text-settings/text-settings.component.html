@@ -1,6 +1,6 @@
-<div class="text_editor">
-    <div class="text_editor__form-container">
-        <p nz-typography nzType="secondary" class="text_editor__title">
+<div class="text">
+    <div class="text__form-container">
+        <p nz-typography nzType="secondary" class="text__title">
             <span>Текст</span>
             <button
                 nz-popconfirm
@@ -17,12 +17,6 @@
                 <i nz-icon nzType="delete" nzTheme="outline"></i>
             </button>
         </p>
-
-        <quill-editor></quill-editor>
-        <nz-row class="text_editor__item" nzAlign="middle">
-            <nz-col nzSpan="12" class="text_editor__action-buttons text_editor__action-buttons--align-right">
-                <button nz-button nzType="primary" (click)="save()" [nzLoading]="state === OperationState.LOADING">OK</button>
-            </nz-col>
-        </nz-row>
+        <quill-editor (onContentChanged)="save($event)"></quill-editor>
     </div>
 </div>

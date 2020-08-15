@@ -18,7 +18,7 @@ import {
 import { ApiHostInterceptor, ErrorsInterceptor } from './interceptors';
 import { TextEditorComponent } from './components/text-editor-form/text-editor.component';
 import { FormsModule } from '@angular/forms';
-import { CreatorFieldTextEditorService } from './services/creator/text-editor.service';
+import { CreatorFieldTextService } from './services/creator/text.service';
 
 /**
  * Import here all modules which are used on app side
@@ -29,7 +29,7 @@ const NZModules = [NzFormModule, NzRadioModule, NzMessageModule, NzInputModule];
  * Services from `./services` directory
  */
 const services = [
-    CreatorFieldTextEditorService,
+    CreatorFieldTextService,
     CreatorFieldInputTextService,
     CreatorFieldTextareaService,
     CreatorFieldRadioService,

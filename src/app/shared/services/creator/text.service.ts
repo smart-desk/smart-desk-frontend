@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class CreatorFieldTextEditorService {
+export class CreatorFieldTextService {
     constructor(private http: HttpClient) {}
 
     getTextByFieldID(fieldID: string): Observable<CreatorFieldText[]> {
@@ -19,7 +19,7 @@ export class CreatorFieldTextEditorService {
         return this.http.post<CreatorFieldText>(`/fields/creator/text`, field);
     }
 
-    updateText(id, field: CreatorFieldText): Observable<CreatorFieldText> {
+    updateText(id, field: Partial<CreatorFieldText>): Observable<CreatorFieldText> {
         return this.http.put<CreatorFieldText>(`/fields/creator/text/${id}`, field);
     }
 

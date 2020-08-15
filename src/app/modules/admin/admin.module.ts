@@ -34,11 +34,11 @@ import { ModelsComponent } from './pages/models/models.component';
 import { InputTextSettingsComponent } from './components/input-text-settings/input-text-settings.component';
 import { TextareaSettingsComponent } from './components/textarea-settings/textarea-settings.component';
 import { RadioSettingsComponent } from './components/radio-settings/radio-settings.component';
-import { TextEditorSettingsComponent } from './components/text-editor-settings/text-editor-settings.component';
+import { TextSettingsComponent } from './components/text-settings/text-settings.component';
 import { QuillModule } from 'ngx-quill';
 
 const components = [
-    TextEditorSettingsComponent,
+    TextSettingsComponent,
     InputTextSettingsComponent,
     TextareaSettingsComponent,
     RadioSettingsComponent,
