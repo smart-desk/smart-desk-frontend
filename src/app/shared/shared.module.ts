@@ -15,7 +15,7 @@ import {
     ModelService,
     SectionService,
 } from './services';
-import { ApiHostInterceptor, ErrorsInterceptor } from './interceptors';
+import { ApiHostInterceptor, DevTokenInterceptor, ErrorsInterceptor } from './interceptors';
 import { TextComponent } from './components/text-form/text.component';
 import { FormsModule } from '@angular/forms';
 
@@ -55,6 +55,11 @@ const interceptors = [
     {
         provide: HTTP_INTERCEPTORS,
         useClass: ErrorsInterceptor,
+        multi: true,
+    },
+    {
+        provide: HTTP_INTERCEPTORS,
+        useClass: DevTokenInterceptor,
         multi: true,
     },
 ];
