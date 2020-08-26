@@ -1,12 +1,101 @@
-import { Component, OnInit } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    ComponentFactoryResolver,
+    ComponentRef,
+    OnInit,
+    ViewChild,
+    ViewContainerRef,
+} from '@angular/core';
+import { NzCascaderOption } from 'ng-zorro-antd';
+import arrayToTree from 'array-to-tree';
+import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { CategoryService, ModelService } from '../../../../shared/services';
+import { Category, Field, Section } from '../../../../shared/models/models.dto';
+import { FieldFormComponent } from '../../../../shared/components/field-form/field-form.component';
+import { getFieldComponentResolver } from '../../../../shared/services/field-resolvers/field-resolvers';
+import { FieldTypes } from '../../../../shared/models/field-metadata';
 
 @Component({
     selector: 'app-advert-create',
     templateUrl: './advert-create.component.html',
     styleUrls: ['./advert-create.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdvertCreateComponent implements OnInit {
-    constructor() {}
+    categoryTree$ = new BehaviorSubject<NzCascaderOption[]>([]);
 
-    ngOnInit(): void {}
+    @ViewChild('fields', { read: ViewContainerRef })
+    private fieldsFormContainerRef: ViewContainerRef;
+
+    constructor(
+        private modelService: ModelService,
+        private componentFactoryResolver: ComponentFactoryResolver,
+        private categoryService: CategoryService
+    ) {}
+
+    ngOnInit(): void {
+        this.categoryService
+            .getCategories()
+            .pipe(map(categories => this.transformArrayToTree(categories)))
+            .subscribe(tree => this.categoryTree$.next(tree));
+    }
+
+    onCategorySelect(category: Category): void {
+        if (this.fieldsFormContainerRef) {
+            this.fieldsFormContainerRef.clear();
+        }
+        this.modelService.getModel(category.model_id).subscribe(model => {
+            this.populateFormWithInputs(model.sections);
+        });
+    }
+
+    private populateFormWithInputs(sections: Section[]): void {
+        sections.forEach(section => {
+            if (section.fields) {
+                section.fields.forEach(field => {
+                    this.resolveFieldComponent(field);
+                });
+            }
+        });
+    }
+
+    private resolveFieldComponent(field: Field): ComponentRef<FieldFormComponent<unknown>> {
+        const resolver = getFieldComponentResolver(this.componentFactoryResolver, field.type as FieldTypes);
+        const component = this.fieldsFormContainerRef.createComponent(resolver);
+
+        // add inputs
+        component.instance.field = field;
+
+        // run onInit
+        component.changeDetectorRef.detectChanges();
+
+        return component;
+    }
+
+    private transformArrayToTree(categories: Category[]): NzCascaderOption[] {
+        const createNodesTree = (cats: any[]): NzCascaderOption[] => {
+            return cats.map(cat => {
+                if (cat.children) {
+                    cat.children = createNodesTree(cat.children);
+                    cat.isLeaf = false;
+                    return this.createCascaderOptionFromCategory(cat);
+                }
+                cat.isLeaf = true;
+                return this.createCascaderOptionFromCategory(cat);
+            });
+        };
+        return createNodesTree(arrayToTree(categories));
+    }
+
+    private createCascaderOptionFromCategory(category: any): NzCascaderOption {
+        return {
+            label: category.name,
+            value: category.id,
+            children: category.children,
+            isLeaf: category.isLeaf,
+            category,
+        };
+    }
 }
