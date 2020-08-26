@@ -6,6 +6,7 @@ import { InputTextFormComponent } from './components/input-text-form/input-text-
 import { TextareaFormComponent } from './components/textarea-form/textarea-form.component';
 import { RadioFormComponent } from './components/radio-form/radio-form.component';
 import {
+    AdvertService,
     CategoryService,
     CreatorFieldInputTextService,
     CreatorFieldRadioService,
@@ -36,6 +37,7 @@ const services = [
     SectionService,
     FieldService,
     CategoryService,
+    AdvertService,
 ];
 
 /**
