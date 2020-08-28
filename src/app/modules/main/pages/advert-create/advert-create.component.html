@@ -1,7 +1,7 @@
-<nz-cascader [nzSize]="'large'" [nzOptions]="categoryTree$ | async" [(ngModel)]="category" (ngModelChange)="onCategorySelect($event)">
+<nz-cascader [nzSize]="'large'" [nzOptions]="categoryTree$ | async" [(ngModel)]="categoryChain" (ngModelChange)="onCategorySelect($event)">
 </nz-cascader>
 
-<ng-container *ngIf="category.length">
+<ng-container *ngIf="categoryChain">
     <ng-container #fields></ng-container>
 
     <button nz-button nzType="primary" (click)="save()">Добавить объявление</button>

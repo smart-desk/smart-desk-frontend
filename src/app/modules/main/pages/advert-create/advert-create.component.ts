@@ -11,13 +11,16 @@ import { NzCascaderOption } from 'ng-zorro-antd';
 import arrayToTree from 'array-to-tree';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CategoryService, ModelService } from '../../../../shared/services';
-import { Category, Field, Section } from '../../../../shared/models/models.dto';
+import { AdvertService, CategoryService, ModelService } from '../../../../shared/services';
+import { Advert, Category, Field, Section } from '../../../../shared/models/models.dto';
 import { FieldFormComponent } from '../../../../shared/components/field-form/field-form.component';
 import { getFieldComponentResolver } from '../../../../shared/services/field-resolvers/field-resolvers';
 import { FieldTypes } from '../../../../shared/models/field-metadata';
-import { FieldSettingsComponent } from '../../../admin/components/field-settings';
 
+// todo markup
+// todo validation after backend request and showing messages
+// todo validation on frontend
+// todo redirect to newly created advert
 @Component({
     selector: 'app-advert-create',
     templateUrl: './advert-create.component.html',
@@ -26,7 +29,8 @@ import { FieldSettingsComponent } from '../../../admin/components/field-settings
 })
 export class AdvertCreateComponent implements OnInit {
     categoryTree$ = new BehaviorSubject<NzCascaderOption[]>([]);
-    category: Category[] = [];
+    categoryChain: Category[] = [];
+    category: Category;
 
     private components: ComponentRef<FieldFormComponent<unknown>>[] = [];
 
@@ -36,7 +40,8 @@ export class AdvertCreateComponent implements OnInit {
     constructor(
         private modelService: ModelService,
         private componentFactoryResolver: ComponentFactoryResolver,
-        private categoryService: CategoryService
+        private categoryService: CategoryService,
+        private advertService: AdvertService
     ) {}
 
     ngOnInit(): void {
@@ -51,7 +56,8 @@ export class AdvertCreateComponent implements OnInit {
             return;
         }
 
-        const model_id = categories[categories.length - 1].model_id;
+        this.category = categories[categories.length - 1];
+        const model_id = this.category.model_id;
 
         if (this.fieldsFormContainerRef) {
             this.fieldsFormContainerRef.clear();
@@ -62,9 +68,19 @@ export class AdvertCreateComponent implements OnInit {
     }
 
     save(): void {
-        this.components.forEach(component => {
-            console.log(component.instance.getValue());
-        });
+        const advert = new Advert();
+        advert.category_id = this.category.id;
+        advert.model_id = this.category.model_id;
+        advert.data = this.components.map(component => component.instance.getValue()).filter(value => !!value);
+
+        this.advertService.createAdvert(advert).subscribe(
+            res => {
+                console.log(res);
+            },
+            err => {
+                console.log(err);
+            }
+        );
     }
 
     private populateFormWithInputs(sections: Section[]): void {
