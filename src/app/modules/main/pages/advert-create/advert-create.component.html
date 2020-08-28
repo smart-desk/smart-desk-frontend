@@ -1,1 +1,4 @@
-<nz-cascader [nzSize]="'large'" [nzOptions]="categoryTree$ | async" [ngModel] (ngModelChange)="onCategorySelect($event)"> </nz-cascader>
+<nz-cascader [nzSize]="'large'" [nzOptions]="categoryTree$ | async" [ngModel]="category" (ngModelChange)="onCategorySelect($event)">
+</nz-cascader>
+
+<ng-container #fields></ng-container>

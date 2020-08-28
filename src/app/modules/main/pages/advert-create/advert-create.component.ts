@@ -25,6 +25,7 @@ import { FieldTypes } from '../../../../shared/models/field-metadata';
 })
 export class AdvertCreateComponent implements OnInit {
     categoryTree$ = new BehaviorSubject<NzCascaderOption[]>([]);
+    category: Category[] = [];
 
     @ViewChild('fields', { read: ViewContainerRef })
     private fieldsFormContainerRef: ViewContainerRef;
@@ -42,11 +43,17 @@ export class AdvertCreateComponent implements OnInit {
             .subscribe(tree => this.categoryTree$.next(tree));
     }
 
-    onCategorySelect(category: Category): void {
+    onCategorySelect(categories: Category[]): void {
+        if (!categories || !categories.length) {
+            return;
+        }
+
+        const model_id = categories[categories.length - 1].model_id;
+
         if (this.fieldsFormContainerRef) {
             this.fieldsFormContainerRef.clear();
         }
-        this.modelService.getModel(category.model_id).subscribe(model => {
+        this.modelService.getModel(model_id).subscribe(model => {
             this.populateFormWithInputs(model.sections);
         });
     }
@@ -92,10 +99,9 @@ export class AdvertCreateComponent implements OnInit {
     private createCascaderOptionFromCategory(category: any): NzCascaderOption {
         return {
             label: category.name,
-            value: category.id,
+            value: category,
             children: category.children,
             isLeaf: category.isLeaf,
-            category,
         };
     }
 }
