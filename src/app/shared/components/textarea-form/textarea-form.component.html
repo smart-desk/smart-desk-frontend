@@ -3,7 +3,14 @@
         <nz-form-item>
             <nz-form-label [nzRequired]="data.required">{{ data.label }}</nz-form-label>
             <nz-form-control>
-                <textarea rows="4" nz-input [required]="data.required" [placeholder]="data.placeholder"></textarea>
+                <textarea
+                    rows="4"
+                    nz-input
+                    [(ngModel)]="value"
+                    [required]="data.required"
+                    [placeholder]="data.placeholder"
+                    [ngModelOptions]="{ standalone: true }"
+                ></textarea>
             </nz-form-control>
         </nz-form-item>
     </form>

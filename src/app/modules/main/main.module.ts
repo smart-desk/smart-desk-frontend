@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NzCascaderModule } from 'ng-zorro-antd/cascader';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
@@ -10,7 +12,7 @@ import { AdvertComponent } from './pages/advert/advert.component';
 import { AdvertEditComponent } from './pages/advert-edit/advert-edit.component';
 import { AdvertCreateComponent } from './pages/advert-create/advert-create.component';
 
-const NZModules = [NzCascaderModule];
+const NZModules = [NzCascaderModule, NzFormModule, NzButtonModule];
 
 const pages = [MainComponent, CategoriesComponent, CategoryComponent, AdvertComponent, AdvertEditComponent, AdvertCreateComponent];
 

@@ -16,6 +16,7 @@ import { Category, Field, Section } from '../../../../shared/models/models.dto';
 import { FieldFormComponent } from '../../../../shared/components/field-form/field-form.component';
 import { getFieldComponentResolver } from '../../../../shared/services/field-resolvers/field-resolvers';
 import { FieldTypes } from '../../../../shared/models/field-metadata';
+import { FieldSettingsComponent } from '../../../admin/components/field-settings';
 
 @Component({
     selector: 'app-advert-create',
@@ -26,6 +27,8 @@ import { FieldTypes } from '../../../../shared/models/field-metadata';
 export class AdvertCreateComponent implements OnInit {
     categoryTree$ = new BehaviorSubject<NzCascaderOption[]>([]);
     category: Category[] = [];
+
+    private components: ComponentRef<FieldFormComponent<unknown>>[] = [];
 
     @ViewChild('fields', { read: ViewContainerRef })
     private fieldsFormContainerRef: ViewContainerRef;
@@ -58,11 +61,18 @@ export class AdvertCreateComponent implements OnInit {
         });
     }
 
+    save(): void {
+        this.components.forEach(component => {
+            console.log(component.instance.getValue());
+        });
+    }
+
     private populateFormWithInputs(sections: Section[]): void {
         sections.forEach(section => {
             if (section.fields) {
                 section.fields.forEach(field => {
-                    this.resolveFieldComponent(field);
+                    const component = this.resolveFieldComponent(field);
+                    this.components.push(component);
                 });
             }
         });

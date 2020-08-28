@@ -17,7 +17,7 @@ import {
     SectionService,
 } from './services';
 import { ApiHostInterceptor, DevTokenInterceptor, ErrorsInterceptor } from './interceptors';
-import { TextComponent } from './components/text-form/text.component';
+import { TextComponent } from './components/text/text.component';
 import { FormsModule } from '@angular/forms';
 
 /**
