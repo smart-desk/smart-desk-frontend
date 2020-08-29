@@ -1,6 +1,6 @@
-<form nz-form nzLayout="vertical" class="input-text">
+<form nz-form nzLayout="vertical" [formGroup]="form">
     <nz-form-item>
-        <nz-radio-group [(ngModel)]="value" [ngModelOptions]="{ standalone: true }">
+        <nz-radio-group formControlName="value">
             <label *ngFor="let radio of field.data" nz-radio [nzValue]="radio.value">{{ radio.label }}</label>
         </nz-radio-group>
     </nz-form-item>

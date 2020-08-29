@@ -4,6 +4,7 @@ import { AdvertFieldBase } from '../../models/models.dto';
 
 interface AdvertField {
     getValue(): AdvertFieldBase;
+    isValid(): boolean;
 }
 
 @Directive()
@@ -14,4 +15,5 @@ export abstract class FieldFormComponent<T> implements AdvertField {
     @Input() advertField: AdvertFieldBase;
 
     abstract getValue(): AdvertFieldBase;
+    abstract isValid(): boolean;
 }

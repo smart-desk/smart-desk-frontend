@@ -22,4 +22,8 @@ export class TextComponent extends FieldFormComponent<CreatorFieldText> implemen
     getValue(): AdvertFieldBase {
         return null;
     }
+
+    isValid(): boolean {
+        return true;
+    }
 }

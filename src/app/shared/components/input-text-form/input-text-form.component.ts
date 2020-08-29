@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FieldFormComponent } from '../field-form/field-form.component';
 import { AdvertFieldBase, CreatorFieldInputText } from '../../models/models.dto';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-input-text',
@@ -9,24 +10,33 @@ import { AdvertFieldBase, CreatorFieldInputText } from '../../models/models.dto'
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputTextFormComponent extends FieldFormComponent<CreatorFieldInputText> implements OnInit {
-    value: string;
+    form: FormGroup;
 
     ngOnInit(): void {
-        if (this.advertField) {
-            this.value = this.advertField.value as string;
+        const valueValidators = [];
+        if (this.field.data && this.field.data.required) {
+            valueValidators.push(Validators.required);
         }
+
+        this.form = new FormGroup({
+            value: new FormControl(this.advertField && this.advertField.value, valueValidators),
+        });
     }
 
     getValue(): AdvertFieldBase {
         if (this.advertField) {
-            this.advertField.value = this.value;
+            this.advertField.value = this.form.get('value').value;
             return this.advertField;
         }
 
         const advertField = new AdvertFieldBase();
-        advertField.value = this.value;
+        advertField.value = this.form.get('value').value;
         advertField.field_id = this.field.id;
 
         return advertField;
+    }
+
+    isValid(): boolean {
+        return this.form.valid;
     }
 }

@@ -1,4 +1,12 @@
-<nz-cascader [nzSize]="'large'" [nzOptions]="categoryTree$ | async" [(ngModel)]="categoryChain" (ngModelChange)="onCategorySelect($event)">
+<nz-cascader
+    class="category-selector"
+    [nzAllowClear]="false"
+    [nzSize]="'large'"
+    [nzOptions]="categoryTree$ | async"
+    [(ngModel)]="categoryChain"
+    [nzPlaceHolder]="'Выберите категорию'"
+    (ngModelChange)="onCategorySelect($event)"
+>
 </nz-cascader>
 
 <ng-container *ngIf="categoryChain && categoryChain.length">

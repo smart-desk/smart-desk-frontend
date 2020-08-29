@@ -68,6 +68,10 @@ export class AdvertCreateComponent implements OnInit {
     }
 
     save(): void {
+        if (!this.isValid()) {
+            return;
+        }
+
         const advert = new Advert();
         advert.category_id = this.category.id;
         advert.model_id = this.category.model_id;
@@ -129,5 +133,9 @@ export class AdvertCreateComponent implements OnInit {
             children: category.children,
             isLeaf: category.isLeaf,
         };
+    }
+
+    private isValid(): boolean {
+        return this.components.every(component => component.instance.isValid());
     }
 }
