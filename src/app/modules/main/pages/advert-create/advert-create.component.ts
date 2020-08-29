@@ -7,7 +7,7 @@ import {
     ViewChild,
     ViewContainerRef,
 } from '@angular/core';
-import { NzCascaderOption } from 'ng-zorro-antd';
+import { NzCascaderOption, NzMentionService, NzMessageService } from 'ng-zorro-antd';
 import arrayToTree from 'array-to-tree';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -16,11 +16,10 @@ import { Advert, Category, Field, Section } from '../../../../shared/models/mode
 import { FieldFormComponent } from '../../../../shared/components/field-form/field-form.component';
 import { getFieldComponentResolver } from '../../../../shared/services/field-resolvers/field-resolvers';
 import { FieldTypes } from '../../../../shared/models/field-metadata';
+import { Router } from '@angular/router';
 
 // todo markup
-// todo validation after backend request and showing messages
-// todo validation on frontend
-// todo redirect to newly created advert
+// todo check subscriptions
 @Component({
     selector: 'app-advert-create',
     templateUrl: './advert-create.component.html',
@@ -41,7 +40,8 @@ export class AdvertCreateComponent implements OnInit {
         private modelService: ModelService,
         private componentFactoryResolver: ComponentFactoryResolver,
         private categoryService: CategoryService,
-        private advertService: AdvertService
+        private advertService: AdvertService,
+        private router: Router
     ) {}
 
     ngOnInit(): void {
@@ -79,10 +79,10 @@ export class AdvertCreateComponent implements OnInit {
 
         this.advertService.createAdvert(advert).subscribe(
             res => {
-                console.log(res);
+                this.router.navigate([res.category_id, res.id]);
             },
             err => {
-                console.log(err);
+                // todo server validation messages
             }
         );
     }
