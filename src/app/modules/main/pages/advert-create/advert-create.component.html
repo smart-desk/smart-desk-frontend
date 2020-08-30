@@ -14,7 +14,7 @@
         [nzAllowClear]="false"
         [nzSize]="'large'"
         [nzOptions]="categoryTree$ | async"
-        [(ngModel)]="categoryChain"
+        [(ngModel)]="selectedCategoriesIds"
         [nzPlaceHolder]="'Выберите категорию'"
         (ngModelChange)="onCategorySelect($event)"
     >
@@ -25,7 +25,7 @@
 <nz-skeleton *ngIf="loadingForm$ | async; else advertButton" [nzActive]="true"></nz-skeleton>
 
 <ng-template #advertButton>
-    <ng-container *ngIf="category">
+    <ng-container *ngIf="selectedCategoriesIds && selectedCategoriesIds.length">
         <button nz-button nzType="primary" (click)="save()">Добавить объявление</button>
     </ng-container>
 </ng-template>

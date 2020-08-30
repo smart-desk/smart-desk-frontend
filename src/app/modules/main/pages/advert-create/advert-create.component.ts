@@ -10,7 +10,7 @@ import {
 import { NzCascaderOption } from 'ng-zorro-antd';
 import arrayToTree from 'array-to-tree';
 import { BehaviorSubject } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { map, take, tap } from 'rxjs/operators';
 import { AdvertService, CategoryService, ModelService } from '../../../../shared/services';
 import { Advert, Category, Field, Section } from '../../../../shared/models/models.dto';
 import { FieldFormComponent } from '../../../../shared/components/field-form/field-form.component';
@@ -27,9 +27,10 @@ import { Router } from '@angular/router';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdvertCreateComponent implements OnInit {
+    selectedCategoriesIds: string[] = [];
+    selectedCategory: Category = null;
+    categories: Category[] = [];
     categoryTree$ = new BehaviorSubject<NzCascaderOption[]>([]);
-    categoryChain: Category[] = [];
-    category: Category;
     loadingForm$ = new BehaviorSubject<boolean>(false);
     loadingCategories$ = new BehaviorSubject<boolean>(true);
 
@@ -49,22 +50,26 @@ export class AdvertCreateComponent implements OnInit {
     ngOnInit(): void {
         this.categoryService
             .getCategories()
-            .pipe(map(categories => this.transformArrayToTree(categories)))
+            .pipe(
+                tap(categories => (this.categories = [...categories])),
+                map(categories => this.transformArrayToTree(categories))
+            )
             .subscribe(tree => {
                 this.categoryTree$.next(tree);
                 this.loadingCategories$.next(false);
             });
     }
 
-    onCategorySelect(categories: Category[]): void {
-        if (!categories || !categories.length) {
+    onCategorySelect(selectedCategoriesIds: string[]): void {
+        if (!selectedCategoriesIds || !selectedCategoriesIds.length) {
             return;
         }
 
         this.loadingForm$.next(true);
 
-        this.category = categories[categories.length - 1];
-        const model_id = this.category.model_id;
+        const lastCategoryId = selectedCategoriesIds[selectedCategoriesIds.length - 1];
+        this.selectedCategory = this.categories.find(cat => cat.id === lastCategoryId);
+        const model_id = this.selectedCategory.model_id;
 
         if (this.fieldsFormContainerRef) {
             this.fieldsFormContainerRef.clear();
@@ -84,8 +89,8 @@ export class AdvertCreateComponent implements OnInit {
         }
 
         const advert = new Advert();
-        advert.category_id = this.category.id;
-        advert.model_id = this.category.model_id;
+        advert.category_id = this.selectedCategory.id;
+        advert.model_id = this.selectedCategory.model_id;
         advert.data = this.components.map(component => component.instance.getValue()).filter(value => !!value);
 
         this.advertService.createAdvert(advert).subscribe(
@@ -140,7 +145,7 @@ export class AdvertCreateComponent implements OnInit {
     private createCascaderOptionFromCategory(category: any): NzCascaderOption {
         return {
             label: category.name,
-            value: category,
+            value: category.id,
             children: category.children,
             isLeaf: category.isLeaf,
         };
