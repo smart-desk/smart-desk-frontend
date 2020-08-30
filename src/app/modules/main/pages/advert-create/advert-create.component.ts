@@ -10,7 +10,7 @@ import {
 import { NzCascaderOption } from 'ng-zorro-antd';
 import arrayToTree from 'array-to-tree';
 import { BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { AdvertService, CategoryService, ModelService } from '../../../../shared/services';
 import { Advert, Category, Field, Section } from '../../../../shared/models/models.dto';
 import { FieldFormComponent } from '../../../../shared/components/field-form/field-form.component';
@@ -30,6 +30,8 @@ export class AdvertCreateComponent implements OnInit {
     categoryTree$ = new BehaviorSubject<NzCascaderOption[]>([]);
     categoryChain: Category[] = [];
     category: Category;
+    loadingForm$ = new BehaviorSubject<boolean>(false);
+    loadingCategories$ = new BehaviorSubject<boolean>(true);
 
     private components: ComponentRef<FieldFormComponent<unknown>>[] = [];
 
@@ -48,7 +50,10 @@ export class AdvertCreateComponent implements OnInit {
         this.categoryService
             .getCategories()
             .pipe(map(categories => this.transformArrayToTree(categories)))
-            .subscribe(tree => this.categoryTree$.next(tree));
+            .subscribe(tree => {
+                this.categoryTree$.next(tree);
+                this.loadingCategories$.next(false);
+            });
     }
 
     onCategorySelect(categories: Category[]): void {
@@ -56,15 +61,21 @@ export class AdvertCreateComponent implements OnInit {
             return;
         }
 
+        this.loadingForm$.next(true);
+
         this.category = categories[categories.length - 1];
         const model_id = this.category.model_id;
 
         if (this.fieldsFormContainerRef) {
             this.fieldsFormContainerRef.clear();
         }
-        this.modelService.getModel(model_id).subscribe(model => {
-            this.populateFormWithInputs(model.sections);
-        });
+        this.modelService
+            .getModel(model_id)
+            .pipe(take(1))
+            .subscribe(model => {
+                this.populateFormWithInputs(model.sections);
+                this.loadingForm$.next(false);
+            });
     }
 
     save(): void {

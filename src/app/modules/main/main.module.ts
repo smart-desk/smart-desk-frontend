@@ -8,6 +8,7 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
@@ -17,7 +18,16 @@ import { AdvertEditComponent } from './pages/advert-edit/advert-edit.component';
 import { AdvertCreateComponent } from './pages/advert-create/advert-create.component';
 import { HeaderComponent } from './components/header/header.component';
 
-const NZModules = [NzCascaderModule, NzFormModule, NzButtonModule, NzLayoutModule, NzMenuModule, NzIconModule, NzTypographyModule];
+const NZModules = [
+    NzCascaderModule,
+    NzFormModule,
+    NzButtonModule,
+    NzLayoutModule,
+    NzMenuModule,
+    NzIconModule,
+    NzTypographyModule,
+    NzSkeletonModule,
+];
 
 const pages = [MainComponent, CategoriesComponent, CategoryComponent, AdvertComponent, AdvertEditComponent, AdvertCreateComponent];
 

@@ -1,18 +1,31 @@
 <h2 nz-typography>Новое объявление</h2>
 
-<nz-cascader
-    class="category-selector"
-    [nzAllowClear]="false"
-    [nzSize]="'large'"
-    [nzOptions]="categoryTree$ | async"
-    [(ngModel)]="categoryChain"
-    [nzPlaceHolder]="'Выберите категорию'"
-    (ngModelChange)="onCategorySelect($event)"
->
-</nz-cascader>
+<nz-skeleton-element
+    *ngIf="loadingCategories$ | async; else selectCategory"
+    class="category-loading"
+    nzType="input"
+    nzSize="large"
+    [nzActive]="true"
+></nz-skeleton-element>
 
-<ng-container *ngIf="categoryChain && categoryChain.length">
-    <ng-container #fields></ng-container>
+<ng-template #selectCategory>
+    <nz-cascader
+        class="category-selector"
+        [nzAllowClear]="false"
+        [nzSize]="'large'"
+        [nzOptions]="categoryTree$ | async"
+        [(ngModel)]="categoryChain"
+        [nzPlaceHolder]="'Выберите категорию'"
+        (ngModelChange)="onCategorySelect($event)"
+    >
+    </nz-cascader>
+</ng-template>
 
-    <button nz-button nzType="primary" (click)="save()">Добавить объявление</button>
-</ng-container>
+<ng-container #fields></ng-container>
+<nz-skeleton *ngIf="loadingForm$ | async; else advertButton" [nzActive]="true"></nz-skeleton>
+
+<ng-template #advertButton>
+    <ng-container *ngIf="category">
+        <button nz-button nzType="primary" (click)="save()">Добавить объявление</button>
+    </ng-container>
+</ng-template>
