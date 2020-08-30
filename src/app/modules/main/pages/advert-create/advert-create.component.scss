@@ -1,0 +1,11 @@
+@import '~src/assets/styles/variables';
+
+.category-selector {
+    width: 100%;
+    max-width: $base-unit * 60;
+    margin-bottom: $base-unit * 3;
+}
+
+.category-loading {
+    max-width: $base-unit * 60;
+}

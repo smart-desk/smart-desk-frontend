@@ -1,9 +1,9 @@
 <ng-container *ngIf="field?.data as data">
-    <form nz-form nzLayout="vertical" class="input-text">
+    <form nz-form nzLayout="vertical" class="input-text" [formGroup]="form">
         <nz-form-item>
             <nz-form-label [nzRequired]="data.required">{{ data.label }}</nz-form-label>
-            <nz-form-control>
-                <input nz-input [required]="data.required" [placeholder]="data.placeholder" />
+            <nz-form-control nzErrorTip="Обязательное поле">
+                <input formControlName="value" nz-input [required]="data.required" [placeholder]="data.placeholder" />
             </nz-form-control>
         </nz-form-item>
     </form>

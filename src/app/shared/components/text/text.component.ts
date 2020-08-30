@@ -1,7 +1,7 @@
 import { Component, OnInit, SecurityContext } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FieldFormComponent } from '../field-form/field-form.component';
-import { CreatorFieldText } from '../../models/models.dto';
+import { AdvertFieldBase, CreatorFieldText } from '../../models/models.dto';
 
 @Component({
     selector: 'app-text-editor',
@@ -17,5 +17,13 @@ export class TextComponent extends FieldFormComponent<CreatorFieldText> implemen
 
     ngOnInit(): void {
         this.content = this.sanitizer.sanitize(SecurityContext.HTML, (this.field.data && this.field.data.value) || '');
+    }
+
+    getValue(): AdvertFieldBase {
+        return null;
+    }
+
+    isValid(): boolean {
+        return true;
     }
 }

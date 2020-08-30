@@ -1,0 +1,9 @@
+@import 'src/assets/styles/variables';
+
+nz-header {
+    background-color: $base-bg;
+    padding: 0;
+    height: $base-unit * 6;
+    line-height: $base-unit * 6;
+    border-bottom: 1px solid $grey-light;
+}
