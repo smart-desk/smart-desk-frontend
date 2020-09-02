@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
@@ -9,6 +9,7 @@ import { ModelService, SectionService } from '../../../../shared/services';
     selector: 'app-create-model',
     templateUrl: './create-model.component.html',
     styleUrls: ['./create-model.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateModelComponent {
     model: Model;
