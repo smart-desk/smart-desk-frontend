@@ -10,6 +10,7 @@ export class Section {
     id: string;
     model_id: string;
     fields: Field[];
+    type: string;
 }
 export class Model {
     id: string;
@@ -32,6 +33,7 @@ export class AdvertFieldBase {
 }
 export class Advert {
     id: string;
+    title: string;
     category_id: string;
     model_id: string;
     data: AdvertFieldBase[];
