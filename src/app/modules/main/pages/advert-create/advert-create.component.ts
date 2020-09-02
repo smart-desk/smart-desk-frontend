@@ -34,6 +34,8 @@ export class AdvertCreateComponent implements OnInit {
     loadingForm$ = new BehaviorSubject<boolean>(false);
     loadingCategories$ = new BehaviorSubject<boolean>(true);
 
+    title = '';
+
     private components: ComponentRef<FieldFormComponent<unknown>>[] = [];
 
     @ViewChild('fields', { read: ViewContainerRef })
@@ -89,6 +91,7 @@ export class AdvertCreateComponent implements OnInit {
         }
 
         const advert = new Advert();
+        advert.title = this.title;
         advert.category_id = this.selectedCategory.id;
         advert.model_id = this.selectedCategory.model_id;
         advert.data = this.components.map(component => component.instance.getValue()).filter(value => !!value);
@@ -152,6 +155,9 @@ export class AdvertCreateComponent implements OnInit {
     }
 
     private isValid(): boolean {
+        if (!this.title) {
+            return false;
+        }
         return this.components.every(component => component.instance.isValid());
     }
 }
