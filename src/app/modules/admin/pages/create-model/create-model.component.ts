@@ -29,6 +29,7 @@ export class CreateModelComponent {
                 switchMap(model => {
                     this.model = model;
                     return this.sectionService.createSection({
+                        type: 'params',
                         model_id: this.model.id,
                     });
                 })

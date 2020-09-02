@@ -1,1 +1,3 @@
-<p>advert works!</p>
+<ng-container *ngIf="advert$ | async as advert">
+    <h1>{{ advert.title }}</h1>
+</ng-container>
