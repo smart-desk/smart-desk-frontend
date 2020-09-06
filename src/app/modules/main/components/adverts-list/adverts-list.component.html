@@ -1,0 +1,7 @@
+<div class="box__adverts">
+    <div class="box__advert" *ngFor="let advert of advertsData">
+        <nz-card nzTitle="{{ advert?.id }}">
+            <p>{{ advert?.value }}</p>
+        </nz-card>
+    </div>
+</div>

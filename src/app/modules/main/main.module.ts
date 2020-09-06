@@ -7,7 +7,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzInputModule } from 'ng-zorro-antd';
+import { NgZorroAntdModule, NzInputModule, NzSelectModule } from 'ng-zorro-antd';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { MainRoutingModule } from './main-routing.module';
@@ -18,6 +18,7 @@ import { AdvertComponent } from './pages/advert/advert.component';
 import { AdvertEditComponent } from './pages/advert-edit/advert-edit.component';
 import { AdvertCreateComponent } from './pages/advert-create/advert-create.component';
 import { HeaderComponent } from './components/header/header.component';
+import { AdvertsListComponent } from './components/adverts-list/adverts-list.component';
 
 const NZModules = [
     NzCascaderModule,
@@ -36,7 +37,7 @@ const pages = [MainComponent, CategoriesComponent, CategoryComponent, AdvertComp
 const components = [HeaderComponent];
 
 @NgModule({
-    declarations: [...pages, ...components],
-    imports: [...NZModules, CommonModule, MainRoutingModule, FormsModule, ReactiveFormsModule],
+    declarations: [...pages, ...components, CategoriesComponent, AdvertsListComponent],
+    imports: [...NZModules, CommonModule, MainRoutingModule, FormsModule, ReactiveFormsModule, NzSelectModule, NgZorroAntdModule],
 })
 export class MainModule {}

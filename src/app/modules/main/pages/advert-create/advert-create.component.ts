@@ -54,7 +54,7 @@ export class AdvertCreateComponent implements OnInit {
             .getCategories()
             .pipe(
                 tap(categories => (this.categories = [...categories])),
-                map(categories => this.transformArrayToTree(categories))
+                map(categories => this.categoryService.transformArrayToTree(categories))
             )
             .subscribe(tree => {
                 this.categoryTree$.next(tree);
@@ -128,30 +128,6 @@ export class AdvertCreateComponent implements OnInit {
         component.changeDetectorRef.detectChanges();
 
         return component;
-    }
-
-    private transformArrayToTree(categories: Category[]): NzCascaderOption[] {
-        const createNodesTree = (cats: any[]): NzCascaderOption[] => {
-            return cats.map(cat => {
-                if (cat.children) {
-                    cat.children = createNodesTree(cat.children);
-                    cat.isLeaf = false;
-                    return this.createCascaderOptionFromCategory(cat);
-                }
-                cat.isLeaf = true;
-                return this.createCascaderOptionFromCategory(cat);
-            });
-        };
-        return createNodesTree(arrayToTree(categories));
-    }
-
-    private createCascaderOptionFromCategory(category: any): NzCascaderOption {
-        return {
-            label: category.name,
-            value: category.id,
-            children: category.children,
-            isLeaf: category.isLeaf,
-        };
     }
 
     private isValid(): boolean {

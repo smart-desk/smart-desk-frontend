@@ -1,0 +1,16 @@
+.box {
+    width: 100%;
+    box-sizing: border-box;
+
+    &__adverts {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    &__advert {
+        width: 20%;
+        flex-wrap: wrap;
+        margin: 10px 0;
+        padding: 0 10px;
+    }
+}
