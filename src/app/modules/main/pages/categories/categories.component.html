@@ -6,5 +6,7 @@
     [(ngModel)]="selectedCategoriesIds"
     [nzPlaceHolder]="'Выберите категорию'"
     (ngModelChange)="onCategorySelect($event)"
+    [nzExpandTrigger]="'hover'"
+    nzChangeOnSelect
 >
 </nz-cascader>
