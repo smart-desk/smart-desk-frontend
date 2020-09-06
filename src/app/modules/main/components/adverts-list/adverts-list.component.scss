@@ -1,16 +1,10 @@
+@import 'src/assets/styles/variables';
+
 .box {
-    width: 100%;
-    box-sizing: border-box;
-
     &__adverts {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    &__advert {
-        width: 20%;
-        flex-wrap: wrap;
-        margin: 10px 0;
-        padding: 0 10px;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-column-gap: $base-unit;
+        grid-row-gap: $base-unit * 2;
     }
 }
