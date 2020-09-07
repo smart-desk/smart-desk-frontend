@@ -1,1 +1,5 @@
-<app-adverts-list *ngIf="adverts" [adverts]="adverts"> </app-adverts-list>
+<div class="spiner" *ngIf="!loadAdverts">
+    <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
+</div>
+<div *ngIf="noData">В этой категории еще нет объявлений</div>
+<app-adverts-list *ngIf="loadAdverts" [adverts]="adverts"> </app-adverts-list>

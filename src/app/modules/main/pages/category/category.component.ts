@@ -11,10 +11,15 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CategoryComponent implements OnInit {
     adverts: Advert[];
+    /*Флаг загрузки объявлений*/
+    loadAdverts = false;
+    /*Флаг присутствия данных*/
+    noData: boolean;
 
     constructor(private advertService: AdvertService, private route: ActivatedRoute) {}
 
     ngOnInit(): void {
+        this.noData = false;
         this.route.paramMap
             .pipe(
                 switchMap(params => {
@@ -23,6 +28,12 @@ export class CategoryComponent implements OnInit {
                         .pipe(map(adverts => adverts.filter(advert => advert.category_id === params.get('category_id'))));
                 })
             )
-            .subscribe(data => (this.adverts = data));
+            .subscribe(data => {
+                if (data) {
+                    this.adverts = data;
+                    return (this.loadAdverts = true);
+                }
+                return (this.noData = true);
+            });
     }
 }

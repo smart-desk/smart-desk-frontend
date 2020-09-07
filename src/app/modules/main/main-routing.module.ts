@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './main.component';
-import { CategoriesComponent } from './pages/categories/categories.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { AdvertComponent } from './pages/advert/advert.component';
 import { AdvertEditComponent } from './pages/advert-edit/advert-edit.component';
@@ -12,10 +11,6 @@ const routes: Routes = [
         path: '',
         component: MainComponent,
         children: [
-            {
-                path: '',
-                component: CategoriesComponent,
-            },
             {
                 path: 'adverts/create',
                 component: AdvertCreateComponent,
