@@ -12,39 +12,39 @@ export class CategoryService {
     /**
      * Returns array of existing categories
      */
-    public getCategories(): Observable<Category[]> {
+    getCategories(): Observable<Category[]> {
         return this.http.get<Category[]>(`/categories`);
     }
 
     /**
      * Return category by id
      */
-    public getCategory(id: string): Observable<Category> {
+    getCategory(id: string): Observable<Category> {
         return this.http.get<Category>(`/categories/${id}`);
     }
 
     /**
      * Create сategory
      */
-    public createCategory(category: Partial<Category>): Observable<Category> {
+    createCategory(category: Partial<Category>): Observable<Category> {
         return this.http.post<Category>(`/categories`, category);
     }
 
     /**
      * Update category by id
      */
-    public updateCategory(id, category: Partial<Category>): Observable<Category> {
+    updateCategory(id, category: Partial<Category>): Observable<Category> {
         return this.http.put<Category>(`/categories/${id}`, category);
     }
 
     /**
      * Delete category by id
      */
-    public deleteCategory(id): Observable<unknown> {
+    deleteCategory(id): Observable<unknown> {
         return this.http.delete<Category>(`/categories/${id}`);
     }
 
-    public transformArrayToTree(categories: Category[]): NzCascaderOption[] {
+    transformArrayToTree(categories: Category[]): NzCascaderOption[] {
         const createNodesTree = (cats: any[]): NzCascaderOption[] => {
             return cats.map(cat => {
                 if (cat.children) {

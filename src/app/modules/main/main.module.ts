@@ -32,12 +32,20 @@ const NZModules = [
     NzInputModule,
 ];
 
-const pages = [MainComponent, CategoriesComponent, CategoryComponent, AdvertComponent, AdvertEditComponent, AdvertCreateComponent];
+const pages = [
+    MainComponent,
+    CategoriesComponent,
+    CategoryComponent,
+    AdvertComponent,
+    AdvertEditComponent,
+    AdvertCreateComponent,
+    AdvertsListComponent,
+];
 
 const components = [HeaderComponent];
 
 @NgModule({
-    declarations: [...pages, ...components, CategoriesComponent, AdvertsListComponent],
+    declarations: [...pages, ...components],
     imports: [...NZModules, CommonModule, MainRoutingModule, FormsModule, ReactiveFormsModule, NzSelectModule, NgZorroAntdModule],
 })
 export class MainModule {}

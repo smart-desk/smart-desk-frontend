@@ -12,12 +12,11 @@ import { map, tap } from 'rxjs/operators';
     styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-    constructor(private categoryService: CategoryService, private router: Router) {}
-
-    categories: Category[] = [];
+    categories: Category[];
     categoryTree$ = new BehaviorSubject<NzCascaderOption[]>([]);
-    loadingCategories$ = new BehaviorSubject<boolean>(true);
     selectedCategoriesIds: string[] = [];
+
+    constructor(private categoryService: CategoryService, private router: Router) {}
 
     ngOnInit(): void {
         this.categoryService
@@ -28,7 +27,6 @@ export class HeaderComponent implements OnInit {
             )
             .subscribe(tree => {
                 this.categoryTree$.next(tree);
-                this.loadingCategories$.next(false);
             });
     }
 

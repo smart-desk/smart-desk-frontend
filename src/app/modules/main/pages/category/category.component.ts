@@ -12,14 +12,11 @@ import { ActivatedRoute } from '@angular/router';
 export class CategoryComponent implements OnInit {
     adverts: Advert[];
     /*Флаг загрузки объявлений*/
-    loadAdverts = false;
-    /*Флаг присутствия данных*/
-    noData: boolean;
+    loadingAdverts = false;
 
     constructor(private advertService: AdvertService, private route: ActivatedRoute) {}
 
     ngOnInit(): void {
-        this.noData = false;
         this.route.paramMap
             .pipe(
                 switchMap(params => {
@@ -31,9 +28,8 @@ export class CategoryComponent implements OnInit {
             .subscribe(data => {
                 if (data) {
                     this.adverts = data;
-                    return (this.loadAdverts = true);
+                    return (this.loadingAdverts = true);
                 }
-                return (this.noData = true);
             });
     }
 }
