@@ -1,18 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { Category } from '../../../../shared/models/models.dto';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { NzCascaderOption } from 'ng-zorro-antd';
+import { map } from 'rxjs/operators';
 import { CategoryService } from '../../../../shared/services';
-import { Router } from '@angular/router';
-import { map, tap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit {
-    categories: Category[];
     categoryTree$ = new BehaviorSubject<NzCascaderOption[]>([]);
     selectedCategoriesIds: string[] = [];
 
@@ -21,10 +20,7 @@ export class HeaderComponent implements OnInit {
     ngOnInit(): void {
         this.categoryService
             .getCategories()
-            .pipe(
-                tap(categories => (this.categories = [...categories])),
-                map(categories => this.categoryService.transformArrayToTree(categories))
-            )
+            .pipe(map(categories => this.categoryService.transformArrayToTree(categories)))
             .subscribe(tree => {
                 this.categoryTree$.next(tree);
             });
