@@ -7,7 +7,10 @@ import { Advert } from '../../models/models.dto';
 export class AdvertService {
     constructor(private http: HttpClient) {}
 
-    getAdverts(): Observable<Advert[]> {
+    getAdverts(categoryId: string): Observable<Advert[]> {
+        if (categoryId) {
+            return this.http.get<Advert[]>(`/adverts?category_id=${categoryId}`);
+        }
         return this.http.get<Advert[]>(`/adverts`);
     }
 

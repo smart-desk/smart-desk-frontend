@@ -1,5 +1,5 @@
-<div class="spiner" *ngIf="!loadingAdverts">
+<div class="spiner" *ngIf="!isLoaded">
     <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
 </div>
-<div *ngIf="loadingAdverts && (adverts.length || !adverts)">В этой категории еще нет объявлений</div>
-<app-adverts-list *ngIf="loadingAdverts" [adverts]="adverts"> </app-adverts-list>
+<div *ngIf="isLoaded && (!adverts || !adverts.length)">В этой категории еще нет объявлений</div>
+<app-adverts-list *ngIf="isLoaded" [adverts]="adverts"> </app-adverts-list>
