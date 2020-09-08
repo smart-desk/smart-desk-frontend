@@ -24,9 +24,9 @@ export class CategoryComponent implements OnInit {
                     return this.advertService.getAdverts(params.get('category_id'));
                 })
             )
-            .subscribe(data => {
-                if (data) {
-                    this.adverts = data;
+            .subscribe(res => {
+                if (res) {
+                    this.adverts = res.data;
                 }
 
                 this.isLoaded = true;

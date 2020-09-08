@@ -24,7 +24,6 @@ export class Category {
     parent_id: string;
     name: string;
 }
-export class Time {}
 export class AdvertFieldBase {
     id: string;
     advert_id: string;
@@ -37,10 +36,16 @@ export class Advert {
     category_id: string;
     model_id: string;
     data: AdvertFieldBase[];
-    created_at: Time;
-    updated_at: Time;
+    created_at: string;
+    updated_at: string;
 }
 
+export class AdvertListResponse {
+    data: Advert[];
+    page: number;
+    limit: number;
+    total_count: number;
+}
 export class CreatorFieldInputText {
     id: string;
     field_id: string;

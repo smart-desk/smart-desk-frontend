@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Advert } from '../../models/models.dto';
+import { Advert, AdvertListResponse } from '../../models/models.dto';
 
 @Injectable()
 export class AdvertService {
     constructor(private http: HttpClient) {}
 
-    getAdverts(categoryId: string): Observable<Advert[]> {
+    getAdverts(categoryId: string): Observable<AdvertListResponse> {
         let path = '/adverts';
         const options: string[] = [];
 
@@ -16,7 +16,7 @@ export class AdvertService {
         }
 
         path += options.length ? `?${options.join('&')}` : '';
-        return this.http.get<Advert[]>(path);
+        return this.http.get<AdvertListResponse>(path);
     }
 
     getAdvert(id: string): Observable<Advert> {
