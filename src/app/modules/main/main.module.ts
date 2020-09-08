@@ -21,6 +21,7 @@ import { AdvertEditComponent } from './pages/advert-edit/advert-edit.component';
 import { AdvertCreateComponent } from './pages/advert-create/advert-create.component';
 import { HeaderComponent } from './components/header/header.component';
 import { AdvertsListComponent } from './components/adverts-list/adverts-list.component';
+import { NavigationHeaderComponent } from './components/navigation-header/navigation-header.component';
 
 const NZModules = [
     NzCascaderModule,
@@ -39,7 +40,7 @@ const NZModules = [
 
 const pages = [MainComponent, CategoryComponent, AdvertComponent, AdvertEditComponent, AdvertCreateComponent, AdvertsListComponent];
 
-const components = [HeaderComponent];
+const components = [HeaderComponent, NavigationHeaderComponent];
 
 @NgModule({
     declarations: [...pages, ...components],
