@@ -7,8 +7,16 @@ import { Advert } from '../../models/models.dto';
 export class AdvertService {
     constructor(private http: HttpClient) {}
 
-    getAdverts(): Observable<Advert[]> {
-        return this.http.get<Advert[]>(`/adverts`);
+    getAdverts(categoryId: string): Observable<Advert[]> {
+        let path = '/adverts';
+        const options: string[] = [];
+
+        if (categoryId) {
+            options.push(`category_id=${categoryId}`);
+        }
+
+        path += options.length ? `?${options.join('&')}` : '';
+        return this.http.get<Advert[]>(path);
     }
 
     getAdvert(id: string): Observable<Advert> {

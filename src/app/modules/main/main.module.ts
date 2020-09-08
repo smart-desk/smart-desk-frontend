@@ -7,17 +7,20 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzInputModule } from 'ng-zorro-antd';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzCardModule } from 'ng-zorro-antd/card';
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
-import { CategoriesComponent } from './pages/categories/categories.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { AdvertComponent } from './pages/advert/advert.component';
 import { AdvertEditComponent } from './pages/advert-edit/advert-edit.component';
 import { AdvertCreateComponent } from './pages/advert-create/advert-create.component';
 import { HeaderComponent } from './components/header/header.component';
+import { AdvertsListComponent } from './components/adverts-list/adverts-list.component';
 
 const NZModules = [
     NzCascaderModule,
@@ -29,9 +32,12 @@ const NZModules = [
     NzTypographyModule,
     NzSkeletonModule,
     NzInputModule,
+    NzSelectModule,
+    NzSpinModule,
+    NzCardModule,
 ];
 
-const pages = [MainComponent, CategoriesComponent, CategoryComponent, AdvertComponent, AdvertEditComponent, AdvertCreateComponent];
+const pages = [MainComponent, CategoryComponent, AdvertComponent, AdvertEditComponent, AdvertCreateComponent, AdvertsListComponent];
 
 const components = [HeaderComponent];
 

@@ -1,1 +1,5 @@
-<p>category works!</p>
+<div class="spiner" *ngIf="!isLoaded">
+    <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
+</div>
+<div *ngIf="isLoaded && (!adverts || !adverts.length)">В этой категории еще нет объявлений</div>
+<app-adverts-list *ngIf="isLoaded" [adverts]="adverts"> </app-adverts-list>

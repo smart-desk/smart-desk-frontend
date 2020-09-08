@@ -1,7 +1,9 @@
 <nz-header>
     <div class="container">
         <nz-row [nzJustify]="'space-between'">
-            <nz-col></nz-col>
+            <nz-col>
+                <a routerLink="/">Smart Desk</a>
+            </nz-col>
             <nz-col>
                 <a routerLink="/admin" nz-button nzType="link">Управление сайтом</a>
                 <button routerLink="/adverts/create" nz-button nzType="primary" nzShape="round">
@@ -9,6 +11,20 @@
                     <span>Разместить объявление</span>
                 </button>
             </nz-col>
+        </nz-row>
+        <nz-row>
+            <nz-cascader
+                class="category-selector"
+                [nzAllowClear]="false"
+                [nzSize]="'large'"
+                [nzOptions]="categoryTree$ | async"
+                [(ngModel)]="selectedCategoriesIds"
+                [nzPlaceHolder]="'Выберите категорию'"
+                (ngModelChange)="onCategorySelect($event)"
+                [nzExpandTrigger]="'hover'"
+                nzChangeOnSelect
+            >
+            </nz-cascader>
         </nz-row>
     </div>
 </nz-header>

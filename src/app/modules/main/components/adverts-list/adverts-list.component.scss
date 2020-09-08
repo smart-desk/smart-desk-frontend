@@ -1,0 +1,10 @@
+@import 'src/assets/styles/variables';
+
+.box {
+    &__adverts {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-column-gap: $base-unit;
+        grid-row-gap: $base-unit * 2;
+    }
+}
