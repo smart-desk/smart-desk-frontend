@@ -8,10 +8,15 @@ export class AdvertService {
     constructor(private http: HttpClient) {}
 
     getAdverts(categoryId: string): Observable<Advert[]> {
+        let path = '/adverts';
+        const options: string[] = [];
+
         if (categoryId) {
-            return this.http.get<Advert[]>(`/adverts?category_id=${categoryId}`);
+            options.push(`category_id=${categoryId}`);
         }
-        return this.http.get<Advert[]>(`/adverts`);
+
+        path += options.length ? `?${options.join('&')}` : '';
+        return this.http.get<Advert[]>(path);
     }
 
     getAdvert(id: string): Observable<Advert> {
