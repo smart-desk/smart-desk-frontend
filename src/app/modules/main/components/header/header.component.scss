@@ -1,9 +1,11 @@
 @import 'src/assets/styles/variables';
 
-nz-header {
-    background-color: $base-bg;
-    padding: 0;
-    height: $base-unit * 6;
-    line-height: $base-unit * 6;
-    border-bottom: 1px solid $grey-light;
+.header {
+    display: grid;
+    grid-template-columns: auto auto 1fr auto;
+    grid-column-gap: $base-unit * 2;
+}
+
+.logo {
+    line-height: $base-unit * 4;
 }
