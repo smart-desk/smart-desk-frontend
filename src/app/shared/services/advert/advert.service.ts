@@ -3,19 +3,28 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Advert, AdvertListResponse } from '../../models/models.dto';
 
+export interface AdvertRequestOptions {
+    categoryId?: string;
+    page?: number;
+}
+
 @Injectable()
 export class AdvertService {
     constructor(private http: HttpClient) {}
 
-    getAdverts(categoryId: string): Observable<AdvertListResponse> {
+    getAdverts(options: AdvertRequestOptions): Observable<AdvertListResponse> {
         let path = '/adverts';
-        const options: string[] = [];
+        const optionsList: string[] = [];
 
-        if (categoryId) {
-            options.push(`category_id=${categoryId}`);
+        if (options.categoryId) {
+            optionsList.push(`category_id=${options.categoryId}`);
         }
 
-        path += options.length ? `?${options.join('&')}` : '';
+        if (options.page) {
+            optionsList.push(`page=${options.page}`);
+        }
+
+        path += optionsList.length ? `?${optionsList.join('&')}` : '';
         return this.http.get<AdvertListResponse>(path);
     }
 

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { Observable } from 'rxjs';
 import { FieldSettingsComponent, OperationState } from '../field-settings';
 import { CreatorFieldRadio } from '../../../../shared/models/models.dto';
-import { CreatorFieldRadioService } from '../../../../shared/services/creator';
+import { CreatorFieldRadioService } from '../../../../shared/services';
 import { FieldService } from '../../../../shared/services';
 
 class CreatorFieldRadioControl extends CreatorFieldRadio {
