@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Advert } from '../../../../shared/models/models.dto';
+import { Advert, AdvertListResponse } from '../../../../shared/models/models.dto';
 import { AdvertDataService } from '../../../../shared/services/advert/advert-data.service';
 
 @Component({
