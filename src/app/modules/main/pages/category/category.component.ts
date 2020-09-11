@@ -12,14 +12,24 @@ import { AdvertDataService } from '../../../../shared/services/advert/advert-dat
 export class CategoryComponent implements OnInit {
     adverts: Advert[];
     isLoaded: boolean;
+    totlaPages: number;
 
     constructor(private advertDataService: AdvertDataService, private cd: ChangeDetectorRef) {}
 
     ngOnInit(): void {
         this.advertDataService.adverts$.subscribe(res => {
-            this.adverts = res.data;
-            this.isLoaded = true;
-            this.cd.detectChanges();
+            this.loading(res);
         });
+    }
+
+    loadPage(loadPage) {
+        this.advertDataService.changePage(loadPage);
+    }
+
+    loading(res) {
+        this.totlaPages = Math.ceil(res.total_count / res.limit);
+        this.adverts = res.data;
+        this.isLoaded = true;
+        this.cd.detectChanges();
     }
 }
