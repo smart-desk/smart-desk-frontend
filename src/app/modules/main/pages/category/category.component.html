@@ -4,4 +4,4 @@
 <div *ngIf="isLoaded && (!adverts || !adverts.length)">В этой категории еще нет объявлений</div>
 <app-adverts-list *ngIf="isLoaded" [adverts]="adverts"> </app-adverts-list>
 
-<app-pagination class="pagination" [nzTotal]="totlaPages" (page)="loadPage($event)"></app-pagination>
+<app-pagination class="pagination" [totalPages]="totalPages" (page)="loadPage($event)"></app-pagination>
