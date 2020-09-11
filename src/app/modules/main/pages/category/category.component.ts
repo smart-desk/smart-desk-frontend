@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Advert } from '../../../../shared/models/models.dto';
 import { AdvertDataService } from '../../../../shared/services/advert/advert-data.service';
-import { Subject } from 'rxjs';
 
 @Component({
     selector: 'app-category',
@@ -13,7 +12,7 @@ import { Subject } from 'rxjs';
 export class CategoryComponent implements OnInit {
     adverts: Advert[];
     isLoaded: boolean;
-    totalPages: number;
+    totalItems: number;
 
     constructor(private advertDataService: AdvertDataService, private cd: ChangeDetectorRef) {}
 
@@ -28,8 +27,7 @@ export class CategoryComponent implements OnInit {
     }
 
     loading(res) {
-        this.totalPages = Math.ceil(res.total_count / res.limit);
-        console.log('this.totlaPages', this.totalPages);
+        this.totalItems = res.limit;
         this.adverts = res.data;
         this.isLoaded = true;
         this.cd.detectChanges();
