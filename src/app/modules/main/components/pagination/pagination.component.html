@@ -1,6 +1,6 @@
 <nz-pagination
-    *ngIf="totalAdverts"
     [nzPageIndex]="pageIndex"
     [nzTotal]="totalAdverts"
     (nzPageIndexChange)="pageChange($event)"
+    [nzPageSize]="pageSize"
 ></nz-pagination>

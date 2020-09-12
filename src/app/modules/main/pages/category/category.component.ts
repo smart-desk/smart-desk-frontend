@@ -13,21 +13,23 @@ export class CategoryComponent implements OnInit {
     adverts: Advert[];
     isLoaded: boolean;
     totalItems: number;
+    pageSize: number;
 
     constructor(private advertDataService: AdvertDataService, private cd: ChangeDetectorRef) {}
 
     ngOnInit(): void {
         this.advertDataService.adverts$.subscribe(res => {
-            this.loading(res);
+            this.initAdvertList(res);
         });
     }
 
-    loadPage(loadPage) {
+    changePage(loadPage) {
         this.advertDataService.changePage(loadPage);
     }
 
-    loading(res) {
-        this.totalItems = res.limit;
+    initAdvertList(res) {
+        this.totalItems = res.total_count;
+        this.pageSize = res.limit;
         this.adverts = res.data;
         this.isLoaded = true;
         this.cd.detectChanges();
