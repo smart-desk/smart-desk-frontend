@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Advert, AdvertListResponse } from '../../../../shared/models/models.dto';
+import { Advert } from '../../../../shared/models/models.dto';
 import { AdvertDataService } from '../../../../shared/services/advert/advert-data.service';
 
 @Component({
@@ -14,6 +14,7 @@ export class CategoryComponent implements OnInit {
     isLoaded: boolean;
     totalItems: number;
     pageSize: number;
+    pageIndex: number;
 
     constructor(private advertDataService: AdvertDataService, private cd: ChangeDetectorRef) {}
 
@@ -28,6 +29,7 @@ export class CategoryComponent implements OnInit {
     }
 
     initAdvertList(res) {
+        this.pageIndex = res.page;
         this.totalItems = res.total_count;
         this.pageSize = res.limit;
         this.adverts = res.data;

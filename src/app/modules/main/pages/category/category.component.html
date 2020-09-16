@@ -4,4 +4,10 @@
 <div *ngIf="isLoaded && (!adverts || !adverts.length)">В этой категории еще нет объявлений</div>
 <app-adverts-list *ngIf="isLoaded" [adverts]="adverts"> </app-adverts-list>
 
-<app-pagination class="pagination" [totalAdverts]="totalItems" [pageSize]="pageSize" (page)="changePage($event)"></app-pagination>
+<app-pagination
+    class="pagination"
+    [pageIndex]="pageIndex"
+    [totalAdverts]="totalItems"
+    [pageSize]="pageSize"
+    (page)="changePage($event)"
+></app-pagination>

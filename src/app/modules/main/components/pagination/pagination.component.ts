@@ -1,5 +1,4 @@
 import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-pagination',
@@ -11,13 +10,9 @@ export class PaginationComponent implements OnInit {
     @Output() page = new EventEmitter<string>();
     @Input() totalAdverts: number;
     @Input() pageSize: number;
-    pageIndex = 1;
+    @Input() pageIndex: number;
 
-    constructor(private route: ActivatedRoute) {}
-
-    ngOnInit(): void {
-        this.pageIndex = this.route.snapshot.queryParams.page;
-    }
+    ngOnInit(): void {}
 
     pageChange(value) {
         this.page.emit(value);
