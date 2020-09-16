@@ -17,6 +17,10 @@
                 <i nz-icon nzType="delete" nzTheme="outline"></i>
             </button>
         </p>
+        <div [ngSwitch]="mode">
+            <i nz-icon nzType="save" *ngSwitchCase="Mode.SAVE" nzTheme="outline"></i>
+            <i nz-icon [nzType]="'sync'" *ngSwitchCase="Mode.EDIT" [nzSpin]="true"></i>
+        </div>
         <quill-editor [ngModel]="content" (onContentChanged)="save($event)"></quill-editor>
     </div>
 </div>
