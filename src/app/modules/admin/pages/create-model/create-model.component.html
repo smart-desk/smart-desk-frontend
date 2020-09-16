@@ -4,7 +4,7 @@
 </nz-page-header>
 
 <div class="create-model__content">
-    <form *ngIf="!model" nz-form [formGroup]="modelForm" (submit)="createModel()">
+    <form nz-form [formGroup]="modelForm" (submit)="createModel()">
         <nz-form-item [nzGutter]="8">
             <nz-form-control nzHasFeedback [nzSpan]="6" nzErrorTip="Обязательное поле">
                 <input nzSize="large" nz-input formControlName="name" name="required" required placeholder="Имя модели" />

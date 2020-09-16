@@ -8,36 +8,10 @@
 <ng-container *ngIf="model">
     <div class="edit-model__content">
         <h1 nz-typography>{{ model.name }}</h1>
-        <nz-row nzGutter="16">
-            <nz-col nzSpan="12">
-                <ng-container *ngIf="model.sections">
-                    <ng-container *ngFor="let section of model.sections">
-                        <ng-container #fields></ng-container>
-                        <button
-                            nz-dropdown
-                            [disabled]="!model"
-                            [nzDisabled]="!model"
-                            nz-button
-                            [nzDropdownMenu]="menu"
-                            nzType="dashed"
-                            nzTrigger="click"
-                        >
-                            <i nz-icon nzType="plus"></i>
-                            Добавить поле
-                        </button>
-                        <nz-dropdown-menu #menu="nzDropdownMenu">
-                            <ul nz-menu>
-                                <li nz-menu-item (click)="createField(input.type, section)" *ngFor="let input of availableInputTypes">
-                                    {{ input.title }}
-                                </li>
-                            </ul>
-                        </nz-dropdown-menu>
-                    </ng-container>
-                </ng-container>
-            </nz-col>
-            <nz-col nzSpan="12">
-                <app-preview [modelId]="model.id"></app-preview>
-            </nz-col>
-        </nz-row>
+        <div class="edit-model__section-form" *ngFor="let section of model.sections">
+            <app-section-form [section]="section"></app-section-form>
+        </div>
+        <!-- todo remove or use-->
+        <!-- <app-preview [modelId]="model.id"></app-preview>-->
     </div>
 </ng-container>

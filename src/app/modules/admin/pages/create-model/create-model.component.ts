@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
 import { Model } from '../../../../shared/models/models.dto';
 import { ModelService, SectionService } from '../../../../shared/services';
 
@@ -26,17 +25,8 @@ export class CreateModelComponent {
             .createModel({
                 name: this.modelForm.get('name').value,
             })
-            .pipe(
-                switchMap(model => {
-                    this.model = model;
-                    return this.sectionService.createSection({
-                        type: 'params',
-                        model_id: this.model.id,
-                    });
-                })
-            )
-            .subscribe(() => {
-                this.router.navigate(['admin', 'models', 'edit', this.model.id]);
+            .subscribe(model => {
+                this.router.navigate(['admin', 'models', 'edit', model.id]);
             });
     }
 
