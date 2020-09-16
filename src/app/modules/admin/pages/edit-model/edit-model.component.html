@@ -8,10 +8,15 @@
 <ng-container *ngIf="model">
     <div class="edit-model__content">
         <h1 nz-typography>{{ model.name }}</h1>
-        <div class="edit-model__section-form" *ngFor="let section of model.sections">
-            <app-section-form [section]="section"></app-section-form>
-        </div>
-        <!-- todo remove or use-->
-        <!-- <app-preview [modelId]="model.id"></app-preview>-->
+        <nz-row>
+            <nz-col nzSpan="12">
+                <div class="edit-model__section-form" *ngFor="let section of model.sections">
+                    <app-section-form [section]="section" (changeFields)="changeFields()"></app-section-form>
+                </div>
+            </nz-col>
+            <nz-col nzSpan="12">
+                <app-preview [modelId]="model.id"></app-preview>
+            </nz-col>
+        </nz-row>
     </div>
 </ng-container>

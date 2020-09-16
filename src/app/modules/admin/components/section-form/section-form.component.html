@@ -1,3 +1,4 @@
+<h3 nz-typography>{{ title }}</h3>
 <ng-container #fields></ng-container>
 <button nz-dropdown [disabled]="!section" [nzDisabled]="!section" nz-button [nzDropdownMenu]="menu" nzType="dashed" nzTrigger="click">
     <i nz-icon nzType="plus"></i>
@@ -5,7 +6,7 @@
 </button>
 <nz-dropdown-menu #menu="nzDropdownMenu">
     <ul nz-menu>
-        <li nz-menu-item (click)="createField(input.type, section)" *ngFor="let input of availableInputTypes">
+        <li nz-menu-item (click)="createField(input.type, section)" *ngFor="let input of availableFields">
             {{ input.title }}
         </li>
     </ul>

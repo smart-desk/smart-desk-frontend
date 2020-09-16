@@ -5,14 +5,16 @@ import {
     Component,
     ComponentFactoryResolver,
     ComponentRef,
+    EventEmitter,
     Input,
+    Output,
     ViewChild,
     ViewContainerRef,
 } from '@angular/core';
 import { Field, Section } from '../../../../shared/models/models.dto';
 import { FieldSettingsComponent, OperationState } from '../field-settings';
 import { getCreatorFieldComponentResolver } from '../../../../shared/services/field-resolvers/field-resolvers';
-import { fieldMetadataList, FieldTypes } from '../../../../shared/models/field-metadata';
+import { FieldMetadata, fieldMetadataList, FieldTypes } from '../../../../shared/models/field-metadata';
 import { FieldService } from '../../../../shared/services';
 
 @Component({
@@ -25,7 +27,10 @@ export class SectionFormComponent implements AfterViewInit {
     @Input()
     section: Section;
 
-    availableInputTypes = fieldMetadataList;
+    @Output()
+    changeFields = new EventEmitter();
+
+    private availableInputTypes = fieldMetadataList;
 
     private components: ComponentRef<FieldSettingsComponent<unknown>>[] = [];
 
@@ -58,6 +63,25 @@ export class SectionFormComponent implements AfterViewInit {
             });
     }
 
+    get title(): string {
+        // todo enum
+        switch (this.section.type) {
+            case 'params':
+                return 'Параметры объявления';
+            case 'price':
+                return 'Цена';
+            case 'location':
+                return 'Местоположение';
+            case 'contacts':
+                return 'Контакты';
+        }
+    }
+
+    get availableFields(): FieldMetadata[] {
+        // todo filter based on type
+        return [...this.availableInputTypes];
+    }
+
     private resolveFieldComponent(field: Field): ComponentRef<FieldSettingsComponent<unknown>> {
         const resolver = getCreatorFieldComponentResolver(this.componentFactoryResolver, field.type as FieldTypes);
         const component = this.fieldsFormContainerRef.createComponent(resolver);
@@ -83,5 +107,9 @@ export class SectionFormComponent implements AfterViewInit {
         this.cd.detectChanges();
     }
 
-    private onSave(state: OperationState): void {}
+    private onSave(state: OperationState): void {
+        if (state === OperationState.SUCCESS) {
+            this.changeFields.emit();
+        }
+    }
 }
