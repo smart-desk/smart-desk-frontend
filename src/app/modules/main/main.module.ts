@@ -22,6 +22,8 @@ import { AdvertCreateComponent } from './pages/advert-create/advert-create.compo
 import { HeaderComponent } from './components/header/header.component';
 import { AdvertsListComponent } from './components/adverts-list/adverts-list.component';
 import { NavigationHeaderComponent } from './components/navigation-header/navigation-header.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
+import { NzPaginationModule } from 'ng-zorro-antd';
 
 const NZModules = [
     NzCascaderModule,
@@ -36,11 +38,12 @@ const NZModules = [
     NzSelectModule,
     NzSpinModule,
     NzCardModule,
+    NzPaginationModule,
 ];
 
 const pages = [MainComponent, CategoryComponent, AdvertComponent, AdvertEditComponent, AdvertCreateComponent, AdvertsListComponent];
 
-const components = [HeaderComponent, NavigationHeaderComponent];
+const components = [HeaderComponent, NavigationHeaderComponent, PaginationComponent];
 
 @NgModule({
     declarations: [...pages, ...components],

@@ -25,7 +25,6 @@ export class AdvertDataService {
                             requestOptions.page = parseInt(queryParams.get('page'), 10);
                         } catch (e) {}
                     }
-
                     return this.advertService.getAdverts(requestOptions);
                 })
             )
