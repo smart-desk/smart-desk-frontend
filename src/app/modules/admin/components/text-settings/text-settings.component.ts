@@ -22,7 +22,6 @@ export class TextSettingsComponent extends FieldSettingsComponent<Partial<Creato
     saveContent$ = new Subject<string>();
     mode: Mode;
     Mode = Mode;
-
     content = '';
 
     constructor(
@@ -55,6 +54,7 @@ export class TextSettingsComponent extends FieldSettingsComponent<Partial<Creato
                     this.state = OperationState.SUCCESS;
                     this.save$.next(this.state);
                     this.mode = Mode.SAVE;
+                    this.cd.detectChanges();
                 },
                 error => {
                     this.state = OperationState.ERROR;
