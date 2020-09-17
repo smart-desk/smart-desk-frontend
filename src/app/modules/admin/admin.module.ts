@@ -36,6 +36,7 @@ import { TextareaSettingsComponent } from './components/textarea-settings/textar
 import { RadioSettingsComponent } from './components/radio-settings/radio-settings.component';
 import { TextSettingsComponent } from './components/text-settings/text-settings.component';
 import { editorSettings } from '../../app.config';
+import { SectionFormComponent } from './components/section-form/section-form.component';
 
 const components = [
     TextSettingsComponent,
@@ -45,6 +46,7 @@ const components = [
     PreviewComponent,
     CategoryFormComponent,
     AdminMenuComponent,
+    SectionFormComponent,
 ];
 
 const pages = [AdminComponent, EditModelComponent, CreateModelComponent, ModelsComponent, CategoriesComponent];
