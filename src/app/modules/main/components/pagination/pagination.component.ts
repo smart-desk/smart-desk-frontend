@@ -8,7 +8,7 @@ import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectionStrategy
 })
 export class PaginationComponent implements OnInit {
     @Output() page = new EventEmitter<string>();
-    @Input() totalAdverts: number;
+    @Input() totalItems: number;
     @Input() pageSize: number;
     @Input() pageIndex: number;
 

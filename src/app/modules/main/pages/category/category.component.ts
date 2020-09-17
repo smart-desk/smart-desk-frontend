@@ -12,7 +12,7 @@ import { AdvertDataService } from '../../../../shared/services/advert/advert-dat
 export class CategoryComponent implements OnInit {
     adverts: Advert[];
     isLoaded: boolean;
-    totalItems: number;
+    totalAdverts: number;
     pageSize: number;
     pageIndex: number;
 
@@ -30,7 +30,7 @@ export class CategoryComponent implements OnInit {
 
     initAdvertList(res) {
         this.pageIndex = res.page;
-        this.totalItems = res.total_count;
+        this.totalAdverts = res.total_count;
         this.pageSize = res.limit;
         this.adverts = res.data;
         this.isLoaded = true;
