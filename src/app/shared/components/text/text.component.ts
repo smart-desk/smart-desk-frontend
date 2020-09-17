@@ -4,7 +4,7 @@ import { FieldFormComponent } from '../field-form/field-form.component';
 import { AdvertFieldBase, CreatorFieldText } from '../../models/models.dto';
 
 @Component({
-    selector: 'app-text-editor',
+    selector: 'app-text',
     templateUrl: './text.component.html',
     styleUrls: ['./text.component.scss'],
 })

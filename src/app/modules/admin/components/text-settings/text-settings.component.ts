@@ -6,6 +6,11 @@ import { CreatorFieldText } from '../../../../shared/models/models.dto';
 import { CreatorFieldTextService, FieldService } from '../../../../shared/services';
 import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 
+enum Mode {
+    EDIT,
+    SAVE,
+}
+
 @Component({
     selector: 'app-text-editor',
     templateUrl: './text-settings.component.html',
@@ -15,7 +20,8 @@ import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs/oper
 export class TextSettingsComponent extends FieldSettingsComponent<Partial<CreatorFieldText>> implements OnInit {
     state: OperationState;
     saveContent$ = new Subject<string>();
-
+    mode: Mode;
+    Mode = Mode;
     content = '';
 
     constructor(
@@ -47,6 +53,8 @@ export class TextSettingsComponent extends FieldSettingsComponent<Partial<Creato
                     this.field.data = res;
                     this.state = OperationState.SUCCESS;
                     this.save$.next(this.state);
+                    this.mode = Mode.SAVE;
+                    this.cd.detectChanges();
                 },
                 error => {
                     this.state = OperationState.ERROR;
@@ -57,9 +65,11 @@ export class TextSettingsComponent extends FieldSettingsComponent<Partial<Creato
 
     ngOnInit(): void {
         this.content = (this.field.data && this.field.data.value) || '';
+        this.mode = Mode.SAVE;
     }
 
     save(change: ContentChange): void {
+        this.mode = Mode.EDIT;
         this.saveContent$.next(change.html);
     }
 
