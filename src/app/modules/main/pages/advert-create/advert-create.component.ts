@@ -7,18 +7,16 @@ import {
     ViewChild,
     ViewContainerRef,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { NzCascaderOption } from 'ng-zorro-antd';
-import arrayToTree from 'array-to-tree';
 import { BehaviorSubject } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { AdvertService, CategoryService, ModelService } from '../../../../shared/services';
-import { Advert, Category, Field, Section } from '../../../../shared/models/models.dto';
+import { AdvertRequest, Category, Field, Section } from '../../../../shared/models/models.dto';
 import { FieldFormComponent } from '../../../../shared/components/field-form/field-form.component';
 import { getFieldComponentResolver } from '../../../../shared/services/field-resolvers/field-resolvers';
 import { FieldTypes } from '../../../../shared/models/field-metadata';
-import { Router } from '@angular/router';
 
-// todo markup
 // todo check subscriptions
 @Component({
     selector: 'app-advert-create',
@@ -90,7 +88,7 @@ export class AdvertCreateComponent implements OnInit {
             return;
         }
 
-        const advert = new Advert();
+        const advert = new AdvertRequest();
         advert.title = this.title;
         advert.category_id = this.selectedCategory.id;
         advert.model_id = this.selectedCategory.model_id;
