@@ -25,6 +25,11 @@ export class AdvertDataService {
                             requestOptions.page = parseInt(queryParams.get('page'), 10);
                         } catch (e) {}
                     }
+
+                    if (queryParams.has('search')) {
+                        requestOptions.search = queryParams.get('search');
+                    }
+
                     return this.advertService.getAdverts(requestOptions);
                 })
             )
@@ -47,6 +52,15 @@ export class AdvertDataService {
             queryParams: {
                 ...this.route.snapshot.queryParams,
                 page: null,
+            },
+        });
+    }
+
+    search(phrase: string) {
+        this.router.navigate([], {
+            queryParams: {
+                ...this.route.snapshot.queryParams,
+                search: phrase,
             },
         });
     }

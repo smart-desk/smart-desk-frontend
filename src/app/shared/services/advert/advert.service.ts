@@ -6,6 +6,7 @@ import { Advert, AdvertListResponse } from '../../models/models.dto';
 export interface AdvertRequestOptions {
     categoryId?: string;
     page?: number;
+    search?: string;
 }
 
 @Injectable()
@@ -22,6 +23,10 @@ export class AdvertService {
 
         if (options.page) {
             optionsList.push(`page=${options.page}`);
+        }
+
+        if (options.search) {
+            optionsList.push(`search=${options.search}`);
         }
 
         path += optionsList.length ? `?${optionsList.join('&')}` : '';
