@@ -24,27 +24,49 @@ export class Category {
     parent_id: string;
     name: string;
 }
+export class Advert {
+    id: string;
+    title: string;
+    category_id: string;
+    model_id: string;
+    created_at: string;
+    updated_at: string;
+}
 export class AdvertFieldBase {
     id: string;
     advert_id: string;
     value: unknown;
     field_id: string;
 }
-export class Advert {
+export class AdvertSection {
+    id: string;
+    type: string;
+    fields: AdvertFieldBase[];
+}
+export class AdvertResponse {
     id: string;
     title: string;
     category_id: string;
     model_id: string;
-    data: AdvertFieldBase[];
     created_at: string;
     updated_at: string;
+    sections: AdvertSection[];
 }
-
 export class AdvertListResponse {
-    data: Advert[];
+    data: AdvertResponse[];
     page: number;
     limit: number;
     total_count: number;
+}
+
+export class AdvertRequest {
+    id: string;
+    title: string;
+    category_id: string;
+    model_id: string;
+    created_at: string;
+    updated_at: string;
+    data: AdvertFieldBase[];
 }
 export class CreatorFieldInputText {
     id: string;
