@@ -26,6 +26,7 @@ import { NavigationHeaderComponent } from './components/navigation-header/naviga
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { IndexComponent } from './pages/index/index.component';
 import { AdvertCardComponent } from './components/advert-card/advert-card.component';
+import { IndexComponent } from './pages/index/index.component';
 
 const NZModules = [
     NzCascaderModule,
