@@ -24,6 +24,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { AdvertsListComponent } from './components/adverts-list/adverts-list.component';
 import { NavigationHeaderComponent } from './components/navigation-header/navigation-header.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { IndexComponent } from './pages/index/index.component';
 import { AdvertCardComponent } from './components/advert-card/advert-card.component';
 
 const NZModules = [
@@ -42,7 +43,15 @@ const NZModules = [
     NzPaginationModule,
 ];
 
-const pages = [MainComponent, CategoryComponent, AdvertComponent, AdvertEditComponent, AdvertCreateComponent, AdvertsListComponent];
+const pages = [
+    MainComponent,
+    CategoryComponent,
+    AdvertComponent,
+    AdvertEditComponent,
+    AdvertCreateComponent,
+    AdvertsListComponent,
+    IndexComponent,
+];
 
 const components = [HeaderComponent, NavigationHeaderComponent, PaginationComponent, AdvertCardComponent];
 
