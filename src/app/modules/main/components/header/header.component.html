@@ -19,10 +19,10 @@
     </div>
     <div class="search">
         <nz-input-group nzSearch [nzAddOnBefore]="prefix" [nzAddOnAfter]="suffixButton">
-            <input type="text" nz-input placeholder="Поиск по объявлениям" />
+            <input [(ngModel)]="searchPhrase" type="text" nz-input [placeholder]="getSearchPlaceholder()" />
         </nz-input-group>
         <ng-template #suffixButton>
-            <button nz-button nzSearch>Найти</button>
+            <button nz-button nzSearch (click)="search()">Найти</button>
         </ng-template>
         <ng-template #prefix>
             <i nz-icon nzType="search" prefix></i>

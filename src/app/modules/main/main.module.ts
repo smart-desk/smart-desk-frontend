@@ -13,6 +13,7 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzPaginationModule } from 'ng-zorro-antd';
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
 import { CategoryComponent } from './pages/category/category.component';
@@ -23,7 +24,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { AdvertsListComponent } from './components/adverts-list/adverts-list.component';
 import { NavigationHeaderComponent } from './components/navigation-header/navigation-header.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
-import { NzPaginationModule } from 'ng-zorro-antd';
+import { IndexComponent } from './pages/index/index.component';
 
 const NZModules = [
     NzCascaderModule,
@@ -41,7 +42,15 @@ const NZModules = [
     NzPaginationModule,
 ];
 
-const pages = [MainComponent, CategoryComponent, AdvertComponent, AdvertEditComponent, AdvertCreateComponent, AdvertsListComponent];
+const pages = [
+    MainComponent,
+    CategoryComponent,
+    AdvertComponent,
+    AdvertEditComponent,
+    AdvertCreateComponent,
+    AdvertsListComponent,
+    IndexComponent,
+];
 
 const components = [HeaderComponent, NavigationHeaderComponent, PaginationComponent];
 

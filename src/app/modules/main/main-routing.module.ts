@@ -5,12 +5,17 @@ import { CategoryComponent } from './pages/category/category.component';
 import { AdvertComponent } from './pages/advert/advert.component';
 import { AdvertEditComponent } from './pages/advert-edit/advert-edit.component';
 import { AdvertCreateComponent } from './pages/advert-create/advert-create.component';
+import { IndexComponent } from './pages/index/index.component';
 
 const routes: Routes = [
     {
         path: '',
         component: MainComponent,
         children: [
+            {
+                path: '',
+                component: IndexComponent,
+            },
             {
                 path: 'adverts/create',
                 component: AdvertCreateComponent,
