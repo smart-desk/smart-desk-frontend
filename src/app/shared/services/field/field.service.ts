@@ -31,14 +31,14 @@ export class FieldService {
     /**
      * Update field by id
      */
-    updateField(id, field: Field): Observable<Field> {
+    updateField(id: string, field: Field): Observable<Field> {
         return this.http.put<Field>(`/fields/${id}`, field);
     }
 
     /**
      * Delete field by id
      */
-    deleteField(id): Observable<unknown> {
+    deleteField(id: string): Observable<unknown> {
         return this.http.delete<Field>(`/fields/${id}`);
     }
 }

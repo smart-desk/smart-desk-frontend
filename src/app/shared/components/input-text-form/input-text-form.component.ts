@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FieldFormComponent } from '../field-form/field-form.component';
-import { AdvertFieldBase, CreatorFieldInputText } from '../../models/models.dto';
+import { AdvertFieldBase, ParamsInputText } from '../../models/models.dto';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -9,12 +9,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
     styleUrls: ['./input-text-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputTextFormComponent extends FieldFormComponent<CreatorFieldInputText> implements OnInit {
+export class InputTextFormComponent extends FieldFormComponent<ParamsInputText> implements OnInit {
     form: FormGroup;
 
     ngOnInit(): void {
         const valueValidators = [];
-        if (this.field.data && this.field.data.required) {
+        if (this.field.params && this.field.params.required) {
             valueValidators.push(Validators.required);
         }
 

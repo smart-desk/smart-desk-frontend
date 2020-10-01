@@ -1,4 +1,4 @@
-<ng-container *ngIf="field?.data as data">
+<ng-container *ngIf="field?.params as data">
     <form nz-form nzLayout="vertical" class="textarea" [formGroup]="form">
         <nz-form-item>
             <nz-form-label [nzRequired]="data.required">{{ data.label }}</nz-form-label>

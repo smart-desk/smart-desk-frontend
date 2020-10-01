@@ -3,8 +3,9 @@
 export class Field {
     id: string;
     section_id: string;
+    title: string;
     type: string;
-    data: unknown;
+    params: unknown;
 }
 export class Section {
     id: string;
@@ -68,27 +69,27 @@ export class AdvertRequest {
     updated_at: string;
     data: AdvertFieldBase[];
 }
-export class CreatorFieldInputText {
+export class ParamsInputText {
     id: string;
     field_id: string;
     label: string;
     placeholder: string;
     required: boolean;
 }
-export class CreatorFieldTextarea {
+export class ParamsTextarea {
     id: string;
     field_id: string;
     label: string;
     placeholder: string;
     required: boolean;
 }
-export class CreatorFieldRadio {
+export class ParamsRadio {
     id: string;
     field_id: string;
     label: string;
     value: string;
 }
-export class CreatorFieldText {
+export class ParamsText {
     id: string;
     field_id: string;
     value: string;

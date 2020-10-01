@@ -48,12 +48,12 @@
                 <i nz-icon nzType="delete" nzTheme="outline"></i>
             </button>
             <h4 nz-typography class="input-text__label">
-                {{ field.data.label }}
-                <span class="input-text__label-additional" nz-typography nzType="secondary" *ngIf="field?.data?.required">
+                {{ field.params.label }}
+                <span class="input-text__label-additional" nz-typography nzType="secondary" *ngIf="field?.params?.required">
                     обязательное
                 </span>
             </h4>
-            <span nz-typography nzType="secondary">{{ field?.data?.placeholder }}</span>
+            <span nz-typography nzType="secondary">{{ field?.params?.placeholder }}</span>
         </ng-container>
     </ng-container>
 </div>

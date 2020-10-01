@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { CreatorFieldInputText } from '../../../../shared/models/models.dto';
-import { CreatorFieldInputTextService, FieldService } from '../../../../shared/services';
+import { ParamsInputText, Field } from '../../../../shared/models/models.dto';
+import { FieldService } from '../../../../shared/services';
 import { FieldSettingsComponent, OperationState } from '../field-settings';
 
 enum Mode {
@@ -16,7 +16,7 @@ enum Mode {
     styleUrls: ['./input-text-settings.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputTextSettingsComponent extends FieldSettingsComponent<Partial<CreatorFieldInputText>> implements OnInit {
+export class InputTextSettingsComponent extends FieldSettingsComponent<Partial<ParamsInputText>> implements OnInit {
     OperationState = OperationState;
     state: OperationState;
 
@@ -25,22 +25,20 @@ export class InputTextSettingsComponent extends FieldSettingsComponent<Partial<C
     mode: Mode;
     Mode = Mode;
 
-    constructor(
-        private creatorFieldInputTextService: CreatorFieldInputTextService,
-        private fieldService: FieldService,
-        private fb: FormBuilder,
-        private cd: ChangeDetectorRef
-    ) {
+    constructor(private fieldService: FieldService, private fb: FormBuilder, private cd: ChangeDetectorRef) {
         super();
     }
 
     ngOnInit(): void {
-        this.mode = this.field && this.field.data && this.field.data.id ? Mode.VIEW : Mode.EDIT;
+        if (!this.field) {
+            this.field = {} as Field;
+        }
+        this.mode = this.field.id ? Mode.VIEW : Mode.EDIT;
 
         this.inputTextForm = this.fb.group({
-            label: [(this.field && this.field.data && this.field.data.label) || '', Validators.required],
-            placeholder: [(this.field && this.field.data && this.field.data.placeholder) || ''],
-            required: [(this.field && this.field.data && this.field.data.required) || false],
+            label: [(this.field.params && this.field.params.label) || '', Validators.required],
+            placeholder: [(this.field.params && this.field.params.placeholder) || ''],
+            required: [(this.field.params && this.field.params.required) || false],
         });
     }
 
@@ -48,21 +46,18 @@ export class InputTextSettingsComponent extends FieldSettingsComponent<Partial<C
         this.state = OperationState.LOADING;
         this.save$.next(this.state);
 
-        const input: CreatorFieldInputText = this.inputTextForm.getRawValue();
-        input.field_id = this.field.id;
+        this.field.params = this.inputTextForm.getRawValue() as ParamsInputText;
+        this.field.title = this.field.params.label;
 
-        let request: Observable<CreatorFieldInputText>;
-
-        if (!(this.field && this.field.data && this.field.data.id)) {
-            this.state = OperationState.SUCCESS;
-            request = this.creatorFieldInputTextService.createInputText(input);
+        let request: Observable<Field>;
+        if (this.field.id) {
+            request = this.fieldService.updateField(this.field.id, this.field);
         } else {
-            request = this.creatorFieldInputTextService.updateInputText(this.field.data.id, input);
-            this.state = OperationState.SUCCESS;
+            request = this.fieldService.createField(this.field);
         }
 
         request.subscribe(res => {
-            this.field.data = res;
+            this.field.params = res;
             this.toggleMode();
             this.save$.next(this.state);
 
@@ -75,12 +70,7 @@ export class InputTextSettingsComponent extends FieldSettingsComponent<Partial<C
     }
 
     cancel(): void {
-        if (this.field.data && this.field.data.id) {
-            this.toggleMode();
-        } else {
-            // todo remove if field is created after hitting the OK button
-            this.delete();
-        }
+        this.toggleMode();
     }
 
     delete(): void {
