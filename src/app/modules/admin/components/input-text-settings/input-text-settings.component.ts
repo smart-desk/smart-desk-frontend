@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { ParamsInputText, Field } from '../../../../shared/models/models.dto';
+import { Field, ParamsInputText } from '../../../../shared/models/models.dto';
 import { FieldService } from '../../../../shared/services';
 import { FieldSettingsComponent, OperationState } from '../field-settings';
 
@@ -20,7 +20,7 @@ export class InputTextSettingsComponent extends FieldSettingsComponent<Partial<P
     OperationState = OperationState;
     state: OperationState;
 
-    inputTextForm: FormGroup;
+    form: FormGroup;
 
     mode: Mode;
     Mode = Mode;
@@ -30,12 +30,9 @@ export class InputTextSettingsComponent extends FieldSettingsComponent<Partial<P
     }
 
     ngOnInit(): void {
-        if (!this.field) {
-            this.field = {} as Field;
-        }
         this.mode = this.field.id ? Mode.VIEW : Mode.EDIT;
 
-        this.inputTextForm = this.fb.group({
+        this.form = this.fb.group({
             label: [(this.field.params && this.field.params.label) || '', Validators.required],
             placeholder: [(this.field.params && this.field.params.placeholder) || ''],
             required: [(this.field.params && this.field.params.required) || false],
@@ -46,8 +43,10 @@ export class InputTextSettingsComponent extends FieldSettingsComponent<Partial<P
         this.state = OperationState.LOADING;
         this.save$.next(this.state);
 
-        this.field.params = this.inputTextForm.getRawValue() as ParamsInputText;
-        this.field.title = this.field.params.label;
+        this.field.params = {
+            ...(this.field.params || {}),
+            ...this.form.getRawValue(),
+        };
 
         let request: Observable<Field>;
         if (this.field.id) {
@@ -57,7 +56,8 @@ export class InputTextSettingsComponent extends FieldSettingsComponent<Partial<P
         }
 
         request.subscribe(res => {
-            this.field.params = res;
+            this.field = res;
+            this.state = OperationState.SUCCESS;
             this.toggleMode();
             this.save$.next(this.state);
 
@@ -74,7 +74,6 @@ export class InputTextSettingsComponent extends FieldSettingsComponent<Partial<P
     }
 
     delete(): void {
-        // in order to delete InputText it would be sufficient to remove corresponding field
         this.fieldService.deleteField(this.field.id).subscribe(() => {
             this.delete$.next(this);
         });

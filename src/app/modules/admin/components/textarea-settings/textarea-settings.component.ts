@@ -30,9 +30,6 @@ export class TextareaSettingsComponent extends FieldSettingsComponent<Partial<Pa
     }
 
     ngOnInit(): void {
-        if (!this.field) {
-            this.field = {} as Field;
-        }
         this.mode = this.field.id ? Mode.VIEW : Mode.EDIT;
 
         this.form = this.fb.group({
@@ -46,7 +43,10 @@ export class TextareaSettingsComponent extends FieldSettingsComponent<Partial<Pa
         this.state = OperationState.LOADING;
         this.save$.next(this.state);
 
-        this.field.params = this.form.getRawValue() as ParamsTextarea;
+        this.field.params = {
+            ...(this.field.params || {}),
+            ...this.form.getRawValue(),
+        };
         this.field.title = this.field.params.label;
 
         let request: Observable<Field>;
@@ -58,7 +58,7 @@ export class TextareaSettingsComponent extends FieldSettingsComponent<Partial<Pa
 
         request.subscribe(res => {
             this.state = OperationState.SUCCESS;
-            this.field.params = res;
+            this.field = res;
             this.toggleMode();
             this.save$.next(this.state);
 

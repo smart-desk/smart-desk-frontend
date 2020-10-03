@@ -2,7 +2,7 @@
     <ng-container [ngSwitch]="mode">
         <div class="input-text__form-container" *ngSwitchCase="Mode.EDIT">
             <p nz-typography nzType="secondary" class="input-text__title">Текстовое поле</p>
-            <form nz-form nzLayout="vertical" [formGroup]="inputTextForm">
+            <form nz-form nzLayout="vertical" [formGroup]="form">
                 <nz-form-item class="input-text__item">
                     <nz-form-control nzErrorTip="Обязательное поле">
                         <input nz-input formControlName="label" name="label" required placeholder="Заголовок" />

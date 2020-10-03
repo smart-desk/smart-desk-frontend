@@ -34,13 +34,12 @@ export class TextSettingsComponent extends FieldSettingsComponent<Partial<Params
                 distinctUntilChanged(),
                 debounceTime(500),
                 switchMap(content => {
-                    const input: Partial<ParamsText> = {
+                    this.field.params = {
+                        ...(this.field.params || {}),
                         value: content,
                     };
 
-                    this.field.params = input;
-
-                    if (this.field) {
+                    if (this.field.id) {
                         return this.fieldService.updateField(this.field.id, this.field);
                     }
                     return this.fieldService.createField(this.field);
@@ -62,9 +61,6 @@ export class TextSettingsComponent extends FieldSettingsComponent<Partial<Params
     }
 
     ngOnInit(): void {
-        if (!this.field) {
-            this.field = {} as FieldWithData<ParamsText>;
-        }
         this.content = (this.field.params && this.field.params.value) || '';
         this.mode = Mode.SAVE;
     }

@@ -95,6 +95,7 @@ export class SectionFormComponent implements AfterViewInit {
 
         this.fieldsFormContainerRef.remove(this.fieldsFormContainerRef.indexOf(targetComponent.hostView));
 
+        this.changeFields.emit();
         this.cd.detectChanges();
     }
 
