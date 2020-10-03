@@ -38,8 +38,12 @@
             <td>{{ data.created_at }}</td>
             <td>{{ data.category_id }}</td>
             <td>
-                <a nz-popconfirm nzPopconfirmTitle="Sure to delete?" (nzOnConfirm)="delete(data.id)">Delete</a>
-                <a nz-popconfirm nzPopconfirmTitle="Sure to delete?" (nzOnConfirm)="edit(data.id)">Edit</a>
+                <p>
+                    <a nz-popconfirm nzPopconfirmTitle="Sure to delete?" (nzOnConfirm)="delete(data.id)">Delete</a>
+                </p>
+                <p>
+                    <a nz-popconfirm nzPopconfirmTitle="Sure to delete?" (nzOnConfirm)="edit(data.id)">Edit</a>
+                </p>
             </td>
         </tr>
     </tbody>
