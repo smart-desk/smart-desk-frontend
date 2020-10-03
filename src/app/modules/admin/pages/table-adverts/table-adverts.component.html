@@ -7,7 +7,16 @@
                 [(nzChecked)]="checked"
                 [nzIndeterminate]="indeterminate"
                 (nzCheckedChange)="onAllChecked($event)"
-            ></th>
+            >
+                <div
+                    #dialogWindow
+                    nz-popconfirm
+                    nzPopconfirmTitle="Are you sure delete this task?"
+                    nzPopconfirmPlacement="bottom"
+                    (nzOnConfirm)="confirm()"
+                    (nzOnCancel)="cancel()"
+                ></div>
+            </th>
             <th nzCustomFilter>
                 id
                 <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
@@ -30,6 +39,7 @@
             <td>{{ data.category_id }}</td>
             <td>
                 <a nz-popconfirm nzPopconfirmTitle="Sure to delete?" (nzOnConfirm)="delete(data.id)">Delete</a>
+                <a nz-popconfirm nzPopconfirmTitle="Sure to delete?" (nzOnConfirm)="edit(data.id)">Edit</a>
             </td>
         </tr>
     </tbody>

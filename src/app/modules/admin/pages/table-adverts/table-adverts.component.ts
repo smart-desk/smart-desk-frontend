@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ContentChild, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AdvertService } from '../../../../shared/services';
 import { Advert } from '../../../../shared/models/models.dto';
 
@@ -8,6 +8,7 @@ import { Advert } from '../../../../shared/models/models.dto';
     styleUrls: ['./table-adverts.component.scss'],
 })
 export class TableAdvertsComponent implements OnInit {
+    @ViewChild('dialogWindow') dialogWindow: ElementRef;
     searchValue = '';
     visible = false;
     listAdverts: Advert[];
@@ -29,21 +30,27 @@ export class TableAdvertsComponent implements OnInit {
         this.getAdverts();
     }
 
-    /** Удаление checked объявлений */
     delete(value?) {
         if (value) {
-            this.advertService.deleteAdvert(value);
+            this.advertService.deleteAdvert(value).subscribe();
             this.listAdverts = this.listAdverts.filter(item => item.id !== value);
         } else {
-            this.setCheckedId.forEach(id => this.advertService.deleteAdvert(id));
-            this.listAdverts = this.listAdverts.filter(item => !this.setCheckedId.has(item.id));
+            /** delete checked adverts */
+            /** todo костыль, нужен для использования готовой логики компоненты */
+            this.dialogWindow.nativeElement.click();
         }
-
         this.listDisplayAdverts = [...this.listAdverts];
     }
 
-    edit() {
-        console.log();
+    confirm(): void {
+        this.setCheckedId.forEach(id => this.advertService.deleteAdvert(id).subscribe());
+        this.listAdverts = this.listAdverts.filter(item => !this.setCheckedId.has(item.id));
+    }
+
+    cancel(): void {}
+
+    edit(id) {
+        console.log(id);
     }
 
     getAdverts() {
