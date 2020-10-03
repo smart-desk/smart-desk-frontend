@@ -15,7 +15,7 @@ export class TableAdvertsComponent implements OnInit {
     listOfSelection = [
         {
             text: 'Delete',
-            onSelect: data => {
+            onSelect: event => {
                 this.delete();
             },
         },
@@ -30,13 +30,20 @@ export class TableAdvertsComponent implements OnInit {
     }
 
     /** Удаление checked объявлений */
-    delete() {
-        this.listDisplayAdverts.forEach(item => {
-            if (this.setCheckedId.has(item.id)) {
-                this.advertService.deleteAdvert(item.id);
-            }
-        });
-        this.getAdverts();
+    delete(value?) {
+        if (value) {
+            this.advertService.deleteAdvert(value);
+            this.listAdverts = this.listAdverts.filter(item => item.id !== value);
+        } else {
+            this.setCheckedId.forEach(id => this.advertService.deleteAdvert(id));
+            this.listAdverts = this.listAdverts.filter(item => !this.setCheckedId.has(item.id));
+        }
+
+        this.listDisplayAdverts = [...this.listAdverts];
+    }
+
+    edit() {
+        console.log();
     }
 
     getAdverts() {

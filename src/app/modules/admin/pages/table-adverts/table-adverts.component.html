@@ -2,6 +2,7 @@
     <thead>
         <tr>
             <th
+                class="column-checkbox"
                 [nzSelections]="listOfSelection"
                 [(nzChecked)]="checked"
                 [nzIndeterminate]="indeterminate"
@@ -17,6 +18,7 @@
             <th>title</th>
             <th>created_at</th>
             <th>category_id</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -26,6 +28,9 @@
             <td>{{ data.title }}</td>
             <td>{{ data.created_at }}</td>
             <td>{{ data.category_id }}</td>
+            <td>
+                <a nz-popconfirm nzPopconfirmTitle="Sure to delete?" (nzOnConfirm)="delete(data.id)">Delete</a>
+            </td>
         </tr>
     </tbody>
 </nz-table>
