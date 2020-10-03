@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
@@ -37,6 +38,7 @@ import { RadioSettingsComponent } from './components/radio-settings/radio-settin
 import { TextSettingsComponent } from './components/text-settings/text-settings.component';
 import { editorSettings } from '../../app.config';
 import { SectionFormComponent } from './components/section-form/section-form.component';
+import { TableAdvertsComponent } from './pages/table-adverts/table-adverts.component';
 
 const components = [
     TextSettingsComponent,
@@ -49,9 +51,10 @@ const components = [
     SectionFormComponent,
 ];
 
-const pages = [AdminComponent, EditModelComponent, CreateModelComponent, ModelsComponent, CategoriesComponent];
+const pages = [AdminComponent, EditModelComponent, CreateModelComponent, ModelsComponent, CategoriesComponent, TableAdvertsComponent];
 
 const NZModules = [
+    NzTableModule,
     NzLayoutModule,
     NzMenuModule,
     NzIconModule,
@@ -83,6 +86,6 @@ const NZModules = [
         CommonModule,
         QuillModule.forRoot(editorSettings),
     ],
-    declarations: [...pages, ...components],
+    declarations: [...pages, ...components, TableAdvertsComponent],
 })
 export class AdminModule {}

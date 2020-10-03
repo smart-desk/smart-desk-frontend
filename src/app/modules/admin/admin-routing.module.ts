@@ -6,6 +6,7 @@ import { CreateModelComponent } from './pages/create-model/create-model.componen
 import { ModelsComponent } from './pages/models/models.component';
 import { EditModelComponent } from './pages/edit-model/edit-model.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
+import { TableAdvertsComponent } from './pages/table-adverts/table-adverts.component';
 
 const routes: Routes = [
     {
@@ -27,6 +28,10 @@ const routes: Routes = [
             {
                 path: 'categories',
                 component: CategoriesComponent,
+            },
+            {
+                path: 'adverts',
+                component: TableAdvertsComponent,
             },
         ],
     },
