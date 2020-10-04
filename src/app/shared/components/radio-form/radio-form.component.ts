@@ -9,7 +9,7 @@ import { AdvertFieldBase, ParamsRadio } from '../../models/models.dto';
     styleUrls: ['./radio-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RadioFormComponent extends FieldFormComponent<ParamsRadio[]> implements OnInit {
+export class RadioFormComponent extends FieldFormComponent<ParamsRadio> implements OnInit {
     form: FormGroup;
 
     // todo backend returns 500 error if value is null

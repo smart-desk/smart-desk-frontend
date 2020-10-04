@@ -1,7 +1,7 @@
 <form nz-form nzLayout="vertical" [formGroup]="form">
     <nz-form-item>
         <nz-radio-group formControlName="value">
-            <label *ngFor="let radio of field.params" nz-radio [nzValue]="radio.value">{{ radio.label }}</label>
+            <label *ngFor="let radio of field.params.data" nz-radio [nzValue]="radio.value">{{ radio.label }}</label>
         </nz-radio-group>
     </nz-form-item>
 </form>
