@@ -23,8 +23,8 @@ export class RadioSettingsComponent extends FieldSettingsComponent<ParamsRadio> 
 
     ngOnInit() {
         const radios =
-            this.field.params && this.field.params.data
-                ? this.field.params.data.map(data => this.createRadioControl(data))
+            this.field.params && this.field.params.data && this.field.params.data.radios
+                ? this.field.params.data.radios.map(data => this.createRadioControl(data))
                 : [this.createRadioControl()];
 
         this.form = this.fb.group({
@@ -44,7 +44,7 @@ export class RadioSettingsComponent extends FieldSettingsComponent<ParamsRadio> 
     save(): void {
         this.updateState(OperationState.LOADING);
 
-        const radioData: RadioData[] = this.radios.getRawValue();
+        const radios: RadioData[] = this.radios.getRawValue();
         const title = this.form.get('title').value;
 
         this.field = {
@@ -52,7 +52,7 @@ export class RadioSettingsComponent extends FieldSettingsComponent<ParamsRadio> 
             title,
             params: {
                 ...(this.field.params || {}),
-                data: radioData,
+                data: { radios },
             },
         } as FieldWithData<ParamsRadio>;
 

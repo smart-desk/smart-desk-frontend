@@ -83,14 +83,17 @@ export class ParamsTextarea {
     placeholder: string;
     required: boolean;
 }
+export class ParamsRadio {
+    id: string;
+    field_id: string;
+    data: Radios;
+}
 export class RadioData {
     label: string;
     value: string;
 }
-export class ParamsRadio {
-    id: string;
-    field_id: string;
-    data: RadioData[];
+export class Radios {
+    radios: RadioData[];
 }
 export class ParamsText {
     id: string;
