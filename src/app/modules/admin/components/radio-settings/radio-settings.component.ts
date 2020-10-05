@@ -44,7 +44,7 @@ export class RadioSettingsComponent extends FieldSettingsComponent<ParamsRadio> 
     save(): void {
         this.updateState(OperationState.LOADING);
 
-        const radios: RadioData[] = this.radios.getRawValue();
+        const radios = this.convertControlsToRadios(this.radios.getRawValue());
         const title = this.form.get('title').value;
 
         this.field = {
@@ -100,6 +100,15 @@ export class RadioSettingsComponent extends FieldSettingsComponent<ParamsRadio> 
         return this.fb.group({
             label: (radio && radio.label) || '',
             value: (radio && radio.value) || '',
+        });
+    }
+
+    private convertControlsToRadios(controls: any[]): RadioData[] {
+        return controls.map((data: RadioData) => {
+            const value = new RadioData();
+            value.label = data.label;
+            value.value = data.label.replace(/\s/g, '').trim().toLocaleLowerCase();
+            return value;
         });
     }
 }

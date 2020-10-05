@@ -34,6 +34,7 @@ export class AdvertDataService {
                 })
             )
             .subscribe(data => {
+                // todo !important! it is triggered on every page
                 this.adverts$.next(data);
             });
     }
