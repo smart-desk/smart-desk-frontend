@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { CreatorFieldTextarea } from '../../../../shared/models/models.dto';
-import { CreatorFieldTextareaService, FieldService } from '../../../../shared/services';
+import { ParamsTextarea, Field } from '../../../../shared/models/models.dto';
+import { FieldService } from '../../../../shared/services';
 import { FieldSettingsComponent, OperationState } from '../field-settings';
 
 enum Mode {
@@ -16,7 +16,7 @@ enum Mode {
     styleUrls: ['./textarea-settings.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TextareaSettingsComponent extends FieldSettingsComponent<Partial<CreatorFieldTextarea>> implements OnInit {
+export class TextareaSettingsComponent extends FieldSettingsComponent<Partial<ParamsTextarea>> implements OnInit {
     OperationState = OperationState;
     state: OperationState;
 
@@ -25,22 +25,17 @@ export class TextareaSettingsComponent extends FieldSettingsComponent<Partial<Cr
     mode: Mode;
     Mode = Mode;
 
-    constructor(
-        private creatorFieldTextareaService: CreatorFieldTextareaService,
-        private fb: FormBuilder,
-        private cd: ChangeDetectorRef,
-        private fieldService: FieldService
-    ) {
+    constructor(private fb: FormBuilder, private cd: ChangeDetectorRef, private fieldService: FieldService) {
         super();
     }
 
     ngOnInit(): void {
-        this.mode = this.field && this.field.data && this.field.data.id ? Mode.VIEW : Mode.EDIT;
+        this.mode = this.field.id ? Mode.VIEW : Mode.EDIT;
 
         this.form = this.fb.group({
-            label: [(this.field.data && this.field.data.label) || '', Validators.required],
-            placeholder: [(this.field.data && this.field.data.placeholder) || ''],
-            required: [(this.field.data && this.field.data.required) || false],
+            label: [(this.field.params && this.field.params.label) || '', Validators.required],
+            placeholder: [(this.field.params && this.field.params.placeholder) || ''],
+            required: [(this.field.params && this.field.params.required) || false],
         });
     }
 
@@ -48,20 +43,22 @@ export class TextareaSettingsComponent extends FieldSettingsComponent<Partial<Cr
         this.state = OperationState.LOADING;
         this.save$.next(this.state);
 
-        const input: CreatorFieldTextarea = this.form.getRawValue();
-        input.field_id = this.field.id;
+        this.field.params = {
+            ...(this.field.params || {}),
+            ...this.form.getRawValue(),
+        };
+        this.field.title = this.field.params.label;
 
-        let request: Observable<CreatorFieldTextarea>;
-
-        if (!(this.field.data && this.field.data.id)) {
-            request = this.creatorFieldTextareaService.createTextarea(input);
+        let request: Observable<Field>;
+        if (this.field.id) {
+            request = this.fieldService.updateField(this.field.id, this.field);
         } else {
-            request = this.creatorFieldTextareaService.updateTextarea(this.field.data.id, input);
+            request = this.fieldService.createField(this.field);
         }
 
         request.subscribe(res => {
             this.state = OperationState.SUCCESS;
-            this.field.data = res;
+            this.field = res;
             this.toggleMode();
             this.save$.next(this.state);
 
@@ -70,16 +67,10 @@ export class TextareaSettingsComponent extends FieldSettingsComponent<Partial<Cr
     }
 
     cancel(): void {
-        if (this.field.data && this.field.data.id) {
-            this.toggleMode();
-        } else {
-            // todo remove if field is created after hitting the OK button
-            this.delete();
-        }
+        this.toggleMode();
     }
 
     delete(): void {
-        // in order to delete InputText it would be sufficient to remove corresponding field
         this.fieldService.deleteField(this.field.id).subscribe(() => {
             this.delete$.next(this);
         });

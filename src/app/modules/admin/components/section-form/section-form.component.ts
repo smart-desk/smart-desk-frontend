@@ -15,7 +15,6 @@ import { Field, Section } from '../../../../shared/models/models.dto';
 import { FieldSettingsComponent, OperationState } from '../field-settings';
 import { getCreatorFieldComponentResolver } from '../../../../shared/services/field-resolvers/field-resolvers';
 import { FieldMetadata, fieldMetadataList, FieldTypes } from '../../../../shared/models/field-metadata';
-import { FieldService } from '../../../../shared/services';
 
 @Component({
     selector: 'app-section-form',
@@ -37,11 +36,7 @@ export class SectionFormComponent implements AfterViewInit {
     @ViewChild('fields', { read: ViewContainerRef })
     private fieldsFormContainerRef: ViewContainerRef;
 
-    constructor(
-        private componentFactoryResolver: ComponentFactoryResolver,
-        private cd: ChangeDetectorRef,
-        private fieldService: FieldService
-    ) {}
+    constructor(private componentFactoryResolver: ComponentFactoryResolver, private cd: ChangeDetectorRef) {}
 
     ngAfterViewInit() {
         this.section.fields.forEach(field => {
@@ -51,16 +46,12 @@ export class SectionFormComponent implements AfterViewInit {
     }
 
     createField(type: FieldTypes, section: Section): void {
-        // @TODO: We need to create field after we clicks OK, not before.
-        this.fieldService
-            .createField({
-                type,
-                section_id: section.id,
-            })
-            .subscribe(field => {
-                const component = this.resolveFieldComponent(field);
-                this.components.push(component);
-            });
+        const field = new Field();
+        field.type = type;
+        field.section_id = section.id;
+
+        const component = this.resolveFieldComponent(field);
+        this.components.push(component);
     }
 
     get title(): string {
@@ -104,6 +95,7 @@ export class SectionFormComponent implements AfterViewInit {
 
         this.fieldsFormContainerRef.remove(this.fieldsFormContainerRef.indexOf(targetComponent.hostView));
 
+        this.changeFields.emit();
         this.cd.detectChanges();
     }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FieldFormComponent } from '../field-form/field-form.component';
-import { AdvertFieldBase, CreatorFieldTextarea } from '../../models/models.dto';
+import { AdvertFieldBase, ParamsTextarea } from '../../models/models.dto';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -8,12 +8,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
     templateUrl: './textarea-form.component.html',
     styleUrls: ['./textarea-form.component.scss'],
 })
-export class TextareaFormComponent extends FieldFormComponent<CreatorFieldTextarea> implements OnInit {
+export class TextareaFormComponent extends FieldFormComponent<ParamsTextarea> implements OnInit {
     form: FormGroup;
 
     ngOnInit(): void {
         const valueValidators = [];
-        if (this.field.data && this.field.data.required) {
+        if (this.field.params && this.field.params.required) {
             valueValidators.push(Validators.required);
         }
 

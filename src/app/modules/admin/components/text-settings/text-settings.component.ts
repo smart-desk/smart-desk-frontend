@@ -2,9 +2,10 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { Subject } from 'rxjs';
 import { ContentChange } from 'ngx-quill/lib/quill-editor.component';
 import { FieldSettingsComponent, OperationState } from '../field-settings';
-import { CreatorFieldText } from '../../../../shared/models/models.dto';
-import { CreatorFieldTextService, FieldService } from '../../../../shared/services';
+import { ParamsText } from '../../../../shared/models/models.dto';
+import { FieldService } from '../../../../shared/services';
 import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
+import { FieldWithData } from '../../../../shared/models/field-with-data';
 
 enum Mode {
     EDIT,
@@ -17,18 +18,14 @@ enum Mode {
     styleUrls: ['./text-settings.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TextSettingsComponent extends FieldSettingsComponent<Partial<CreatorFieldText>> implements OnInit {
+export class TextSettingsComponent extends FieldSettingsComponent<Partial<ParamsText>> implements OnInit {
     state: OperationState;
     saveContent$ = new Subject<string>();
     mode: Mode;
     Mode = Mode;
     content = '';
 
-    constructor(
-        private creatorFieldTextService: CreatorFieldTextService,
-        private cd: ChangeDetectorRef,
-        private fieldService: FieldService
-    ) {
+    constructor(private cd: ChangeDetectorRef, private fieldService: FieldService) {
         super();
 
         this.saveContent$
@@ -37,20 +34,20 @@ export class TextSettingsComponent extends FieldSettingsComponent<Partial<Creato
                 distinctUntilChanged(),
                 debounceTime(500),
                 switchMap(content => {
-                    const input: Partial<CreatorFieldText> = {
-                        field_id: this.field.id,
+                    this.field.params = {
+                        ...(this.field.params || {}),
                         value: content,
                     };
 
-                    if (this.field.data && this.field.data.id) {
-                        return this.creatorFieldTextService.updateText(this.field.data.id, input);
+                    if (this.field.id) {
+                        return this.fieldService.updateField(this.field.id, this.field);
                     }
-                    return this.creatorFieldTextService.createText(input);
+                    return this.fieldService.createField(this.field);
                 })
             )
             .subscribe(
                 res => {
-                    this.field.data = res;
+                    this.field = res;
                     this.state = OperationState.SUCCESS;
                     this.save$.next(this.state);
                     this.mode = Mode.SAVE;
@@ -64,7 +61,7 @@ export class TextSettingsComponent extends FieldSettingsComponent<Partial<Creato
     }
 
     ngOnInit(): void {
-        this.content = (this.field.data && this.field.data.value) || '';
+        this.content = (this.field.params && this.field.params.value) || '';
         this.mode = Mode.SAVE;
     }
 

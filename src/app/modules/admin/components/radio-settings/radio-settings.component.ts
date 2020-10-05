@@ -1,13 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FieldSettingsComponent, OperationState } from '../field-settings';
-import { CreatorFieldRadio } from '../../../../shared/models/models.dto';
-import { CreatorFieldRadioService } from '../../../../shared/services';
+import { Field, ParamsRadio, RadioData } from '../../../../shared/models/models.dto';
 import { FieldService } from '../../../../shared/services';
-
-class CreatorFieldRadioControl extends CreatorFieldRadio {
-    edit?: boolean;
-}
+import { FieldWithData } from '../../../../shared/models/field-with-data';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'app-radio',
@@ -15,55 +12,59 @@ class CreatorFieldRadioControl extends CreatorFieldRadio {
     styleUrls: ['./radio-settings.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RadioSettingsComponent extends FieldSettingsComponent<CreatorFieldRadio[]> implements OnInit {
+export class RadioSettingsComponent extends FieldSettingsComponent<ParamsRadio> implements OnInit {
+    form: FormGroup;
+
     state: OperationState;
 
-    controls: CreatorFieldRadioControl[] = [];
-
-    constructor(
-        private creatorFieldRadioService: CreatorFieldRadioService,
-        private fieldService: FieldService,
-        private cd: ChangeDetectorRef
-    ) {
+    constructor(private fieldService: FieldService, private cd: ChangeDetectorRef, private fb: FormBuilder) {
         super();
     }
 
-    ngOnInit(): void {
-        if (this.field.data) {
-            this.controls = [...this.field.data];
-        } else {
-            this.add();
-        }
+    ngOnInit() {
+        const radios =
+            this.field.params && this.field.params.data && this.field.params.data.radios
+                ? this.field.params.data.radios.map(data => this.createRadioControl(data))
+                : [this.createRadioControl()];
+
+        this.form = this.fb.group({
+            title: [this.field.title || ''],
+            radios: this.fb.array(radios),
+        });
     }
 
-    add(): void {
-        const radio = new CreatorFieldRadioControl();
-        radio.edit = true;
-        this.controls.push(radio);
+    get radios() {
+        return this.form.get('radios') as FormArray;
     }
 
-    edit(control: CreatorFieldRadioControl): void {
-        control.edit = true;
+    addRadio(): void {
+        this.radios.push(this.createRadioControl());
     }
 
-    change(control: CreatorFieldRadioControl): void {
-        control.edit = false;
-
+    save(): void {
         this.updateState(OperationState.LOADING);
 
-        let request: Observable<CreatorFieldRadio>;
+        const radios = this.convertControlsToRadios(this.radios.getRawValue());
+        const title = this.form.get('title').value;
 
-        if (control.id && control.field_id) {
-            request = this.creatorFieldRadioService.updateRadio(control.id, control);
+        this.field = {
+            ...(this.field || {}),
+            title,
+            params: {
+                ...(this.field.params || {}),
+                data: { radios },
+            },
+        } as FieldWithData<ParamsRadio>;
+
+        let request: Observable<Field>;
+        if (this.field.id) {
+            request = this.fieldService.updateField(this.field.id, this.field);
         } else {
-            control.value = control.label.replace(' ', '_');
-            control.field_id = this.field.id;
-            request = this.creatorFieldRadioService.createRadio(control);
+            request = this.fieldService.createField(this.field);
         }
-
         request.subscribe(
             res => {
-                control.id = res.id;
+                this.field = res as FieldWithData<ParamsRadio>;
                 this.updateState(OperationState.SUCCESS);
                 this.cd.detectChanges();
             },
@@ -73,25 +74,13 @@ export class RadioSettingsComponent extends FieldSettingsComponent<CreatorFieldR
         );
     }
 
-    delete(control: CreatorFieldRadio): void {
-        this.updateState(OperationState.LOADING);
-
-        this.creatorFieldRadioService.deleteRadio(control.id).subscribe(
-            () => {
-                this.controls = this.controls.filter(c => c.id !== control.id);
-                this.updateState(OperationState.SUCCESS);
-                this.cd.detectChanges();
-            },
-            () => {
-                this.updateState(OperationState.ERROR);
-            }
-        );
+    deleteRadio(i: number): void {
+        this.radios.removeAt(i);
     }
 
     deleteField(): void {
         this.updateState(OperationState.LOADING);
 
-        // in order to delete all data it would be sufficient to remove corresponding field
         this.fieldService.deleteField(this.field.id).subscribe(
             () => {
                 this.delete$.next(this);
@@ -105,5 +94,21 @@ export class RadioSettingsComponent extends FieldSettingsComponent<CreatorFieldR
     private updateState(state: OperationState): void {
         this.state = state;
         this.save$.next(this.state);
+    }
+
+    private createRadioControl(radio?: RadioData): FormGroup {
+        return this.fb.group({
+            label: (radio && radio.label) || '',
+            value: (radio && radio.value) || '',
+        });
+    }
+
+    private convertControlsToRadios(controls: { label: string; value: string }[]): RadioData[] {
+        return controls.map((data: RadioData) => {
+            const value = new RadioData();
+            value.label = data.label;
+            value.value = data.label.replace(/\s/g, '').trim().toLocaleLowerCase();
+            return value;
+        });
     }
 }

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FieldFormComponent } from '../field-form/field-form.component';
-import { AdvertFieldBase, CreatorFieldRadio } from '../../models/models.dto';
+import { AdvertFieldBase, ParamsRadio } from '../../models/models.dto';
 
 @Component({
     selector: 'app-radio',
@@ -9,7 +9,7 @@ import { AdvertFieldBase, CreatorFieldRadio } from '../../models/models.dto';
     styleUrls: ['./radio-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RadioFormComponent extends FieldFormComponent<CreatorFieldRadio[]> implements OnInit {
+export class RadioFormComponent extends FieldFormComponent<ParamsRadio> implements OnInit {
     form: FormGroup;
 
     // todo backend returns 500 error if value is null

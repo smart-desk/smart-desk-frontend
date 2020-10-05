@@ -48,10 +48,10 @@
                 <i nz-icon nzType="delete" nzTheme="outline"></i>
             </button>
             <h4 nz-typography class="textarea__label">
-                {{ field.data.label }}
-                <span class="textarea__label-additional" nz-typography nzType="secondary" *ngIf="field.data.required"> обязательное</span>
+                {{ field.params.label }}
+                <span class="textarea__label-additional" nz-typography nzType="secondary" *ngIf="field.params.required"> обязательное</span>
             </h4>
-            <span nz-typography nzType="secondary">{{ field.data.placeholder }}</span>
+            <span nz-typography nzType="secondary">{{ field.params.placeholder }}</span>
         </ng-container>
     </ng-container>
 </div>
