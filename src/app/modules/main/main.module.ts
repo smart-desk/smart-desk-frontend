@@ -58,5 +58,6 @@ const components = [HeaderComponent, NavigationHeaderComponent, PaginationCompon
 @NgModule({
     declarations: [...pages, ...components],
     imports: [...NZModules, CommonModule, MainRoutingModule, FormsModule, ReactiveFormsModule],
+    exports: [PaginationComponent],
 })
 export class MainModule {}

@@ -1,0 +1,53 @@
+<section class="actions-box">
+    <button
+        nz-button
+        nzType="primary"
+        [disabled]="selectedItems.size === 0"
+        nzSize="large"
+        nz-popconfirm
+        nzPopconfirmTitle="Удалить?"
+        nzPopconfirmPlacement="bottom"
+        (nzOnConfirm)="confirm()"
+        (nzOnCancel)="cancel()"
+    >
+        <i nz-icon nzType="delete"></i>Удалить
+    </button>
+</section>
+<nz-table #nzTable [nzData]="listDisplayAdverts" [nzFrontPagination]="false">
+    <thead>
+        <tr>
+            <th
+                class="column-checkbox"
+                [(nzChecked)]="checked"
+                [nzIndeterminate]="indeterminate"
+                (nzCheckedChange)="onAllChecked($event)"
+            ></th>
+            <th>ID</th>
+            <th>Заголовок</th>
+            <th>Дата создания</th>
+            <th>Категория</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of nzTable.data" id="{{ data.id }}" (dblclick)="edit(data.id)">
+            <td [nzChecked]="selectedItems.has(data.id)" (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
+            <td>{{ data.id }}</td>
+            <td>{{ data.title }}</td>
+            <td>{{ data.created_at }}</td>
+            <td>{{ data.category_id }}</td>
+            <td>
+                <a nz-popconfirm nzPopconfirmTitle="Sure to delete?" (nzOnConfirm)="delete(data.id)">Delete</a>
+                <nz-divider nzType="vertical"></nz-divider>
+                <a (click)="edit(data.id)">Edit</a>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<app-pagination
+    class="pagination"
+    [pageIndex]="pageIndex"
+    [totalItems]="totalAdverts"
+    [pageSize]="pageSize"
+    (page)="changePage($event)"
+></app-pagination>

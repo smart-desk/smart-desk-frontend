@@ -38,7 +38,8 @@ import { RadioSettingsComponent } from './components/radio-settings/radio-settin
 import { TextSettingsComponent } from './components/text-settings/text-settings.component';
 import { editorSettings } from '../../app.config';
 import { SectionFormComponent } from './components/section-form/section-form.component';
-import { TableAdvertsComponent } from './pages/table-adverts/table-adverts.component';
+import { AdvertsListComponent } from './pages/adverts-list/adverts-list.component';
+import { MainModule } from '../main/main.module';
 
 const components = [
     TextSettingsComponent,
@@ -51,7 +52,7 @@ const components = [
     SectionFormComponent,
 ];
 
-const pages = [AdminComponent, EditModelComponent, CreateModelComponent, ModelsComponent, CategoriesComponent, TableAdvertsComponent];
+const pages = [AdminComponent, EditModelComponent, CreateModelComponent, ModelsComponent, CategoriesComponent, AdvertsListComponent];
 
 const NZModules = [
     NzTableModule,
@@ -85,7 +86,8 @@ const NZModules = [
         AdminRoutingModule,
         CommonModule,
         QuillModule.forRoot(editorSettings),
+        MainModule,
     ],
-    declarations: [...pages, ...components, TableAdvertsComponent],
+    declarations: [...pages, ...components, AdvertsListComponent],
 })
 export class AdminModule {}

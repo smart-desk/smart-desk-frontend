@@ -18,6 +18,7 @@
     margin-right: $base-unit;
 }
 
-.column-checkbox {
-    width: $base-unit * 10;
+app-pagination {
+    display: flex;
+    justify-content: center;
 }
