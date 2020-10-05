@@ -103,7 +103,7 @@ export class RadioSettingsComponent extends FieldSettingsComponent<ParamsRadio> 
         });
     }
 
-    private convertControlsToRadios(controls: any[]): RadioData[] {
+    private convertControlsToRadios(controls: { label: string; value: string }[]): RadioData[] {
         return controls.map((data: RadioData) => {
             const value = new RadioData();
             value.label = data.label;
