@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { AdvertDataService } from '../../../../shared/services';
+import { AdvertDataService } from '../../services';
 
 @Component({
     selector: 'app-search',
@@ -17,5 +17,9 @@ export class SearchComponent implements OnInit {
 
     search() {
         this.newItemEvent.emit(this.searchPhrase);
+    }
+
+    reset() {
+        this.searchPhrase = '';
     }
 }

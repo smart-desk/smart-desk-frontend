@@ -1,0 +1,16 @@
+@import '../../../../assets/styles/variables';
+
+button,
+input {
+    height: $base-unit * 5;
+}
+
+.reset {
+    position: absolute;
+    top: 50%;
+    right: 80px;
+    margin-top: -$base-unit/2;
+    color: darkred;
+    transform: rotate(45deg);
+    z-index: 10;
+}

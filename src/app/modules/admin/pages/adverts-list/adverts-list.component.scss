@@ -2,16 +2,7 @@
 
 .search-box {
     padding: $base-unit;
-}
-
-.search-box input {
-    width: $base-unit * 11;
-    margin-bottom: $base-unit;
-    display: block;
-}
-
-.search-box button {
-    width: $base-unit * 10;
+    margin-left: auto;
 }
 
 .search-button {
@@ -21,4 +12,9 @@
 app-pagination {
     display: flex;
     justify-content: center;
+}
+
+.actions-box {
+    display: flex;
+    align-items: center;
 }

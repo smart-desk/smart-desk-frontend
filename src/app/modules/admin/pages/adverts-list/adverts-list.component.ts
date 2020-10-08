@@ -30,7 +30,7 @@ export class AdvertsListComponent implements OnInit {
     delete(value?) {
         this.advertService.deleteAdvert(value).subscribe();
         this.listAdverts = this.listAdverts.filter(item => item.id !== value);
-        this.listDisplayAdverts = [...this.listAdverts];
+        // this.listDisplayAdverts = [...this.listAdverts];
     }
 
     confirm(): void {
@@ -39,7 +39,7 @@ export class AdvertsListComponent implements OnInit {
             this.advertService.deleteAdvert(id).subscribe();
         });
         this.listAdverts = this.listAdverts.filter(item => !this.selectedItems.has(item.id));
-        this.listDisplayAdverts = [...this.listAdverts];
+        // this.listDisplayAdverts = [...this.listAdverts];
     }
 
     cancel(): void {}
@@ -51,7 +51,7 @@ export class AdvertsListComponent implements OnInit {
     getAdverts(pageIndex) {
         this.advertService.getAdverts({ page: pageIndex }).subscribe(advertMeta => {
             this.listAdverts = advertMeta.data;
-            this.listDisplayAdverts = [...this.listAdverts];
+            // this.listDisplayAdverts = [...this.listAdverts];
             this.totalAdverts = advertMeta.total_count;
             this.pageSize = advertMeta.limit;
         });
@@ -60,15 +60,11 @@ export class AdvertsListComponent implements OnInit {
     search(value): void {
         this.advertService.getAdverts({ search: value }).subscribe(advertMeta => {
             this.listAdverts = advertMeta.data;
-            this.listDisplayAdverts = [...this.listAdverts];
+            // this.listDisplayAdverts = [...this.listAdverts];
             this.totalAdverts = advertMeta.total_count;
             this.pageSize = advertMeta.limit;
         });
     }
-    // searchh(): void {
-    //     this.visible = false;
-    //     this.listDisplayAdverts = this.listAdverts.filter(item => item.id.indexOf(this.searchValue) !== -1);
-    // }
 
     updateSelectedItems(id: string, checked: boolean): void {
         if (checked) {
@@ -83,7 +79,7 @@ export class AdvertsListComponent implements OnInit {
     }
 
     onAllChecked(value: boolean): void {
-        this.listDisplayAdverts.forEach(item => this.updateSelectedItems(item.id, value));
+        this.listAdverts.forEach(item => this.updateSelectedItems(item.id, value));
     }
 
     changePage(event) {

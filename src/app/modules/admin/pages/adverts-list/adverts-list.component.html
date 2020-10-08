@@ -1,3 +1,7 @@
+<nz-page-header>
+    <nz-page-header-title>Объявления</nz-page-header-title>
+    <nz-page-header-subtitle>Взаимодействуйте с объявлениями</nz-page-header-subtitle>
+</nz-page-header>
 <section class="actions-box">
     <button
         nz-button
@@ -12,11 +16,11 @@
     >
         <i nz-icon nzType="delete"></i>Удалить
     </button>
-    <button>
-        <app-search searchPhrase="12" placeholder="12" (newItemEvent)="search($event)"></app-search>
-    </button>
+    <div class="search-box">
+        <app-search placeholder="найду для тебя" (newItemEvent)="search($event)"></app-search>
+    </div>
 </section>
-<nz-table #nzTable [nzData]="listDisplayAdverts" [nzFrontPagination]="false">
+<nz-table #nzTable [nzData]="listAdverts" [nzFrontPagination]="false">
     <thead>
         <tr>
             <th

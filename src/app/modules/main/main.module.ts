@@ -23,9 +23,9 @@ import { AdvertCreateComponent } from './pages/advert-create/advert-create.compo
 import { HeaderComponent } from './components/header/header.component';
 import { AdvertsListComponent } from './components/adverts-list/adverts-list.component';
 import { NavigationHeaderComponent } from './components/navigation-header/navigation-header.component';
-import { PaginationComponent } from './components/pagination/pagination.component';
 import { IndexComponent } from './pages/index/index.component';
 import { AdvertCardComponent } from './components/advert-card/advert-card.component';
+import { SharedModule } from '../../shared/shared.module';
 
 const NZModules = [
     NzCascaderModule,
@@ -53,11 +53,10 @@ const pages = [
     IndexComponent,
 ];
 
-const components = [HeaderComponent, NavigationHeaderComponent, PaginationComponent, AdvertCardComponent];
+const components = [HeaderComponent, NavigationHeaderComponent, AdvertCardComponent];
 
 @NgModule({
     declarations: [...pages, ...components],
-    imports: [...NZModules, CommonModule, MainRoutingModule, FormsModule, ReactiveFormsModule],
-    exports: [PaginationComponent],
+    imports: [...NZModules, CommonModule, MainRoutingModule, FormsModule, ReactiveFormsModule, SharedModule],
 })
 export class MainModule {}

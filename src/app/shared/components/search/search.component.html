@@ -1,5 +1,6 @@
 <div class="search">
     <nz-input-group nzSearch [nzAddOnBefore]="prefix" [nzAddOnAfter]="suffixButton">
+        <i class="reset" nz-icon nzType="plus" prefix *ngIf="searchPhrase" (click)="reset()"></i>
         <input [(ngModel)]="searchPhrase" type="text" nz-input [placeholder]="placeholder" />
     </nz-input-group>
     <ng-template #suffixButton>
