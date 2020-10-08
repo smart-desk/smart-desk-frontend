@@ -12,6 +12,9 @@
     >
         <i nz-icon nzType="delete"></i>Удалить
     </button>
+    <button>
+        <app-search searchPhrase="12" placeholder="12" (newItemEvent)="search($event)"></app-search>
+    </button>
 </section>
 <nz-table #nzTable [nzData]="listDisplayAdverts" [nzFrontPagination]="false">
     <thead>

@@ -1,0 +1,11 @@
+<div class="search">
+    <nz-input-group nzSearch [nzAddOnBefore]="prefix" [nzAddOnAfter]="suffixButton">
+        <input [(ngModel)]="searchPhrase" type="text" nz-input [placeholder]="placeholder" />
+    </nz-input-group>
+    <ng-template #suffixButton>
+        <button nz-button nzSearch (click)="search()">Найти</button>
+    </ng-template>
+    <ng-template #prefix>
+        <i nz-icon nzType="search" prefix></i>
+    </ng-template>
+</div>

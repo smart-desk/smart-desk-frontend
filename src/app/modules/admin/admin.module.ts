@@ -40,6 +40,7 @@ import { editorSettings } from '../../app.config';
 import { SectionFormComponent } from './components/section-form/section-form.component';
 import { AdvertsListComponent } from './pages/adverts-list/adverts-list.component';
 import { MainModule } from '../main/main.module';
+import { SearchComponent } from './components/search/search.component';
 
 const components = [
     TextSettingsComponent,
@@ -50,6 +51,7 @@ const components = [
     CategoryFormComponent,
     AdminMenuComponent,
     SectionFormComponent,
+    SearchComponent,
 ];
 
 const pages = [AdminComponent, EditModelComponent, CreateModelComponent, ModelsComponent, CategoriesComponent, AdvertsListComponent];
@@ -88,6 +90,6 @@ const NZModules = [
         QuillModule.forRoot(editorSettings),
         MainModule,
     ],
-    declarations: [...pages, ...components, AdvertsListComponent],
+    declarations: [...pages, ...components, AdvertsListComponent, SearchComponent],
 })
 export class AdminModule {}

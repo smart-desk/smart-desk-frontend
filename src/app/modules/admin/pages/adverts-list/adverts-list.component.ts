@@ -57,15 +57,18 @@ export class AdvertsListComponent implements OnInit {
         });
     }
 
-    reset(): void {
-        this.searchValue = '';
-        this.search();
+    search(value): void {
+        this.advertService.getAdverts({ search: value }).subscribe(advertMeta => {
+            this.listAdverts = advertMeta.data;
+            this.listDisplayAdverts = [...this.listAdverts];
+            this.totalAdverts = advertMeta.total_count;
+            this.pageSize = advertMeta.limit;
+        });
     }
-
-    search(): void {
-        this.visible = false;
-        this.listDisplayAdverts = this.listAdverts.filter(item => item.id.indexOf(this.searchValue) !== -1);
-    }
+    // searchh(): void {
+    //     this.visible = false;
+    //     this.listDisplayAdverts = this.listAdverts.filter(item => item.id.indexOf(this.searchValue) !== -1);
+    // }
 
     updateSelectedItems(id: string, checked: boolean): void {
         if (checked) {
