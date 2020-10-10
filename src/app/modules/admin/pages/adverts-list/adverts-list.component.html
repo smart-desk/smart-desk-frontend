@@ -17,7 +17,7 @@
         <i nz-icon nzType="delete"></i>Удалить
     </button>
     <div class="search-box">
-        <app-search placeholder="найду для тебя" (newItemEvent)="search($event)"></app-search>
+        <app-search placeholder="Напиши, чего ты хочешь" (newItemEvent)="search($event)"></app-search>
     </div>
 </section>
 <nz-table #nzTable [nzData]="listAdverts" [nzFrontPagination]="false">

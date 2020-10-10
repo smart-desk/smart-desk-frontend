@@ -1,8 +1,8 @@
 @import './src/assets/styles/variables';
 
 .search-box {
-    padding: $base-unit;
     margin-left: auto;
+    width: $base-unit * 39;
 }
 
 .search-button {
@@ -17,4 +17,5 @@ app-pagination {
 .actions-box {
     display: flex;
     align-items: center;
+    padding-bottom: 8px;
 }
