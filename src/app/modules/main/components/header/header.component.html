@@ -17,16 +17,8 @@
             <button nz-button nzType="primary" nzShape="round"><i nz-icon nzType="unordered-list" nzTheme="outline"></i>Категория</button>
         </nz-cascader>
     </div>
-    <div class="search">
-        <nz-input-group nzSearch [nzAddOnBefore]="prefix" [nzAddOnAfter]="suffixButton">
-            <input [(ngModel)]="searchPhrase" type="text" nz-input [placeholder]="getSearchPlaceholder()" />
-        </nz-input-group>
-        <ng-template #suffixButton>
-            <button nz-button nzSearch (click)="search()">Найти</button>
-        </ng-template>
-        <ng-template #prefix>
-            <i nz-icon nzType="search" prefix></i>
-        </ng-template>
+    <div class="search-box">
+        <app-search [placeholder]="getSearchPlaceholder()" (newItemEvent)="search($event)"></app-search>
     </div>
     <div>
         <button routerLink="/adverts/create" nz-button nzType="primary" nzShape="round">

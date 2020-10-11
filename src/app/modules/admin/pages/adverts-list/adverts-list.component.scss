@@ -1,0 +1,21 @@
+@import './src/assets/styles/variables';
+
+.search-box {
+    margin-left: auto;
+    width: $base-unit * 39;
+}
+
+.search-button {
+    margin-right: $base-unit;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+}
+
+.actions-box {
+    display: flex;
+    align-items: center;
+    padding-bottom: 8px;
+}
