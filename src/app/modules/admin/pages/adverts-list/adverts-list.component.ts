@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AdvertService, CategoryService } from '../../../../shared/services';
-import { Advert } from '../../../../shared/models/models.dto';
+import { Advert, Category } from '../../../../shared/models/models.dto';
 import { Router } from '@angular/router';
 
 @Component({
@@ -46,7 +46,7 @@ export class AdvertsListComponent implements OnInit {
         this.router.navigate([`./adverts/${id}/edit`]);
     }
 
-    getAdverts(pageIndex: number) {
+    getAdverts(pageIndex: number): void {
         this.advertService.getAdverts({ page: pageIndex }).subscribe(advertMeta => {
             this.listAdverts = advertMeta.data;
             this.totalAdverts = advertMeta.total_count;
@@ -76,11 +76,12 @@ export class AdvertsListComponent implements OnInit {
         this.listAdverts.forEach(item => this.updateSelectedItems(item.id, value));
     }
 
-    changePage(event: number) {
+    changePage(event: number): void {
         this.getAdverts(event);
     }
 
-    formatDate(datestring) {
+    /** TODO: Заменить библиотекой */
+    formatDate(datestring: string): string {
         const date = new Date(datestring);
         const dd = date.getDate();
         let ddStr = String(dd);
@@ -121,7 +122,10 @@ export class AdvertsListComponent implements OnInit {
         return `${ddStr}.${mmStr}.${yyStr} ${hhStr}:${minStr}:${ssStr}`;
     }
 
-    getCategoryName(id) {
-        this.categoryService.getCategory(id).subscribe(category => category.name);
+    /** TODO: падает запрос, 401 не авторизован */
+    getCategoryName(id: string): void {
+        this.categoryService.getCategory(id).subscribe(category => {
+            return category.name;
+        });
     }
 }

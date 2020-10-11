@@ -39,10 +39,10 @@
             <td>{{ data.category_id }}</td>
             <td>
                 <a nz-popconfirm nzPopconfirmTitle="Вы уверены, что хотите удалить это объявление?" (nzOnConfirm)="delete(data.id)"
-                    >Delete</a
+                    >Удалить</a
                 >
                 <nz-divider nzType="vertical"></nz-divider>
-                <a (click)="edit(data.id)">Edit</a>
+                <a (click)="edit(data.id)">Редактировать</a>
             </td>
         </tr>
     </tbody>
