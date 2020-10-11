@@ -39,7 +39,6 @@ import { TextSettingsComponent } from './components/text-settings/text-settings.
 import { editorSettings } from '../../app.config';
 import { SectionFormComponent } from './components/section-form/section-form.component';
 import { AdvertsListComponent } from './pages/adverts-list/adverts-list.component';
-import { MainModule } from '../main/main.module';
 
 const components = [
     TextSettingsComponent,

@@ -7,7 +7,6 @@
         nz-button
         nzType="primary"
         [disabled]="selectedItems.size === 0"
-        nzSize="large"
         nz-popconfirm
         nzPopconfirmTitle="Вы уверены, что хотите удалить выделенное объявление?"
         nzPopconfirmPlacement="bottom"
@@ -36,7 +35,7 @@
             <td>{{ data.id }}</td>
             <td>{{ data.title }}</td>
             <td>{{ formatDate(data.created_at) }}</td>
-            <td>{{ data.category_id }}</td>
+            <td>{{ getCategoryName(data.category_id) }}</td>
             <td>
                 <a nz-popconfirm nzPopconfirmTitle="Вы уверены, что хотите удалить это объявление?" (nzOnConfirm)="delete(data.id)"
                     >Удалить</a

@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AdvertService, CategoryService } from '../../../../shared/services';
-import { Advert } from '../../../../shared/models/models.dto';
+import { Advert, Category } from '../../../../shared/models/models.dto';
 import { Router } from '@angular/router';
+import * as dayjs from 'dayjs';
 
 @Component({
     selector: 'app-table-adverts',
@@ -15,6 +16,7 @@ export class AdvertsListComponent implements OnInit {
     pageIndex = 1;
     pageSize = 20;
     totalAdverts: number;
+    categories: Category[];
 
     constructor(
         private advertService: AdvertService,
@@ -25,6 +27,7 @@ export class AdvertsListComponent implements OnInit {
 
     ngOnInit(): void {
         this.getAdverts(this.pageIndex);
+        this.categoryService.getCategories().subscribe(categories => (this.categories = categories));
     }
 
     delete(id?: string) {
@@ -35,11 +38,12 @@ export class AdvertsListComponent implements OnInit {
 
     deleteSelectedAdverts(): void {
         this.selectedItems.forEach(id => {
-            this.updateSelectedItems(id, false);
-            this.advertService.deleteAdvert(id).subscribe();
+            this.advertService.deleteAdvert(id).subscribe(() => {
+                this.listAdverts = this.listAdverts.filter(item => item.id !== id);
+                this.selectedItems.delete(id);
+                this.cd.detectChanges();
+            });
         });
-        this.listAdverts = this.listAdverts.filter(item => !this.selectedItems.has(item.id));
-        this.cd.detectChanges();
     }
 
     edit(id: string) {
@@ -51,8 +55,8 @@ export class AdvertsListComponent implements OnInit {
             this.listAdverts = advertMeta.data;
             this.totalAdverts = advertMeta.total_count;
             this.pageSize = advertMeta.limit;
+            this.cd.detectChanges();
         });
-        this.cd.detectChanges();
     }
 
     search(value: string): void {
@@ -60,8 +64,8 @@ export class AdvertsListComponent implements OnInit {
             this.listAdverts = advertMeta.data;
             this.totalAdverts = advertMeta.total_count;
             this.pageSize = advertMeta.limit;
+            this.cd.detectChanges();
         });
-        this.cd.detectChanges();
     }
 
     updateSelectedItems(id: string, checked: boolean): void {
@@ -80,50 +84,12 @@ export class AdvertsListComponent implements OnInit {
         this.getAdverts(event);
     }
 
-    /** TODO: Заменить библиотекой */
-    formatDate(datestring: string): string {
-        const date = new Date(datestring);
-        const dd = date.getDate();
-        let ddStr = String(dd);
-        if (dd < 10) {
-            ddStr = '0' + ddStr;
-        }
-
-        const mm = date.getMonth() + 1;
-        let mmStr = String(mm);
-        if (mm < 10) {
-            mmStr = '0' + mmStr;
-        }
-
-        const yy = date.getFullYear();
-        let yyStr = String(yy);
-        if (yy < 10) {
-            yyStr = '0' + yyStr;
-        }
-
-        const hh = date.getHours();
-        let hhStr = String(hh);
-        if (hh < 10) {
-            hhStr = '0' + hhStr;
-        }
-
-        const min = date.getMinutes();
-        let minStr = String(min);
-        if (min < 10) {
-            minStr = '0' + minStr;
-        }
-
-        const ss = date.getSeconds();
-        let ssStr = String(ss);
-        if (ss < 10) {
-            ssStr = '0' + ssStr;
-        }
-
-        return `${ddStr}.${mmStr}.${yyStr} ${hhStr}:${minStr}:${ssStr}`;
+    formatDate(date: string): string {
+        return dayjs(date).format('DD-MM-YYYY HH:mm:ss');
     }
 
-    /** TODO: падает запрос, 401 не авторизован */
-    getCategoryName(id: string): void {
-        this.categoryService.getCategory(id).subscribe(category => category.name);
+    getCategoryName(id: string): string {
+        const categoryAdvert = this.categories.find(category => category.id === id);
+        return categoryAdvert ? categoryAdvert.name : 'Категория не определена';
     }
 }
