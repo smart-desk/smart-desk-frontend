@@ -79,7 +79,7 @@ const interceptors = [
 
 @NgModule({
     imports: [...NZModules, HttpClientModule, CommonModule, FormsModule, ReactiveFormsModule],
-    exports: [],
+    exports: [PaginationComponent, SearchComponent],
     declarations: [...components],
     providers: [...services, ...interceptors],
 })
