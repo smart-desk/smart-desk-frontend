@@ -72,7 +72,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.router.navigate([`/${selectedCat}`]);
     }
 
-    search(searchPhrase): void {
+    search(searchPhrase: string): void {
         if (searchPhrase.trim()) {
             this.advertDataService.search(searchPhrase.trim());
         }

@@ -50,7 +50,6 @@ const components = [
     CategoryFormComponent,
     AdminMenuComponent,
     SectionFormComponent,
-    AdvertsListComponent,
 ];
 
 const pages = [AdminComponent, EditModelComponent, CreateModelComponent, ModelsComponent, CategoriesComponent, AdvertsListComponent];
@@ -87,7 +86,6 @@ const NZModules = [
         AdminRoutingModule,
         CommonModule,
         QuillModule.forRoot(editorSettings),
-        MainModule,
     ],
     declarations: [...pages, ...components],
 })

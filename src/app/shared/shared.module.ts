@@ -33,7 +33,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 /**
  * Import here all modules which are used on app side
  */
-const NZModules = [NzFormModule, NzRadioModule, NzMessageModule, NzInputModule, NzIconModule, NzButtonModule];
+const NZModules = [NzFormModule, NzRadioModule, NzMessageModule, NzInputModule, NzIconModule, NzButtonModule, NzPaginationModule];
 
 /**
  * Services from `./services` directory
@@ -53,6 +53,7 @@ const services = [
 /**
  * Components from `./components` directory
  */
+
 const components = [InputTextFormComponent, TextareaFormComponent, RadioFormComponent, TextComponent, SearchComponent, PaginationComponent];
 
 /**
@@ -77,8 +78,8 @@ const interceptors = [
 ];
 
 @NgModule({
-    imports: [...NZModules, HttpClientModule, CommonModule, FormsModule, ReactiveFormsModule, NzPaginationModule],
-    exports: [SearchComponent, PaginationComponent],
+    imports: [...NZModules, HttpClientModule, CommonModule, FormsModule, ReactiveFormsModule],
+    exports: [],
     declarations: [...components],
     providers: [...services, ...interceptors],
 })

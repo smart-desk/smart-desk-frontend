@@ -11,8 +11,7 @@
         nz-popconfirm
         nzPopconfirmTitle="Удалить?"
         nzPopconfirmPlacement="bottom"
-        (nzOnConfirm)="confirm()"
-        (nzOnCancel)="cancel()"
+        (nzOnConfirm)="deleteSelectedAdverts()"
     >
         <i nz-icon nzType="delete"></i>Удалить
     </button>
@@ -23,12 +22,7 @@
 <nz-table #nzTable [nzData]="listAdverts" [nzFrontPagination]="false">
     <thead>
         <tr>
-            <th
-                class="column-checkbox"
-                [(nzChecked)]="checked"
-                [nzIndeterminate]="indeterminate"
-                (nzCheckedChange)="onAllChecked($event)"
-            ></th>
+            <th class="column-checkbox" (nzCheckedChange)="onAllChecked($event)"></th>
             <th>ID</th>
             <th>Заголовок</th>
             <th>Дата создания</th>
@@ -38,13 +32,15 @@
     </thead>
     <tbody>
         <tr *ngFor="let data of nzTable.data" id="{{ data.id }}" (dblclick)="edit(data.id)">
-            <td [nzChecked]="selectedItems.has(data.id)" (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
+            <td [nzChecked]="selectedItems.has(data.id)" (nzCheckedChange)="updateSelectedItems(data.id, $event)"></td>
             <td>{{ data.id }}</td>
             <td>{{ data.title }}</td>
-            <td>{{ data.created_at }}</td>
+            <td>{{ formatDate(data.created_at) }}</td>
             <td>{{ data.category_id }}</td>
             <td>
-                <a nz-popconfirm nzPopconfirmTitle="Sure to delete?" (nzOnConfirm)="delete(data.id)">Delete</a>
+                <a nz-popconfirm nzPopconfirmTitle="Вы уверены, что хотите удалить это объявление?" (nzOnConfirm)="delete(data.id)"
+                    >Delete</a
+                >
                 <nz-divider nzType="vertical"></nz-divider>
                 <a (click)="edit(data.id)">Edit</a>
             </td>

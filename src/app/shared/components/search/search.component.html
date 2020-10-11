@@ -1,10 +1,10 @@
 <div class="search">
     <nz-input-group nzSearch [nzAddOnBefore]="prefix" [nzAddOnAfter]="suffixButton">
         <i class="reset" nz-icon nzType="plus" prefix *ngIf="searchPhrase" (click)="reset()"></i>
-        <input [(ngModel)]="searchPhrase" type="text" nz-input [placeholder]="placeholder" />
+        <input class="search__input" [(ngModel)]="searchPhrase" type="text" nz-input [placeholder]="placeholder" />
     </nz-input-group>
     <ng-template #suffixButton>
-        <button nz-button nzSearch (click)="search()">Найти</button>
+        <button class="search__button" nz-button nzSearch (click)="search()">Найти</button>
     </ng-template>
     <ng-template #prefix>
         <i nz-icon nzType="search" prefix></i>
