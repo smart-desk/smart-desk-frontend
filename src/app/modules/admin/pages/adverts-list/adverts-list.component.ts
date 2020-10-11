@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AdvertService, CategoryService } from '../../../../shared/services';
-import { Advert, Category } from '../../../../shared/models/models.dto';
+import { Advert } from '../../../../shared/models/models.dto';
 import { Router } from '@angular/router';
 
 @Component({
@@ -124,8 +124,6 @@ export class AdvertsListComponent implements OnInit {
 
     /** TODO: падает запрос, 401 не авторизован */
     getCategoryName(id: string): void {
-        this.categoryService.getCategory(id).subscribe(category => {
-            return category.name;
-        });
+        this.categoryService.getCategory(id).subscribe(category => category.name);
     }
 }
