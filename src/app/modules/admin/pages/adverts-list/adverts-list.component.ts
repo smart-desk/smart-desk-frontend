@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { AdvertService, CategoryService } from '../../../../shared/services';
+import { AdvertRequestOptions, AdvertService, CategoryService } from '../../../../shared/services';
 import { Advert, Category } from '../../../../shared/models/models.dto';
 import { Router } from '@angular/router';
 import * as dayjs from 'dayjs';
@@ -16,7 +16,7 @@ export class AdvertsListComponent implements OnInit {
     pageIndex = 1;
     pageSize = 20;
     totalAdverts: number;
-    categories: Category[];
+    categories: Category[] = [];
 
     constructor(
         private advertService: AdvertService,
@@ -26,11 +26,11 @@ export class AdvertsListComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.getAdverts(this.pageIndex);
+        this.getAdverts({ page: this.pageIndex });
         this.categoryService.getCategories().subscribe(categories => (this.categories = categories));
     }
 
-    delete(id?: string) {
+    delete(id?: string): void {
         this.advertService.deleteAdvert(id).subscribe();
         this.listAdverts = this.listAdverts.filter(item => item.id !== id);
         this.cd.detectChanges();
@@ -46,12 +46,12 @@ export class AdvertsListComponent implements OnInit {
         });
     }
 
-    edit(id: string) {
+    edit(id: string): void {
         this.router.navigate([`./adverts/${id}/edit`]);
     }
 
-    getAdverts(pageIndex: number): void {
-        this.advertService.getAdverts({ page: pageIndex }).subscribe(advertMeta => {
+    getAdverts(options: AdvertRequestOptions): void {
+        this.advertService.getAdverts(options).subscribe(advertMeta => {
             this.listAdverts = advertMeta.data;
             this.totalAdverts = advertMeta.total_count;
             this.pageSize = advertMeta.limit;
@@ -60,12 +60,8 @@ export class AdvertsListComponent implements OnInit {
     }
 
     search(value: string): void {
-        this.advertService.getAdverts({ search: value }).subscribe(advertMeta => {
-            this.listAdverts = advertMeta.data;
-            this.totalAdverts = advertMeta.total_count;
-            this.pageSize = advertMeta.limit;
-            this.cd.detectChanges();
-        });
+        this.pageIndex = 1;
+        this.getAdverts({ search: value, page: this.pageIndex });
     }
 
     updateSelectedItems(id: string, checked: boolean): void {
@@ -81,7 +77,9 @@ export class AdvertsListComponent implements OnInit {
     }
 
     changePage(event: number): void {
-        this.getAdverts(event);
+        if (event !== this.pageIndex) {
+            this.getAdverts({ page: event });
+        }
     }
 
     formatDate(date: string): string {
