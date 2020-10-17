@@ -14,6 +14,7 @@ import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzPaginationModule } from 'ng-zorro-antd';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
 import { CategoryComponent } from './pages/category/category.component';
@@ -26,8 +27,10 @@ import { NavigationHeaderComponent } from './components/navigation-header/naviga
 import { IndexComponent } from './pages/index/index.component';
 import { AdvertCardComponent } from './components/advert-card/advert-card.component';
 import { SharedModule } from '../../shared/shared.module';
+import { LoginComponent } from './components/login/login.component';
 
 const NZModules = [
+    NzModalModule,
     NzCascaderModule,
     NzFormModule,
     NzButtonModule,
@@ -56,7 +59,7 @@ const pages = [
 const components = [HeaderComponent, NavigationHeaderComponent, AdvertCardComponent];
 
 @NgModule({
-    declarations: [...pages, ...components],
+    declarations: [...pages, ...components, LoginComponent],
     imports: [...NZModules, CommonModule, MainRoutingModule, FormsModule, ReactiveFormsModule, SharedModule],
 })
 export class MainModule {}

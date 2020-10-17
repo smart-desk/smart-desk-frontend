@@ -14,7 +14,7 @@ import {
 import { InputTextFormComponent } from './components/input-text-form/input-text-form.component';
 import { TextareaFormComponent } from './components/textarea-form/textarea-form.component';
 import { RadioFormComponent } from './components/radio-form/radio-form.component';
-import { AdvertService, CategoryService, FieldService, ModelService, SectionService } from './services';
+import { AdvertService, CategoryService, FieldService, ModelService, SectionService, AuthService } from './services';
 import { ApiHostInterceptor, DevTokenInterceptor, ErrorsInterceptor } from './interceptors';
 import { TextComponent } from './components/text/text.component';
 import { SearchComponent } from './components/search/search.component';
@@ -28,12 +28,11 @@ const NZModules = [NzFormModule, NzRadioModule, NzMessageModule, NzInputModule, 
 /**
  * Services from `./services` directory
  */
-const services = [ModelService, SectionService, FieldService, CategoryService, AdvertService];
+const services = [ModelService, SectionService, FieldService, CategoryService, AdvertService, AuthService];
 
 /**
  * Components from `./components` directory
  */
-
 const components = [InputTextFormComponent, TextareaFormComponent, RadioFormComponent, TextComponent, SearchComponent, PaginationComponent];
 
 /**
