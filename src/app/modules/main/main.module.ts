@@ -16,6 +16,8 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
 import { CategoryComponent } from './pages/category/category.component';
@@ -29,6 +31,7 @@ import { IndexComponent } from './pages/index/index.component';
 import { AdvertCardComponent } from './components/advert-card/advert-card.component';
 import { SharedModule } from '../../shared/shared.module';
 import { LoginComponent } from './components/login/login.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 const NZModules = [
     NzModalModule,
@@ -46,22 +49,23 @@ const NZModules = [
     NzCardModule,
     NzPaginationModule,
     NzNotificationModule,
+    NzAvatarModule,
+    NzDropDownModule,
 ];
 
-const pages = [
-    MainComponent,
-    CategoryComponent,
-    AdvertComponent,
-    AdvertEditComponent,
-    AdvertCreateComponent,
+const pages = [MainComponent, CategoryComponent, AdvertComponent, AdvertEditComponent, AdvertCreateComponent, IndexComponent];
+
+const components = [
+    HeaderComponent,
+    NavigationHeaderComponent,
+    AdvertCardComponent,
     AdvertsListComponent,
-    IndexComponent,
+    ProfileComponent,
+    LoginComponent,
 ];
-
-const components = [HeaderComponent, NavigationHeaderComponent, AdvertCardComponent];
 
 @NgModule({
-    declarations: [...pages, ...components, LoginComponent],
+    declarations: [...pages, ...components],
     imports: [...NZModules, CommonModule, MainRoutingModule, FormsModule, ReactiveFormsModule, SharedModule],
 })
 export class MainModule {}
