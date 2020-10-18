@@ -13,7 +13,8 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzPaginationModule } from 'ng-zorro-antd';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
@@ -44,6 +45,7 @@ const NZModules = [
     NzSpinModule,
     NzCardModule,
     NzPaginationModule,
+    NzNotificationModule,
 ];
 
 const pages = [

@@ -14,8 +14,8 @@ import {
 import { InputTextFormComponent } from './components/input-text-form/input-text-form.component';
 import { TextareaFormComponent } from './components/textarea-form/textarea-form.component';
 import { RadioFormComponent } from './components/radio-form/radio-form.component';
-import { AdvertService, CategoryService, FieldService, ModelService, SectionService, AuthService } from './services';
-import { ApiHostInterceptor, DevTokenInterceptor, ErrorsInterceptor } from './interceptors';
+import { AdvertService, CategoryService, FieldService, ModelService, SectionService, AuthService, UserService } from './services';
+import { ApiHostInterceptor, TokenInterceptor, ErrorsInterceptor } from './interceptors';
 import { TextComponent } from './components/text/text.component';
 import { SearchComponent } from './components/search/search.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
@@ -28,7 +28,7 @@ const NZModules = [NzFormModule, NzRadioModule, NzMessageModule, NzInputModule, 
 /**
  * Services from `./services` directory
  */
-const services = [ModelService, SectionService, FieldService, CategoryService, AdvertService, AuthService];
+const services = [ModelService, SectionService, FieldService, CategoryService, AdvertService, AuthService, UserService];
 
 /**
  * Components from `./components` directory
@@ -51,7 +51,7 @@ const interceptors = [
     },
     {
         provide: HTTP_INTERCEPTORS,
-        useClass: DevTokenInterceptor,
+        useClass: TokenInterceptor,
         multi: true,
     },
 ];

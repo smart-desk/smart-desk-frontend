@@ -5,3 +5,4 @@ export * from './section/section.service';
 export * from './advert/advert.service';
 export * from './advert/advert-data.service';
 export * from './auth/auth.service';
+export * from './user/user.service';
