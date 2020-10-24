@@ -18,7 +18,7 @@
         </nz-cascader>
     </div>
     <div class="search-box">
-        <app-search [placeholder]="getSearchPlaceholder()" (newItemEvent)="search($event)"></app-search>
+        <app-search [placeholder]="getSearchPlaceholder()" (searchChange)="search($event)"></app-search>
     </div>
     <div>
         <button routerLink="/adverts/create" nz-button nzType="primary" nzShape="round">
