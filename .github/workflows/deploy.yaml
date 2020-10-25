@@ -19,7 +19,7 @@ jobs:
                   username: ${{ secrets.SSH_USERNAME }}
                   key: ${{ secrets.SSH_KEY }}
                   script: |
-                      cd smart-desk-frontend
+                      cd ~/smart-desk-frontend/
                       git pull
                       yarn
                       yarn build
