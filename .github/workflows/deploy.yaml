@@ -21,6 +21,6 @@ jobs:
                   script: |
                       cd smart-desk-frontend
                       git pull
-                      yarn
-                      yarn build
-                      cp -r dist/* /var/www/smart-desk-frontend/
+                      sudo yarn
+                      sudo yarn build
+                      sudo cp -r dist/* /var/www/smart-desk-frontend/
