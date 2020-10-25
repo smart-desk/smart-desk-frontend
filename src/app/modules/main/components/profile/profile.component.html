@@ -1,0 +1,14 @@
+<a *ngIf="!user" (click)="openLoginModal()">Войти</a>
+
+<p class="profile__name" nz-dropdown nzTrigger="click" *ngIf="user" [nzDropdownMenu]="profileMenu">
+    <span>{{ user.firstName }} {{ user.lastName }}</span>
+    <nz-avatar class="profile__avatar" [nzText]="getAvatarLetters()" [nzSize]="24"></nz-avatar>
+</p>
+
+<nz-dropdown-menu #profileMenu="nzDropdownMenu">
+    <ul nz-menu>
+        <li nz-menu-item>Настройки</li>
+        <li nz-menu-divider></li>
+        <li nz-menu-item (click)="logout()">Выйти</li>
+    </ul>
+</nz-dropdown-menu>

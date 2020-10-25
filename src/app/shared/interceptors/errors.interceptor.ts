@@ -13,8 +13,9 @@ export class ErrorsInterceptor implements HttpInterceptor {
         return next.handle(req).pipe(
             retry(environment.retry),
             catchError((error: HttpErrorResponse) => {
-                this.message.error(`${error.message}`);
-
+                if (error.status === 500) {
+                    this.message.error(`${error.message}`);
+                }
                 return throwError(error);
             })
         );

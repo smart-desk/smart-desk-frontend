@@ -1,0 +1,8 @@
+<div class="spinner" *ngIf="loading">
+    <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
+</div>
+
+<button *ngIf="!loading" (click)="googleLogin()" nz-button nzType="primary" [nzSize]="'large'" nzShape="round">
+    <i nz-icon nzType="google" nzTheme="outline"></i>
+    <span>Войти с Google</span>
+</button>
