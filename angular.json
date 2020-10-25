@@ -69,6 +69,14 @@
                                     "maximumError": "10kb"
                                 }
                             ]
+                        },
+                        "staging": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.stage.ts"
+                                }
+                            ]
                         }
                     }
                 },
@@ -80,6 +88,9 @@
                     "configurations": {
                         "production": {
                             "browserTarget": "smart-desk-frontend:build:production"
+                        },
+                        "staging": {
+                            "browserTarget": "smart-desk-frontend:build:staging"
                         }
                     }
                 },
