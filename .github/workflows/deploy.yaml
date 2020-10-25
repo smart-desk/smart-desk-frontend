@@ -22,7 +22,8 @@ jobs:
                   key: ${{ secrets.SSH_KEY }}
                   script: |
                       cd ~/smart-desk-frontend/
-                      echo $PASS | sudo git pull
+                      echo $PASS | sudo -S
+                      git pull
                       yarn
                       yarn build
                       cp -r dist/* /var/www/smart-desk-frontend/
