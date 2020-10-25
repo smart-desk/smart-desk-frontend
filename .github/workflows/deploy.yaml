@@ -20,6 +20,7 @@ jobs:
                   host: ${{ secrets.SSH_HOST }}
                   username: ${{ secrets.SSH_USERNAME }}
                   key: ${{ secrets.SSH_KEY }}
+                  envs: PASS
                   script: |
                       cd ~/smart-desk-frontend/
                       echo $PASS | sudo -S git pull
