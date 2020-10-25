@@ -14,13 +14,15 @@ jobs:
 
             - name: deploy
               uses: appleboy/ssh-action@v0.1.2
+              env:
+                  PASS: ${{ secrets.SSH_USER_PASSWORD }}
               with:
                   host: ${{ secrets.SSH_HOST }}
                   username: ${{ secrets.SSH_USERNAME }}
                   key: ${{ secrets.SSH_KEY }}
                   script: |
                       cd ~/smart-desk-frontend/
-                      git pull
+                      echo $PASS | sudo git pull
                       yarn
                       yarn build
                       cp -r dist/* /var/www/smart-desk-frontend/
