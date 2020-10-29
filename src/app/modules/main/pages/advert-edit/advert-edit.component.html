@@ -1,34 +1,18 @@
-<form [formGroup]="form" *ngIf="advert$ | async as advert">
-    <form nz-form [formGroup]="form" (ngSubmit)="submitForm()">
-        <h1>Объявление</h1>
+<div>
+    <form nz-form nzLayout="vertical" class="input-title">
         <nz-form-item>
-            <nz-form-label [nzSpan]="4" nzRequired nzFor="title">Заголовок</nz-form-label>
-            <nz-form-control [nzSpan]="8" nzErrorTip="Please input your name">
-                <input type="text" nz-input formControlName="title" placeholder="Please input your title" />
-            </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-            <nz-form-label [nzSpan]="4" nzFor="categoryId" [nzRequired]="validateForm.get('required')?.value">Категория</nz-form-label>
-            <nz-form-control [nzSpan]="8" nzErrorTip="Please input your categoryId">
-                <input type="text" nz-input formControlName="categoryId" placeholder="Please input your category" />
-            </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-            <nz-form-label [nzSpan]="4" nzFor="createdAt" [nzRequired]="validateForm.get('required')?.value">Создана</nz-form-label>
-            <nz-form-control [nzSpan]="8" nzErrorTip="Please input your createdAt">
-                <input type="text" nz-input formControlName="createdAt" placeholder="Please input your createdAt" />
-            </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-            <nz-form-label [nzSpan]="4" nzFor="updatedAt" [nzRequired]="validateForm.get('required')?.value">Обновленно</nz-form-label>
-            <nz-form-control [nzSpan]="8" nzErrorTip="Please input your createdAt">
-                <input type="text" nz-input formControlName="createdAt" placeholder="Please input your updatedAt" />
-            </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-            <nz-form-control [nzSpan]="8" [nzOffset]="4">
-                <button nz-button nzType="primary">Check</button>
+            <nz-form-label [nzRequired]="true">Заголовок</nz-form-label>
+            <nz-form-control nzErrorTip="Обязательное поле">
+                <input
+                    nz-input
+                    [(ngModel)]="title"
+                    [required]="true"
+                    [placeholder]="'Введите заголовок'"
+                    [ngModelOptions]="{ standalone: true }"
+                />
             </nz-form-control>
         </nz-form-item>
     </form>
-</form>
+    <ng-container #fields></ng-container>
+    <button nz-button nzType="primary" (click)="save()">Сохранить</button>
+</div>

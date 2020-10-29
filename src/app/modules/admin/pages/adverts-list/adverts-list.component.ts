@@ -47,7 +47,7 @@ export class AdvertsListComponent implements OnInit {
     }
 
     edit(id: string): void {
-        this.router.navigate([`./adverts/${id}/edit`]);
+        this.router.navigate([`/adverts/${id}/edit`]);
     }
 
     getAdverts(options: AdvertRequestOptions): void {
