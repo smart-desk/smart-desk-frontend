@@ -10,6 +10,7 @@ import { TextareaSettingsComponent as CreatorTextareaComponent } from '../../mod
 import { TextareaFormComponent } from '../components/textarea-form/textarea-form.component';
 import { TextComponent } from '../components/text/text.component';
 import { TextSettingsComponent } from '../../modules/admin/components/text-settings/text-settings.component';
+import { TextareaViewComponent } from '../../modules/main/components/textarea-view/textarea-view.component';
 
 export enum FieldTypes {
     INPUT_TEXT = 'input_text',
@@ -24,6 +25,7 @@ export interface FieldMetadata {
     description?: string;
     formComponent: Type<FieldFormComponent<unknown>>;
     settingsComponent: Type<CreatorInputBaseDirective<unknown>>;
+    viewComponent?: Type<FieldFormComponent<unknown>>; // todo: ? временное решение, пока поле не установленно у каждого филда
 }
 
 export const fieldMetadataList = new Set<FieldMetadata>();
@@ -47,6 +49,7 @@ fieldMetadataList.add({
     title: 'Большое текстовое поле',
     formComponent: TextareaFormComponent,
     settingsComponent: CreatorTextareaComponent,
+    viewComponent: TextareaViewComponent,
 });
 
 fieldMetadataList.add({
