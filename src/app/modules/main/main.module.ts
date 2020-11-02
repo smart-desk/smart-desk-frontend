@@ -32,6 +32,7 @@ import { AdvertCardComponent } from './components/advert-card/advert-card.compon
 import { SharedModule } from '../../shared/shared.module';
 import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { TextareaViewComponent } from './components/textarea-view/textarea-view.component';
 
 const NZModules = [
     NzModalModule,
@@ -62,6 +63,7 @@ const components = [
     AdvertsListComponent,
     ProfileComponent,
     LoginComponent,
+    TextareaViewComponent,
 ];
 
 @NgModule({
