@@ -5,17 +5,17 @@ import {
     ComponentRef,
     OnInit,
     ViewChild,
-    ViewContainerRef,
+    ViewContainerRef
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzCascaderOption } from 'ng-zorro-antd';
 import { BehaviorSubject } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
-import { AdvertService, CategoryService, ModelService } from '../../../../shared/services';
-import { AdvertRequest, Category, Field, Section } from '../../../../shared/models/models.dto';
 import { FieldFormComponent } from '../../../../shared/components/field-form/field-form.component';
-import { getFieldComponentResolver } from '../../../../shared/services/field-resolvers/field-resolvers';
 import { FieldTypes } from '../../../../shared/models/field-metadata';
+import { AdvertRequest, Category, Field, Section } from '../../../../shared/models/models.dto';
+import { AdvertService, CategoryService, ModelService } from '../../../../shared/services';
+import { getFieldComponentResolver } from '../../../../shared/services/field-resolvers/field-resolvers';
 
 // todo check subscriptions
 @Component({
