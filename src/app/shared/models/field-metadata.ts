@@ -25,7 +25,7 @@ export interface FieldMetadata {
     description?: string;
     formComponent: Type<FieldFormComponent<unknown>>;
     settingsComponent: Type<CreatorInputBaseDirective<unknown>>;
-    viewComponent?: Type<FieldFormComponent<unknown>>; // todo: ? временное решение, пока поле не установленно у каждого филда
+    viewComponent?: Type<FieldFormComponent<unknown>>; // todo: "?" временное решение, пока поле не установленно у каждого филда
 }
 
 export const fieldMetadataList = new Set<FieldMetadata>();
@@ -49,7 +49,7 @@ fieldMetadataList.add({
     title: 'Большое текстовое поле',
     formComponent: TextareaFormComponent,
     settingsComponent: CreatorTextareaComponent,
-    viewComponent: TextareaViewComponent,
+    // viewComponent: TextareaViewComponent,
 });
 
 fieldMetadataList.add({
