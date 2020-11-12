@@ -13,12 +13,13 @@ import {
 import { switchMap } from 'rxjs/operators';
 import { AdvertService, ModelService } from '../../../../shared/services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Advert, AdvertRequest, AdvertResponse, Field, Model, Section } from '../../../../shared/models/models.dto';
+import { AdvertRequest, AdvertResponse, Field, Model, Section } from '../../../../shared/models/models.dto';
 import { FieldFormComponent } from '../../../../shared/components/field-form/field-form.component';
 import { getFieldComponentResolver } from '../../../../shared/services/field-resolvers/field-resolvers';
 import { FieldTypes } from '../../../../shared/models/field-metadata';
 import { InputTextFormComponent } from '../../../../shared/components/input-text-form/input-text-form.component';
 import { Observable } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-advert-edit',
@@ -27,12 +28,11 @@ import { Observable } from 'rxjs';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdvertEditComponent implements OnInit {
-    title = '';
-    private components: ComponentRef<FieldFormComponent<unknown>>[] = [];
+    form: FormGroup;
     @ViewChild('fields', { read: ViewContainerRef })
     private fieldsFormContainerRef: ViewContainerRef;
+    private components: ComponentRef<FieldFormComponent<unknown>>[] = [];
     private advert: AdvertResponse;
-    @ViewChildren(InputTextFormComponent) input: QueryList<InputTextFormComponent>;
 
     constructor(
         private advertService: AdvertService,
@@ -40,10 +40,14 @@ export class AdvertEditComponent implements OnInit {
         private componentFactoryResolver: ComponentFactoryResolver,
         private router: Router,
         private route: ActivatedRoute,
-        private cd: ChangeDetectorRef
+        private cd: ChangeDetectorRef,
+        private fb: FormBuilder
     ) {}
 
     ngOnInit(): void {
+        this.form = this.fb.group({
+            title: ['', [Validators.required]],
+        });
         this.route.paramMap
             .pipe(
                 switchMap(paramMap => this.advertService.getAdvert(paramMap.get('advert_id'))),
@@ -55,13 +59,24 @@ export class AdvertEditComponent implements OnInit {
                 )
             )
             .subscribe((model: Model) => {
+                this.form.controls.title.setValue(this.advert.title);
                 this.populateFormWithInputs(model.sections);
                 this.cd.detectChanges();
             });
     }
 
+    save(): void {
+        if (this.isValid()) {
+            const advert = new AdvertRequest();
+            advert.data = this.components.map(component => component.instance.getValue()).filter(value => !!value);
+            advert.title = this.form.controls.title.value;
+            this.advertService.updateAdvert(this.advert.id, advert).subscribe(() => {
+                this.router.navigate([this.advert.category_id, this.advert.id]);
+            });
+        }
+    }
+
     private populateFormWithInputs(sections: Section[]): void {
-        this.title = this.advert.title;
         sections.forEach(section => {
             if (section.fields) {
                 section.fields.forEach(field => {
@@ -93,19 +108,8 @@ export class AdvertEditComponent implements OnInit {
         return component;
     }
 
-    save() {
-        if (this.isValid()) {
-            const advert = new AdvertRequest();
-            advert.data = this.components.map(component => component.instance.getValue()).filter(value => !!value);
-            advert.title = this.title;
-            this.advertService.updateAdvert(this.advert.id, advert).subscribe(() => {
-                this.router.navigate([this.advert.category_id, this.advert.id]);
-            });
-        }
-    }
-
     private isValid(): boolean {
-        if (!this.title) {
+        if (!this.form.valid) {
             return false;
         }
         return this.components.every(component => component.instance.isValid());

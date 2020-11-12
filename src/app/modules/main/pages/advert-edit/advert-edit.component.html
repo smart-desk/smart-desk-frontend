@@ -1,15 +1,9 @@
 <div>
-    <form nz-form nzLayout="vertical" class="input-title">
+    <form nz-form nzLayout="vertical" class="input-title" [formGroup]="form">
         <nz-form-item>
             <nz-form-label [nzRequired]="true">Заголовок</nz-form-label>
             <nz-form-control nzErrorTip="Обязательное поле">
-                <input
-                    nz-input
-                    [(ngModel)]="title"
-                    [required]="true"
-                    [placeholder]="'Введите заголовок'"
-                    [ngModelOptions]="{ standalone: true }"
-                />
+                <input nz-input [required]="true" formControlName="title" [placeholder]="'Введите заголовок'" />
             </nz-form-control>
         </nz-form-item>
     </form>
