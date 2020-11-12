@@ -5,9 +5,7 @@ import {
     ComponentFactoryResolver,
     ComponentRef,
     OnInit,
-    QueryList,
     ViewChild,
-    ViewChildren,
     ViewContainerRef,
 } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
@@ -17,7 +15,6 @@ import { AdvertRequest, AdvertResponse, Field, Model, Section } from '../../../.
 import { FieldFormComponent } from '../../../../shared/components/field-form/field-form.component';
 import { getFieldComponentResolver } from '../../../../shared/services/field-resolvers/field-resolvers';
 import { FieldTypes } from '../../../../shared/models/field-metadata';
-import { InputTextFormComponent } from '../../../../shared/components/input-text-form/input-text-form.component';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
