@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Advert, AdvertListResponse, AdvertRequest } from '../../models/models.dto';
+import { Advert, AdvertListResponse, AdvertRequest, AdvertResponse } from '../../models/models.dto';
 
 export interface AdvertRequestOptions {
     categoryId?: string;
@@ -33,8 +33,8 @@ export class AdvertService {
         return this.http.get<AdvertListResponse>(path);
     }
 
-    getAdvert(id: string): Observable<Advert> {
-        return this.http.get<Advert>(`/adverts/${id}`);
+    getAdvert(id: string): Observable<AdvertResponse> {
+        return this.http.get<AdvertResponse>(`/adverts/${id}`);
     }
 
     createAdvert(advert: Partial<AdvertRequest>): Observable<Advert> {
