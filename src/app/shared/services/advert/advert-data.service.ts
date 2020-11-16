@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { combineLatest, Subject } from 'rxjs';
-import { AdvertListResponse } from '../../models/models.dto';
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdvertRequestOptions, AdvertService } from './advert.service';
+import { AdvertsGetResponseDto } from '../../models/dto/advert.dto';
 
 @Injectable()
 export class AdvertDataService {
-    adverts$ = new Subject<AdvertListResponse>();
+    adverts$ = new Subject<AdvertsGetResponseDto>();
 
     constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private advertService: AdvertService) {
         combineLatest([this.route.paramMap, this.route.queryParamMap])

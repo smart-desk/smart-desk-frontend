@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Model } from '../../../../shared/models/models.dto';
 import { ModelService, SectionService } from '../../../../shared/services';
+import { Model } from '../../../../shared/models/dto/model.entity';
 
 @Component({
     selector: 'app-create-model',

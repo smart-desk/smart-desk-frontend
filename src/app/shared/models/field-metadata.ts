@@ -10,16 +10,10 @@ import { TextareaSettingsComponent as CreatorTextareaComponent } from '../../mod
 import { TextareaFormComponent } from '../components/textarea-form/textarea-form.component';
 import { TextComponent } from '../components/text/text.component';
 import { TextSettingsComponent } from '../../modules/admin/components/text-settings/text-settings.component';
-
-export enum FieldTypes {
-    INPUT_TEXT = 'input_text',
-    RADIO = 'radio',
-    TEXTAREA = 'textarea',
-    TEXT = 'text',
-}
+import { FieldType } from './dto/field.entity';
 
 export interface FieldMetadata {
-    type: FieldTypes;
+    type: FieldType;
     title: string;
     description?: string;
     formComponent: Type<FieldFormComponent<unknown>>;
@@ -29,28 +23,28 @@ export interface FieldMetadata {
 export const fieldMetadataList = new Set<FieldMetadata>();
 
 fieldMetadataList.add({
-    type: FieldTypes.INPUT_TEXT,
+    type: FieldType.INPUT_TEXT,
     title: 'Текстовое поле',
     formComponent: InputTextFormComponent,
     settingsComponent: CreatorInputTextComponent,
 });
 
 fieldMetadataList.add({
-    type: FieldTypes.RADIO,
+    type: FieldType.RADIO,
     title: 'Радиокнопка',
     formComponent: RadioFormComponent,
     settingsComponent: CreatorRadioComponent,
 });
 
 fieldMetadataList.add({
-    type: FieldTypes.TEXTAREA,
+    type: FieldType.TEXTAREA,
     title: 'Большое текстовое поле',
     formComponent: TextareaFormComponent,
     settingsComponent: CreatorTextareaComponent,
 });
 
 fieldMetadataList.add({
-    type: FieldTypes.TEXT,
+    type: FieldType.TEXT,
     title: 'Текст',
     formComponent: TextComponent,
     settingsComponent: TextSettingsComponent,

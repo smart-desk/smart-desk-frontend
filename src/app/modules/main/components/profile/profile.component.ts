@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { of } from 'rxjs';
 import { NzModalService } from 'ng-zorro-antd';
 import { LoginComponent } from '../login/login.component';
-import { AuthService, User, UserService } from '../../../../shared/services';
+import { AuthService, UserService } from '../../../../shared/services';
 import { catchError, switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { User } from '../../../../shared/models/dto/user.entity';
 
 @Component({
     selector: 'app-profile',

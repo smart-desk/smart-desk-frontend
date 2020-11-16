@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { AdvertListResponse, AdvertResponse, Category } from '../../../../shared/models/models.dto';
 import { AdvertDataService, CategoryService } from '../../../../shared/services';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { AdvertsGetResponseDto } from '../../../../shared/models/dto/advert.dto';
+import { Category } from '../../../../shared/models/dto/category.entity';
+import { Advert } from '../../../../shared/models/dto/advert.entity';
 
 @Component({
     selector: 'app-category',
@@ -13,7 +15,7 @@ import { switchMap } from 'rxjs/operators';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryComponent implements OnInit {
-    adverts: AdvertResponse[];
+    adverts: Advert[];
     isLoaded: boolean;
     totalAdverts: number;
     pageSize: number;
@@ -43,11 +45,11 @@ export class CategoryComponent implements OnInit {
         this.advertDataService.changePage(loadPage);
     }
 
-    private initAdvertList(res: AdvertListResponse) {
+    private initAdvertList(res: AdvertsGetResponseDto) {
         this.pageIndex = res.page;
-        this.totalAdverts = res.total_count;
+        this.totalAdverts = res.totalCount;
         this.pageSize = res.limit;
-        this.adverts = res.data;
+        this.adverts = res.adverts;
         this.isLoaded = true;
         this.cd.detectChanges();
     }

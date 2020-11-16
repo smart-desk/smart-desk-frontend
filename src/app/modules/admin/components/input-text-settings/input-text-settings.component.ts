@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { Field, ParamsInputText } from '../../../../shared/models/models.dto';
 import { FieldService } from '../../../../shared/services';
 import { FieldSettingsComponent, OperationState } from '../field-settings';
+import { InputTextDto } from '../../../../shared/models/dto/field-params/input-text.dto';
+import { Field } from '../../../../shared/models/dto/field.entity';
 
 enum Mode {
     EDIT,
@@ -16,7 +17,7 @@ enum Mode {
     styleUrls: ['./input-text-settings.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputTextSettingsComponent extends FieldSettingsComponent<Partial<ParamsInputText>> implements OnInit {
+export class InputTextSettingsComponent extends FieldSettingsComponent<InputTextDto> implements OnInit {
     OperationState = OperationState;
     state: OperationState;
 
@@ -33,9 +34,10 @@ export class InputTextSettingsComponent extends FieldSettingsComponent<Partial<P
         this.mode = this.field.id ? Mode.VIEW : Mode.EDIT;
 
         this.form = this.fb.group({
-            label: [(this.field.params && this.field.params.label) || '', Validators.required],
-            placeholder: [(this.field.params && this.field.params.placeholder) || ''],
-            required: [(this.field.params && this.field.params.required) || false],
+            // todo
+            label: [(this.field.params && (this.field.params as InputTextDto).label) || '', Validators.required],
+            placeholder: [(this.field.params && (this.field.params as InputTextDto).placeholder) || ''],
+            required: [(this.field.params && (this.field.params as InputTextDto).required) || false],
         });
     }
 

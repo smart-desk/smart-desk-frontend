@@ -11,10 +11,11 @@ import {
     ViewChild,
     ViewContainerRef,
 } from '@angular/core';
-import { Field, Section } from '../../../../shared/models/models.dto';
 import { FieldSettingsComponent, OperationState } from '../field-settings';
 import { getCreatorFieldComponentResolver } from '../../../../shared/services/field-resolvers/field-resolvers';
-import { FieldMetadata, fieldMetadataList, FieldTypes } from '../../../../shared/models/field-metadata';
+import { FieldMetadata, fieldMetadataList } from '../../../../shared/models/field-metadata';
+import { Section } from '../../../../shared/models/dto/section.entity';
+import { Field, FieldType } from '../../../../shared/models/dto/field.entity';
 
 @Component({
     selector: 'app-section-form',
@@ -45,7 +46,7 @@ export class SectionFormComponent implements AfterViewInit {
         });
     }
 
-    createField(type: FieldTypes, section: Section): void {
+    createField(type: FieldType, section: Section): void {
         const field = new Field();
         field.type = type;
         field.section_id = section.id;
@@ -74,7 +75,7 @@ export class SectionFormComponent implements AfterViewInit {
     }
 
     private resolveFieldComponent(field: Field): ComponentRef<FieldSettingsComponent<unknown>> {
-        const resolver = getCreatorFieldComponentResolver(this.componentFactoryResolver, field.type as FieldTypes);
+        const resolver = getCreatorFieldComponentResolver(this.componentFactoryResolver, field.type);
         const component = this.fieldsFormContainerRef.createComponent(resolver);
 
         // add inputs

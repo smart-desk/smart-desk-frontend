@@ -5,17 +5,19 @@ import {
     ComponentRef,
     OnInit,
     ViewChild,
-    ViewContainerRef
+    ViewContainerRef,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzCascaderOption } from 'ng-zorro-antd';
 import { BehaviorSubject } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { FieldFormComponent } from '../../../../shared/components/field-form/field-form.component';
-import { FieldTypes } from '../../../../shared/models/field-metadata';
-import { AdvertRequest, Category, Field, Section } from '../../../../shared/models/models.dto';
 import { AdvertService, CategoryService, ModelService } from '../../../../shared/services';
 import { getFieldComponentResolver } from '../../../../shared/services/field-resolvers/field-resolvers';
+import { Category } from '../../../../shared/models/dto/category.entity';
+import { CreateAdvertDto } from '../../../../shared/models/dto/advert.dto';
+import { Section } from '../../../../shared/models/dto/section.entity';
+import { Field } from '../../../../shared/models/dto/field.entity';
 
 // todo check subscriptions
 @Component({
@@ -69,13 +71,13 @@ export class AdvertCreateComponent implements OnInit {
 
         const lastCategoryId = selectedCategoriesIds[selectedCategoriesIds.length - 1];
         this.selectedCategory = this.categories.find(cat => cat.id === lastCategoryId);
-        const model_id = this.selectedCategory.model_id;
+        const modelId = this.selectedCategory.modelId;
 
         if (this.fieldsFormContainerRef) {
             this.fieldsFormContainerRef.clear();
         }
         this.modelService
-            .getModel(model_id)
+            .getModel(modelId)
             .pipe(take(1))
             .subscribe(model => {
                 this.populateFormWithInputs(model.sections);
@@ -88,11 +90,11 @@ export class AdvertCreateComponent implements OnInit {
             return;
         }
 
-        const advert = new AdvertRequest();
+        const advert = new CreateAdvertDto();
         advert.title = this.title;
         advert.category_id = this.selectedCategory.id;
-        advert.model_id = this.selectedCategory.model_id;
-        advert.data = this.components.map(component => component.instance.getValue()).filter(value => !!value);
+        advert.model_id = this.selectedCategory.modelId;
+        advert.fields = this.components.map(component => component.instance.getValue()).filter(value => !!value);
 
         this.advertService.createAdvert(advert).subscribe(
             res => {
@@ -116,7 +118,7 @@ export class AdvertCreateComponent implements OnInit {
     }
 
     private resolveFieldComponent(field: Field): ComponentRef<FieldFormComponent<unknown>> {
-        const resolver = getFieldComponentResolver(this.componentFactoryResolver, field.type as FieldTypes);
+        const resolver = getFieldComponentResolver(this.componentFactoryResolver, field.type);
         const component = this.fieldsFormContainerRef.createComponent(resolver);
 
         // add inputs

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Advert, AdvertListResponse, AdvertRequest, AdvertResponse } from '../../models/models.dto';
+import { AdvertsGetResponseDto, CreateAdvertDto, UpdateAdvertDto } from '../../models/dto/advert.dto';
+import { Advert } from '../../models/dto/advert.entity';
 
 export interface AdvertRequestOptions {
     categoryId?: string;
@@ -13,7 +14,8 @@ export interface AdvertRequestOptions {
 export class AdvertService {
     constructor(private http: HttpClient) {}
 
-    getAdverts(options: AdvertRequestOptions): Observable<AdvertListResponse> {
+    // todo use AdvertsGetDto
+    getAdverts(options: AdvertRequestOptions): Observable<AdvertsGetResponseDto> {
         let path = '/adverts';
         const optionsList: string[] = [];
 
@@ -30,22 +32,22 @@ export class AdvertService {
         }
 
         path += optionsList.length ? `?${optionsList.join('&')}` : '';
-        return this.http.get<AdvertListResponse>(path);
+        return this.http.get<AdvertsGetResponseDto>(path);
     }
 
-    getAdvert(id: string): Observable<AdvertResponse> {
-        return this.http.get<AdvertResponse>(`/adverts/${id}`);
+    getAdvert(id: string): Observable<Advert> {
+        return this.http.get<Advert>(`/adverts/${id}`);
     }
 
-    createAdvert(advert: Partial<AdvertRequest>): Observable<Advert> {
+    createAdvert(advert: CreateAdvertDto): Observable<Advert> {
         return this.http.post<Advert>(`/adverts`, advert);
     }
 
-    updateAdvert(id, advert: Partial<AdvertRequest>): Observable<Advert> {
+    updateAdvert(id: string, advert: UpdateAdvertDto): Observable<Advert> {
         return this.http.put<Advert>(`/adverts/${id}`, advert);
     }
 
-    deleteAdvert(id): Observable<unknown> {
+    deleteAdvert(id: string): Observable<unknown> {
         return this.http.delete<Advert>(`/adverts/${id}`);
     }
 }

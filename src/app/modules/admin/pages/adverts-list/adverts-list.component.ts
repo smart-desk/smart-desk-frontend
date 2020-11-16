@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AdvertRequestOptions, AdvertService, CategoryService } from '../../../../shared/services';
-import { Advert, Category } from '../../../../shared/models/models.dto';
 import { Router } from '@angular/router';
 import * as dayjs from 'dayjs';
+import { Advert } from '../../../../shared/models/dto/advert.entity';
+import { Category } from '../../../../shared/models/dto/category.entity';
 
 @Component({
     selector: 'app-table-adverts',
@@ -52,8 +53,8 @@ export class AdvertsListComponent implements OnInit {
 
     getAdverts(options: AdvertRequestOptions): void {
         this.advertService.getAdverts(options).subscribe(advertMeta => {
-            this.listAdverts = advertMeta.data;
-            this.totalAdverts = advertMeta.total_count;
+            this.listAdverts = advertMeta.adverts;
+            this.totalAdverts = advertMeta.totalCount;
             this.pageSize = advertMeta.limit;
             this.cd.detectChanges();
         });

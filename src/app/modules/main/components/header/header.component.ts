@@ -4,7 +4,7 @@ import { BehaviorSubject, of, Subject } from 'rxjs';
 import { NzCascaderOption } from 'ng-zorro-antd';
 import { filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { AdvertDataService, CategoryService } from '../../../../shared/services';
-import { Category } from '../../../../shared/models/models.dto';
+import { Category } from '../../../../shared/models/dto/category.entity';
 
 @Component({
     selector: 'app-header',

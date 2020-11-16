@@ -4,7 +4,8 @@ import { NzPopoverDirective, NzTreeNode } from 'ng-zorro-antd';
 import arrayToTree from 'array-to-tree';
 import { BehaviorSubject } from 'rxjs';
 import { CategoryService, ModelService } from '../../../../shared/services/';
-import { Category, Model } from '../../../../shared/models/models.dto';
+import { Model } from '../../../../shared/models/dto/model.entity';
+import { Category } from '../../../../shared/models/dto/category.entity';
 
 @Component({
     selector: 'app-models',
@@ -41,7 +42,7 @@ export class CategoriesComponent implements OnInit {
     add(parentNode: NzTreeNode, newCategory: Category): void {
         if (parentNode) {
             const parentCategory = parentNode.origin.category as Category;
-            newCategory.parent_id = parentCategory.id;
+            newCategory.parentId = parentCategory.id;
         }
         this.categoryService.createCategory(newCategory).subscribe(res => {
             const node = this.createNodeFromCategory(res);

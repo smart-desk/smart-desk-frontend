@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { Model } from '../../../../shared/models/models.dto';
 import { ModelService } from '../../../../shared/services';
 import { PreviewComponent } from '../../components/preview/preview.component';
+import { Model } from '../../../../shared/models/dto/model.entity';
 
 @Component({
     selector: 'app-edit-model',

@@ -1,12 +1,12 @@
 import { Directive, Input, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { OperationState } from './operation-state.enum';
-import { FieldWithData } from '../../../../shared/models/field-with-data';
+import { Field } from '../../../../shared/models/dto/field.entity';
 
 @Directive()
 // tslint:disable-next-line:directive-class-suffix
 export abstract class FieldSettingsComponent<T> implements OnDestroy {
-    @Input() field: FieldWithData<T>;
+    @Input() field: Field;
 
     protected save$ = new Subject<OperationState>();
     protected delete$ = new Subject<FieldSettingsComponent<unknown>>();
