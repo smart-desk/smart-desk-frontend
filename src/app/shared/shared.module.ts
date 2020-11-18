@@ -19,6 +19,7 @@ import { ApiHostInterceptor, TokenInterceptor, ErrorsInterceptor } from './inter
 import { TextComponent } from './components/text/text.component';
 import { SearchComponent } from './components/search/search.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { DynamicFieldsModule } from './modules/dynamic-fields/dynamic-fields.module';
 
 /**
  * Import here all modules which are used on app side
@@ -57,7 +58,7 @@ const interceptors = [
 ];
 
 @NgModule({
-    imports: [...NZModules, HttpClientModule, CommonModule, FormsModule, ReactiveFormsModule],
+    imports: [...NZModules, HttpClientModule, CommonModule, FormsModule, ReactiveFormsModule, DynamicFieldsModule],
     exports: [...components],
     declarations: [...components],
     providers: [...services, ...interceptors],
