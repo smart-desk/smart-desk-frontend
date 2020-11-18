@@ -2,14 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-
-// todo replace with generated user interface
-export interface User {
-    id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-}
+import { User } from '../../models/dto/user.entity';
 
 @Injectable({
     providedIn: 'root',

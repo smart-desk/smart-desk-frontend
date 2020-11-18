@@ -11,12 +11,15 @@ import {
 import { switchMap } from 'rxjs/operators';
 import { AdvertService, ModelService } from '../../../../shared/services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdvertRequest, AdvertResponse, Field, Model, Section } from '../../../../shared/models/models.dto';
 import { FieldFormComponent } from '../../../../shared/components/field-form/field-form.component';
 import { getFieldComponentResolver } from '../../../../shared/services/field-resolvers/field-resolvers';
-import { FieldTypes } from '../../../../shared/models/field-metadata';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Advert } from '../../../../shared/models/dto/advert.entity';
+import { Model } from '../../../../shared/models/dto/model.entity';
+import { UpdateAdvertDto } from '../../../../shared/models/dto/advert.dto';
+import { Section } from '../../../../shared/models/dto/section.entity';
+import { Field } from '../../../../shared/models/dto/field.entity';
 
 @Component({
     selector: 'app-advert-edit',
@@ -29,7 +32,7 @@ export class AdvertEditComponent implements OnInit {
     @ViewChild('fields', { read: ViewContainerRef })
     private fieldsFormContainerRef: ViewContainerRef;
     private components: ComponentRef<FieldFormComponent<unknown>>[] = [];
-    private advert: AdvertResponse;
+    private advert: Advert;
 
     constructor(
         private advertService: AdvertService,
@@ -49,7 +52,7 @@ export class AdvertEditComponent implements OnInit {
             .pipe(
                 switchMap(paramMap => this.advertService.getAdvert(paramMap.get('advert_id'))),
                 switchMap(
-                    (advert: AdvertResponse): Observable<Model> => {
+                    (advert: Advert): Observable<Model> => {
                         this.advert = advert;
                         return this.modelService.getModel(advert.model_id);
                     }
@@ -64,8 +67,8 @@ export class AdvertEditComponent implements OnInit {
 
     save(): void {
         if (this.isValid()) {
-            const advert = new AdvertRequest();
-            advert.data = this.components.map(component => component.instance.getValue()).filter(value => !!value);
+            const advert = new UpdateAdvertDto();
+            advert.fields = this.components.map(component => component.instance.getValue()).filter(value => !!value);
             advert.title = this.form.controls.title.value;
             this.advertService.updateAdvert(this.advert.id, advert).subscribe(() => {
                 this.router.navigate([this.advert.category_id, this.advert.id]);
@@ -85,7 +88,7 @@ export class AdvertEditComponent implements OnInit {
     }
 
     private resolveFieldComponent(field: Field): ComponentRef<FieldFormComponent<unknown>> {
-        const resolver = getFieldComponentResolver(this.componentFactoryResolver, field.type as FieldTypes);
+        const resolver = getFieldComponentResolver(this.componentFactoryResolver, field.type);
         const component = this.fieldsFormContainerRef.createComponent(resolver);
 
         component.instance.field = field;
@@ -93,8 +96,8 @@ export class AdvertEditComponent implements OnInit {
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.advert.sections.length; i++) {
             if (this.advert.sections[i].fields) {
-                const advertField = this.advert.sections[i].fields.find(f => f.field_id === field.id);
-                component.instance.advertField = advertField;
+                const advertField = this.advert.sections[i].fields.find(f => f.id === field.id);
+                component.instance.data = advertField;
                 if (advertField) {
                     break;
                 }

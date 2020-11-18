@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Field } from '../../models/models.dto';
+import { Field } from '../../models/dto/field.entity';
+import { FieldCreateDto, FieldUpdateDto } from '../../models/dto/field.dto';
 
 @Injectable()
 export class FieldService {
@@ -24,14 +25,14 @@ export class FieldService {
     /**
      * Create field
      */
-    createField(field: Partial<Field>): Observable<Field> {
+    createField(field: FieldCreateDto): Observable<Field> {
         return this.http.post<Field>(`/fields`, field);
     }
 
     /**
      * Update field by id
      */
-    updateField(id: string, field: Field): Observable<Field> {
+    updateField(id: string, field: FieldUpdateDto): Observable<Field> {
         return this.http.put<Field>(`/fields/${id}`, field);
     }
 

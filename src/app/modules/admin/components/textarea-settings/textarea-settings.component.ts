@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { ParamsTextarea, Field } from '../../../../shared/models/models.dto';
 import { FieldService } from '../../../../shared/services';
 import { FieldSettingsComponent, OperationState } from '../field-settings';
+import { TextareaDto } from '../../../../shared/models/dto/field-params/textarea.dto';
+import { Field } from '../../../../shared/models/dto/field.entity';
 
 enum Mode {
     EDIT,
@@ -16,7 +17,7 @@ enum Mode {
     styleUrls: ['./textarea-settings.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TextareaSettingsComponent extends FieldSettingsComponent<Partial<ParamsTextarea>> implements OnInit {
+export class TextareaSettingsComponent extends FieldSettingsComponent<TextareaDto> implements OnInit {
     OperationState = OperationState;
     state: OperationState;
 
@@ -33,9 +34,10 @@ export class TextareaSettingsComponent extends FieldSettingsComponent<Partial<Pa
         this.mode = this.field.id ? Mode.VIEW : Mode.EDIT;
 
         this.form = this.fb.group({
-            label: [(this.field.params && this.field.params.label) || '', Validators.required],
-            placeholder: [(this.field.params && this.field.params.placeholder) || ''],
-            required: [(this.field.params && this.field.params.required) || false],
+            // todo
+            label: [(this.field.params && (this.field.params as TextareaDto).label) || '', Validators.required],
+            placeholder: [(this.field.params && (this.field.params as TextareaDto).placeholder) || ''],
+            required: [(this.field.params && (this.field.params as TextareaDto).required) || false],
         });
     }
 
@@ -47,7 +49,7 @@ export class TextareaSettingsComponent extends FieldSettingsComponent<Partial<Pa
             ...(this.field.params || {}),
             ...this.form.getRawValue(),
         };
-        this.field.title = this.field.params.label;
+        this.field.title = (this.field.params as TextareaDto).label;
 
         let request: Observable<Field>;
         if (this.field.id) {

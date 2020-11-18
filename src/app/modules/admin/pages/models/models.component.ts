@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Model } from '../../../../shared/models/models.dto';
 import { ModelService } from '../../../../shared/services';
+import { Model } from '../../../../shared/models/dto/model.entity';
 
 @Component({
     selector: 'app-models',

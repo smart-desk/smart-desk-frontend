@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Model } from '../../models/models.dto';
+import { Model } from '../../models/dto/model.entity';
+import { ModelCreateDto, ModelUpdateDto } from '../../models/dto/model.dto';
 
 @Injectable()
 export class ModelService {
@@ -18,27 +19,27 @@ export class ModelService {
      * Return model by id
      */
     getModel(id: string): Observable<Model> {
-        return this.http.get<Model>(`/models/${id}/full`);
+        return this.http.get<Model>(`/models/${id}`);
     }
 
     /**
      * Create model
      */
-    createModel(model: Partial<Model>): Observable<Model> {
+    createModel(model: ModelCreateDto): Observable<Model> {
         return this.http.post<Model>(`/models`, model);
     }
 
     /**
      * Update model by id
      */
-    updateModel(id, model: Partial<Model>): Observable<Model> {
+    updateModel(id: string, model: ModelUpdateDto): Observable<Model> {
         return this.http.put<Model>(`/models/${id}`, model);
     }
 
     /**
      * Delete model by id
      */
-    deleteModel(id): Observable<unknown> {
+    deleteModel(id: string): Observable<unknown> {
         return this.http.delete<Model>(`/models/${id}`);
     }
 }

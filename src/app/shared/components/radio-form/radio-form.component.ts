@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FieldFormComponent } from '../field-form/field-form.component';
-import { AdvertFieldBase, ParamsRadio } from '../../models/models.dto';
+import { RadioDto } from '../../models/dto/field-params/radio.dto';
+import { RadioEntity } from '../../models/dto/field-data/radio.entity';
 
 @Component({
     selector: 'app-radio',
@@ -9,23 +10,23 @@ import { AdvertFieldBase, ParamsRadio } from '../../models/models.dto';
     styleUrls: ['./radio-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RadioFormComponent extends FieldFormComponent<ParamsRadio> implements OnInit {
+export class RadioFormComponent extends FieldFormComponent<RadioDto> implements OnInit {
     form: FormGroup;
 
     // todo backend returns 500 error if value is null
     ngOnInit(): void {
         this.form = new FormGroup({
-            value: new FormControl(this.advertField && this.advertField.value),
+            value: new FormControl(this.data && this.data.value),
         });
     }
 
-    getValue(): AdvertFieldBase {
-        if (this.advertField) {
-            this.advertField.value = this.form.get('value').value;
-            return this.advertField;
+    getValue(): any {
+        if (this.data) {
+            this.data.value = this.form.get('value').value;
+            return this.data;
         }
 
-        const advertField = new AdvertFieldBase();
+        const advertField = new RadioEntity(); // todo
         advertField.value = this.form.get('value').value;
         advertField.field_id = this.field.id;
 

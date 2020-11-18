@@ -1,4 +1,4 @@
-import { Field } from './models.dto';
+import { Field } from './dto/field.entity';
 
 export class FieldWithData<T> extends Field {
     params: T;

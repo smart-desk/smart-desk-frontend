@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Category } from '../../models/models.dto';
 import { NzCascaderOption } from 'ng-zorro-antd';
+// todo we can do it on backend
 import arrayToTree from 'array-to-tree';
+import { Category } from '../../models/dto/category.entity';
+import { CreateCategoryDto } from '../../models/dto/create-category.dto';
+import { UpdateCategoryDto } from '../../models/dto/update-category.dto';
 
 @Injectable()
 export class CategoryService {
@@ -26,21 +29,21 @@ export class CategoryService {
     /**
      * Create сategory
      */
-    createCategory(category: Partial<Category>): Observable<Category> {
+    createCategory(category: CreateCategoryDto): Observable<Category> {
         return this.http.post<Category>(`/categories`, category);
     }
 
     /**
      * Update category by id
      */
-    updateCategory(id, category: Partial<Category>): Observable<Category> {
+    updateCategory(id: string, category: UpdateCategoryDto): Observable<Category> {
         return this.http.put<Category>(`/categories/${id}`, category);
     }
 
     /**
      * Delete category by id
      */
-    deleteCategory(id): Observable<unknown> {
+    deleteCategory(id: string): Observable<unknown> {
         return this.http.delete<Category>(`/categories/${id}`);
     }
 

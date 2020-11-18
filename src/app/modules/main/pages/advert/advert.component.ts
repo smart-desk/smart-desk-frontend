@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { switchMap } from 'rxjs/operators';
 import { AdvertService } from '../../../../shared/services';
 import { ActivatedRoute } from '@angular/router';
-import { Advert } from '../../../../shared/models/models.dto';
 import { Observable } from 'rxjs';
+import { Advert } from '../../../../shared/models/dto/advert.entity';
 
 @Component({
     selector: 'app-advert',

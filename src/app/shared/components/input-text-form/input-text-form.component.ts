@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FieldFormComponent } from '../field-form/field-form.component';
-import { AdvertFieldBase, ParamsInputText } from '../../models/models.dto';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { InputTextDto } from '../../models/dto/field-params/input-text.dto';
+import { InputTextEntity } from '../../models/dto/field-data/input-text.entity';
 
 @Component({
     selector: 'app-input-text',
@@ -9,27 +10,28 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
     styleUrls: ['./input-text-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputTextFormComponent extends FieldFormComponent<ParamsInputText> implements OnInit {
+export class InputTextFormComponent extends FieldFormComponent<InputTextDto> implements OnInit {
     form: FormGroup;
 
     ngOnInit(): void {
         const valueValidators = [];
-        if (this.field.params && this.field.params.required) {
+        if (this.field.params && (this.field.params as InputTextDto).required) {
+            // todo
             valueValidators.push(Validators.required);
         }
 
         this.form = new FormGroup({
-            value: new FormControl(this.advertField && this.advertField.value, valueValidators),
+            value: new FormControl(this.data && this.data.value, valueValidators),
         });
     }
 
-    getValue(): AdvertFieldBase {
-        if (this.advertField) {
-            this.advertField.value = this.form.get('value').value;
-            return this.advertField;
+    getValue(): any {
+        if (this.data) {
+            this.data.value = this.form.get('value').value;
+            return this.data;
         }
 
-        const advertField = new AdvertFieldBase();
+        const advertField = new InputTextEntity();
         advertField.value = this.form.get('value').value;
         advertField.field_id = this.field.id;
 

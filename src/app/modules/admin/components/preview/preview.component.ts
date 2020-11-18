@@ -9,10 +9,10 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import { ModelService } from '../../../../shared/services';
-import { Field, Section } from '../../../../shared/models/models.dto';
 import { FieldFormComponent } from '../../../../shared/components/field-form/field-form.component';
 import { getFieldComponentResolver } from '../../../../shared/services/field-resolvers/field-resolvers';
-import { FieldTypes } from '../../../../shared/models/field-metadata';
+import { Section } from '../../../../shared/models/dto/section.entity';
+import { Field } from '../../../../shared/models/dto/field.entity';
 
 @Component({
     selector: 'app-preview',
@@ -53,7 +53,7 @@ export class PreviewComponent implements OnInit {
     }
 
     private resolveFieldComponent(field: Field): ComponentRef<FieldFormComponent<unknown>> {
-        const resolver = getFieldComponentResolver(this.componentFactoryResolver, field.type as FieldTypes);
+        const resolver = getFieldComponentResolver(this.componentFactoryResolver, field.type);
         const component = this.fieldsFormContainerRef.createComponent(resolver);
 
         // add inputs

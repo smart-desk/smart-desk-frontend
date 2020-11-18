@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Category, Model } from '../../../../shared/models/models.dto';
+import { Category } from '../../../../shared/models/dto/category.entity';
+import { Model } from '../../../../shared/models/dto/model.entity';
 
 @Component({
     selector: 'app-category-form',
@@ -29,11 +30,11 @@ export class CategoryFormComponent implements OnInit {
     submit(): void {
         if (this.category) {
             this.category.name = this.form.get('name').value as string;
-            this.category.model_id = (this.form.get('model').value as Model).id;
+            this.category.modelId = (this.form.get('model').value as Model).id;
         } else {
             this.category = {
                 name: this.form.get('name').value as string,
-                model_id: (this.form.get('model').value as Model).id,
+                modelId: (this.form.get('model').value as Model).id,
             } as Category;
         }
 
@@ -45,6 +46,6 @@ export class CategoryFormComponent implements OnInit {
     }
 
     private getModelByCategory(category: Category): Model {
-        return !this.category ? this.models[0] : this.models.find(model => model.id === category.model_id);
+        return !this.category ? this.models[0] : this.models.find(model => model.id === category.modelId);
     }
 }

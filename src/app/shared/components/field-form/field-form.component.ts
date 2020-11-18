@@ -1,19 +1,22 @@
 import { Directive, Input } from '@angular/core';
 import { FieldWithData } from '../../models/field-with-data';
-import { AdvertFieldBase } from '../../models/models.dto';
+import { TextareaDto } from '../../models/dto/field-params/textarea.dto';
+import { RadioDto } from '../../models/dto/field-params/radio.dto';
+import { TextDto } from '../../models/dto/field-params/text.dto';
+import { InputTextDto } from '../../models/dto/field-params/input-text.dto';
 
 interface AdvertField {
-    getValue(): AdvertFieldBase;
+    getValue(): unknown; // todo
     isValid(): boolean;
 }
 
 @Directive()
 // tslint:disable-next-line:directive-class-suffix
 export abstract class FieldFormComponent<T> implements AdvertField {
-    @Input() field: FieldWithData<T>;
+    @Input() field: FieldWithData<InputTextDto | TextareaDto | RadioDto | TextDto>;
     @Input() preview: boolean;
-    @Input() advertField: AdvertFieldBase;
+    @Input() data: any; // todo
 
-    abstract getValue(): AdvertFieldBase;
+    abstract getValue(): any; // todo
     abstract isValid(): boolean;
 }

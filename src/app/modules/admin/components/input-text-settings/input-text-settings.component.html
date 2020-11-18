@@ -48,7 +48,7 @@
                 <i nz-icon nzType="delete" nzTheme="outline"></i>
             </button>
             <h4 nz-typography class="input-text__label">
-                {{ field.params.label }}
+                {{ field?.params?.label }}
                 <span class="input-text__label-additional" nz-typography nzType="secondary" *ngIf="field?.params?.required">
                     обязательное
                 </span>

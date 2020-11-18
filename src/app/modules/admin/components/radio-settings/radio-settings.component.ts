@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FieldSettingsComponent, OperationState } from '../field-settings';
-import { Field, ParamsRadio, RadioData } from '../../../../shared/models/models.dto';
 import { FieldService } from '../../../../shared/services';
 import { FieldWithData } from '../../../../shared/models/field-with-data';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { RadioDto, RadioItem } from '../../../../shared/models/dto/field-params/radio.dto';
+import { Field } from '../../../../shared/models/dto/field.entity';
 
 @Component({
     selector: 'app-radio',
@@ -12,7 +13,7 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
     styleUrls: ['./radio-settings.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RadioSettingsComponent extends FieldSettingsComponent<ParamsRadio> implements OnInit {
+export class RadioSettingsComponent extends FieldSettingsComponent<RadioDto> implements OnInit {
     form: FormGroup;
 
     state: OperationState;
@@ -23,8 +24,9 @@ export class RadioSettingsComponent extends FieldSettingsComponent<ParamsRadio> 
 
     ngOnInit() {
         const radios =
-            this.field.params && this.field.params.data && this.field.params.data.radios
-                ? this.field.params.data.radios.map(data => this.createRadioControl(data))
+            // todo
+            this.field.params && (this.field.params as RadioDto).radios
+                ? (this.field.params as RadioDto).radios.map(data => this.createRadioControl(data))
                 : [this.createRadioControl()];
 
         this.form = this.fb.group({
@@ -52,9 +54,9 @@ export class RadioSettingsComponent extends FieldSettingsComponent<ParamsRadio> 
             title,
             params: {
                 ...(this.field.params || {}),
-                data: { radios },
+                radios,
             },
-        } as FieldWithData<ParamsRadio>;
+        } as FieldWithData<RadioDto>;
 
         let request: Observable<Field>;
         if (this.field.id) {
@@ -64,7 +66,7 @@ export class RadioSettingsComponent extends FieldSettingsComponent<ParamsRadio> 
         }
         request.subscribe(
             res => {
-                this.field = res as FieldWithData<ParamsRadio>;
+                this.field = res as FieldWithData<RadioDto>;
                 this.updateState(OperationState.SUCCESS);
                 this.cd.detectChanges();
             },
@@ -96,16 +98,16 @@ export class RadioSettingsComponent extends FieldSettingsComponent<ParamsRadio> 
         this.save$.next(this.state);
     }
 
-    private createRadioControl(radio?: RadioData): FormGroup {
+    private createRadioControl(radio?: RadioItem): FormGroup {
         return this.fb.group({
             label: (radio && radio.label) || '',
             value: (radio && radio.value) || '',
         });
     }
 
-    private convertControlsToRadios(controls: { label: string; value: string }[]): RadioData[] {
-        return controls.map((data: RadioData) => {
-            const value = new RadioData();
+    private convertControlsToRadios(controls: { label: string; value: string }[]): RadioItem[] {
+        return controls.map((data: RadioItem) => {
+            const value = new RadioItem();
             value.label = data.label;
             value.value = data.label.replace(/\s/g, '').trim().toLocaleLowerCase();
             return value;
