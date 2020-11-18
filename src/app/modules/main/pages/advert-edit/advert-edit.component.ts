@@ -11,8 +11,7 @@ import {
 import { switchMap } from 'rxjs/operators';
 import { AdvertService, ModelService } from '../../../../shared/services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FieldFormComponent } from '../../../../shared/components/field-form/field-form.component';
-import { getFieldComponentResolver } from '../../../../shared/services/field-resolvers/field-resolvers';
+import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Advert } from '../../../../shared/models/dto/advert.entity';
@@ -20,6 +19,7 @@ import { Model } from '../../../../shared/models/dto/model.entity';
 import { UpdateAdvertDto } from '../../../../shared/models/dto/advert.dto';
 import { Section } from '../../../../shared/models/dto/section.entity';
 import { Field } from '../../../../shared/models/dto/field.entity';
+import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
 
 @Component({
     selector: 'app-advert-edit',
@@ -31,7 +31,7 @@ export class AdvertEditComponent implements OnInit {
     form: FormGroup;
     @ViewChild('fields', { read: ViewContainerRef })
     private fieldsFormContainerRef: ViewContainerRef;
-    private components: ComponentRef<FieldFormComponent<unknown>>[] = [];
+    private components: ComponentRef<AbstractFieldFormComponent<unknown>>[] = [];
     private advert: Advert;
 
     constructor(
@@ -41,7 +41,8 @@ export class AdvertEditComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private cd: ChangeDetectorRef,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private dynamicFieldService: DynamicFieldsService
     ) {}
 
     ngOnInit(): void {
@@ -87,8 +88,12 @@ export class AdvertEditComponent implements OnInit {
         });
     }
 
-    private resolveFieldComponent(field: Field): ComponentRef<FieldFormComponent<unknown>> {
-        const resolver = getFieldComponentResolver(this.componentFactoryResolver, field.type);
+    private resolveFieldComponent(field: Field): ComponentRef<AbstractFieldFormComponent<unknown>> {
+        const service = this.dynamicFieldService.getService(field.type);
+        if (!service) {
+            return;
+        }
+        const resolver = service.getFormComponent();
         const component = this.fieldsFormContainerRef.createComponent(resolver);
 
         component.instance.field = field;

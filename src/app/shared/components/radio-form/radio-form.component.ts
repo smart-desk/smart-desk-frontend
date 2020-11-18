@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { FieldFormComponent } from '../field-form/field-form.component';
+import { AbstractFieldFormComponent } from '../../modules/dynamic-fields/abstract-field-form.component';
 import { RadioDto } from '../../models/dto/field-params/radio.dto';
 import { RadioEntity } from '../../models/dto/field-data/radio.entity';
 
@@ -10,7 +10,7 @@ import { RadioEntity } from '../../models/dto/field-data/radio.entity';
     styleUrls: ['./radio-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RadioFormComponent extends FieldFormComponent<RadioDto> implements OnInit {
+export class RadioFormComponent extends AbstractFieldFormComponent<RadioDto> implements OnInit {
     form: FormGroup;
 
     // todo backend returns 500 error if value is null

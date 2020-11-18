@@ -9,10 +9,10 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import { ModelService } from '../../../../shared/services';
-import { FieldFormComponent } from '../../../../shared/components/field-form/field-form.component';
-import { getFieldComponentResolver } from '../../../../shared/services/field-resolvers/field-resolvers';
+import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
 import { Section } from '../../../../shared/models/dto/section.entity';
 import { Field } from '../../../../shared/models/dto/field.entity';
+import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
 
 @Component({
     selector: 'app-preview',
@@ -27,7 +27,11 @@ export class PreviewComponent implements OnInit {
     @ViewChild('fields', { read: ViewContainerRef })
     private fieldsFormContainerRef: ViewContainerRef;
 
-    constructor(private modelService: ModelService, private componentFactoryResolver: ComponentFactoryResolver) {}
+    constructor(
+        private modelService: ModelService,
+        private componentFactoryResolver: ComponentFactoryResolver,
+        private dynamicFieldService: DynamicFieldsService
+    ) {}
 
     ngOnInit(): void {
         this.update();
@@ -52,8 +56,12 @@ export class PreviewComponent implements OnInit {
         });
     }
 
-    private resolveFieldComponent(field: Field): ComponentRef<FieldFormComponent<unknown>> {
-        const resolver = getFieldComponentResolver(this.componentFactoryResolver, field.type);
+    private resolveFieldComponent(field: Field): ComponentRef<AbstractFieldFormComponent<unknown>> {
+        const service = this.dynamicFieldService.getService(field.type);
+        if (!service) {
+            return;
+        }
+        const resolver = service.getFormComponent();
         const component = this.fieldsFormContainerRef.createComponent(resolver);
 
         // add inputs

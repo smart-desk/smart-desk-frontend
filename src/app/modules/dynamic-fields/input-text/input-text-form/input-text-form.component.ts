@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { AbstractFieldFormComponent } from '../../modules/dynamic-fields/abstract-field-form.component';
+import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { InputTextDto } from '../../models/dto/field-params/input-text.dto';
-import { InputTextEntity } from '../../models/dto/field-data/input-text.entity';
+import { InputTextDto } from '../../../../shared/models/dto/field-params/input-text.dto';
+import { InputTextEntity } from '../../../../shared/models/dto/field-data/input-text.entity';
 
 @Component({
     selector: 'app-input-text',
@@ -10,7 +10,7 @@ import { InputTextEntity } from '../../models/dto/field-data/input-text.entity';
     styleUrls: ['./input-text-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputTextFormComponent extends AbstractFieldFormComponent<InputTextDto> implements OnInit {
+export class InputTextFormComponent extends AbstractFieldFormComponent<unknown> implements OnInit {
     form: FormGroup;
 
     ngOnInit(): void {

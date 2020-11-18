@@ -1,6 +1,6 @@
 import { Component, OnInit, SecurityContext } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { FieldFormComponent } from '../field-form/field-form.component';
+import { AbstractFieldFormComponent } from '../../modules/dynamic-fields/abstract-field-form.component';
 import { TextDto } from '../../models/dto/field-params/text.dto';
 
 @Component({
@@ -8,7 +8,7 @@ import { TextDto } from '../../models/dto/field-params/text.dto';
     templateUrl: './text.component.html',
     styleUrls: ['./text.component.scss'],
 })
-export class TextComponent extends FieldFormComponent<TextDto> implements OnInit {
+export class TextComponent extends AbstractFieldFormComponent<TextDto> implements OnInit {
     content = '';
 
     constructor(private sanitizer: DomSanitizer) {

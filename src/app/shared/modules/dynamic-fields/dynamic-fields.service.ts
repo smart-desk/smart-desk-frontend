@@ -10,6 +10,8 @@ export class DynamicFieldsService {
     constructor(@Inject('FIELDS_MAP') private fieldsMap: DynamicFieldsMap, private injector: Injector) {}
 
     getService(type: FieldType): AbstractFieldService {
-        return this.injector.get(this.fieldsMap.get(type));
+        if (this.fieldsMap.get(type)) {
+            return this.injector.get(this.fieldsMap.get(type));
+        }
     }
 }

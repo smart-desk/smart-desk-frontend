@@ -1,6 +1,6 @@
 import { Type } from '@angular/core';
 
-import { FieldFormComponent } from '../components/field-form/field-form.component';
+import { AbstractFieldFormComponent } from '../modules/dynamic-fields/abstract-field-form.component';
 import { FieldSettingsComponent as CreatorInputBaseDirective } from '../../modules/admin/components/field-settings';
 import { InputTextFormComponent } from '../components/input-text-form/input-text-form.component';
 import { InputTextSettingsComponent as CreatorInputTextComponent } from '../../modules/admin/components/input-text-settings/input-text-settings.component';
@@ -16,7 +16,7 @@ export interface FieldMetadata {
     type: FieldType;
     title: string;
     description?: string;
-    formComponent: Type<FieldFormComponent<unknown>>;
+    formComponent: Type<AbstractFieldFormComponent<unknown>>;
     settingsComponent: Type<CreatorInputBaseDirective<unknown>>;
 }
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FieldFormComponent } from '../field-form/field-form.component';
+import { AbstractFieldFormComponent } from '../../modules/dynamic-fields/abstract-field-form.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TextareaDto } from '../../models/dto/field-params/textarea.dto';
 import { TextareaEntity } from '../../models/dto/field-data/textarea.entity';
@@ -9,7 +9,7 @@ import { TextareaEntity } from '../../models/dto/field-data/textarea.entity';
     templateUrl: './textarea-form.component.html',
     styleUrls: ['./textarea-form.component.scss'],
 })
-export class TextareaFormComponent extends FieldFormComponent<TextareaDto> implements OnInit {
+export class TextareaFormComponent extends AbstractFieldFormComponent<TextareaDto> implements OnInit {
     form: FormGroup;
 
     ngOnInit(): void {

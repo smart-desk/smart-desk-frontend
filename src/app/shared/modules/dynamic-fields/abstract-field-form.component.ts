@@ -6,13 +6,13 @@ import { TextDto } from '../../models/dto/field-params/text.dto';
 import { InputTextDto } from '../../models/dto/field-params/input-text.dto';
 
 interface AdvertField {
-    getValue(): unknown; // todo
+    getValue(): unknown; // todo and rename
     isValid(): boolean;
 }
 
 @Directive()
 // tslint:disable-next-line:directive-class-suffix
-export abstract class FieldFormComponent<T> implements AdvertField {
+export abstract class AbstractFieldFormComponent<T> implements AdvertField {
     @Input() field: FieldWithData<InputTextDto | TextareaDto | RadioDto | TextDto>;
     @Input() preview: boolean;
     @Input() data: any; // todo
