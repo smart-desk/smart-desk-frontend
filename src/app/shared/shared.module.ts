@@ -12,11 +12,11 @@ import {
     NzRadioModule,
 } from 'ng-zorro-antd';
 import { InputTextFormComponent } from './components/input-text-form/input-text-form.component';
-import { TextareaFormComponent } from './components/textarea-form/textarea-form.component';
-import { RadioFormComponent } from './components/radio-form/radio-form.component';
+import { TextareaFormComponent } from '../modules/dynamic-fields/textarea/textarea-form/textarea-form.component';
+import { RadioFormComponent } from '../modules/dynamic-fields/radio/radio-form/radio-form.component';
 import { AdvertService, CategoryService, FieldService, ModelService, SectionService, AuthService } from './services';
 import { ApiHostInterceptor, TokenInterceptor, ErrorsInterceptor } from './interceptors';
-import { TextComponent } from './components/text/text.component';
+import { TextComponent } from '../modules/dynamic-fields/text/text/text.component';
 import { SearchComponent } from './components/search/search.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { DynamicFieldsModule } from './modules/dynamic-fields/dynamic-fields.module';

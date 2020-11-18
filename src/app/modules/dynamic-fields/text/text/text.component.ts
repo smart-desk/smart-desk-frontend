@@ -1,7 +1,7 @@
 import { Component, OnInit, SecurityContext } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { AbstractFieldFormComponent } from '../../modules/dynamic-fields/abstract-field-form.component';
-import { TextDto } from '../../models/dto/field-params/text.dto';
+import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
+import { TextDto } from '../../../../shared/models/dto/field-params/text.dto';
 
 @Component({
     selector: 'app-text',

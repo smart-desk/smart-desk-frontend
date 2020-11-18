@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FieldSettingsComponent, OperationState } from '../field-settings';
 import { FieldService } from '../../../../shared/services';
 import { FieldWithData } from '../../../../shared/models/field-with-data';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
@@ -13,7 +12,7 @@ import { Field } from '../../../../shared/models/dto/field.entity';
     styleUrls: ['./radio-settings.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RadioSettingsComponent extends FieldSettingsComponent<RadioDto> implements OnInit {
+export class RadioSettingsComponent extends AbstractFieldParamsComponent<RadioDto> implements OnInit {
     form: FormGroup;
 
     state: OperationState;

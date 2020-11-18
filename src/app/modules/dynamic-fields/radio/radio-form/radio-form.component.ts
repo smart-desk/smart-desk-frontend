@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { AbstractFieldFormComponent } from '../../modules/dynamic-fields/abstract-field-form.component';
-import { RadioDto } from '../../models/dto/field-params/radio.dto';
-import { RadioEntity } from '../../models/dto/field-data/radio.entity';
+import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
+import { RadioDto } from '../../../../shared/models/dto/field-params/radio.dto';
+import { RadioEntity } from '../../../../shared/models/dto/field-data/radio.entity';
 
 @Component({
     selector: 'app-radio',

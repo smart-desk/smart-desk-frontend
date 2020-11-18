@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { FieldService } from '../../../../shared/services';
-import { FieldSettingsComponent, OperationState } from '../field-settings';
 import { InputTextDto } from '../../../../shared/models/dto/field-params/input-text.dto';
 import { Field } from '../../../../shared/models/dto/field.entity';
+import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-params.component';
 
 enum Mode {
     EDIT,
@@ -17,7 +17,7 @@ enum Mode {
     styleUrls: ['./input-text-params.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputTextParamsComponent extends FieldSettingsComponent<InputTextDto> implements OnInit {
+export class InputTextParamsComponent extends AbstractFieldParamsComponent<InputTextDto> implements OnInit {
     OperationState = OperationState;
     state: OperationState;
 

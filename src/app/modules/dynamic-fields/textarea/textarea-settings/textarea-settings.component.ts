@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { FieldService } from '../../../../shared/services';
-import { FieldSettingsComponent, OperationState } from '../field-settings';
-import { InputTextDto } from '../../../../shared/models/dto/field-params/input-text.dto';
+import { TextareaDto } from '../../../../shared/models/dto/field-params/textarea.dto';
 import { Field } from '../../../../shared/models/dto/field.entity';
+import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-params.component';
 
 enum Mode {
     EDIT,
@@ -12,12 +12,12 @@ enum Mode {
 }
 
 @Component({
-    selector: 'app-input-text',
-    templateUrl: './input-text-settings.component.html',
-    styleUrls: ['./input-text-settings.component.scss'],
+    selector: 'app-textarea',
+    templateUrl: './textarea-settings.component.html',
+    styleUrls: ['./textarea-settings.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputTextSettingsComponent extends FieldSettingsComponent<InputTextDto> implements OnInit {
+export class TextareaSettingsComponent extends AbstractFieldParamsComponent<TextareaDto> implements OnInit {
     OperationState = OperationState;
     state: OperationState;
 
@@ -26,7 +26,7 @@ export class InputTextSettingsComponent extends FieldSettingsComponent<InputText
     mode: Mode;
     Mode = Mode;
 
-    constructor(private fieldService: FieldService, private fb: FormBuilder, private cd: ChangeDetectorRef) {
+    constructor(private fb: FormBuilder, private cd: ChangeDetectorRef, private fieldService: FieldService) {
         super();
     }
 
@@ -35,9 +35,9 @@ export class InputTextSettingsComponent extends FieldSettingsComponent<InputText
 
         this.form = this.fb.group({
             // todo
-            label: [(this.field.params && (this.field.params as InputTextDto).label) || '', Validators.required],
-            placeholder: [(this.field.params && (this.field.params as InputTextDto).placeholder) || ''],
-            required: [(this.field.params && (this.field.params as InputTextDto).required) || false],
+            label: [(this.field.params && (this.field.params as TextareaDto).label) || '', Validators.required],
+            placeholder: [(this.field.params && (this.field.params as TextareaDto).placeholder) || ''],
+            required: [(this.field.params && (this.field.params as TextareaDto).required) || false],
         });
     }
 
@@ -49,6 +49,7 @@ export class InputTextSettingsComponent extends FieldSettingsComponent<InputText
             ...(this.field.params || {}),
             ...this.form.getRawValue(),
         };
+        this.field.title = (this.field.params as TextareaDto).label;
 
         let request: Observable<Field>;
         if (this.field.id) {
@@ -58,17 +59,13 @@ export class InputTextSettingsComponent extends FieldSettingsComponent<InputText
         }
 
         request.subscribe(res => {
-            this.field = res;
             this.state = OperationState.SUCCESS;
+            this.field = res;
             this.toggleMode();
             this.save$.next(this.state);
 
             this.cd.detectChanges();
         });
-    }
-
-    toggleMode(): void {
-        this.mode = this.mode === Mode.EDIT ? Mode.VIEW : Mode.EDIT;
     }
 
     cancel(): void {
@@ -79,5 +76,9 @@ export class InputTextSettingsComponent extends FieldSettingsComponent<InputText
         this.fieldService.deleteField(this.field.id).subscribe(() => {
             this.delete$.next(this);
         });
+    }
+
+    toggleMode(): void {
+        this.mode = this.mode === Mode.EDIT ? Mode.VIEW : Mode.EDIT;
     }
 }

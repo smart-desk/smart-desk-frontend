@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractFieldFormComponent } from '../../modules/dynamic-fields/abstract-field-form.component';
+import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { TextareaDto } from '../../models/dto/field-params/textarea.dto';
-import { TextareaEntity } from '../../models/dto/field-data/textarea.entity';
+import { TextareaDto } from '../../../../shared/models/dto/field-params/textarea.dto';
+import { TextareaEntity } from '../../../../shared/models/dto/field-data/textarea.entity';
 
 @Component({
     selector: 'app-textarea',

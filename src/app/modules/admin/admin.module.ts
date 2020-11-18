@@ -32,17 +32,15 @@ import { CategoriesComponent } from './pages/categories/categories.component';
 import { CreateModelComponent } from './pages/create-model/create-model.component';
 import { EditModelComponent } from './pages/edit-model/edit-model.component';
 import { ModelsComponent } from './pages/models/models.component';
-import { InputTextSettingsComponent } from './components/input-text-settings/input-text-settings.component';
-import { TextareaSettingsComponent } from './components/textarea-settings/textarea-settings.component';
-import { RadioSettingsComponent } from './components/radio-settings/radio-settings.component';
-import { TextSettingsComponent } from './components/text-settings/text-settings.component';
+import { TextareaSettingsComponent } from '../dynamic-fields/textarea/textarea-settings/textarea-settings.component';
+import { RadioSettingsComponent } from '../dynamic-fields/radio/radio-settings/radio-settings.component';
+import { TextSettingsComponent } from '../dynamic-fields/text/text-settings/text-settings.component';
 import { editorSettings } from '../../app.config';
 import { SectionFormComponent } from './components/section-form/section-form.component';
 import { AdvertsListComponent } from './pages/adverts-list/adverts-list.component';
 
 const components = [
     TextSettingsComponent,
-    InputTextSettingsComponent,
     TextareaSettingsComponent,
     RadioSettingsComponent,
     PreviewComponent,

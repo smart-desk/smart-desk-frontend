@@ -11,11 +11,9 @@ import {
     ViewChild,
     ViewContainerRef,
 } from '@angular/core';
-import { FieldSettingsComponent, OperationState } from '../field-settings';
-import { getCreatorFieldComponentResolver } from '../../../../shared/services/field-resolvers/field-resolvers';
-import { FieldMetadata, fieldMetadataList } from '../../../../shared/models/field-metadata';
 import { Section } from '../../../../shared/models/dto/section.entity';
 import { Field, FieldType } from '../../../../shared/models/dto/field.entity';
+import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-params.component';
 
 @Component({
     selector: 'app-section-form',
@@ -32,7 +30,7 @@ export class SectionFormComponent implements AfterViewInit {
 
     private availableInputTypes = fieldMetadataList;
 
-    private components: ComponentRef<FieldSettingsComponent<unknown>>[] = [];
+    private components: ComponentRef<AbstractFieldParamsComponent<unknown>>[] = [];
 
     @ViewChild('fields', { read: ViewContainerRef })
     private fieldsFormContainerRef: ViewContainerRef;
@@ -74,7 +72,7 @@ export class SectionFormComponent implements AfterViewInit {
         return [...this.availableInputTypes];
     }
 
-    private resolveFieldComponent(field: Field): ComponentRef<FieldSettingsComponent<unknown>> {
+    private resolveFieldComponent(field: Field): ComponentRef<AbstractFieldParamsComponent<unknown>> {
         const resolver = getCreatorFieldComponentResolver(this.componentFactoryResolver, field.type);
         const component = this.fieldsFormContainerRef.createComponent(resolver);
 
@@ -91,7 +89,7 @@ export class SectionFormComponent implements AfterViewInit {
         return component;
     }
 
-    private onDelete(instance: FieldSettingsComponent<unknown>): void {
+    private onDelete(instance: AbstractFieldParamsComponent<unknown>): void {
         const targetComponent = this.components.find(component => component.instance === instance);
 
         this.fieldsFormContainerRef.remove(this.fieldsFormContainerRef.indexOf(targetComponent.hostView));

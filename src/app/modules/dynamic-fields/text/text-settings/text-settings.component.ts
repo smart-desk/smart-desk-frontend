@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ContentChange } from 'ngx-quill/lib/quill-editor.component';
-import { FieldSettingsComponent, OperationState } from '../field-settings';
 import { FieldService } from '../../../../shared/services';
 import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 import { TextDto } from '../../../../shared/models/dto/field-params/text.dto';
+import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-params.component';
 
 enum Mode {
     EDIT,
@@ -17,7 +17,7 @@ enum Mode {
     styleUrls: ['./text-settings.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TextSettingsComponent extends FieldSettingsComponent<TextDto> implements OnInit {
+export class TextSettingsComponent extends AbstractFieldParamsComponent<TextDto> implements OnInit {
     state: OperationState;
     saveContent$ = new Subject<string>();
     mode: Mode;
