@@ -1,7 +1,7 @@
 name: Build Staging
 on:
     push:
-        branch: [master]
+        branches: [master]
 
 jobs:
     build:
