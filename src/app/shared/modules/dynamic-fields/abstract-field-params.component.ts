@@ -5,17 +5,17 @@ import { Field } from '../../../../shared/models/dto/field.entity';
 
 @Directive()
 // tslint:disable-next-line:directive-class-suffix
-export abstract class FieldSettingsComponent<T> implements OnDestroy {
+export abstract class AbstractFieldParamsComponent<T> implements OnDestroy {
     @Input() field: Field;
 
     protected save$ = new Subject<OperationState>();
-    protected delete$ = new Subject<FieldSettingsComponent<unknown>>();
+    protected delete$ = new Subject<AbstractFieldParamsComponent<unknown>>();
 
     get onSave$(): Observable<OperationState> {
         return this.save$.asObservable();
     }
 
-    get onDelete(): Observable<FieldSettingsComponent<unknown>> {
+    get onDelete(): Observable<AbstractFieldParamsComponent<unknown>> {
         return this.delete$.asObservable();
     }
 
