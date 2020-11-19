@@ -5,17 +5,17 @@ import { OperationState } from '../../models/operation-state.enum';
 
 @Directive()
 // tslint:disable-next-line:directive-class-suffix
-export abstract class AbstractFieldParamsComponent<T> implements OnDestroy {
+export abstract class AbstractFieldParamsComponent implements OnDestroy {
     @Input() field: Field;
 
     protected save$ = new Subject<OperationState>();
-    protected delete$ = new Subject<AbstractFieldParamsComponent<unknown>>();
+    protected delete$ = new Subject<AbstractFieldParamsComponent>();
 
     get onSave$(): Observable<OperationState> {
         return this.save$.asObservable();
     }
 
-    get onDelete(): Observable<AbstractFieldParamsComponent<unknown>> {
+    get onDelete(): Observable<AbstractFieldParamsComponent> {
         return this.delete$.asObservable();
     }
 

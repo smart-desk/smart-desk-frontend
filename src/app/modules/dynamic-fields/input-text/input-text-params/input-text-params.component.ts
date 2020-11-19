@@ -18,7 +18,7 @@ enum Mode {
     styleUrls: ['./input-text-params.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputTextParamsComponent extends AbstractFieldParamsComponent<InputTextDto> implements OnInit {
+export class InputTextParamsComponent extends AbstractFieldParamsComponent implements OnInit {
     operationState = OperationState;
     state: OperationState;
 

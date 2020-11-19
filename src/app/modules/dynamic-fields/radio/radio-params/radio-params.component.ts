@@ -13,7 +13,7 @@ import { OperationState } from '../../../../shared/models/operation-state.enum';
     styleUrls: ['./radio-params.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RadioParamsComponent extends AbstractFieldParamsComponent<RadioDto> implements OnInit {
+export class RadioParamsComponent extends AbstractFieldParamsComponent implements OnInit {
     form: FormGroup;
 
     state: OperationState;

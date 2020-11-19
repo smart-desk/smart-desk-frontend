@@ -13,7 +13,7 @@ export class InputTextService implements AbstractFieldService {
         return this.componentFactoryResolver.resolveComponentFactory(InputTextFormComponent);
     }
 
-    getParamsComponent(): ComponentFactory<AbstractFieldParamsComponent<unknown>> {
+    getParamsComponent(): ComponentFactory<AbstractFieldParamsComponent> {
         return this.componentFactoryResolver.resolveComponentFactory(InputTextParamsComponent);
     }
 

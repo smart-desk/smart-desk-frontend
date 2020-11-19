@@ -11,7 +11,7 @@ export abstract class AbstractFieldService {
     /**
      * Returns customer for field
      */
-    abstract getParamsComponent(): ComponentFactory<AbstractFieldParamsComponent<unknown>>; // todo remove generic maybe
+    abstract getParamsComponent(): ComponentFactory<AbstractFieldParamsComponent>; // todo remove generic maybe
 
     /**
      * Returns hyman readable name

@@ -18,7 +18,7 @@ enum Mode {
     styleUrls: ['./text-params.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TextParamsComponent extends AbstractFieldParamsComponent<TextDto> implements OnInit {
+export class TextParamsComponent extends AbstractFieldParamsComponent implements OnInit {
     state: OperationState;
     saveContent$ = new Subject<string>();
     mode: Mode;

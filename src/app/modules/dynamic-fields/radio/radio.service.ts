@@ -13,7 +13,7 @@ export class RadioService implements AbstractFieldService {
         return this.componentFactoryResolver.resolveComponentFactory(RadioFormComponent);
     }
 
-    getParamsComponent(): ComponentFactory<AbstractFieldParamsComponent<unknown>> {
+    getParamsComponent(): ComponentFactory<AbstractFieldParamsComponent> {
         return this.componentFactoryResolver.resolveComponentFactory(RadioParamsComponent);
     }
 

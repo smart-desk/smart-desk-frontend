@@ -13,7 +13,7 @@ export class TextareaService implements AbstractFieldService {
         return this.componentFactoryResolver.resolveComponentFactory(TextareaFormComponent);
     }
 
-    getParamsComponent(): ComponentFactory<AbstractFieldParamsComponent<unknown>> {
+    getParamsComponent(): ComponentFactory<AbstractFieldParamsComponent> {
         return this.componentFactoryResolver.resolveComponentFactory(TextareaParamsComponent);
     }
 

@@ -30,7 +30,7 @@ export class SectionFormComponent implements AfterViewInit {
     @Output()
     changeFields = new EventEmitter();
 
-    private components: ComponentRef<AbstractFieldParamsComponent<unknown>>[] = [];
+    private components: ComponentRef<AbstractFieldParamsComponent>[] = [];
 
     @ViewChild('fields', { read: ViewContainerRef })
     private fieldsFormContainerRef: ViewContainerRef;
@@ -80,7 +80,7 @@ export class SectionFormComponent implements AfterViewInit {
         }
     }
 
-    private resolveFieldComponent(field: Field): ComponentRef<AbstractFieldParamsComponent<unknown>> {
+    private resolveFieldComponent(field: Field): ComponentRef<AbstractFieldParamsComponent> {
         const service = this.dynamicFieldsService.getService(field.type);
         if (!service) {
             return;
@@ -97,7 +97,7 @@ export class SectionFormComponent implements AfterViewInit {
         return component;
     }
 
-    private onDelete(instance: AbstractFieldParamsComponent<unknown>): void {
+    private onDelete(instance: AbstractFieldParamsComponent): void {
         const targetComponent = this.components.find(component => component.instance === instance);
 
         this.fieldsFormContainerRef.remove(this.fieldsFormContainerRef.indexOf(targetComponent.hostView));

@@ -18,7 +18,7 @@ enum Mode {
     styleUrls: ['./textarea-params.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TextareaParamsComponent extends AbstractFieldParamsComponent<TextareaDto> implements OnInit {
+export class TextareaParamsComponent extends AbstractFieldParamsComponent implements OnInit {
     operationState = OperationState;
     state: OperationState;
 
