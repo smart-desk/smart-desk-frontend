@@ -123,7 +123,7 @@ export class AdvertCreateComponent implements OnInit {
         if (!service) {
             return;
         }
-        const resolver = service.getFormComponent();
+        const resolver = service.getFormComponentResolver();
         const component = this.fieldsFormContainerRef.createComponent(resolver);
 
         // add inputs

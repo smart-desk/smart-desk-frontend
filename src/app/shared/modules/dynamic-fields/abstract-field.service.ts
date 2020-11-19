@@ -6,12 +6,12 @@ export abstract class AbstractFieldService {
     /**
      * Returns customer for field
      */
-    abstract getFormComponent(): ComponentFactory<AbstractFieldFormComponent<unknown>>; // todo remove generic
+    abstract getFormComponentResolver(): ComponentFactory<AbstractFieldFormComponent<unknown>>; // todo remove generic
 
     /**
      * Returns customer for field
      */
-    abstract getParamsComponent(): ComponentFactory<AbstractFieldParamsComponent>; // todo remove generic maybe
+    abstract getParamsComponentResolver(): ComponentFactory<AbstractFieldParamsComponent>;
 
     /**
      * Returns hyman readable name

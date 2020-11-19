@@ -86,7 +86,7 @@ export class SectionFormComponent implements AfterViewInit {
             return;
         }
 
-        const resolver = service.getParamsComponent();
+        const resolver = service.getParamsComponentResolver();
         const component = this.fieldsFormContainerRef.createComponent(resolver);
 
         component.instance.field = field;
