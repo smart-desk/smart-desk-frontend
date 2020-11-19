@@ -57,13 +57,13 @@ export class SectionFormComponent implements AfterViewInit {
         this.components.push(component);
     }
 
-    getFieldName(type: string): string {
-        const service = this.dynamicFieldsService.getService(type as FieldType);
-        return service ? service.getName() : '----';
+    availableFieldTypes(): string[] {
+        return Object.values(FieldType);
     }
 
-    availableFieldTypes(): string[] {
-        return Object.keys(FieldType);
+    getFieldName(type: string): string {
+        const service = this.dynamicFieldsService.getService(type as FieldType);
+        return service ? service.getName() : '';
     }
 
     get title(): string {
