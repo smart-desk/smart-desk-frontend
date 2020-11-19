@@ -1,23 +1,23 @@
 import { ComponentFactory, ComponentFactoryResolver, Injectable } from '@angular/core';
 import { AbstractFieldService } from '../../../shared/modules/dynamic-fields/abstract-field.service';
-import { InputTextFormComponent } from './input-text-form/input-text-form.component';
 import { AbstractFieldFormComponent } from '../../../shared/modules/dynamic-fields/abstract-field-form.component';
+import { TextareaFormComponent } from './textarea-form/textarea-form.component';
 import { AbstractFieldParamsComponent } from '../../../shared/modules/dynamic-fields/abstract-field-params.component';
-import { InputTextParamsComponent } from './input-text-params/input-text-params.component';
+import { TextareaParamsComponent } from './textarea-params/textarea-params.component';
 
 @Injectable()
-export class InputTextService implements AbstractFieldService {
+export class TextareaService implements AbstractFieldService {
     constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
     getFormComponent(): ComponentFactory<AbstractFieldFormComponent<unknown>> {
-        return this.componentFactoryResolver.resolveComponentFactory(InputTextFormComponent);
+        return this.componentFactoryResolver.resolveComponentFactory(TextareaFormComponent);
     }
 
     getParamsComponent(): ComponentFactory<AbstractFieldParamsComponent<unknown>> {
-        return this.componentFactoryResolver.resolveComponentFactory(InputTextParamsComponent);
+        return this.componentFactoryResolver.resolveComponentFactory(TextareaParamsComponent);
     }
 
     getName(): string {
-        return 'Input Text';
+        return 'Textarea';
     }
 }

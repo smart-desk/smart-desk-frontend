@@ -5,10 +5,10 @@ import { TextDto } from '../../../../shared/models/dto/field-params/text.dto';
 
 @Component({
     selector: 'app-text',
-    templateUrl: './text.component.html',
-    styleUrls: ['./text.component.scss'],
+    templateUrl: './text-form.component.html',
+    styleUrls: ['./text-form.component.scss'],
 })
-export class TextComponent extends AbstractFieldFormComponent<TextDto> implements OnInit {
+export class TextFormComponent extends AbstractFieldFormComponent<TextDto> implements OnInit {
     content = '';
 
     constructor(private sanitizer: DomSanitizer) {

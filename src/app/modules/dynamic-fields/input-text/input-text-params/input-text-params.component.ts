@@ -5,6 +5,7 @@ import { FieldService } from '../../../../shared/services';
 import { InputTextDto } from '../../../../shared/models/dto/field-params/input-text.dto';
 import { Field } from '../../../../shared/models/dto/field.entity';
 import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-params.component';
+import { OperationState } from '../../../../shared/models/operation-state.enum';
 
 enum Mode {
     EDIT,
@@ -18,7 +19,7 @@ enum Mode {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputTextParamsComponent extends AbstractFieldParamsComponent<InputTextDto> implements OnInit {
-    OperationState = OperationState;
+    operationState = OperationState;
     state: OperationState;
 
     form: FormGroup;

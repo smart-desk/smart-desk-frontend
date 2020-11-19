@@ -5,6 +5,7 @@ import { FieldService } from '../../../../shared/services';
 import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 import { TextDto } from '../../../../shared/models/dto/field-params/text.dto';
 import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-params.component';
+import { OperationState } from '../../../../shared/models/operation-state.enum';
 
 enum Mode {
     EDIT,
@@ -13,11 +14,11 @@ enum Mode {
 
 @Component({
     selector: 'app-text-editor',
-    templateUrl: './text-settings.component.html',
-    styleUrls: ['./text-settings.component.scss'],
+    templateUrl: './text-params.component.html',
+    styleUrls: ['./text-params.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TextSettingsComponent extends AbstractFieldParamsComponent<TextDto> implements OnInit {
+export class TextParamsComponent extends AbstractFieldParamsComponent<TextDto> implements OnInit {
     state: OperationState;
     saveContent$ = new Subject<string>();
     mode: Mode;

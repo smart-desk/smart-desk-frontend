@@ -14,6 +14,8 @@ import {
 import { Section } from '../../../../shared/models/dto/section.entity';
 import { Field, FieldType } from '../../../../shared/models/dto/field.entity';
 import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-params.component';
+import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
+import { OperationState } from '../../../../shared/models/operation-state.enum';
 
 @Component({
     selector: 'app-section-form',
@@ -28,14 +30,16 @@ export class SectionFormComponent implements AfterViewInit {
     @Output()
     changeFields = new EventEmitter();
 
-    private availableInputTypes = fieldMetadataList;
-
     private components: ComponentRef<AbstractFieldParamsComponent<unknown>>[] = [];
 
     @ViewChild('fields', { read: ViewContainerRef })
     private fieldsFormContainerRef: ViewContainerRef;
 
-    constructor(private componentFactoryResolver: ComponentFactoryResolver, private cd: ChangeDetectorRef) {}
+    constructor(
+        private componentFactoryResolver: ComponentFactoryResolver,
+        private cd: ChangeDetectorRef,
+        private dynamicFieldsService: DynamicFieldsService
+    ) {}
 
     ngAfterViewInit() {
         this.section.fields.forEach(field => {
@@ -44,13 +48,22 @@ export class SectionFormComponent implements AfterViewInit {
         });
     }
 
-    createField(type: FieldType, section: Section): void {
+    createField(type: string, section: Section): void {
         const field = new Field();
-        field.type = type;
+        field.type = type as FieldType; // todo as
         field.section_id = section.id;
 
         const component = this.resolveFieldComponent(field);
         this.components.push(component);
+    }
+
+    getFieldName(type: string): string {
+        const service = this.dynamicFieldsService.getService(type as FieldType);
+        return service ? service.getName() : '----';
+    }
+
+    availableFieldTypes(): string[] {
+        return Object.keys(FieldType);
     }
 
     get title(): string {
@@ -67,23 +80,18 @@ export class SectionFormComponent implements AfterViewInit {
         }
     }
 
-    get availableFields(): FieldMetadata[] {
-        // todo filter based on type
-        return [...this.availableInputTypes];
-    }
-
     private resolveFieldComponent(field: Field): ComponentRef<AbstractFieldParamsComponent<unknown>> {
-        const resolver = getCreatorFieldComponentResolver(this.componentFactoryResolver, field.type);
+        const service = this.dynamicFieldsService.getService(field.type);
+        if (!service) {
+            return;
+        }
+
+        const resolver = service.getParamsComponent();
         const component = this.fieldsFormContainerRef.createComponent(resolver);
 
-        // add inputs
         component.instance.field = field;
-
-        // subscribe on events
         component.instance.onSave$.subscribe(state => this.onSave(state));
         component.instance.onDelete.subscribe(instance => this.onDelete(instance));
-
-        // run onInit
         component.changeDetectorRef.detectChanges();
 
         return component;

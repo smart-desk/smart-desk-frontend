@@ -1,9 +1,5 @@
 import { Directive, Input } from '@angular/core';
-import { FieldWithData } from '../../models/field-with-data';
-import { TextareaDto } from '../../models/dto/field-params/textarea.dto';
-import { RadioDto } from '../../models/dto/field-params/radio.dto';
-import { TextDto } from '../../models/dto/field-params/text.dto';
-import { InputTextDto } from '../../models/dto/field-params/input-text.dto';
+import { Field } from '../../models/dto/field.entity';
 
 interface AdvertField {
     getValue(): unknown; // todo and rename
@@ -13,7 +9,7 @@ interface AdvertField {
 @Directive()
 // tslint:disable-next-line:directive-class-suffix
 export abstract class AbstractFieldFormComponent<T> implements AdvertField {
-    @Input() field: FieldWithData<InputTextDto | TextareaDto | RadioDto | TextDto>;
+    @Input() field: Field;
     @Input() preview: boolean;
     @Input() data: any; // todo
 

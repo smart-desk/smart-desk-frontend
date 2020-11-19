@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { SectionType } from '../../../../shared/models/section.model';
 import { Advert } from '../../../../shared/models/dto/advert.entity';
+import { SectionType } from '../../../../shared/models/dto/section.entity';
 
 @Component({
     selector: 'app-advert-card',

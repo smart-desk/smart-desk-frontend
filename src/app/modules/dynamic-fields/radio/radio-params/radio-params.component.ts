@@ -1,18 +1,19 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FieldService } from '../../../../shared/services';
-import { FieldWithData } from '../../../../shared/models/field-with-data';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { RadioDto, RadioItem } from '../../../../shared/models/dto/field-params/radio.dto';
 import { Field } from '../../../../shared/models/dto/field.entity';
+import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-params.component';
+import { OperationState } from '../../../../shared/models/operation-state.enum';
 
 @Component({
     selector: 'app-radio',
-    templateUrl: './radio-settings.component.html',
-    styleUrls: ['./radio-settings.component.scss'],
+    templateUrl: './radio-params.component.html',
+    styleUrls: ['./radio-params.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RadioSettingsComponent extends AbstractFieldParamsComponent<RadioDto> implements OnInit {
+export class RadioParamsComponent extends AbstractFieldParamsComponent<RadioDto> implements OnInit {
     form: FormGroup;
 
     state: OperationState;
@@ -55,7 +56,7 @@ export class RadioSettingsComponent extends AbstractFieldParamsComponent<RadioDt
                 ...(this.field.params || {}),
                 radios,
             },
-        } as FieldWithData<RadioDto>;
+        } as Field;
 
         let request: Observable<Field>;
         if (this.field.id) {
@@ -65,7 +66,7 @@ export class RadioSettingsComponent extends AbstractFieldParamsComponent<RadioDt
         }
         request.subscribe(
             res => {
-                this.field = res as FieldWithData<RadioDto>;
+                this.field = res as Field; // todo create Field class
                 this.updateState(OperationState.SUCCESS);
                 this.cd.detectChanges();
             },

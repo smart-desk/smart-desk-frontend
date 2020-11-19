@@ -5,6 +5,7 @@ import { FieldService } from '../../../../shared/services';
 import { TextareaDto } from '../../../../shared/models/dto/field-params/textarea.dto';
 import { Field } from '../../../../shared/models/dto/field.entity';
 import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-params.component';
+import { OperationState } from '../../../../shared/models/operation-state.enum';
 
 enum Mode {
     EDIT,
@@ -13,12 +14,12 @@ enum Mode {
 
 @Component({
     selector: 'app-textarea',
-    templateUrl: './textarea-settings.component.html',
-    styleUrls: ['./textarea-settings.component.scss'],
+    templateUrl: './textarea-params.component.html',
+    styleUrls: ['./textarea-params.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TextareaSettingsComponent extends AbstractFieldParamsComponent<TextareaDto> implements OnInit {
-    OperationState = OperationState;
+export class TextareaParamsComponent extends AbstractFieldParamsComponent<TextareaDto> implements OnInit {
+    operationState = OperationState;
     state: OperationState;
 
     form: FormGroup;
