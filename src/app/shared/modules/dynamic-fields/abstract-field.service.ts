@@ -16,5 +16,5 @@ export abstract class AbstractFieldService {
     /**
      * Returns hyman readable name
      */
-    abstract getName(): string;
+    abstract getFieldName(): string;
 }
