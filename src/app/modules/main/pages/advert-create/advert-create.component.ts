@@ -36,7 +36,7 @@ export class AdvertCreateComponent implements OnInit {
 
     title = '';
 
-    private components: ComponentRef<AbstractFieldFormComponent<unknown>>[] = [];
+    private components: ComponentRef<AbstractFieldFormComponent<any>>[] = [];
 
     @ViewChild('fields', { read: ViewContainerRef })
     private fieldsFormContainerRef: ViewContainerRef;
@@ -95,7 +95,7 @@ export class AdvertCreateComponent implements OnInit {
         advert.title = this.title;
         advert.category_id = this.selectedCategory.id;
         advert.model_id = this.selectedCategory.modelId;
-        advert.fields = this.components.map(component => component.instance.getValue()).filter(value => !!value);
+        advert.fields = this.components.map(component => component.instance.getFieldData()).filter(value => !!value);
 
         this.advertService.createAdvert(advert).subscribe(
             res => {
@@ -139,6 +139,6 @@ export class AdvertCreateComponent implements OnInit {
         if (!this.title) {
             return false;
         }
-        return this.components.every(component => component.instance.isValid());
+        return this.components.every(component => component.instance.isFieldDataValid());
     }
 }

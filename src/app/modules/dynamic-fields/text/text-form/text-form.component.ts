@@ -1,4 +1,4 @@
-import { Component, OnInit, SecurityContext } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, SecurityContext } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
 import { TextDto } from '../../../../shared/models/dto/field-params/text.dto';
@@ -7,23 +7,26 @@ import { TextDto } from '../../../../shared/models/dto/field-params/text.dto';
     selector: 'app-text',
     templateUrl: './text-form.component.html',
     styleUrls: ['./text-form.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TextFormComponent extends AbstractFieldFormComponent<TextDto> implements OnInit {
+export class TextFormComponent extends AbstractFieldFormComponent<null> implements OnInit {
     content = '';
 
-    constructor(private sanitizer: DomSanitizer) {
+    constructor(private sanitizer: DomSanitizer, private cdr: ChangeDetectorRef) {
         super();
     }
 
     ngOnInit(): void {
-        this.content = this.sanitizer.sanitize(SecurityContext.HTML, (this.field.params && (this.field.params as TextDto).value) || '');
+        const params = this.field.params as TextDto;
+        this.content = this.sanitizer.sanitize(SecurityContext.HTML, params.value || '');
+        this.cdr.detectChanges();
     }
 
-    getValue(): any {
+    getFieldData(): any {
         return null;
     }
 
-    isValid(): boolean {
+    isFieldDataValid(): boolean {
         return true;
     }
 }

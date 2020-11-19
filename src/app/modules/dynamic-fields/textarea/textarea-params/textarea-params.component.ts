@@ -33,12 +33,12 @@ export class TextareaParamsComponent extends AbstractFieldParamsComponent implem
 
     ngOnInit(): void {
         this.mode = this.field.id ? Mode.VIEW : Mode.EDIT;
+        const params = this.field.params as TextareaDto;
 
         this.form = this.fb.group({
-            // todo
-            label: [(this.field.params && (this.field.params as TextareaDto).label) || '', Validators.required],
-            placeholder: [(this.field.params && (this.field.params as TextareaDto).placeholder) || ''],
-            required: [(this.field.params && (this.field.params as TextareaDto).required) || false],
+            label: [(params && params.label) || '', Validators.required],
+            placeholder: [(params && params.placeholder) || ''],
+            required: [(params && params.required) || false],
         });
     }
 

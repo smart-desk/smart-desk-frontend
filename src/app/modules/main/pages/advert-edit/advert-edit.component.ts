@@ -31,7 +31,7 @@ export class AdvertEditComponent implements OnInit {
     form: FormGroup;
     @ViewChild('fields', { read: ViewContainerRef })
     private fieldsFormContainerRef: ViewContainerRef;
-    private components: ComponentRef<AbstractFieldFormComponent<unknown>>[] = [];
+    private components: ComponentRef<AbstractFieldFormComponent<any>>[] = [];
     private advert: Advert;
 
     constructor(
@@ -69,7 +69,7 @@ export class AdvertEditComponent implements OnInit {
     save(): void {
         if (this.isValid()) {
             const advert = new UpdateAdvertDto();
-            advert.fields = this.components.map(component => component.instance.getValue()).filter(value => !!value);
+            advert.fields = this.components.map(component => component.instance.getFieldData()).filter(value => !!value);
             advert.title = this.form.controls.title.value;
             this.advertService.updateAdvert(this.advert.id, advert).subscribe(() => {
                 this.router.navigate([this.advert.category_id, this.advert.id]);
@@ -117,6 +117,6 @@ export class AdvertEditComponent implements OnInit {
         if (!this.form.valid) {
             return false;
         }
-        return this.components.every(component => component.instance.isValid());
+        return this.components.every(component => component.instance.isFieldDataValid());
     }
 }

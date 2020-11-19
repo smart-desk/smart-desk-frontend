@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { InputTextDto } from '../../../../shared/models/dto/field-params/input-text.dto';
 import { InputTextEntity } from '../../../../shared/models/dto/field-data/input-text.entity';
+import { InputTextDto } from '../../../../shared/models/dto/field-params/input-text.dto';
 
 @Component({
     selector: 'app-input-text',
@@ -10,13 +10,13 @@ import { InputTextEntity } from '../../../../shared/models/dto/field-data/input-
     styleUrls: ['./input-text-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputTextFormComponent extends AbstractFieldFormComponent<unknown> implements OnInit {
+export class InputTextFormComponent extends AbstractFieldFormComponent<InputTextEntity> implements OnInit {
     form: FormGroup;
 
     ngOnInit(): void {
         const valueValidators = [];
-        if (this.field.params && (this.field.params as InputTextDto).required) {
-            // todo
+        const params = this.field.params as InputTextDto;
+        if (params && params.required) {
             valueValidators.push(Validators.required);
         }
 
@@ -25,7 +25,7 @@ export class InputTextFormComponent extends AbstractFieldFormComponent<unknown> 
         });
     }
 
-    getValue(): any {
+    getFieldData(): any {
         if (this.data) {
             this.data.value = this.form.get('value').value;
             return this.data;
@@ -38,7 +38,7 @@ export class InputTextFormComponent extends AbstractFieldFormComponent<unknown> 
         return advertField;
     }
 
-    isValid(): boolean {
+    isFieldDataValid(): boolean {
         return this.form.valid;
     }
 }

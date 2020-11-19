@@ -33,12 +33,12 @@ export class InputTextParamsComponent extends AbstractFieldParamsComponent imple
 
     ngOnInit(): void {
         this.mode = this.field.id ? Mode.VIEW : Mode.EDIT;
+        const params = this.field.params as InputTextDto;
 
         this.form = this.fb.group({
-            // todo
-            label: [(this.field.params && (this.field.params as InputTextDto).label) || '', Validators.required],
-            placeholder: [(this.field.params && (this.field.params as InputTextDto).placeholder) || ''],
-            required: [(this.field.params && (this.field.params as InputTextDto).required) || false],
+            label: [(params && params.label) || '', Validators.required],
+            placeholder: [(params && params.placeholder) || ''],
+            required: [(params && params.required) || false],
         });
     }
 

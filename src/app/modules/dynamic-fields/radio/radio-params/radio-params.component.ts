@@ -23,11 +23,8 @@ export class RadioParamsComponent extends AbstractFieldParamsComponent implement
     }
 
     ngOnInit() {
-        const radios =
-            // todo
-            this.field.params && (this.field.params as RadioDto).radios
-                ? (this.field.params as RadioDto).radios.map(data => this.createRadioControl(data))
-                : [this.createRadioControl()];
+        const params = this.field.params as RadioDto;
+        const radios = params && params.radios ? params.radios.map(data => this.createRadioControl(data)) : [this.createRadioControl()];
 
         this.form = this.fb.group({
             title: [this.field.title || ''],
@@ -52,10 +49,7 @@ export class RadioParamsComponent extends AbstractFieldParamsComponent implement
         this.field = {
             ...(this.field || {}),
             title,
-            params: {
-                ...(this.field.params || {}),
-                radios,
-            },
+            params: { radios },
         } as Field;
 
         let request: Observable<Field>;
