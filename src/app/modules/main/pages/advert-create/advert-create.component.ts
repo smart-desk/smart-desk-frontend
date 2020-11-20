@@ -11,13 +11,13 @@ import { Router } from '@angular/router';
 import { NzCascaderOption } from 'ng-zorro-antd';
 import { BehaviorSubject } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
-import { FieldFormComponent } from '../../../../shared/components/field-form/field-form.component';
+import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
 import { AdvertService, CategoryService, ModelService } from '../../../../shared/services';
-import { getFieldComponentResolver } from '../../../../shared/services/field-resolvers/field-resolvers';
 import { Category } from '../../../../shared/models/dto/category.entity';
 import { CreateAdvertDto } from '../../../../shared/models/dto/advert.dto';
 import { Section } from '../../../../shared/models/dto/section.entity';
 import { Field } from '../../../../shared/models/dto/field.entity';
+import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
 
 // todo check subscriptions
 @Component({
@@ -36,7 +36,7 @@ export class AdvertCreateComponent implements OnInit {
 
     title = '';
 
-    private components: ComponentRef<FieldFormComponent<unknown>>[] = [];
+    private components: ComponentRef<AbstractFieldFormComponent<any>>[] = [];
 
     @ViewChild('fields', { read: ViewContainerRef })
     private fieldsFormContainerRef: ViewContainerRef;
@@ -46,7 +46,8 @@ export class AdvertCreateComponent implements OnInit {
         private componentFactoryResolver: ComponentFactoryResolver,
         private categoryService: CategoryService,
         private advertService: AdvertService,
-        private router: Router
+        private router: Router,
+        private dynamicFieldService: DynamicFieldsService
     ) {}
 
     ngOnInit(): void {
@@ -94,7 +95,7 @@ export class AdvertCreateComponent implements OnInit {
         advert.title = this.title;
         advert.category_id = this.selectedCategory.id;
         advert.model_id = this.selectedCategory.modelId;
-        advert.fields = this.components.map(component => component.instance.getValue()).filter(value => !!value);
+        advert.fields = this.components.map(component => component.instance.getFieldData()).filter(value => !!value);
 
         this.advertService.createAdvert(advert).subscribe(
             res => {
@@ -117,8 +118,12 @@ export class AdvertCreateComponent implements OnInit {
         });
     }
 
-    private resolveFieldComponent(field: Field): ComponentRef<FieldFormComponent<unknown>> {
-        const resolver = getFieldComponentResolver(this.componentFactoryResolver, field.type);
+    private resolveFieldComponent(field: Field): ComponentRef<AbstractFieldFormComponent<unknown>> {
+        const service = this.dynamicFieldService.getService(field.type);
+        if (!service) {
+            return;
+        }
+        const resolver = service.getFormComponentResolver();
         const component = this.fieldsFormContainerRef.createComponent(resolver);
 
         // add inputs
@@ -134,6 +139,6 @@ export class AdvertCreateComponent implements OnInit {
         if (!this.title) {
             return false;
         }
-        return this.components.every(component => component.instance.isValid());
+        return this.components.every(component => component.instance.isFieldDataValid());
     }
 }
