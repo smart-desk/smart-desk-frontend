@@ -4,6 +4,7 @@ import { AbstractFieldFormComponent } from '../../../shared/modules/dynamic-fiel
 import { PhotoFormComponent } from './photo-form/photo-form.component';
 import { AbstractFieldParamsComponent } from '../../../shared/modules/dynamic-fields/abstract-field-params.component';
 import { PhotoParamsComponent } from './photo-params/photo-params.component';
+import { PhotoViewComponent } from './photo-view/photo-view.component';
 
 @Injectable()
 export class PhotoService implements AbstractFieldService {
@@ -15,6 +16,10 @@ export class PhotoService implements AbstractFieldService {
 
     getParamsComponentResolver(): ComponentFactory<AbstractFieldParamsComponent> {
         return this.componentFactoryResolver.resolveComponentFactory(PhotoParamsComponent);
+    }
+
+    getViewComponentResolver(): ComponentFactory<PhotoViewComponent> {
+        return this.componentFactoryResolver.resolveComponentFactory(PhotoViewComponent);
     }
 
     getFieldName(): string {

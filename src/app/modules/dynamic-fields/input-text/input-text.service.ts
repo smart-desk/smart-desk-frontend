@@ -17,6 +17,10 @@ export class InputTextService implements AbstractFieldService {
         return this.componentFactoryResolver.resolveComponentFactory(InputTextParamsComponent);
     }
 
+    getViewComponentResolver(): ComponentFactory<any> {
+        return undefined;
+    }
+
     getFieldName(): string {
         return 'Input Text';
     }

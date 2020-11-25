@@ -17,6 +17,10 @@ export class TextService implements AbstractFieldService {
         return this.componentFactoryResolver.resolveComponentFactory(TextParamsComponent);
     }
 
+    getViewComponentResolver(): ComponentFactory<any> {
+        return undefined;
+    }
+
     getFieldName(): string {
         return 'Text';
     }

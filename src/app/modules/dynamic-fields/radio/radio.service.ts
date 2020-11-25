@@ -17,6 +17,10 @@ export class RadioService implements AbstractFieldService {
         return this.componentFactoryResolver.resolveComponentFactory(RadioParamsComponent);
     }
 
+    getViewComponentResolver(): ComponentFactory<any> {
+        return undefined;
+    }
+
     getFieldName(): string {
         return 'Radio';
     }

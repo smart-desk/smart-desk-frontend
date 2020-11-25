@@ -17,6 +17,10 @@ export class TextareaService implements AbstractFieldService {
         return this.componentFactoryResolver.resolveComponentFactory(TextareaParamsComponent);
     }
 
+    getViewComponentResolver(): ComponentFactory<any> {
+        return undefined;
+    }
+
     getFieldName(): string {
         return 'Textarea';
     }
