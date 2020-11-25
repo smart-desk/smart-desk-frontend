@@ -27,19 +27,16 @@ export class PhotoFormComponent extends AbstractFieldFormComponent<PhotoEntity, 
     }
 
     getFieldData(): any {
-        // if (this.field.data) {
-        //     this.field.data.value = this.form.get('value').value; // todo
-        //     return this.field.data;
-        // }
+        if (this.field.data) {
+            this.field.data.value = this.urls.getRawValue().filter(link => !!link);
+            return this.field.data;
+        }
 
-        // console.log(this.urlsForm.getRawValue());
+        const advertField = new PhotoEntity();
+        advertField.value = this.urls.getRawValue().filter(link => !!link);
+        advertField.field_id = this.field.id;
 
-        // const advertField = new PhotoEntity();
-        // advertField.value = this.form.get('value').value;
-        // advertField.field_id = this.field.id;
-
-        // return advertField;
-        return [];
+        return advertField;
     }
 
     isFieldDataValid(): boolean {
