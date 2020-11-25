@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { InputTextEntity } from '../../../../shared/models/dto/field-data/input-text.entity';
-import { InputTextDto } from '../../../../shared/models/dto/field-params/input-text.dto';
+import { InputTextParamsDto } from '../../../../shared/models/dto/field-data/input-text-params.dto';
 
 @Component({
     selector: 'app-input-text',
@@ -15,7 +15,7 @@ export class InputTextFormComponent extends AbstractFieldFormComponent<InputText
 
     ngOnInit(): void {
         const valueValidators = [];
-        const params = this.field.params as InputTextDto;
+        const params = this.field.params as InputTextParamsDto;
         if (params && params.required) {
             valueValidators.push(Validators.required);
         }

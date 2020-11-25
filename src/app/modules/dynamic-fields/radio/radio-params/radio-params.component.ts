@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { Observable } from 'rxjs';
 import { FieldService } from '../../../../shared/services';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { RadioDto, RadioItem } from '../../../../shared/models/dto/field-params/radio.dto';
 import { Field } from '../../../../shared/models/dto/field.entity';
 import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-params.component';
 import { OperationState } from '../../../../shared/models/operation-state.enum';
+import { RadioItem, RadioParamsDto } from '../../../../shared/models/dto/field-data/radio-params.dto';
 
 @Component({
     selector: 'app-radio',
@@ -23,7 +23,7 @@ export class RadioParamsComponent extends AbstractFieldParamsComponent implement
     }
 
     ngOnInit() {
-        const params = this.field.params as RadioDto;
+        const params = this.field.params as RadioParamsDto;
         const radios = params && params.radios ? params.radios.map(data => this.createRadioControl(data)) : [this.createRadioControl()];
 
         this.form = this.fb.group({

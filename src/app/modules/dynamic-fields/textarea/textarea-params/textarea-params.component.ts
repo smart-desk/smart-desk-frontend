@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { FieldService } from '../../../../shared/services';
-import { TextareaDto } from '../../../../shared/models/dto/field-params/textarea.dto';
 import { Field } from '../../../../shared/models/dto/field.entity';
 import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-params.component';
 import { OperationState } from '../../../../shared/models/operation-state.enum';
+import { TextareaParamsDto } from '../../../../shared/models/dto/field-data/textarea-params.dto';
 
 enum Mode {
     EDIT,
@@ -33,7 +33,7 @@ export class TextareaParamsComponent extends AbstractFieldParamsComponent implem
 
     ngOnInit(): void {
         this.mode = this.field.id ? Mode.VIEW : Mode.EDIT;
-        const params = this.field.params as TextareaDto;
+        const params = this.field.params as TextareaParamsDto;
 
         this.form = this.fb.group({
             label: [(params && params.label) || '', Validators.required],
@@ -47,10 +47,10 @@ export class TextareaParamsComponent extends AbstractFieldParamsComponent implem
         this.save$.next(this.state);
 
         this.field.params = {
-            ...(this.field.params || {}),
+            ...((this.field.params as object) || {}),
             ...this.form.getRawValue(),
         };
-        this.field.title = (this.field.params as TextareaDto).label;
+        this.field.title = (this.field.params as TextareaParamsDto).label;
 
         let request: Observable<Field>;
         if (this.field.id) {

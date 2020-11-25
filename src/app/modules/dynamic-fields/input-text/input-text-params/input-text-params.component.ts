@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { FieldService } from '../../../../shared/services';
-import { InputTextDto } from '../../../../shared/models/dto/field-params/input-text.dto';
 import { Field } from '../../../../shared/models/dto/field.entity';
 import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-params.component';
 import { OperationState } from '../../../../shared/models/operation-state.enum';
+import { InputTextParamsDto } from '../../../../shared/models/dto/field-data/input-text-params.dto';
 
 enum Mode {
     EDIT,
@@ -33,7 +33,7 @@ export class InputTextParamsComponent extends AbstractFieldParamsComponent imple
 
     ngOnInit(): void {
         this.mode = this.field.id ? Mode.VIEW : Mode.EDIT;
-        const params = this.field.params as InputTextDto;
+        const params = this.field.params as InputTextParamsDto;
 
         this.form = this.fb.group({
             label: [(params && params.label) || '', Validators.required],
@@ -47,7 +47,7 @@ export class InputTextParamsComponent extends AbstractFieldParamsComponent imple
         this.save$.next(this.state);
 
         this.field.params = {
-            ...(this.field.params || {}),
+            ...((this.field.params as object) || {}),
             ...this.form.getRawValue(),
         };
 
