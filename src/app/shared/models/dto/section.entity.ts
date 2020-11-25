@@ -1,4 +1,4 @@
-import { Field } from './field.entity';
+import { FieldEntity } from './field.entity';
 
 export enum SectionType {
     PARAMS = 'params',
@@ -12,5 +12,5 @@ export class Section {
     type: SectionType;
     // tslint:disable-next-line:variable-name
     model_id: string;
-    fields: Field[];
+    fields: FieldEntity[];
 }

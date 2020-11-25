@@ -11,12 +11,15 @@ import { RadioModule } from '../../../modules/dynamic-fields/radio/radio.module'
 import { TextModule } from '../../../modules/dynamic-fields/text/text.module';
 import { createDynamicFieldProvider } from './utils';
 import { DynamicFieldsMap } from './dynamic-fields.map';
+import { PhotoService } from '../../../modules/dynamic-fields/photo/photo.service';
+import { PhotoModule } from '../../../modules/dynamic-fields/photo/photo.module';
 
 const providers = [
     createDynamicFieldProvider(FieldType.INPUT_TEXT, InputTextService),
     createDynamicFieldProvider(FieldType.RADIO, RadioService),
     createDynamicFieldProvider(FieldType.TEXT, TextService),
     createDynamicFieldProvider(FieldType.TEXTAREA, TextareaService),
+    createDynamicFieldProvider(FieldType.PHOTO, PhotoService),
 ];
 
 @NgModule({
@@ -28,6 +31,6 @@ const providers = [
         },
         ...providers,
     ],
-    imports: [CommonModule, InputTextModule, TextareaModule, RadioModule, TextModule],
+    imports: [CommonModule, InputTextModule, TextareaModule, RadioModule, TextModule, PhotoModule],
 })
 export class DynamicFieldsModule {}

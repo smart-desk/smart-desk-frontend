@@ -1,0 +1,9 @@
+<form nz-form nzLayout="vertical" [formGroup]="formGroup">
+    <ng-container formArrayName="urls">
+        <nz-form-item *ngFor="let _ of urls.controls; index as i">
+            <nz-form-control>
+                <input nz-input placeholder="Введите значение" [formControlName]="i" />
+            </nz-form-control>
+        </nz-form-item>
+    </ng-container>
+</form>

@@ -5,7 +5,7 @@ import { FieldService } from '../../../../shared/services';
 import { FieldEntity } from '../../../../shared/models/dto/field.entity';
 import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-params.component';
 import { OperationState } from '../../../../shared/models/operation-state.enum';
-import { InputTextParamsDto } from '../../../../shared/models/dto/field-data/input-text-params.dto';
+import { PhotoParamsDto } from '../../../../shared/models/dto/field-data/photo-params.dto';
 
 enum Mode {
     EDIT,
@@ -13,12 +13,12 @@ enum Mode {
 }
 
 @Component({
-    selector: 'app-input-text',
-    templateUrl: './input-text-params.component.html',
-    styleUrls: ['./input-text-params.component.scss'],
+    selector: 'app-textarea',
+    templateUrl: './photo-params.component.html',
+    styleUrls: ['./photo-params.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputTextParamsComponent extends AbstractFieldParamsComponent implements OnInit {
+export class PhotoParamsComponent extends AbstractFieldParamsComponent implements OnInit {
     operationState = OperationState;
     state: OperationState;
 
@@ -27,18 +27,17 @@ export class InputTextParamsComponent extends AbstractFieldParamsComponent imple
     mode: Mode;
     Mode = Mode;
 
-    constructor(private fieldService: FieldService, private fb: FormBuilder, private cd: ChangeDetectorRef) {
+    constructor(private fb: FormBuilder, private cd: ChangeDetectorRef, private fieldService: FieldService) {
         super();
     }
 
     ngOnInit(): void {
         this.mode = this.field.id ? Mode.VIEW : Mode.EDIT;
-        const params = this.field.params as InputTextParamsDto;
+        const params = this.field.params as PhotoParamsDto;
 
         this.form = this.fb.group({
-            label: [(params && params.label) || '', Validators.required],
-            placeholder: [(params && params.placeholder) || ''],
-            required: [(params && params.required) || false],
+            max: [(params && params.max) || 10, Validators.required],
+            min: [(params && params.min) || 1],
         });
     }
 
@@ -47,7 +46,7 @@ export class InputTextParamsComponent extends AbstractFieldParamsComponent imple
         this.save$.next(this.state);
 
         this.field.params = {
-            ...((this.field.params as object) || {}),
+            ...((this.field.params as PhotoParamsDto) || {}),
             ...this.form.getRawValue(),
         };
 
@@ -59,17 +58,13 @@ export class InputTextParamsComponent extends AbstractFieldParamsComponent imple
         }
 
         request.subscribe(res => {
-            this.field = res;
             this.state = OperationState.SUCCESS;
+            this.field = res;
             this.toggleMode();
             this.save$.next(this.state);
 
             this.cd.detectChanges();
         });
-    }
-
-    toggleMode(): void {
-        this.mode = this.mode === Mode.EDIT ? Mode.VIEW : Mode.EDIT;
     }
 
     cancel(): void {
@@ -80,5 +75,9 @@ export class InputTextParamsComponent extends AbstractFieldParamsComponent imple
         this.fieldService.deleteField(this.field.id).subscribe(() => {
             this.delete$.next(this);
         });
+    }
+
+    toggleMode(): void {
+        this.mode = this.mode === Mode.EDIT ? Mode.VIEW : Mode.EDIT;
     }
 }

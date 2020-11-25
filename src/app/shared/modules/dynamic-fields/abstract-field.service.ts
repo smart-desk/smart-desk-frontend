@@ -7,7 +7,7 @@ export abstract class AbstractFieldService {
      * Returns component resolver for user part form
      * This component must be displayed when user creates and edits advert
      */
-    abstract getFormComponentResolver(): ComponentFactory<AbstractFieldFormComponent<unknown>>; // todo remove generic
+    abstract getFormComponentResolver(): ComponentFactory<AbstractFieldFormComponent<any, any>>; // todo remove generic
 
     /**
      * Returns component resolver for admin part form

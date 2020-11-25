@@ -1,12 +1,11 @@
 import { Directive, Input } from '@angular/core';
-import { Field } from '../../models/dto/field.entity';
+import { Field } from '../../models/field';
 
 @Directive()
 // tslint:disable-next-line:directive-class-suffix
-export abstract class AbstractFieldFormComponent<T> {
-    @Input() field: Field;
+export abstract class AbstractFieldFormComponent<T, K> {
+    @Input() field: Field<T, K>;
     @Input() preview: boolean;
-    @Input() data: T;
 
     abstract getFieldData(): T;
     abstract isFieldDataValid(): boolean;

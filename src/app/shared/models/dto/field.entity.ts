@@ -6,7 +6,7 @@ export enum FieldType {
     PHOTO = 'photo',
 }
 
-export class Field {
+export class FieldEntity {
     id: string;
     title: string;
     type: FieldType;

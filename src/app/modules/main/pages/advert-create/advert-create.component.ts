@@ -16,7 +16,7 @@ import { AdvertService, CategoryService, ModelService } from '../../../../shared
 import { Category } from '../../../../shared/models/dto/category.entity';
 import { CreateAdvertDto } from '../../../../shared/models/dto/advert.dto';
 import { Section } from '../../../../shared/models/dto/section.entity';
-import { Field } from '../../../../shared/models/dto/field.entity';
+import { FieldEntity } from '../../../../shared/models/dto/field.entity';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
 
 // todo check subscriptions
@@ -36,7 +36,7 @@ export class AdvertCreateComponent implements OnInit {
 
     title = '';
 
-    private components: ComponentRef<AbstractFieldFormComponent<any>>[] = [];
+    private components: ComponentRef<AbstractFieldFormComponent<any, any>>[] = [];
 
     @ViewChild('fields', { read: ViewContainerRef })
     private fieldsFormContainerRef: ViewContainerRef;
@@ -118,7 +118,7 @@ export class AdvertCreateComponent implements OnInit {
         });
     }
 
-    private resolveFieldComponent(field: Field): ComponentRef<AbstractFieldFormComponent<unknown>> {
+    private resolveFieldComponent(field: FieldEntity): ComponentRef<AbstractFieldFormComponent<any, any>> {
         const service = this.dynamicFieldService.getService(field.type);
         if (!service) {
             return;

@@ -9,7 +9,7 @@ import { TextParamsDto } from '../../../../shared/models/dto/field-data/text-par
     styleUrls: ['./text-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TextFormComponent extends AbstractFieldFormComponent<null> implements OnInit {
+export class TextFormComponent extends AbstractFieldFormComponent<null, TextParamsDto> implements OnInit {
     content = '';
 
     constructor(private sanitizer: DomSanitizer, private cdr: ChangeDetectorRef) {
@@ -17,7 +17,7 @@ export class TextFormComponent extends AbstractFieldFormComponent<null> implemen
     }
 
     ngOnInit(): void {
-        const params = this.field.params as TextParamsDto;
+        const params = this.field.params;
         this.content = this.sanitizer.sanitize(SecurityContext.HTML, params.value || '');
         this.cdr.detectChanges();
     }

@@ -11,7 +11,7 @@ import {
 import { ModelService } from '../../../../shared/services';
 import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
 import { Section } from '../../../../shared/models/dto/section.entity';
-import { Field } from '../../../../shared/models/dto/field.entity';
+import { FieldEntity } from '../../../../shared/models/dto/field.entity';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
 
 @Component({
@@ -56,7 +56,7 @@ export class PreviewComponent implements OnInit {
         });
     }
 
-    private resolveFieldComponent(field: Field): ComponentRef<AbstractFieldFormComponent<unknown>> {
+    private resolveFieldComponent(field: FieldEntity): ComponentRef<AbstractFieldFormComponent<any, any>> {
         const service = this.dynamicFieldService.getService(field.type);
         if (!service) {
             return;

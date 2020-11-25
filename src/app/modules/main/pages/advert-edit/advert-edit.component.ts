@@ -18,7 +18,7 @@ import { Advert } from '../../../../shared/models/dto/advert.entity';
 import { Model } from '../../../../shared/models/dto/model.entity';
 import { UpdateAdvertDto } from '../../../../shared/models/dto/advert.dto';
 import { Section } from '../../../../shared/models/dto/section.entity';
-import { Field } from '../../../../shared/models/dto/field.entity';
+import { FieldEntity } from '../../../../shared/models/dto/field.entity';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
 
 @Component({
@@ -31,7 +31,7 @@ export class AdvertEditComponent implements OnInit {
     form: FormGroup;
     @ViewChild('fields', { read: ViewContainerRef })
     private fieldsFormContainerRef: ViewContainerRef;
-    private components: ComponentRef<AbstractFieldFormComponent<any>>[] = [];
+    private components: ComponentRef<AbstractFieldFormComponent<any, any>>[] = [];
     private advert: Advert;
 
     constructor(
@@ -88,7 +88,7 @@ export class AdvertEditComponent implements OnInit {
         });
     }
 
-    private resolveFieldComponent(field: Field): ComponentRef<AbstractFieldFormComponent<unknown>> {
+    private resolveFieldComponent(field: FieldEntity): ComponentRef<AbstractFieldFormComponent<any, any>> {
         const service = this.dynamicFieldService.getService(field.type);
         if (!service) {
             return;
@@ -102,7 +102,6 @@ export class AdvertEditComponent implements OnInit {
         for (let i = 0; i < this.advert.sections.length; i++) {
             if (this.advert.sections[i].fields) {
                 const advertField = this.advert.sections[i].fields.find(f => f.id === field.id);
-                component.instance.data = advertField;
                 if (advertField) {
                     break;
                 }

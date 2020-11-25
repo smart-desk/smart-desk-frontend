@@ -1,0 +1,25 @@
+<div class="textarea">
+    <div class="textarea__form-container">
+        <p nz-typography nzType="secondary" class="textarea__title">Фотографии</p>
+        <form nz-form nzLayout="vertical" [formGroup]="form">
+            <nz-form-item class="textarea__item">
+                <nz-form-control nzErrorTip="Максимум фотографий">
+                    <input nz-input formControlName="max" name="max" required placeholder="Max amount" type="number" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item class="textarea__item">
+                <nz-form-control>
+                    <input nz-input formControlName="min" name="min" required placeholder="Min amount" type="number" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-row class="textarea__item" nzAlign="middle">
+                <nz-col class="textarea__action-buttons" nzSpan="12">
+                    <button nz-button nzType="link" (click)="cancel()">Отмена</button>
+                </nz-col>
+                <nz-col nzSpan="12" class="textarea__action-buttons textarea__action-buttons--align-right">
+                    <button nz-button nzType="primary" (click)="save()" [nzLoading]="state === operationState.LOADING">OK</button>
+                </nz-col>
+            </nz-row>
+        </form>
+    </div>
+</div>

@@ -10,25 +10,25 @@ import { TextareaParamsDto } from '../../../../shared/models/dto/field-data/text
     styleUrls: ['./textarea-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TextareaFormComponent extends AbstractFieldFormComponent<TextareaEntity> implements OnInit {
+export class TextareaFormComponent extends AbstractFieldFormComponent<TextareaEntity, TextareaParamsDto> implements OnInit {
     form: FormGroup;
 
     ngOnInit(): void {
-        const params = this.field.params as TextareaParamsDto;
+        const params = this.field.params;
         const valueValidators = [];
         if (params && params.required) {
             valueValidators.push(Validators.required);
         }
 
         this.form = new FormGroup({
-            value: new FormControl(this.data && this.data.value, valueValidators),
+            value: new FormControl(this.field.data && this.field.data.value, valueValidators),
         });
     }
 
     getFieldData(): any {
-        if (this.data) {
-            this.data.value = this.form.get('value').value;
-            return this.data;
+        if (this.field.data) {
+            this.field.data.value = this.form.get('value').value;
+            return this.field.data;
         }
 
         const advertField = new TextareaEntity();

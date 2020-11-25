@@ -9,7 +9,7 @@ import { RadioParamsComponent } from './radio-params/radio-params.component';
 export class RadioService implements AbstractFieldService {
     constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
-    getFormComponentResolver(): ComponentFactory<AbstractFieldFormComponent<unknown>> {
+    getFormComponentResolver(): ComponentFactory<AbstractFieldFormComponent<any, any>> {
         return this.componentFactoryResolver.resolveComponentFactory(RadioFormComponent);
     }
 

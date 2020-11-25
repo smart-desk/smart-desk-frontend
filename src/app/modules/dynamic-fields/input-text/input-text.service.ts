@@ -9,7 +9,7 @@ import { InputTextParamsComponent } from './input-text-params/input-text-params.
 export class InputTextService implements AbstractFieldService {
     constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
-    getFormComponentResolver(): ComponentFactory<AbstractFieldFormComponent<unknown>> {
+    getFormComponentResolver(): ComponentFactory<AbstractFieldFormComponent<any, any>> {
         return this.componentFactoryResolver.resolveComponentFactory(InputTextFormComponent);
     }
 
