@@ -1,16 +1,17 @@
-import { CreateFieldDataBaseDto, UpdateFieldDataBaseDto } from './field-data/field-data-base.dto';
 import { Advert } from './advert.entity';
+import { DynamicFieldsBaseCreateDto } from './dynamic-fields-base-create.dto';
+import { DynamicFieldsBaseUpdateDto } from './dynamic-fields-base-update.dto';
 
 export class CreateAdvertDto {
     category_id: string;
     model_id: string;
     title: string;
-    fields: CreateFieldDataBaseDto[];
+    fields: DynamicFieldsBaseCreateDto[];
 }
 
 export class UpdateAdvertDto {
     title: string;
-    fields: UpdateFieldDataBaseDto[];
+    fields: DynamicFieldsBaseUpdateDto[];
 }
 
 export class AdvertsGetDto {

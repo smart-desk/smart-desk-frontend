@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { TextareaDto } from '../../../../shared/models/dto/field-params/textarea.dto';
 import { TextareaEntity } from '../../../../shared/models/dto/field-data/textarea.entity';
+import { TextareaParamsDto } from '../../../../shared/models/dto/field-data/textarea-params.dto';
 
 @Component({
     selector: 'app-textarea',
@@ -10,25 +10,25 @@ import { TextareaEntity } from '../../../../shared/models/dto/field-data/textare
     styleUrls: ['./textarea-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TextareaFormComponent extends AbstractFieldFormComponent<TextareaEntity> implements OnInit {
+export class TextareaFormComponent extends AbstractFieldFormComponent<TextareaEntity, TextareaParamsDto> implements OnInit {
     form: FormGroup;
 
     ngOnInit(): void {
-        const params = this.field.params as TextareaDto;
+        const params = this.field.params;
         const valueValidators = [];
         if (params && params.required) {
             valueValidators.push(Validators.required);
         }
 
         this.form = new FormGroup({
-            value: new FormControl(this.data && this.data.value, valueValidators),
+            value: new FormControl(this.field.data && this.field.data.value, valueValidators),
         });
     }
 
     getFieldData(): any {
-        if (this.data) {
-            this.data.value = this.form.get('value').value;
-            return this.data;
+        if (this.field.data) {
+            this.field.data.value = this.form.get('value').value;
+            return this.field.data;
         }
 
         const advertField = new TextareaEntity();

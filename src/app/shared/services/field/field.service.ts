@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Field } from '../../models/dto/field.entity';
+import { FieldEntity } from '../../models/dto/field.entity';
 import { FieldCreateDto, FieldUpdateDto } from '../../models/dto/field.dto';
 
 @Injectable()
@@ -11,35 +11,35 @@ export class FieldService {
     /**
      * Returns array of fields for specified section id
      */
-    getFieldsBySectionID(sectionID: string): Observable<Field[]> {
-        return this.http.get<Field[]>(`/fields?section_id=${sectionID}`);
+    getFieldsBySectionID(sectionID: string): Observable<FieldEntity[]> {
+        return this.http.get<FieldEntity[]>(`/fields?section_id=${sectionID}`);
     }
 
     /**
      * Return field by id
      */
-    getField(id: string): Observable<Field> {
-        return this.http.get<Field>(`/fields/${id}`);
+    getField(id: string): Observable<FieldEntity> {
+        return this.http.get<FieldEntity>(`/fields/${id}`);
     }
 
     /**
      * Create field
      */
-    createField(field: FieldCreateDto): Observable<Field> {
-        return this.http.post<Field>(`/fields`, field);
+    createField(field: FieldCreateDto): Observable<FieldEntity> {
+        return this.http.post<FieldEntity>(`/fields`, field);
     }
 
     /**
      * Update field by id
      */
-    updateField(id: string, field: FieldUpdateDto): Observable<Field> {
-        return this.http.put<Field>(`/fields/${id}`, field);
+    updateField(id: string, field: FieldUpdateDto): Observable<FieldEntity> {
+        return this.http.put<FieldEntity>(`/fields/${id}`, field);
     }
 
     /**
      * Delete field by id
      */
     deleteField(id: string): Observable<unknown> {
-        return this.http.delete<Field>(`/fields/${id}`);
+        return this.http.delete<FieldEntity>(`/fields/${id}`);
     }
 }

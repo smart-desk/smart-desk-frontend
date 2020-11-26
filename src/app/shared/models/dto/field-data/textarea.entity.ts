@@ -1,8 +1,5 @@
-export class TextareaEntity {
-    id: string;
-    // tslint:disable-next-line:variable-name
-    advert_id: string;
-    // tslint:disable-next-line:variable-name
-    field_id: string;
+import { DynamicFieldsBaseEntity } from '../dynamic-fields-base.entity';
+
+export class TextareaEntity extends DynamicFieldsBaseEntity {
     value: string;
 }

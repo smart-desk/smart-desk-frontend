@@ -1,0 +1,7 @@
+<ng-container *ngIf="field?.data?.value">
+    <nz-carousel [nzEffect]="'fade'">
+        <div nz-carousel-content *ngFor="let image of field.data.value">
+            <img [src]="image" />
+        </div>
+    </nz-carousel>
+</ng-container>

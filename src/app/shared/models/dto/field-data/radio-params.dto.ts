@@ -1,5 +1,4 @@
-export class RadioDto {
-    title: string;
+export class RadioParamsDto {
     radios: RadioItem[];
 }
 

@@ -3,9 +3,9 @@ import { Subject } from 'rxjs';
 import { ContentChange } from 'ngx-quill/lib/quill-editor.component';
 import { FieldService } from '../../../../shared/services';
 import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
-import { TextDto } from '../../../../shared/models/dto/field-params/text.dto';
 import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-params.component';
 import { OperationState } from '../../../../shared/models/operation-state.enum';
+import { TextParamsDto } from '../../../../shared/models/dto/field-data/text-params.dto';
 
 enum Mode {
     EDIT,
@@ -35,7 +35,7 @@ export class TextParamsComponent extends AbstractFieldParamsComponent implements
                 debounceTime(500),
                 switchMap(content => {
                     this.field.params = {
-                        ...(this.field.params || {}),
+                        ...((this.field.params as object) || {}),
                         value: content,
                     };
 
@@ -61,7 +61,7 @@ export class TextParamsComponent extends AbstractFieldParamsComponent implements
     }
 
     ngOnInit(): void {
-        this.content = (this.field.params && (this.field.params as TextDto).value) || '';
+        this.content = (this.field.params && (this.field.params as TextParamsDto).value) || '';
         this.mode = Mode.SAVE;
     }
 
