@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { Observable } from 'rxjs';
 import { FieldService } from '../../../../shared/services';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { RadioDto, RadioItem } from '../../../../shared/models/dto/field-params/radio.dto';
-import { Field } from '../../../../shared/models/dto/field.entity';
+import { FieldEntity } from '../../../../shared/models/dto/field.entity';
 import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-params.component';
 import { OperationState } from '../../../../shared/models/operation-state.enum';
+import { RadioItem, RadioParamsDto } from '../../../../shared/models/dto/field-data/radio-params.dto';
 
 @Component({
     selector: 'app-radio',
@@ -23,7 +23,7 @@ export class RadioParamsComponent extends AbstractFieldParamsComponent implement
     }
 
     ngOnInit() {
-        const params = this.field.params as RadioDto;
+        const params = this.field.params as RadioParamsDto;
         const radios = params && params.radios ? params.radios.map(data => this.createRadioControl(data)) : [this.createRadioControl()];
 
         this.form = this.fb.group({
@@ -50,9 +50,9 @@ export class RadioParamsComponent extends AbstractFieldParamsComponent implement
             ...(this.field || {}),
             title,
             params: { radios },
-        } as Field;
+        } as FieldEntity;
 
-        let request: Observable<Field>;
+        let request: Observable<FieldEntity>;
         if (this.field.id) {
             request = this.fieldService.updateField(this.field.id, this.field);
         } else {
@@ -60,7 +60,7 @@ export class RadioParamsComponent extends AbstractFieldParamsComponent implement
         }
         request.subscribe(
             res => {
-                this.field = res as Field; // todo create Field class
+                this.field = res as FieldEntity; // todo create Field class
                 this.updateState(OperationState.SUCCESS);
                 this.cd.detectChanges();
             },

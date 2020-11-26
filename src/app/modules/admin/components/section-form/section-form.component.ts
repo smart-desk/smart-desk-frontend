@@ -12,7 +12,7 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import { Section } from '../../../../shared/models/dto/section.entity';
-import { Field, FieldType } from '../../../../shared/models/dto/field.entity';
+import { FieldEntity, FieldType } from '../../../../shared/models/dto/field.entity';
 import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-params.component';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
 import { OperationState } from '../../../../shared/models/operation-state.enum';
@@ -49,7 +49,7 @@ export class SectionFormComponent implements AfterViewInit {
     }
 
     createField(type: string, section: Section): void {
-        const field = new Field();
+        const field = new FieldEntity();
         field.type = type as FieldType; // todo as
         field.section_id = section.id;
 
@@ -80,7 +80,7 @@ export class SectionFormComponent implements AfterViewInit {
         }
     }
 
-    private resolveFieldComponent(field: Field): ComponentRef<AbstractFieldParamsComponent> {
+    private resolveFieldComponent(field: FieldEntity): ComponentRef<AbstractFieldParamsComponent> {
         const service = this.dynamicFieldsService.getService(field.type);
         if (!service) {
             return;

@@ -9,12 +9,16 @@ import { TextareaParamsComponent } from './textarea-params/textarea-params.compo
 export class TextareaService implements AbstractFieldService {
     constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
-    getFormComponentResolver(): ComponentFactory<AbstractFieldFormComponent<unknown>> {
+    getFormComponentResolver(): ComponentFactory<AbstractFieldFormComponent<any, any>> {
         return this.componentFactoryResolver.resolveComponentFactory(TextareaFormComponent);
     }
 
     getParamsComponentResolver(): ComponentFactory<AbstractFieldParamsComponent> {
         return this.componentFactoryResolver.resolveComponentFactory(TextareaParamsComponent);
+    }
+
+    getViewComponentResolver(): ComponentFactory<any> {
+        return undefined;
     }
 
     getFieldName(): string {

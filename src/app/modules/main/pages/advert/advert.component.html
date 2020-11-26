@@ -1,3 +1,5 @@
-<ng-container *ngIf="advert$ | async as advert">
+<ng-container *ngIf="advert">
     <h1>{{ advert.title }}</h1>
 </ng-container>
+
+<ng-container #fields></ng-container>

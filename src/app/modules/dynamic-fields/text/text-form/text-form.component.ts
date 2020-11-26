@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, SecurityContext } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
-import { TextDto } from '../../../../shared/models/dto/field-params/text.dto';
+import { TextParamsDto } from '../../../../shared/models/dto/field-data/text-params.dto';
 
 @Component({
     selector: 'app-text',
@@ -9,7 +9,7 @@ import { TextDto } from '../../../../shared/models/dto/field-params/text.dto';
     styleUrls: ['./text-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TextFormComponent extends AbstractFieldFormComponent<null> implements OnInit {
+export class TextFormComponent extends AbstractFieldFormComponent<null, TextParamsDto> implements OnInit {
     content = '';
 
     constructor(private sanitizer: DomSanitizer, private cdr: ChangeDetectorRef) {
@@ -17,7 +17,7 @@ export class TextFormComponent extends AbstractFieldFormComponent<null> implemen
     }
 
     ngOnInit(): void {
-        const params = this.field.params as TextDto;
+        const params = this.field.params;
         this.content = this.sanitizer.sanitize(SecurityContext.HTML, params.value || '');
         this.cdr.detectChanges();
     }

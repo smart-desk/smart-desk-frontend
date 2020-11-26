@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
 import { RadioEntity } from '../../../../shared/models/dto/field-data/radio.entity';
+import { RadioParamsDto } from '../../../../shared/models/dto/field-data/radio-params.dto';
 
 @Component({
     selector: 'app-radio',
@@ -9,19 +10,19 @@ import { RadioEntity } from '../../../../shared/models/dto/field-data/radio.enti
     styleUrls: ['./radio-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RadioFormComponent extends AbstractFieldFormComponent<RadioEntity> implements OnInit {
+export class RadioFormComponent extends AbstractFieldFormComponent<RadioEntity, RadioParamsDto> implements OnInit {
     form: FormGroup;
 
     ngOnInit(): void {
         this.form = new FormGroup({
-            value: new FormControl(this.data && this.data.value),
+            value: new FormControl(this.field.data && this.field.data.value),
         });
     }
 
     getFieldData(): any {
-        if (this.data) {
-            this.data.value = this.form.get('value').value;
-            return this.data;
+        if (this.field.data) {
+            this.field.data.value = this.form.get('value').value;
+            return this.field.data;
         }
 
         const advertField = new RadioEntity();
