@@ -13,6 +13,7 @@ import {
     NzPopconfirmModule,
     NzTypographyModule,
     NzCarouselModule,
+    NzUploadModule,
 } from 'ng-zorro-antd';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PhotoViewComponent } from './photo-view/photo-view.component';
@@ -31,6 +32,7 @@ import { PhotoViewComponent } from './photo-view/photo-view.component';
         NzIconModule,
         NzGridModule,
         NzCarouselModule,
+        NzUploadModule,
     ],
     providers: [PhotoService],
     declarations: [PhotoFormComponent, PhotoParamsComponent, PhotoViewComponent],

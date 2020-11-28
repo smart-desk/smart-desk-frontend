@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { PhotoEntity } from '../../../../shared/models/dto/field-data/photo.entity';
 import { PhotoParamsDto } from '../../../../shared/models/dto/field-data/photo-params.dto';
+import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd';
+import { UploadImageResponse } from '../../../../shared/models/dto/upload-image-response';
+import { InputTextEntity } from '../../../../shared/models/dto/field-data/input-text.entity';
 
 @Component({
     selector: 'app-textarea',
@@ -10,36 +12,31 @@ import { PhotoParamsDto } from '../../../../shared/models/dto/field-data/photo-p
     styleUrls: ['./photo-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PhotoFormComponent extends AbstractFieldFormComponent<PhotoEntity, PhotoParamsDto> implements OnInit {
-    formGroup: FormGroup;
+export class PhotoFormComponent extends AbstractFieldFormComponent<PhotoEntity, PhotoParamsDto> {
+    fileList: NzUploadFile[] = [];
 
-    ngOnInit(): void {
-        const params = this.field.params as PhotoParamsDto;
-        const urls = (this.field.data && this.field.data.value) || Array(params.max).fill('');
-
-        this.formGroup = new FormGroup({
-            urls: new FormArray(urls.map(url => new FormControl(url))),
-        });
+    listChanged(event: NzUploadChangeParam) {
+        if (event.type === 'success') {
+            this.fileList = event.fileList;
+        }
     }
 
-    get urls() {
-        return this.formGroup.get('urls') as FormArray;
-    }
+    getFieldData(): PhotoEntity {
+        const value = this.fileList.map(file => (file.response as UploadImageResponse).url);
 
-    getFieldData(): any {
         if (this.field.data) {
-            this.field.data.value = this.urls.getRawValue().filter(link => !!link);
+            this.field.data.value = value;
             return this.field.data;
         }
 
-        const advertField = new PhotoEntity();
-        advertField.value = this.urls.getRawValue().filter(link => !!link);
-        advertField.field_id = this.field.id;
+        const fieldData = new PhotoEntity();
+        fieldData.value = value;
+        fieldData.field_id = this.field.id;
 
-        return advertField;
+        return fieldData;
     }
 
     isFieldDataValid(): boolean {
-        return this.formGroup.valid;
+        return true;
     }
 }
