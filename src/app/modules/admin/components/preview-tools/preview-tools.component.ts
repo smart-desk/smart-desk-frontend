@@ -12,7 +12,6 @@ import {
 import { NzDrawerService } from 'ng-zorro-antd/drawer';
 import { FieldEntity } from '../../../../shared/models/dto/field.entity';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
-import { FieldSettingsComponent } from '../field-settings/field-settings.component';
 
 /**
  * todo this component may become a directive when this issue will be resolved
@@ -32,7 +31,10 @@ export class PreviewToolsComponent implements AfterViewInit {
     field: FieldEntity;
 
     @Output()
-    fieldChange = new EventEmitter();
+    edit = new EventEmitter<FieldEntity>();
+
+    @Output()
+    delete = new EventEmitter<FieldEntity>();
 
     @ViewChild('field', { read: ViewContainerRef })
     private fieldContainerRef: ViewContainerRef;
@@ -44,17 +46,11 @@ export class PreviewToolsComponent implements AfterViewInit {
     ) {}
 
     onEdit() {
-        const drawer = this.drawerService.create({
-            nzContent: FieldSettingsComponent,
-            nzContentParams: { field: this.field },
-            nzWidth: 320,
-            nzMask: false,
-        });
+        this.edit.emit(this.field);
+    }
 
-        drawer.afterOpen.subscribe(() => {
-            const instance = drawer.getContentComponent();
-            instance.fieldChange.subscribe(() => this.fieldChange.emit());
-        });
+    onDelete() {
+        this.delete.emit(this.field);
     }
 
     ngAfterViewInit() {

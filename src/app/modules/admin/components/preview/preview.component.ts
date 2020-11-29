@@ -5,6 +5,7 @@ import { FieldEntity } from '../../../../shared/models/dto/field.entity';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
 import { NzDrawerService } from 'ng-zorro-antd/drawer';
 import { PreviewToolsComponent } from '../preview-tools/preview-tools.component';
+import { FieldSettingsComponent } from '../field-settings/field-settings.component';
 
 @Component({
     selector: 'app-preview',
@@ -53,9 +54,26 @@ export class PreviewComponent implements OnInit {
         const resolver = this.componentFactoryResolver.resolveComponentFactory(PreviewToolsComponent);
         const component = this.fieldsFormContainerRef.createComponent(resolver);
         component.instance.field = field;
-        component.instance.fieldChange.subscribe(() => this.update());
+        component.instance.edit.subscribe(f => this.onEdit(f));
+        component.instance.delete.subscribe(f => this.onDelete(f));
         component.changeDetectorRef.detectChanges();
     }
 
-    private onFieldChange() {}
+    private onEdit(field: FieldEntity): void {
+        const drawer = this.drawerService.create({
+            nzContent: FieldSettingsComponent,
+            nzContentParams: { field },
+            nzWidth: 320,
+            nzMask: false,
+        });
+
+        drawer.afterOpen.subscribe(() => {
+            const instance = drawer.getContentComponent();
+            instance.fieldChange.subscribe(() => this.update());
+        });
+    }
+
+    private onDelete(field: FieldEntity) {
+        console.log('Delete field: ' + field.id);
+    }
 }
