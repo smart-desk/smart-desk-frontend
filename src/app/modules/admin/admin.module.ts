@@ -31,8 +31,9 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { FieldSettingsComponent } from './components/field-settings/field-settings.component';
+import { PreviewToolsComponent } from './components/preview-tools/preview-tools.component';
 
-const components = [PreviewComponent, CategoryFormComponent, AdminMenuComponent, SectionFormComponent];
+const components = [PreviewComponent, CategoryFormComponent, AdminMenuComponent, SectionFormComponent, PreviewToolsComponent];
 
 const pages = [AdminComponent, EditModelComponent, CreateModelComponent, ModelsComponent, CategoriesComponent, AdvertsListComponent];
 

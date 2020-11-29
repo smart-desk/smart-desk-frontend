@@ -1,0 +1,16 @@
+.preview-tools {
+    position: relative;
+
+    &__buttons {
+        position: absolute;
+        display: none;
+        top: 0;
+        left: 0;
+    }
+
+    &:hover {
+        .preview-tools__buttons {
+            display: block;
+        }
+    }
+}

@@ -5,7 +5,7 @@
 }
 :host ::ng-deep > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane {
     background: #fff;
-    padding: $base-unit;
+    padding: $base-unit * 2;
 }
 :host ::ng-deep > .ant-tabs-card > .ant-tabs-nav::before {
     display: none;

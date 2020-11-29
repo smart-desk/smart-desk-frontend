@@ -1,12 +1,10 @@
-import { ChangeDetectionStrategy, Component, ComponentRef, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ModelService } from '../../../../shared/services';
-import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
 import { Section } from '../../../../shared/models/dto/section.entity';
 import { FieldEntity } from '../../../../shared/models/dto/field.entity';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
-import { Field } from '../../../../shared/models/field';
 import { NzDrawerService } from 'ng-zorro-antd/drawer';
-import { FieldSettingsComponent } from '../field-settings/field-settings.component';
+import { PreviewToolsComponent } from '../preview-tools/preview-tools.component';
 
 @Component({
     selector: 'app-preview',
@@ -24,7 +22,8 @@ export class PreviewComponent implements OnInit {
     constructor(
         private modelService: ModelService,
         private dynamicFieldService: DynamicFieldsService,
-        private drawerService: NzDrawerService
+        private drawerService: NzDrawerService,
+        private componentFactoryResolver: ComponentFactoryResolver
     ) {}
 
     ngOnInit(): void {
@@ -50,28 +49,12 @@ export class PreviewComponent implements OnInit {
         });
     }
 
-    private resolveFieldComponent(field: FieldEntity): ComponentRef<AbstractFieldFormComponent<any, any>> {
-        const service = this.dynamicFieldService.getService(field.type);
-        if (!service) {
-            return;
-        }
-        const resolver = service.getFormComponentResolver();
+    private resolveFieldComponent(field: FieldEntity): void {
+        const resolver = this.componentFactoryResolver.resolveComponentFactory(PreviewToolsComponent);
         const component = this.fieldsFormContainerRef.createComponent(resolver);
         component.instance.field = field;
-        component.instance.preview = true;
-        // todo no any
-        if ((component.instance as any).edit$) {
-            (component.instance as any).edit$.subscribe(res => this.openSettings(res));
-        }
         component.changeDetectorRef.detectChanges();
-
-        return component;
     }
 
-    private openSettings(field: Field<any, any>) {
-        const drawer = this.drawerService.create({
-            nzContent: FieldSettingsComponent,
-            nzContentParams: { field },
-        });
-    }
+    private onFieldChange() {}
 }
