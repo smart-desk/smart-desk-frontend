@@ -60,8 +60,14 @@ export class PreviewComponent implements OnInit {
     }
 
     private onEdit(field: FieldEntity): void {
+        const service = this.dynamicFieldService.getService(field.type);
+        if (!service) {
+            return;
+        }
+
         const drawer = this.drawerService.create({
             nzContent: FieldSettingsComponent,
+            nzTitle: service.getFieldName(),
             nzContentParams: { field },
             nzWidth: 320,
             nzMask: false,

@@ -1,30 +1,16 @@
-<div class="input-text">
-    <div class="input-text__form-container">
-        <p nz-typography nzType="secondary" class="input-text__title">Текстовое поле</p>
-        <form nz-form nzLayout="vertical" [formGroup]="form">
-            <nz-form-item class="input-text__item">
-                <nz-form-control nzErrorTip="Обязательное поле">
-                    <input nz-input formControlName="label" name="label" required placeholder="Заголовок" />
-                </nz-form-control>
-            </nz-form-item>
-            <nz-form-item class="input-text__item">
-                <nz-form-control>
-                    <input nz-input formControlName="placeholder" name="placeholder" placeholder="Плейсхолдер" />
-                </nz-form-control>
-            </nz-form-item>
-            <nz-row class="input-text__item" nzAlign="middle">
-                <nz-col>
-                    <label nz-checkbox formControlName="required">Обязательное поле</label>
-                </nz-col>
-            </nz-row>
-            <nz-row class="input-text__item" nzAlign="middle">
-                <nz-col nzSpan="12">
-                    <button nz-button nzType="link" (click)="cancel()">Отмена</button>
-                </nz-col>
-                <nz-col nzSpan="12" class="input-text__action-buttons input-text__action-buttons--align-right">
-                    <button nz-button nzType="primary" (click)="save()" [nzLoading]="state === operationState.LOADING">OK</button>
-                </nz-col>
-            </nz-row>
-        </form>
+<form nz-form nzLayout="vertical" [formGroup]="form">
+    <nz-form-item>
+        <nz-form-control nzErrorTip="Обязательное поле">
+            <input nz-input formControlName="label" name="label" required placeholder="Заголовок" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-control>
+            <input nz-input formControlName="placeholder" name="placeholder" placeholder="Плейсхолдер" />
+        </nz-form-control>
+    </nz-form-item>
+    <div class="buttons">
+        <label nz-checkbox formControlName="required">Обязательное поле</label>
+        <button nz-button nzType="primary" (click)="save()" [nzLoading]="state === operationState.LOADING">OK</button>
     </div>
-</div>
+</form>
