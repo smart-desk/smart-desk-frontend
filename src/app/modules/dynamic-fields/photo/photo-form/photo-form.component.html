@@ -1,9 +1,14 @@
-<form nz-form nzLayout="vertical" [formGroup]="formGroup">
-    <ng-container formArrayName="urls">
-        <nz-form-item *ngFor="let _ of urls.controls; index as i">
-            <nz-form-control>
-                <input nz-input placeholder="Введите значение" [formControlName]="i" />
-            </nz-form-control>
-        </nz-form-item>
-    </ng-container>
-</form>
+<nz-upload
+    nzAction="/s3/image"
+    nzListType="picture-card"
+    nzAccept="image/png, image/jpeg"
+    [(nzFileList)]="fileList"
+    [nzMultiple]="true"
+    [nzDisabled]="fileList?.length === field?.params?.max"
+    (nzChange)="listChanged($event)"
+>
+    <div>
+        <i nz-icon nzType="plus"></i>
+        <div style="margin-top: 8px;">Upload</div>
+    </div>
+</nz-upload>

@@ -61,7 +61,7 @@ export class AdvertEditComponent implements OnInit {
             )
             .subscribe((model: Model) => {
                 this.form.controls.title.setValue(this.advert.title);
-                this.populateFormWithInputs(model.sections);
+                this.populateFormWithInputs(this.advert.sections);
                 this.cd.detectChanges();
             });
     }
