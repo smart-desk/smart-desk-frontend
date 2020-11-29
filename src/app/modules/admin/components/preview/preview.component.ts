@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
-import { ModelService } from '../../../../shared/services';
+import { FieldService, ModelService } from '../../../../shared/services';
 import { Section } from '../../../../shared/models/dto/section.entity';
 import { FieldEntity } from '../../../../shared/models/dto/field.entity';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
@@ -24,7 +24,8 @@ export class PreviewComponent implements OnInit {
         private modelService: ModelService,
         private dynamicFieldService: DynamicFieldsService,
         private drawerService: NzDrawerService,
-        private componentFactoryResolver: ComponentFactoryResolver
+        private componentFactoryResolver: ComponentFactoryResolver,
+        private fieldService: FieldService
     ) {}
 
     ngOnInit(): void {
@@ -79,7 +80,7 @@ export class PreviewComponent implements OnInit {
         });
     }
 
-    private onDelete(field: FieldEntity) {
-        console.log('Delete field: ' + field.id);
+    private onDelete(field: FieldEntity): void {
+        this.fieldService.deleteField(field.id).subscribe(() => this.update());
     }
 }
