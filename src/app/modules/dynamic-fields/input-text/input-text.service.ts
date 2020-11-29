@@ -4,6 +4,10 @@ import { InputTextFormComponent } from './input-text-form/input-text-form.compon
 import { AbstractFieldFormComponent } from '../../../shared/modules/dynamic-fields/abstract-field-form.component';
 import { AbstractFieldParamsComponent } from '../../../shared/modules/dynamic-fields/abstract-field-params.component';
 import { InputTextParamsComponent } from './input-text-params/input-text-params.component';
+import { AbstractFieldViewComponent } from '../../../shared/modules/dynamic-fields/abstract-field-view.component';
+import { InputTextEntity } from '../../../shared/models/dto/field-data/input-text.entity';
+import { InputTextParamsDto } from '../../../shared/models/dto/field-data/input-text-params.dto';
+import { InputTextViewComponent } from './input-text-view/input-text-view.component';
 
 @Injectable()
 export class InputTextService implements AbstractFieldService {
@@ -17,8 +21,8 @@ export class InputTextService implements AbstractFieldService {
         return this.componentFactoryResolver.resolveComponentFactory(InputTextParamsComponent);
     }
 
-    getViewComponentResolver(): ComponentFactory<any> {
-        return undefined;
+    getViewComponentResolver(): ComponentFactory<AbstractFieldViewComponent<InputTextEntity, InputTextParamsDto>> {
+        return this.componentFactoryResolver.resolveComponentFactory(InputTextViewComponent);
     }
 
     getFieldName(): string {

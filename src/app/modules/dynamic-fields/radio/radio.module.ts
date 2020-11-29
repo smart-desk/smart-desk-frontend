@@ -11,6 +11,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { RadioViewComponent } from './radio-view/radio-view.component';
 
 @NgModule({
     imports: [
@@ -24,9 +26,10 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
         NzInputModule,
         ReactiveFormsModule,
         NzRadioModule,
+        NzDividerModule,
     ],
     providers: [RadioService],
-    declarations: [RadioFormComponent, RadioParamsComponent],
+    declarations: [RadioFormComponent, RadioParamsComponent, RadioViewComponent],
     exports: [RadioFormComponent, RadioParamsComponent],
 })
 export class RadioModule {}
