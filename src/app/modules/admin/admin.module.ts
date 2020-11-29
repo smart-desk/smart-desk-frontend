@@ -28,6 +28,9 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { FieldSettingsComponent } from './components/field-settings/field-settings.component';
 
 const components = [PreviewComponent, CategoryFormComponent, AdminMenuComponent, SectionFormComponent];
 
@@ -55,7 +58,9 @@ const pages = [AdminComponent, EditModelComponent, CreateModelComponent, ModelsC
         NzTableModule,
         NzSelectModule,
         NzLayoutModule,
+        NzTabsModule,
+        NzDrawerModule,
     ],
-    declarations: [...pages, ...components],
+    declarations: [...pages, ...components, FieldSettingsComponent],
 })
 export class AdminModule {}

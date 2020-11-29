@@ -1,18 +1,12 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    ComponentFactoryResolver,
-    ComponentRef,
-    Input,
-    OnInit,
-    ViewChild,
-    ViewContainerRef,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ComponentRef, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ModelService } from '../../../../shared/services';
 import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
 import { Section } from '../../../../shared/models/dto/section.entity';
 import { FieldEntity } from '../../../../shared/models/dto/field.entity';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
+import { Field } from '../../../../shared/models/field';
+import { NzDrawerService } from 'ng-zorro-antd/drawer';
+import { FieldSettingsComponent } from '../field-settings/field-settings.component';
 
 @Component({
     selector: 'app-preview',
@@ -29,8 +23,8 @@ export class PreviewComponent implements OnInit {
 
     constructor(
         private modelService: ModelService,
-        private componentFactoryResolver: ComponentFactoryResolver,
-        private dynamicFieldService: DynamicFieldsService
+        private dynamicFieldService: DynamicFieldsService,
+        private drawerService: NzDrawerService
     ) {}
 
     ngOnInit(): void {
@@ -65,8 +59,19 @@ export class PreviewComponent implements OnInit {
         const component = this.fieldsFormContainerRef.createComponent(resolver);
         component.instance.field = field;
         component.instance.preview = true;
+        // todo no any
+        if ((component.instance as any).edit$) {
+            (component.instance as any).edit$.subscribe(res => this.openSettings(res));
+        }
         component.changeDetectorRef.detectChanges();
 
         return component;
+    }
+
+    private openSettings(field: Field<any, any>) {
+        const drawer = this.drawerService.create({
+            nzContent: FieldSettingsComponent,
+            nzContentParams: { field },
+        });
     }
 }

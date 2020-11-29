@@ -30,12 +30,4 @@ export class EditModelComponent implements OnInit {
             this.cd.detectChanges();
         });
     }
-
-    onBack(): void {
-        this.router.navigate(['./admin/models']);
-    }
-
-    changeFields(): void {
-        this.preview.update();
-    }
 }
