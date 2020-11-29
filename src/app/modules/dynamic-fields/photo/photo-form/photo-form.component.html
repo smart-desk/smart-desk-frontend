@@ -2,6 +2,7 @@
     nzAction="/s3/image"
     nzListType="picture-card"
     nzAccept="image/png, image/jpeg"
+    [(nzFileList)]="fileList"
     [nzMultiple]="true"
     [nzDisabled]="fileList?.length === field?.params?.max"
     (nzChange)="listChanged($event)"

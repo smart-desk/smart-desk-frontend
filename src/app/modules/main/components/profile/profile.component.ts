@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { of } from 'rxjs';
-import { NzModalService } from 'ng-zorro-antd';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { LoginComponent } from '../login/login.component';
 import { AuthService, UserService } from '../../../../shared/services';
 import { catchError, switchMap } from 'rxjs/operators';

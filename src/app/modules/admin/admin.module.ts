@@ -12,24 +12,22 @@ import { EditModelComponent } from './pages/edit-model/edit-model.component';
 import { ModelsComponent } from './pages/models/models.component';
 import { SectionFormComponent } from './components/section-form/section-form.component';
 import { AdvertsListComponent } from './pages/adverts-list/adverts-list.component';
-import {
-    NzButtonModule,
-    NzDividerModule,
-    NzDropDownModule,
-    NzFormModule,
-    NzIconModule,
-    NzInputModule,
-    NzLayoutModule,
-    NzListModule,
-    NzPageHeaderModule,
-    NzPopconfirmModule,
-    NzPopoverModule,
-    NzSelectModule,
-    NzTableModule,
-    NzTreeModule,
-    NzTypographyModule,
-} from 'ng-zorro-antd';
 import { SharedModule } from '../../shared/shared.module';
+import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { NzTreeModule } from 'ng-zorro-antd/tree';
+import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
+import { NzListModule } from 'ng-zorro-antd/list';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
 
 const components = [PreviewComponent, CategoryFormComponent, AdminMenuComponent, SectionFormComponent];
 

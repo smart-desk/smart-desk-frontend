@@ -8,9 +8,9 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { NzCascaderOption } from 'ng-zorro-antd';
 import { BehaviorSubject } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
+import { NzCascaderOption } from 'ng-zorro-antd/cascader';
 import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
 import { AdvertService, CategoryService, ModelService } from '../../../../shared/services';
 import { Category } from '../../../../shared/models/dto/category.entity';

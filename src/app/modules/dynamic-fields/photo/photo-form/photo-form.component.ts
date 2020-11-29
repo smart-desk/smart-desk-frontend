@@ -2,9 +2,8 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
 import { PhotoEntity } from '../../../../shared/models/dto/field-data/photo.entity';
 import { PhotoParamsDto } from '../../../../shared/models/dto/field-data/photo-params.dto';
-import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd';
 import { UploadImageResponse } from '../../../../shared/models/dto/upload-image-response';
-import { InputTextEntity } from '../../../../shared/models/dto/field-data/input-text.entity';
+import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 
 @Component({
     selector: 'app-textarea',
@@ -12,8 +11,19 @@ import { InputTextEntity } from '../../../../shared/models/dto/field-data/input-
     styleUrls: ['./photo-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PhotoFormComponent extends AbstractFieldFormComponent<PhotoEntity, PhotoParamsDto> {
+export class PhotoFormComponent extends AbstractFieldFormComponent<PhotoEntity, PhotoParamsDto> implements OnInit {
     fileList: NzUploadFile[] = [];
+
+    ngOnInit() {
+        if (this.field && this.field.data && this.field.data.value) {
+            this.fileList = this.field.data.value.map((url, i) => ({
+                uid: `${(i += 1)}`,
+                name: `${i}`,
+                status: 'done',
+                url,
+            }));
+        }
+    }
 
     listChanged(event: NzUploadChangeParam) {
         if (event.type === 'success') {

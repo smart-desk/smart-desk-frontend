@@ -3,16 +3,14 @@ import { CommonModule } from '@angular/common';
 import { RadioFormComponent } from './radio-form/radio-form.component';
 import { RadioParamsComponent } from './radio-params/radio-params.component';
 import { RadioService } from './radio.service';
-import {
-    NzButtonModule,
-    NzFormModule,
-    NzIconModule,
-    NzInputModule,
-    NzPopconfirmModule,
-    NzRadioModule,
-    NzTypographyModule,
-} from 'ng-zorro-antd';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 
 @NgModule({
     imports: [

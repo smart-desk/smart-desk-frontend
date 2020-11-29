@@ -2,20 +2,18 @@ import { NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {
-    NzButtonModule,
-    NzFormModule,
-    NzIconModule,
-    NzInputModule,
-    NzMessageModule,
-    NzPaginationModule,
-    NzRadioModule,
-} from 'ng-zorro-antd';
 import { AdvertService, CategoryService, FieldService, ModelService, SectionService, AuthService } from './services';
 import { ApiHostInterceptor, TokenInterceptor, ErrorsInterceptor } from './interceptors';
 import { SearchComponent } from './components/search/search.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { DynamicFieldsModule } from './modules/dynamic-fields/dynamic-fields.module';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 
 /**
  * Import here all modules which are used on app side
