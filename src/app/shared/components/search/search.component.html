@@ -1,12 +1,14 @@
 <div class="search">
-    <nz-input-group nzSearch [nzAddOnBefore]="prefix" [nzAddOnAfter]="suffixButton">
-        <i class="reset" nz-icon nzType="plus" prefix *ngIf="searchPhrase" (click)="reset()"></i>
+    <nz-input-group nzSearch [nzPrefix]="prefix" [nzSuffix]="suffix" [nzAddOnAfter]="suffixButton">
         <input class="search__input" [(ngModel)]="searchPhrase" type="text" nz-input [placeholder]="placeholder" />
     </nz-input-group>
     <ng-template #suffixButton>
         <button class="search__button" nz-button nzSearch (click)="search()">Найти</button>
     </ng-template>
     <ng-template #prefix>
-        <i nz-icon nzType="search" prefix></i>
+        <i nz-icon nzType="search"></i>
+    </ng-template>
+    <ng-template #suffix>
+        <i nz-icon nzType="close" *ngIf="searchPhrase" (click)="reset()"></i>
     </ng-template>
 </div>
