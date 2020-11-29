@@ -44,7 +44,7 @@ export class AdvertService {
     }
 
     updateAdvert(id: string, advert: UpdateAdvertDto): Observable<Advert> {
-        return this.http.put<Advert>(`/adverts/${id}`, advert);
+        return this.http.patch<Advert>(`/adverts/${id}`, advert);
     }
 
     deleteAdvert(id: string): Observable<unknown> {
