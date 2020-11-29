@@ -11,6 +11,7 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { InputTextViewComponent } from './input-text-view/input-text-view.component';
 
 @NgModule({
     imports: [
@@ -25,7 +26,7 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
         NzPopconfirmModule,
     ],
     providers: [InputTextService],
-    declarations: [InputTextFormComponent, InputTextParamsComponent],
+    declarations: [InputTextFormComponent, InputTextParamsComponent, InputTextViewComponent],
     exports: [InputTextFormComponent, InputTextParamsComponent],
 })
 export class InputTextModule {}
