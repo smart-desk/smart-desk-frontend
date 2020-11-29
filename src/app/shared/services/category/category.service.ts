@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { NzCascaderOption } from 'ng-zorro-antd';
 // todo we can do it on backend
 import arrayToTree from 'array-to-tree';
 import { Category } from '../../models/dto/category.entity';
 import { CreateCategoryDto } from '../../models/dto/create-category.dto';
 import { UpdateCategoryDto } from '../../models/dto/update-category.dto';
+import { NzCascaderOption } from 'ng-zorro-antd/cascader';
 
 @Injectable()
 export class CategoryService {

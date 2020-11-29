@@ -3,7 +3,8 @@ import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { of } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { switchMap } from 'rxjs/operators';
-import { NzModalRef, NzNotificationService } from 'ng-zorro-antd';
+import { NzModalRef } from 'ng-zorro-antd/modal';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { AuthService, UserService } from '../../../../shared/services';
 
 @Component({

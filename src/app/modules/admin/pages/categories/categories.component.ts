@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChildren } from '@angular/core';
 import { map, switchMap, tap } from 'rxjs/operators';
-import { NzPopoverDirective, NzTreeNode } from 'ng-zorro-antd';
 import arrayToTree from 'array-to-tree';
 import { BehaviorSubject } from 'rxjs';
 import { CategoryService, ModelService } from '../../../../shared/services/';
 import { Model } from '../../../../shared/models/dto/model.entity';
 import { Category } from '../../../../shared/models/dto/category.entity';
+import { NzTreeNode } from 'ng-zorro-antd/tree';
+import { NzPopoverDirective } from 'ng-zorro-antd/popover';
 
 @Component({
     selector: 'app-models',
