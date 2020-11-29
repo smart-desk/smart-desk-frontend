@@ -12,6 +12,8 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzGridModule } from 'ng-zorro-antd/grid';
+import { TextareaViewComponent } from './textarea-view/textarea-view.component';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
 
 @NgModule({
     imports: [
@@ -26,9 +28,10 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
         NzButtonModule,
         NzIconModule,
         NzGridModule,
+        NzDividerModule,
     ],
     providers: [TextareaService],
-    declarations: [TextareaFormComponent, TextareaParamsComponent],
+    declarations: [TextareaFormComponent, TextareaParamsComponent, TextareaViewComponent],
     exports: [TextareaFormComponent, TextareaParamsComponent],
 })
 export class TextareaModule {}

@@ -4,6 +4,7 @@ import { AbstractFieldFormComponent } from '../../../shared/modules/dynamic-fiel
 import { TextareaFormComponent } from './textarea-form/textarea-form.component';
 import { AbstractFieldParamsComponent } from '../../../shared/modules/dynamic-fields/abstract-field-params.component';
 import { TextareaParamsComponent } from './textarea-params/textarea-params.component';
+import { TextareaViewComponent } from './textarea-view/textarea-view.component';
 
 @Injectable()
 export class TextareaService implements AbstractFieldService {
@@ -18,7 +19,7 @@ export class TextareaService implements AbstractFieldService {
     }
 
     getViewComponentResolver(): ComponentFactory<any> {
-        return undefined;
+        return this.componentFactoryResolver.resolveComponentFactory(TextareaViewComponent);
     }
 
     getFieldName(): string {
