@@ -1,4 +1,14 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    Input,
+    Output,
+    ViewChild,
+    ViewContainerRef,
+    EventEmitter,
+} from '@angular/core';
 import { NzDrawerService } from 'ng-zorro-antd/drawer';
 import { FieldEntity } from '../../../../shared/models/dto/field.entity';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
@@ -21,6 +31,9 @@ export class PreviewToolsComponent implements AfterViewInit {
     @Input()
     field: FieldEntity;
 
+    @Output()
+    fieldChange = new EventEmitter();
+
     @ViewChild('field', { read: ViewContainerRef })
     private fieldContainerRef: ViewContainerRef;
 
@@ -34,6 +47,13 @@ export class PreviewToolsComponent implements AfterViewInit {
         const drawer = this.drawerService.create({
             nzContent: FieldSettingsComponent,
             nzContentParams: { field: this.field },
+            nzWidth: 320,
+            nzMask: false,
+        });
+
+        drawer.afterOpen.subscribe(() => {
+            const instance = drawer.getContentComponent();
+            instance.fieldChange.subscribe(() => this.fieldChange.emit());
         });
     }
 

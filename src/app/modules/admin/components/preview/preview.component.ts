@@ -53,6 +53,7 @@ export class PreviewComponent implements OnInit {
         const resolver = this.componentFactoryResolver.resolveComponentFactory(PreviewToolsComponent);
         const component = this.fieldsFormContainerRef.createComponent(resolver);
         component.instance.field = field;
+        component.instance.fieldChange.subscribe(() => this.update());
         component.changeDetectorRef.detectChanges();
     }
 

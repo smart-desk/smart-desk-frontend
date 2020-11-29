@@ -10,7 +10,6 @@ import { CategoriesComponent } from './pages/categories/categories.component';
 import { CreateModelComponent } from './pages/create-model/create-model.component';
 import { EditModelComponent } from './pages/edit-model/edit-model.component';
 import { ModelsComponent } from './pages/models/models.component';
-import { SectionFormComponent } from './components/section-form/section-form.component';
 import { AdvertsListComponent } from './pages/adverts-list/adverts-list.component';
 import { SharedModule } from '../../shared/shared.module';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
@@ -33,7 +32,7 @@ import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { FieldSettingsComponent } from './components/field-settings/field-settings.component';
 import { PreviewToolsComponent } from './components/preview-tools/preview-tools.component';
 
-const components = [PreviewComponent, CategoryFormComponent, AdminMenuComponent, SectionFormComponent, PreviewToolsComponent];
+const components = [PreviewComponent, CategoryFormComponent, AdminMenuComponent, PreviewToolsComponent];
 
 const pages = [AdminComponent, EditModelComponent, CreateModelComponent, ModelsComponent, CategoriesComponent, AdvertsListComponent];
 

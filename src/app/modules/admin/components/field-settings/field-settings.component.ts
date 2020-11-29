@@ -1,6 +1,18 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    Output,
+    ViewChild,
+    ViewContainerRef,
+} from '@angular/core';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
 import { FieldEntity } from '../../../../shared/models/dto/field.entity';
+import { OperationState } from '../../../../shared/models/operation-state.enum';
+import { NzDrawerRef } from 'ng-zorro-antd/drawer';
 
 @Component({
     selector: 'app-field-settings',
@@ -12,10 +24,13 @@ export class FieldSettingsComponent implements AfterViewInit {
     @Input()
     field: FieldEntity;
 
-    @ViewChild('paramsForm', { read: ViewContainerRef })
-    paramsFormContainer: ViewContainerRef;
+    @Output()
+    fieldChange = new EventEmitter();
 
-    constructor(private dynamicFieldsService: DynamicFieldsService, private cdr: ChangeDetectorRef) {}
+    @ViewChild('paramsForm', { read: ViewContainerRef })
+    private paramsFormContainer: ViewContainerRef;
+
+    constructor(private dynamicFieldsService: DynamicFieldsService, private cdr: ChangeDetectorRef, private drawerRef: NzDrawerRef) {}
 
     ngAfterViewInit() {
         const service = this.dynamicFieldsService.getService(this.field.type);
@@ -29,6 +44,12 @@ export class FieldSettingsComponent implements AfterViewInit {
 
         const component = this.paramsFormContainer.createComponent(resolver);
         component.instance.field = this.field;
+        component.instance.onSave$.subscribe(status => {
+            if (status === OperationState.SUCCESS) {
+                this.fieldChange.emit(status);
+                this.drawerRef.close();
+            }
+        });
         this.cdr.detectChanges();
     }
 }
