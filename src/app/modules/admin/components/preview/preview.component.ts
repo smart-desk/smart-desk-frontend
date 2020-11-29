@@ -6,6 +6,8 @@ import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/
 import { NzDrawerService } from 'ng-zorro-antd/drawer';
 import { PreviewToolsComponent } from '../preview-tools/preview-tools.component';
 import { FieldSettingsComponent } from '../field-settings/field-settings.component';
+import { AddFieldComponent } from '../add-field/add-field.component';
+import { Model } from '../../../../shared/models/dto/model.entity';
 
 @Component({
     selector: 'app-preview',
@@ -19,6 +21,8 @@ export class PreviewComponent implements OnInit {
 
     @ViewChild('fields', { read: ViewContainerRef })
     private fieldsFormContainerRef: ViewContainerRef;
+
+    private model: Model;
 
     constructor(
         private modelService: ModelService,
@@ -37,7 +41,26 @@ export class PreviewComponent implements OnInit {
             this.fieldsFormContainerRef.clear();
         }
         this.modelService.getModel(this.modelId).subscribe(model => {
-            this.populateFormWithInputs(model.sections);
+            this.model = model;
+            this.populateFormWithInputs(this.model.sections);
+        });
+    }
+
+    addField(): void {
+        const drawer = this.drawerService.create({
+            nzContent: AddFieldComponent,
+            nzContentParams: { model: this.model },
+            nzTitle: 'New Field',
+            nzWidth: 320,
+            nzMask: false,
+        });
+
+        drawer.afterOpen.subscribe(() => {
+            const instance = drawer.getContentComponent();
+            instance.create.subscribe(f => {
+                drawer.close();
+                this.onEdit(f);
+            });
         });
     }
 
@@ -76,7 +99,10 @@ export class PreviewComponent implements OnInit {
 
         drawer.afterOpen.subscribe(() => {
             const instance = drawer.getContentComponent();
-            instance.fieldChange.subscribe(() => this.update());
+            instance.fieldChange.subscribe(() => {
+                drawer.close();
+                this.update();
+            });
         });
     }
 

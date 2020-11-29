@@ -30,7 +30,7 @@ export class FieldSettingsComponent implements AfterViewInit {
     @ViewChild('paramsForm', { read: ViewContainerRef })
     private paramsFormContainer: ViewContainerRef;
 
-    constructor(private dynamicFieldsService: DynamicFieldsService, private cdr: ChangeDetectorRef, private drawerRef: NzDrawerRef) {}
+    constructor(private dynamicFieldsService: DynamicFieldsService, private cdr: ChangeDetectorRef) {}
 
     ngAfterViewInit() {
         const service = this.dynamicFieldsService.getService(this.field.type);
@@ -47,7 +47,6 @@ export class FieldSettingsComponent implements AfterViewInit {
         component.instance.onSave$.subscribe(status => {
             if (status === OperationState.SUCCESS) {
                 this.fieldChange.emit(status);
-                this.drawerRef.close();
             }
         });
         this.cdr.detectChanges();
