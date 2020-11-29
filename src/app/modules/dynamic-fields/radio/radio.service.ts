@@ -4,12 +4,16 @@ import { AbstractFieldFormComponent } from '../../../shared/modules/dynamic-fiel
 import { RadioFormComponent } from './radio-form/radio-form.component';
 import { AbstractFieldParamsComponent } from '../../../shared/modules/dynamic-fields/abstract-field-params.component';
 import { RadioParamsComponent } from './radio-params/radio-params.component';
+import { AbstractFieldViewComponent } from '../../../shared/modules/dynamic-fields/abstract-field-view.component';
+import { RadioEntity } from '../../../shared/models/dto/field-data/radio.entity';
+import { RadioParamsDto } from '../../../shared/models/dto/field-data/radio-params.dto';
+import { RadioViewComponent } from './radio-view/radio-view.component';
 
 @Injectable()
 export class RadioService implements AbstractFieldService {
     constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
-    getFormComponentResolver(): ComponentFactory<AbstractFieldFormComponent<any, any>> {
+    getFormComponentResolver(): ComponentFactory<AbstractFieldFormComponent<RadioEntity, RadioParamsDto>> {
         return this.componentFactoryResolver.resolveComponentFactory(RadioFormComponent);
     }
 
@@ -17,8 +21,8 @@ export class RadioService implements AbstractFieldService {
         return this.componentFactoryResolver.resolveComponentFactory(RadioParamsComponent);
     }
 
-    getViewComponentResolver(): ComponentFactory<any> {
-        return undefined;
+    getViewComponentResolver(): ComponentFactory<AbstractFieldViewComponent<RadioEntity, RadioParamsDto>> {
+        return this.componentFactoryResolver.resolveComponentFactory(RadioViewComponent);
     }
 
     getFieldName(): string {
