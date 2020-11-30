@@ -1,28 +1,7 @@
-<div class="text">
-    <div class="text__form-container">
-        <p nz-typography nzType="secondary" class="text__title">
-            <span>Текст</span>
-            <button
-                nz-popconfirm
-                nzPopconfirmTitle="Вы уверены что хотите удалить поле?"
-                nzPopconfirmPlacement="top"
-                nzCancelText="Отмена"
-                nzOkText="Удалить"
-                (nzOnConfirm)="delete()"
-                nz-button
-                nzType="link"
-                nzSize="small"
-                nzShape="circle"
-            >
-                <i nz-icon nzType="delete" nzTheme="outline"></i>
-            </button>
-        </p>
-        <div class="container">
-            <div class="container__icon" [ngSwitch]="mode">
-                <i nz-icon nzType="save" *ngSwitchCase="Mode.SAVE" nzTheme="outline"></i>
-                <i nz-icon [nzType]="'sync'" *ngSwitchCase="Mode.EDIT" [nzSpin]="true"></i>
-            </div>
-            <quill-editor [ngModel]="content" (onContentChanged)="save($event)"></quill-editor>
-        </div>
+<div class="container">
+    <div class="container__icon" [ngSwitch]="mode">
+        <i nz-icon nzType="save" *ngSwitchCase="Mode.SAVE" nzTheme="outline"></i>
+        <i nz-icon [nzType]="'sync'" *ngSwitchCase="Mode.EDIT" [nzSpin]="true"></i>
     </div>
+    <quill-editor [ngModel]="content" (onContentChanged)="save($event)"></quill-editor>
 </div>

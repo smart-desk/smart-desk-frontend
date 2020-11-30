@@ -7,11 +7,6 @@ import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic
 import { OperationState } from '../../../../shared/models/operation-state.enum';
 import { TextareaParamsDto } from '../../../../shared/models/dto/field-data/textarea-params.dto';
 
-enum Mode {
-    EDIT,
-    VIEW,
-}
-
 @Component({
     selector: 'app-textarea',
     templateUrl: './textarea-params.component.html',
@@ -24,15 +19,11 @@ export class TextareaParamsComponent extends AbstractFieldParamsComponent implem
 
     form: FormGroup;
 
-    mode: Mode;
-    Mode = Mode;
-
     constructor(private fb: FormBuilder, private cd: ChangeDetectorRef, private fieldService: FieldService) {
         super();
     }
 
     ngOnInit(): void {
-        this.mode = this.field.id ? Mode.VIEW : Mode.EDIT;
         const params = this.field.params as TextareaParamsDto;
 
         this.form = this.fb.group({
@@ -62,24 +53,17 @@ export class TextareaParamsComponent extends AbstractFieldParamsComponent implem
         request.subscribe(res => {
             this.state = OperationState.SUCCESS;
             this.field = res;
-            this.toggleMode();
             this.save$.next(this.state);
 
             this.cd.detectChanges();
         });
     }
 
-    cancel(): void {
-        this.toggleMode();
-    }
+    cancel(): void {}
 
     delete(): void {
         this.fieldService.deleteField(this.field.id).subscribe(() => {
             this.delete$.next(this);
         });
-    }
-
-    toggleMode(): void {
-        this.mode = this.mode === Mode.EDIT ? Mode.VIEW : Mode.EDIT;
     }
 }

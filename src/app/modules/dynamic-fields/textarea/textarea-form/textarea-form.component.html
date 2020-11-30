@@ -1,9 +1,16 @@
-<ng-container *ngIf="field?.params as data">
+<ng-container *ngIf="field?.params">
+    <button nz-button *ngIf="preview" (click)="onEdit()">Edit</button>
     <form nz-form nzLayout="vertical" class="textarea" [formGroup]="form">
         <nz-form-item>
-            <nz-form-label [nzRequired]="data.required">{{ data.label }}</nz-form-label>
+            <nz-form-label [nzRequired]="field?.params?.required">{{ field?.params?.label }}</nz-form-label>
             <nz-form-control>
-                <textarea rows="4" nz-input formControlName="value" [required]="data.required" [placeholder]="data.placeholder"></textarea>
+                <textarea
+                    rows="4"
+                    nz-input
+                    formControlName="value"
+                    [required]="field?.params?.required"
+                    [placeholder]="field?.params?.placeholder"
+                ></textarea>
             </nz-form-control>
         </nz-form-item>
     </form>

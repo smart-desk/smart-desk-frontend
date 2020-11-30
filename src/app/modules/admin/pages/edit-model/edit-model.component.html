@@ -1,22 +1,10 @@
-<nz-page-header nzBackIcon (nzBack)="onBack()">
-    <nz-page-header-title>Редактирование модели</nz-page-header-title>
-    <nz-page-header-subtitle>
-        Добавляйте, удаляйте и редактируйте поля которые будут отображены для того чтобы создать объявление
-    </nz-page-header-subtitle>
-</nz-page-header>
-
 <ng-container *ngIf="model">
-    <div class="edit-model__content">
-        <h1 nz-typography>{{ model.name }}</h1>
-        <nz-row>
-            <nz-col nzSpan="12">
-                <div class="edit-model__section-form" *ngFor="let section of model.sections">
-                    <app-section-form [section]="section" (changeFields)="changeFields()"></app-section-form>
-                </div>
-            </nz-col>
-            <nz-col nzSpan="12">
-                <app-preview [modelId]="model.id"></app-preview>
-            </nz-col>
-        </nz-row>
-    </div>
+    <nz-page-header>
+        <nz-page-header-title>{{ model.name }}</nz-page-header-title>
+        <nz-page-header-subtitle>
+            Редактирование модели
+        </nz-page-header-subtitle>
+    </nz-page-header>
+
+    <app-preview [modelId]="model.id"></app-preview>
 </ng-container>

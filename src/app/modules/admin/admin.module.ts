@@ -10,7 +10,6 @@ import { CategoriesComponent } from './pages/categories/categories.component';
 import { CreateModelComponent } from './pages/create-model/create-model.component';
 import { EditModelComponent } from './pages/edit-model/edit-model.component';
 import { ModelsComponent } from './pages/models/models.component';
-import { SectionFormComponent } from './components/section-form/section-form.component';
 import { AdvertsListComponent } from './pages/adverts-list/adverts-list.component';
 import { SharedModule } from '../../shared/shared.module';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
@@ -28,8 +27,20 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { FieldSettingsComponent } from './components/field-settings/field-settings.component';
+import { PreviewToolsComponent } from './components/preview-tools/preview-tools.component';
+import { AddFieldComponent } from './components/add-field/add-field.component';
 
-const components = [PreviewComponent, CategoryFormComponent, AdminMenuComponent, SectionFormComponent];
+const components = [
+    PreviewComponent,
+    CategoryFormComponent,
+    AdminMenuComponent,
+    PreviewToolsComponent,
+    FieldSettingsComponent,
+    AddFieldComponent,
+];
 
 const pages = [AdminComponent, EditModelComponent, CreateModelComponent, ModelsComponent, CategoriesComponent, AdvertsListComponent];
 
@@ -55,6 +66,8 @@ const pages = [AdminComponent, EditModelComponent, CreateModelComponent, ModelsC
         NzTableModule,
         NzSelectModule,
         NzLayoutModule,
+        NzTabsModule,
+        NzDrawerModule,
     ],
     declarations: [...pages, ...components],
 })

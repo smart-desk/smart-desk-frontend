@@ -4,11 +4,12 @@
     margin-bottom: $base-unit * 3;
     max-width: $base-unit * 40;
 
-    &__title {
-        margin-bottom: $base-unit;
-    }
-
     &__item {
         margin-bottom: $base-unit;
     }
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
 }

@@ -1,0 +1,14 @@
+<form nz-form>
+    <nz-form-item>
+        <nz-select [(ngModel)]="selectedSection" (ngModelChange)="sectionChange($event)" [ngModelOptions]="{ standalone: true }">
+            <nz-option *ngFor="let s of sectionData" [nzValue]="s" [nzLabel]="getSectionName(s)"></nz-option>
+        </nz-select>
+    </nz-form-item>
+
+    <nz-form-item *ngIf="fieldData[selectedSection].length">
+        <nz-select [(ngModel)]="selectedField" [ngModelOptions]="{ standalone: true }">
+            <nz-option *ngFor="let f of fieldData[selectedSection]" [nzValue]="f" [nzLabel]="getFieldName(f)"></nz-option>
+        </nz-select>
+    </nz-form-item>
+    <button nz-button nzType="primary" [disabled]="!selectedField" (click)="createField()">Create field</button>
+</form>

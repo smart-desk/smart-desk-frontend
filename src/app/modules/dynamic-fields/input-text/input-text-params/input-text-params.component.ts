@@ -7,11 +7,6 @@ import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic
 import { OperationState } from '../../../../shared/models/operation-state.enum';
 import { InputTextParamsDto } from '../../../../shared/models/dto/field-data/input-text-params.dto';
 
-enum Mode {
-    EDIT,
-    VIEW,
-}
-
 @Component({
     selector: 'app-input-text',
     templateUrl: './input-text-params.component.html',
@@ -24,15 +19,11 @@ export class InputTextParamsComponent extends AbstractFieldParamsComponent imple
 
     form: FormGroup;
 
-    mode: Mode;
-    Mode = Mode;
-
     constructor(private fieldService: FieldService, private fb: FormBuilder, private cd: ChangeDetectorRef) {
         super();
     }
 
     ngOnInit(): void {
-        this.mode = this.field.id ? Mode.VIEW : Mode.EDIT;
         const params = this.field.params as InputTextParamsDto;
 
         this.form = this.fb.group({
@@ -61,20 +52,13 @@ export class InputTextParamsComponent extends AbstractFieldParamsComponent imple
         request.subscribe(res => {
             this.field = res;
             this.state = OperationState.SUCCESS;
-            this.toggleMode();
             this.save$.next(this.state);
 
             this.cd.detectChanges();
         });
     }
 
-    toggleMode(): void {
-        this.mode = this.mode === Mode.EDIT ? Mode.VIEW : Mode.EDIT;
-    }
-
-    cancel(): void {
-        this.toggleMode();
-    }
+    cancel(): void {}
 
     delete(): void {
         this.fieldService.deleteField(this.field.id).subscribe(() => {

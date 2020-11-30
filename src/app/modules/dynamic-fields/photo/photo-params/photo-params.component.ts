@@ -7,11 +7,6 @@ import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic
 import { OperationState } from '../../../../shared/models/operation-state.enum';
 import { PhotoParamsDto } from '../../../../shared/models/dto/field-data/photo-params.dto';
 
-enum Mode {
-    EDIT,
-    VIEW,
-}
-
 @Component({
     selector: 'app-textarea',
     templateUrl: './photo-params.component.html',
@@ -24,15 +19,11 @@ export class PhotoParamsComponent extends AbstractFieldParamsComponent implement
 
     form: FormGroup;
 
-    mode: Mode;
-    Mode = Mode;
-
     constructor(private fb: FormBuilder, private cd: ChangeDetectorRef, private fieldService: FieldService) {
         super();
     }
 
     ngOnInit(): void {
-        this.mode = this.field.id ? Mode.VIEW : Mode.EDIT;
         const params = this.field.params as PhotoParamsDto;
 
         this.form = this.fb.group({
@@ -60,24 +51,15 @@ export class PhotoParamsComponent extends AbstractFieldParamsComponent implement
         request.subscribe(res => {
             this.state = OperationState.SUCCESS;
             this.field = res;
-            this.toggleMode();
             this.save$.next(this.state);
 
             this.cd.detectChanges();
         });
     }
 
-    cancel(): void {
-        this.toggleMode();
-    }
-
     delete(): void {
         this.fieldService.deleteField(this.field.id).subscribe(() => {
             this.delete$.next(this);
         });
-    }
-
-    toggleMode(): void {
-        this.mode = this.mode === Mode.EDIT ? Mode.VIEW : Mode.EDIT;
     }
 }

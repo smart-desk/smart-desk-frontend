@@ -1,26 +1,4 @@
 <div class="radio">
-    <div class="radio__title">
-        <span nz-typography nzType="secondary">Радиокнопки</span>
-        <button nz-button nzType="link" nzSize="small" nzShape="circle" (click)="addRadio()">
-            <i nz-icon nzType="plus-circle" nzTheme="outline"></i>
-        </button>
-        <!-- todo extract as delete button component -->
-        <button
-            nz-popconfirm
-            nzPopconfirmTitle="Вы уверены что хотите удалить поле?"
-            nzPopconfirmPlacement="top"
-            nzCancelText="Отмена"
-            nzOkText="Удалить"
-            (nzOnConfirm)="deleteField()"
-            nz-button
-            nzType="link"
-            nzSize="small"
-            nzShape="circle"
-        >
-            <i nz-icon nzType="delete" nzTheme="outline"></i>
-        </button>
-    </div>
-
     <form nz-form [nzLayout]="'vertical'" [formGroup]="form" (ngSubmit)="save()">
         <nz-form-item>
             <nz-form-label nzFor="title">Заголовок</nz-form-label>
@@ -42,10 +20,9 @@
             </nz-form-item>
         </ng-container>
 
-        <nz-form-item>
-            <nz-form-control>
-                <button nz-button type="submit" nzType="primary">Сохранить</button>
-            </nz-form-control>
-        </nz-form-item>
+        <div class="buttons">
+            <button nz-button type="submit" nzType="link" (click)="addRadio()">Добавить</button>
+            <button nz-button type="submit" nzType="primary">Save</button>
+        </div>
     </form>
 </div>
