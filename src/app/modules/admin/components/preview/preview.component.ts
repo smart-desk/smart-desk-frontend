@@ -1,18 +1,13 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    ComponentFactoryResolver,
-    ComponentRef,
-    Input,
-    OnInit,
-    ViewChild,
-    ViewContainerRef,
-} from '@angular/core';
-import { ModelService } from '../../../../shared/services';
-import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
+import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { FieldService, ModelService } from '../../../../shared/services';
 import { Section } from '../../../../shared/models/dto/section.entity';
 import { FieldEntity } from '../../../../shared/models/dto/field.entity';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
+import { NzDrawerService } from 'ng-zorro-antd/drawer';
+import { PreviewToolsComponent } from '../preview-tools/preview-tools.component';
+import { FieldSettingsComponent } from '../field-settings/field-settings.component';
+import { AddFieldComponent } from '../add-field/add-field.component';
+import { Model } from '../../../../shared/models/dto/model.entity';
 
 @Component({
     selector: 'app-preview',
@@ -27,10 +22,14 @@ export class PreviewComponent implements OnInit {
     @ViewChild('fields', { read: ViewContainerRef })
     private fieldsFormContainerRef: ViewContainerRef;
 
+    private model: Model;
+
     constructor(
         private modelService: ModelService,
+        private dynamicFieldService: DynamicFieldsService,
+        private drawerService: NzDrawerService,
         private componentFactoryResolver: ComponentFactoryResolver,
-        private dynamicFieldService: DynamicFieldsService
+        private fieldService: FieldService
     ) {}
 
     ngOnInit(): void {
@@ -42,7 +41,26 @@ export class PreviewComponent implements OnInit {
             this.fieldsFormContainerRef.clear();
         }
         this.modelService.getModel(this.modelId).subscribe(model => {
-            this.populateFormWithInputs(model.sections);
+            this.model = model;
+            this.populateFormWithInputs(this.model.sections);
+        });
+    }
+
+    addField(): void {
+        const drawer = this.drawerService.create({
+            nzContent: AddFieldComponent,
+            nzContentParams: { model: this.model },
+            nzTitle: 'New Field',
+            nzWidth: 320,
+            nzMask: false,
+        });
+
+        drawer.afterOpen.subscribe(() => {
+            const instance = drawer.getContentComponent();
+            instance.create.subscribe(f => {
+                drawer.close();
+                this.onEdit(f);
+            });
         });
     }
 
@@ -56,17 +74,39 @@ export class PreviewComponent implements OnInit {
         });
     }
 
-    private resolveFieldComponent(field: FieldEntity): ComponentRef<AbstractFieldFormComponent<any, any>> {
+    private resolveFieldComponent(field: FieldEntity): void {
+        const resolver = this.componentFactoryResolver.resolveComponentFactory(PreviewToolsComponent);
+        const component = this.fieldsFormContainerRef.createComponent(resolver);
+        component.instance.field = field;
+        component.instance.edit.subscribe(f => this.onEdit(f));
+        component.instance.delete.subscribe(f => this.onDelete(f));
+        component.changeDetectorRef.detectChanges();
+    }
+
+    private onEdit(field: FieldEntity): void {
         const service = this.dynamicFieldService.getService(field.type);
         if (!service) {
             return;
         }
-        const resolver = service.getFormComponentResolver();
-        const component = this.fieldsFormContainerRef.createComponent(resolver);
-        component.instance.field = field;
-        component.instance.preview = true;
-        component.changeDetectorRef.detectChanges();
 
-        return component;
+        const drawer = this.drawerService.create({
+            nzContent: FieldSettingsComponent,
+            nzTitle: service.getFieldName(),
+            nzContentParams: { field },
+            nzWidth: 320,
+            nzMask: false,
+        });
+
+        drawer.afterOpen.subscribe(() => {
+            const instance = drawer.getContentComponent();
+            instance.fieldChange.subscribe(() => {
+                drawer.close();
+                this.update();
+            });
+        });
+    }
+
+    private onDelete(field: FieldEntity): void {
+        this.fieldService.deleteField(field.id).subscribe(() => this.update());
     }
 }

@@ -1,59 +1,16 @@
-<div class="textarea">
-    <ng-container [ngSwitch]="mode">
-        <div class="textarea__form-container" *ngSwitchCase="Mode.EDIT">
-            <p nz-typography nzType="secondary" class="textarea__title">Текстовая область</p>
-            <form nz-form nzLayout="vertical" [formGroup]="form">
-                <nz-form-item class="textarea__item">
-                    <nz-form-control nzErrorTip="Обязательное поле">
-                        <input nz-input formControlName="label" name="label" required placeholder="Заголовок" />
-                    </nz-form-control>
-                </nz-form-item>
-                <nz-form-item class="textarea__item">
-                    <nz-form-control>
-                        <input nz-input formControlName="placeholder" name="placeholder" placeholder="Плейсхолдер" />
-                    </nz-form-control>
-                </nz-form-item>
-                <nz-row class="textarea__item" nzAlign="middle">
-                    <nz-col>
-                        <label nz-checkbox formControlName="required">Обязательное поле</label>
-                    </nz-col>
-                </nz-row>
-                <nz-row class="textarea__item" nzAlign="middle">
-                    <nz-col class="textarea__action-buttons" nzSpan="12">
-                        <button nz-button nzType="link" (click)="cancel()">Отмена</button>
-                    </nz-col>
-                    <nz-col nzSpan="12" class="textarea__action-buttons textarea__action-buttons--align-right">
-                        <button nz-button nzType="primary" (click)="save()" [nzLoading]="state === operationState.LOADING">OK</button>
-                    </nz-col>
-                </nz-row>
-            </form>
-        </div>
-        <ng-container *ngSwitchCase="Mode.VIEW">
-            <span nz-typography nzType="secondary">Текстовая область</span>
-            <button nz-button nzType="link" nzSize="small" nzShape="circle" (click)="toggleMode()">
-                <i nz-icon nzType="edit" nzTheme="outline"></i>
-            </button>
-            <button
-                nz-popconfirm
-                nzPopconfirmTitle="Вы уверены что хотите удалить поле?"
-                nzPopconfirmPlacement="top"
-                nzCancelText="Отмена"
-                nzOkText="Удалить"
-                (nzOnConfirm)="delete()"
-                nz-button
-                nzType="link"
-                nzSize="small"
-                nzShape="circle"
-            >
-                <i nz-icon nzType="delete" nzTheme="outline"></i>
-            </button>
-            <h4 nz-typography class="textarea__label">
-                {{ field?.params?.label }}
-                <span class="textarea__label-additional" nz-typography nzType="secondary" *ngIf="field?.params?.required">
-                    обязательное</span
-                >
-            </h4>
-            <span nz-typography nzType="secondary">{{ field?.params?.placeholder }}</span>
-        </ng-container>
-    </ng-container>
-</div>
+<form nz-form nzLayout="vertical" [formGroup]="form">
+    <nz-form-item>
+        <nz-form-control nzErrorTip="Обязательное поле">
+            <input nz-input formControlName="label" name="label" required placeholder="Заголовок" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-control>
+            <input nz-input formControlName="placeholder" name="placeholder" placeholder="Плейсхолдер" />
+        </nz-form-control>
+    </nz-form-item>
+    <div class="buttons">
+        <label nz-checkbox formControlName="required">Обязательное поле</label>
+        <button nz-button nzType="primary" (click)="save()" [nzLoading]="state === operationState.LOADING">Save</button>
+    </div>
+</form>

@@ -1,0 +1,20 @@
+@import '~src/assets/styles/variables';
+
+:host ::ng-deep > .ant-tabs-card .ant-tabs-content {
+    margin-top: -$base-unit * 2;
+}
+:host ::ng-deep > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane {
+    background: #fff;
+    padding: $base-unit * 2;
+}
+:host ::ng-deep > .ant-tabs-card > .ant-tabs-nav::before {
+    display: none;
+}
+:host ::ng-deep > .ant-tabs-card .ant-tabs-tab {
+    border-color: transparent;
+    background: transparent;
+}
+:host ::ng-deep > .ant-tabs-card .ant-tabs-tab-active {
+    border-color: #fff;
+    background: #fff;
+}

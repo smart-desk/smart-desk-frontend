@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, EventEmitter } from '@angular/core';
 import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TextareaEntity } from '../../../../shared/models/dto/field-data/textarea.entity';
@@ -12,6 +12,13 @@ import { TextareaParamsDto } from '../../../../shared/models/dto/field-data/text
 })
 export class TextareaFormComponent extends AbstractFieldFormComponent<TextareaEntity, TextareaParamsDto> implements OnInit {
     form: FormGroup;
+
+    // todo add to every component for preview
+    edit$ = new EventEmitter();
+
+    onEdit() {
+        this.edit$.next(this.field);
+    }
 
     ngOnInit(): void {
         const params = this.field.params;
