@@ -1,11 +1,9 @@
 @import '../../../../../assets/styles/variables';
 
-.container {
-    position: relative;
+.editor {
+    display: block;
+}
 
-    &__icon {
-        position: absolute;
-        top: 10px;
-        right: 15px;
-    }
+.button {
+    margin-top: $base-unit;
 }

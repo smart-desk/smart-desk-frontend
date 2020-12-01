@@ -1,16 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
-import { ContentChange } from 'ngx-quill/lib/quill-editor.component';
 import { FieldService } from '../../../../shared/services';
-import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-params.component';
 import { OperationState } from '../../../../shared/models/operation-state.enum';
 import { TextParamsDto } from '../../../../shared/models/dto/field-data/text-params.dto';
-
-enum Mode {
-    EDIT,
-    SAVE,
-}
 
 @Component({
     selector: 'app-text-editor',
@@ -20,59 +12,37 @@ enum Mode {
 })
 export class TextParamsComponent extends AbstractFieldParamsComponent implements OnInit {
     state: OperationState;
-    saveContent$ = new Subject<string>();
-    mode: Mode;
-    Mode = Mode;
     content = '';
 
     constructor(private cd: ChangeDetectorRef, private fieldService: FieldService) {
         super();
-
-        this.saveContent$
-            .pipe(
-                filter(content => !!content),
-                distinctUntilChanged(),
-                debounceTime(500),
-                switchMap(content => {
-                    this.field.params = {
-                        ...((this.field.params as object) || {}),
-                        value: content,
-                    };
-
-                    if (this.field.id) {
-                        return this.fieldService.updateField(this.field.id, this.field);
-                    }
-                    return this.fieldService.createField(this.field);
-                })
-            )
-            .subscribe(
-                res => {
-                    this.field = res;
-                    this.state = OperationState.SUCCESS;
-                    this.save$.next(this.state);
-                    this.mode = Mode.SAVE;
-                    this.cd.detectChanges();
-                },
-                error => {
-                    this.state = OperationState.ERROR;
-                    this.save$.next(this.state);
-                }
-            );
     }
 
     ngOnInit(): void {
         this.content = (this.field.params && (this.field.params as TextParamsDto).value) || '';
-        this.mode = Mode.SAVE;
     }
 
-    save(change: ContentChange): void {
-        this.mode = Mode.EDIT;
-        this.saveContent$.next(change.html);
-    }
+    save(): void {
+        this.field.params = {
+            ...((this.field.params as object) || {}),
+            value: this.content,
+        };
 
-    delete(): void {
-        this.fieldService.deleteField(this.field.id).subscribe(() => {
-            this.delete$.next(this);
-        });
+        const request = this.field.id
+            ? this.fieldService.updateField(this.field.id, this.field)
+            : this.fieldService.createField(this.field);
+
+        request.subscribe(
+            res => {
+                this.field = res;
+                this.state = OperationState.SUCCESS;
+                this.save$.next(this.state);
+                this.cd.detectChanges();
+            },
+            error => {
+                this.state = OperationState.ERROR;
+                this.save$.next(this.state);
+            }
+        );
     }
 }

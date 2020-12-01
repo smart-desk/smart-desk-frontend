@@ -15,10 +15,6 @@ export abstract class AbstractFieldParamsComponent implements OnDestroy {
         return this.save$.asObservable();
     }
 
-    get onDelete(): Observable<AbstractFieldParamsComponent> {
-        return this.delete$.asObservable();
-    }
-
     ngOnDestroy() {
         this.delete$.complete();
         this.save$.complete();
