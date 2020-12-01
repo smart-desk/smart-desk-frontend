@@ -25,6 +25,7 @@
     "angularx-social-login": "^3.2.2",
     "array-to-tree": "^3.3.2",
     "dayjs": "^1.9.1",
+    "lightgallery.js": "^1.4.0",
     "ng-zorro-antd": "^10.1.2",
     "ngx-quill": "12",
     "quill": "^1.3.7",
