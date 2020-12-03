@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ImageItem } from 'ng-gallery';
 import { AbstractFieldViewComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-view.component';
 import { PhotoEntity } from '../../../../shared/models/dto/field-data/photo.entity';
 import { PhotoParamsDto } from '../../../../shared/models/dto/field-data/photo-params.dto';
-import { ImageItem } from 'ng-gallery';
 
 @Component({
     selector: 'app-photo-view',
