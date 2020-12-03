@@ -14,6 +14,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { GalleryModule } from 'ng-gallery';
 
 @NgModule({
     imports: [
@@ -29,6 +30,7 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
         NzIconModule,
         NzGridModule,
         NzUploadModule,
+        GalleryModule,
     ],
     providers: [PhotoService],
     declarations: [PhotoFormComponent, PhotoParamsComponent, PhotoViewComponent],

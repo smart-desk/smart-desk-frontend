@@ -1,7 +1,3 @@
-<div *ngIf="field?.data?.value" #gallery>
-    <ng-container *ngFor="let image of field.data.value">
-        <a [href]="image">
-            <img [src]="image" />
-        </a>
-    </ng-container>
+<div *ngIf="field?.data?.value">
+    <gallery [items]="images" thumbPosition="bottom" [counter]="false"></gallery>
 </div>

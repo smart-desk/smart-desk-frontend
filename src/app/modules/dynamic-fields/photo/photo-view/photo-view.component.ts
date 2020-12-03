@@ -1,9 +1,8 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AbstractFieldViewComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-view.component';
 import { PhotoEntity } from '../../../../shared/models/dto/field-data/photo.entity';
 import { PhotoParamsDto } from '../../../../shared/models/dto/field-data/photo-params.dto';
-
-declare var lightGallery: any;
+import { ImageItem } from 'ng-gallery';
 
 @Component({
     selector: 'app-photo-view',
@@ -11,16 +10,12 @@ declare var lightGallery: any;
     styleUrls: ['./photo-view.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PhotoViewComponent extends AbstractFieldViewComponent<PhotoEntity, PhotoParamsDto> implements AfterViewInit {
-    @ViewChild('gallery', { read: ViewContainerRef })
-    private galleryContainer: ViewContainerRef;
+export class PhotoViewComponent extends AbstractFieldViewComponent<PhotoEntity, PhotoParamsDto> implements OnInit {
+    images: ImageItem[] = [];
 
-    constructor() {
-        super();
-    }
-
-    ngAfterViewInit() {
-        const element = this.galleryContainer.element.nativeElement;
-        lightGallery(element);
+    ngOnInit() {
+        if (this.field.data && this.field.data.value) {
+            this.images = this.field.data.value.map(url => new ImageItem({ src: url, thumb: url }));
+        }
     }
 }
