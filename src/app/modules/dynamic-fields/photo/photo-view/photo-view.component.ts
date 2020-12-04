@@ -14,8 +14,9 @@ export class PhotoViewComponent extends AbstractFieldViewComponent<PhotoEntity, 
     images: ImageItem[] = [];
 
     ngOnInit() {
-        if (this.field.data && this.field.data.value) {
-            this.images = this.field.data.value.map(url => new ImageItem({ src: url, thumb: url }));
+        const { data } = this.field;
+        if (data && data.value) {
+            this.images = data.value.map(url => new ImageItem({ src: url, thumb: url }));
         }
     }
 }
