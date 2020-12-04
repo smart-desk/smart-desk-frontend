@@ -9,6 +9,11 @@ import { FieldSettingsComponent } from '../field-settings/field-settings.compone
 import { AddFieldComponent } from '../add-field/add-field.component';
 import { Model } from '../../../../shared/models/dto/model.entity';
 
+const DRAWER_BASE_CONFIG = {
+    nzWidth: 400,
+    nzMaskClosable: true,
+};
+
 @Component({
     selector: 'app-preview',
     templateUrl: './preview.component.html',
@@ -51,8 +56,7 @@ export class PreviewComponent implements OnInit {
             nzContent: AddFieldComponent,
             nzContentParams: { model: this.model },
             nzTitle: 'New Field',
-            nzWidth: 320,
-            nzMask: false,
+            ...DRAWER_BASE_CONFIG,
         });
 
         drawer.afterOpen.subscribe(() => {
@@ -93,8 +97,7 @@ export class PreviewComponent implements OnInit {
             nzContent: FieldSettingsComponent,
             nzTitle: service.getFieldName(),
             nzContentParams: { field },
-            nzWidth: 320,
-            nzMask: false,
+            ...DRAWER_BASE_CONFIG,
         });
 
         drawer.afterOpen.subscribe(() => {
