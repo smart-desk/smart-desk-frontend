@@ -37,6 +37,7 @@
                             "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
                             "./node_modules/quill/dist/quill.core.css",
                             "./node_modules/quill/dist/quill.snow.css",
+                            "./node_modules/@angular/cdk/overlay-prebuilt.css",
                             "src/styles.scss"
                         ],
                         "scripts": []

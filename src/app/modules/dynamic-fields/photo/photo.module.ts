@@ -13,8 +13,9 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { GalleryModule } from 'ng-gallery';
+import { LightboxModule } from 'ng-gallery/lightbox';
 
 @NgModule({
     imports: [
@@ -29,8 +30,9 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
         NzButtonModule,
         NzIconModule,
         NzGridModule,
-        NzCarouselModule,
         NzUploadModule,
+        GalleryModule,
+        LightboxModule,
     ],
     providers: [PhotoService],
     declarations: [PhotoFormComponent, PhotoParamsComponent, PhotoViewComponent],
