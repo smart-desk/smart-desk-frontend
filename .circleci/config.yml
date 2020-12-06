@@ -19,7 +19,7 @@ jobs:
             - checkout
 
             - store_artifacts:
-                  path: /dist
+                  path: dist
                   destination: smart-desk-frontend
 
 #       - run:
