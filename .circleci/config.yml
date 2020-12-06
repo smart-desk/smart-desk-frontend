@@ -1,14 +1,33 @@
 version: 2.1
 jobs:
-  build:
+  test:
     docker:
-      - image: circleci/node:lts
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+      - image: circleci/node:14.14.0
     steps:
+      - checkout
       - run:
-          name: The First Step
-          command: |
-            echo 'Hello World!'
-            echo 'This is the delivery pipeline'
+          name: Install Dependencies
+          command: yarn
+      - run:
+          name: Run tests
+          command: yarn test
+  deploy:
+    docker:
+      - image: circleci/node:14.14.0
+    steps:
+      - checkout
+      - run:
+          name: Connect via SSH and run deploy script
+          command: ssh -oStrictHostKeyChecking=no -v $DROPLET_USER@$DROPLET_IP "cd /var/www; ./deploy_backend.sh;"
+
+workflows:
+  version: 2
+  test-and-deploy:
+    jobs:
+      - test
+      - deploy:
+          filters:
+            branches:
+              only: master
+          requires:
+            - test
