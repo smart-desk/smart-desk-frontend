@@ -35,8 +35,5 @@ workflows:
     jobs:
       - build-and-test
       - deploy:
-#           filters:
-#             branches:
-#               only: master
           requires:
             - build-and-test
