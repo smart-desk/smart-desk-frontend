@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AuthService } from '../../../../shared/services';
 
 @Component({
     selector: 'app-navigation-header',
@@ -6,4 +7,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     styleUrls: ['./navigation-header.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NavigationHeaderComponent {}
+export class NavigationHeaderComponent implements OnInit {
+    isAuth: boolean;
+
+    constructor(public authService: AuthService) {}
+
+    ngOnInit(): void {
+        this.authService.isLoggedIn().subscribe(bool => (this.isAuth = bool));
+    }
+}

@@ -14,6 +14,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { AuthGuard } from './services/auth/auth.guard';
 
 /**
  * Import here all modules which are used on app side
@@ -23,7 +24,7 @@ const NZModules = [NzFormModule, NzRadioModule, NzMessageModule, NzInputModule, 
 /**
  * Services from `./services` directory
  */
-const services = [ModelService, SectionService, FieldService, CategoryService, AdvertService, AuthService];
+const services = [ModelService, SectionService, FieldService, CategoryService, AdvertService, AuthService, AuthGuard];
 
 /**
  * Components from `./components` directory

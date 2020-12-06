@@ -7,11 +7,13 @@ import { ModelsComponent } from './pages/models/models.component';
 import { EditModelComponent } from './pages/edit-model/edit-model.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { AdvertsListComponent } from './pages/adverts-list/adverts-list.component';
+import { AuthGuard } from '../../shared/services/auth/auth.guard';
 
 const routes: Routes = [
     {
         path: '',
         component: AdminComponent,
+        canActivate: [AuthGuard],
         children: [
             {
                 path: 'models',

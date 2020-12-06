@@ -3,7 +3,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, of, Subject } from 'rxjs';
 import { filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
-import { AdvertDataService, CategoryService } from '../../../../shared/services';
+import { AdvertDataService, AuthService, CategoryService } from '../../../../shared/services';
 import { Category } from '../../../../shared/models/dto/category.entity';
 
 @Component({
@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     currentCategory: Category;
     categoryTree$ = new BehaviorSubject<NzCascaderOption[]>([]);
     selectedCategoriesIds: string[] = [];
-
+    isAuth: boolean;
     searchPhrase = '';
 
     private destroy$ = new Subject();
@@ -27,7 +27,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         private advertDataService: AdvertDataService,
         private categoryService: CategoryService,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        public authService: AuthService
     ) {}
 
     ngOnInit(): void {
@@ -59,6 +60,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
             .subscribe(tree => {
                 this.categoryTree$.next(tree);
             });
+
+        this.authService.isLoggedIn().subscribe(bool => (this.isAuth = bool));
     }
 
     ngOnDestroy() {
