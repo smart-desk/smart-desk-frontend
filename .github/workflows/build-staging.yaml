@@ -1,7 +1,7 @@
 name: Build Staging
 on:
     push:
-        branches: [master]
+        branches: [feature/ci]
 
 jobs:
     build:
@@ -15,7 +15,7 @@ jobs:
             - name: Install Node.js
               uses: actions/setup-node@v1
               with:
-                  node-version: 10.x
+                  node-version: 14.x
 
             - name: Install Yarn
               run: npm install -g yarn
@@ -26,7 +26,10 @@ jobs:
             - name: Yarn build
               run: yarn build --configuration=staging
 
-            - uses: actions/upload-artifact@v2
+            - name: Connect to Server via SSH
+              uses: appleboy/ssh-action@master
               with:
-                  name: smart-desk-frontend-staging
-                  path: dist/
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USERNAME }}
+                  key: ${{ secrets.SSH_KEY }}
+                  script: whoami
