@@ -2,10 +2,10 @@
     <h1>{{ advert.title }}</h1>
 </ng-container>
 <nz-row [nzGutter]="16">
-    <nz-col nzFlex="auto">
+    <nz-col [nzSpan]="18">
         <ng-container #params></ng-container>
     </nz-col>
-    <nz-col nzFlex="300px">
+    <nz-col [nzSpan]="6">
         <div>
             <h2>Цена</h2>
             <ng-container #price></ng-container>
