@@ -1,12 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
 import { AdvertService } from '../../../../shared/services';
 import { ActivatedRoute } from '@angular/router';
 import { Advert } from '../../../../shared/models/dto/advert.entity';
-import { Section } from '../../../../shared/models/dto/section.entity';
+import { SectionType } from '../../../../shared/models/dto/section.entity';
 import { FieldEntity } from '../../../../shared/models/dto/field.entity';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
-import { AbstractFieldViewComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-view.component';
 
 @Component({
     selector: 'app-advert',
@@ -17,8 +16,17 @@ import { AbstractFieldViewComponent } from '../../../../shared/modules/dynamic-f
 export class AdvertComponent implements OnInit {
     advert: Advert;
 
-    @ViewChild('fields', { read: ViewContainerRef })
-    private fieldsFormContainerRef: ViewContainerRef;
+    @ViewChild('params', { read: ViewContainerRef })
+    private paramsContainerRef: ViewContainerRef;
+
+    @ViewChild('contacts', { read: ViewContainerRef })
+    private contactsContainerRef: ViewContainerRef;
+
+    @ViewChild('location', { read: ViewContainerRef })
+    private locationContainerRef: ViewContainerRef;
+
+    @ViewChild('price', { read: ViewContainerRef })
+    private priceContainerRef: ViewContainerRef;
 
     constructor(
         private advertService: AdvertService,
@@ -30,36 +38,57 @@ export class AdvertComponent implements OnInit {
     ngOnInit(): void {
         this.route.paramMap.pipe(switchMap(params => this.advertService.getAdvert(params.get('advert_id')))).subscribe(advert => {
             this.advert = advert;
-            this.populateFormWithInputs(advert.sections);
+
+            this.addParamsFields();
+            this.addContactsFields();
+            this.addPriceFields();
+            this.addLocationFields();
+
             this.cd.detectChanges();
         });
     }
 
-    private populateFormWithInputs(sections: Section[]): void {
-        sections.forEach(section => {
-            if (section.fields) {
-                section.fields.forEach(field => {
-                    this.resolveFieldComponent(field);
-                });
-            }
-        });
+    private addParamsFields(): void {
+        const section = this.advert.sections.find(s => s.type === SectionType.PARAMS);
+        if (section) {
+            this.populateContainerWithFields(this.paramsContainerRef, section.fields);
+        }
     }
 
-    private resolveFieldComponent(field: FieldEntity): ComponentRef<AbstractFieldViewComponent<any, any>> {
-        const service = this.dynamicFieldsService.getService(field.type);
-        if (!service) {
-            return;
+    private addPriceFields(): void {
+        const section = this.advert.sections.find(s => s.type === SectionType.PRICE);
+        if (section) {
+            this.populateContainerWithFields(this.priceContainerRef, section.fields);
         }
+    }
 
-        const resolver = service.getViewComponentResolver();
-        if (!resolver) {
-            return;
+    private addContactsFields(): void {
+        const section = this.advert.sections.find(s => s.type === SectionType.CONTACTS);
+        if (section) {
+            this.populateContainerWithFields(this.contactsContainerRef, section.fields);
         }
-        // todo think about reusability
-        const component = this.fieldsFormContainerRef.createComponent(resolver);
-        component.instance.field = field;
+    }
 
-        component.changeDetectorRef.detectChanges();
-        return component;
+    private addLocationFields(): void {
+        const section = this.advert.sections.find(s => s.type === SectionType.LOCATION);
+        if (section) {
+            this.populateContainerWithFields(this.locationContainerRef, section.fields);
+        }
+    }
+
+    private populateContainerWithFields(container: ViewContainerRef, fields: FieldEntity[]): void {
+        fields.forEach(field => {
+            const service = this.dynamicFieldsService.getService(field.type);
+            if (!service) {
+                return;
+            }
+            const resolver = service.getViewComponentResolver();
+            if (!resolver) {
+                return;
+            }
+            const component = container.createComponent(resolver);
+            component.instance.field = field;
+            component.changeDetectorRef.detectChanges();
+        });
     }
 }
