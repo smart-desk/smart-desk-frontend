@@ -12,19 +12,19 @@ jobs:
         steps:
             - uses: actions/checkout@v1
 
-            - name: Install Node.js
-              uses: actions/setup-node@v1
-              with:
-                  node-version: 14.x
-
-            - name: Install Yarn
-              run: npm install -g yarn
-
-            - name: Yarn install
-              run: yarn
-
-            - name: Yarn build
-              run: yarn build --configuration=staging
+            #            - name: Install Node.js
+            #              uses: actions/setup-node@v1
+            #              with:
+            #                  node-version: 14.x
+            #
+            #            - name: Install Yarn
+            #              run: npm install -g yarn
+            #
+            #            - name: Yarn install
+            #              run: yarn
+            #
+            #            - name: Yarn build
+            #              run: yarn build --configuration=staging
 
             - name: Connect to Server via SSH
               uses: appleboy/ssh-action@master
