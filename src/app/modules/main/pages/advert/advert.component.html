@@ -1,5 +1,22 @@
 <ng-container *ngIf="advert">
     <h1>{{ advert.title }}</h1>
 </ng-container>
-
-<ng-container #fields></ng-container>
+<nz-row [nzGutter]="16">
+    <nz-col [nzSpan]="18">
+        <ng-container #params></ng-container>
+    </nz-col>
+    <nz-col [nzSpan]="6">
+        <div>
+            <h2>Цена</h2>
+            <ng-container #price></ng-container>
+        </div>
+        <div>
+            <h2>Контакты</h2>
+            <ng-container #contacts></ng-container>
+        </div>
+        <div>
+            <h2>Местоположение</h2>
+            <ng-container #location></ng-container>
+        </div>
+    </nz-col>
+</nz-row>

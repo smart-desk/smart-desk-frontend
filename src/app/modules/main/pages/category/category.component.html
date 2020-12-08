@@ -4,13 +4,20 @@
 
 <h1 *ngIf="category$ | async as category">{{ category.name }}</h1>
 
-<div *ngIf="isLoaded && (!adverts || !adverts.length)">В этой категории еще нет объявлений</div>
-<app-adverts-list *ngIf="isLoaded" [adverts]="adverts"> </app-adverts-list>
-
-<app-pagination
-    class="pagination"
-    [pageIndex]="pageIndex"
-    [totalItems]="totalAdverts"
-    [pageSize]="pageSize"
-    (page)="changePage($event)"
-></app-pagination>
+<nz-row [nzGutter]="16">
+    <nz-col [nzSpan]="18">
+        <div *ngIf="isLoaded && (!adverts || !adverts.length)">В этой категории еще нет объявлений</div>
+        <app-adverts-list *ngIf="isLoaded" [adverts]="adverts"> </app-adverts-list>
+        <app-pagination
+            class="pagination"
+            *ngIf="totalAdverts > pageSize"
+            [pageIndex]="pageIndex"
+            [totalItems]="totalAdverts"
+            [pageSize]="pageSize"
+            (page)="changePage($event)"
+        ></app-pagination>
+    </nz-col>
+    <nz-col [nzSpan]="6">
+        <h2>Фильтры</h2>
+    </nz-col>
+</nz-row>
