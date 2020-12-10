@@ -1,4 +1,4 @@
-<a *ngIf="!user" (click)="openLoginModal()">Войти</a>
+<a *ngIf="!user" (click)="this.loginService.openLoginModal()">Войти</a>
 
 <p class="profile__name" nz-dropdown nzTrigger="click" *ngIf="user" [nzDropdownMenu]="profileMenu">
     <span>{{ user.firstName }} {{ user.lastName }}</span>

@@ -15,21 +15,44 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { AuthGuard } from './services/auth/auth.guard';
+import { LoginService } from './services/login/login.service';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { LoginComponent } from './components/login/login.component';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 /**
  * Import here all modules which are used on app side
  */
-const NZModules = [NzFormModule, NzRadioModule, NzMessageModule, NzInputModule, NzIconModule, NzButtonModule, NzPaginationModule];
+const NZModules = [
+    NzFormModule,
+    NzRadioModule,
+    NzMessageModule,
+    NzInputModule,
+    NzIconModule,
+    NzButtonModule,
+    NzPaginationModule,
+    NzSpinModule,
+];
 
 /**
  * Services from `./services` directory
  */
-const services = [ModelService, SectionService, FieldService, CategoryService, AdvertService, AuthService, AuthGuard];
+const services = [
+    ModelService,
+    SectionService,
+    FieldService,
+    CategoryService,
+    AdvertService,
+    AuthService,
+    AuthGuard,
+    LoginService,
+    NzModalService,
+];
 
 /**
  * Components from `./components` directory
  */
-const components = [SearchComponent, PaginationComponent];
+const components = [SearchComponent, PaginationComponent, LoginComponent];
 
 /**
  * Interceptors from `./interceptors` directory

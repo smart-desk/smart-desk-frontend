@@ -21,7 +21,7 @@
         <app-search [placeholder]="getSearchPlaceholder()" (searchChange)="search($event)"></app-search>
     </div>
     <div>
-        <button *ngIf="isAuth" routerLink="/adverts/create" nz-button nzType="primary" nzShape="round">
+        <button (click)="checkRight()" nz-button nzType="primary" nzShape="round">
             <i nz-icon nzType="plus"></i>
             <span>Разместить объявление</span>
         </button>

@@ -5,7 +5,7 @@ import { fromPromise } from 'rxjs/internal-compatibility';
 import { switchMap } from 'rxjs/operators';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { AuthService, UserService } from '../../../../shared/services';
+import { AuthService, UserService } from '../../services';
 
 @Component({
     selector: 'app-login',

@@ -5,6 +5,7 @@ import { filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
 import { AdvertDataService, AuthService, CategoryService } from '../../../../shared/services';
 import { Category } from '../../../../shared/models/dto/category.entity';
+import { LoginService } from '../../../../shared/services/login/login.service';
 
 @Component({
     selector: 'app-header',
@@ -28,7 +29,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         private categoryService: CategoryService,
         private router: Router,
         private route: ActivatedRoute,
-        public authService: AuthService
+        private authService: AuthService,
+        private loginService: LoginService
     ) {}
 
     ngOnInit(): void {
@@ -86,5 +88,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
             return 'Поиск по категории ' + this.currentCategory.name;
         }
         return 'Поиск по объявлениям';
+    }
+
+    checkRight() {
+        this.authService.isLoggedIn().subscribe(isAuth => {
+            if (isAuth) {
+                return this.router.navigate(['/adverts/create']);
+            }
+            return this.loginService.openLoginModal();
+        });
     }
 }

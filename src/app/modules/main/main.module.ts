@@ -30,7 +30,6 @@ import { NavigationHeaderComponent } from './components/navigation-header/naviga
 import { IndexComponent } from './pages/index/index.component';
 import { AdvertCardComponent } from './components/advert-card/advert-card.component';
 import { SharedModule } from '../../shared/shared.module';
-import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
 
 const NZModules = [
@@ -55,14 +54,7 @@ const NZModules = [
 
 const pages = [MainComponent, CategoryComponent, AdvertComponent, AdvertEditComponent, AdvertCreateComponent, IndexComponent];
 
-const components = [
-    HeaderComponent,
-    NavigationHeaderComponent,
-    AdvertCardComponent,
-    AdvertsListComponent,
-    ProfileComponent,
-    LoginComponent,
-];
+const components = [HeaderComponent, NavigationHeaderComponent, AdvertCardComponent, AdvertsListComponent, ProfileComponent];
 
 @NgModule({
     declarations: [...pages, ...components],
