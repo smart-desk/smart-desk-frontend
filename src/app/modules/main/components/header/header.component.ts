@@ -62,8 +62,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
             .subscribe(tree => {
                 this.categoryTree$.next(tree);
             });
-
-        this.authService.isLoggedIn().subscribe(bool => (this.isAuth = bool));
     }
 
     ngOnDestroy() {
