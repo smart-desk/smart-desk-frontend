@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AbstractFieldViewComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-view.component';
 import { PriceEntity } from '../dto/price.entity';
 import { PriceParamsDto } from '../dto/price-params.dto';
-import { getCurrencySignByCode, roundPrice } from '../helpers';
+import { getCurrencySymbolByCode, roundPrice } from '../helpers';
 
 @Component({
     selector: 'app-price-view',
@@ -14,7 +14,7 @@ export class PriceViewComponent extends AbstractFieldViewComponent<PriceEntity, 
     getCurrencySymbol(): string {
         const { params } = this.field;
         if (params && params.currency) {
-            return getCurrencySignByCode(params.currency);
+            return getCurrencySymbolByCode(params.currency);
         }
         return '';
     }

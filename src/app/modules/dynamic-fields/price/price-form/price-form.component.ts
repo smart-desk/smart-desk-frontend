@@ -3,7 +3,7 @@ import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-f
 import { FormControl, FormGroup } from '@angular/forms';
 import { PriceEntity } from '../dto/price.entity';
 import { PriceParamsDto } from '../dto/price-params.dto';
-import { getCurrencySignByCode } from '../helpers';
+import { getCurrencySymbolByCode } from '../helpers';
 
 @Component({
     selector: 'app-price',
@@ -24,7 +24,7 @@ export class PriceFormComponent extends AbstractFieldFormComponent<PriceEntity, 
     getCurrencySymbol(): string {
         const { params } = this.field;
         if (params && params.currency) {
-            return getCurrencySignByCode(params.currency);
+            return getCurrencySymbolByCode(params.currency);
         }
         return '';
     }

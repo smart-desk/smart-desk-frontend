@@ -1,5 +1,5 @@
 <nz-card nzHoverable [nzCover]="coverTemplate" [routerLink]="['/', advert.category_id, advert.id]">
-    <nz-card-meta [nzTitle]="advert?.title"></nz-card-meta>
+    <nz-card-meta [nzTitle]="getTitle()" [nzDescription]="getDescription()"></nz-card-meta>
 </nz-card>
 <ng-template #coverTemplate>
     <img alt="example" [src]="getThumbSrc() || 'assets/images/not-found.png'" />
