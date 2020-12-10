@@ -18,7 +18,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     currentCategory: Category;
     categoryTree$ = new BehaviorSubject<NzCascaderOption[]>([]);
     selectedCategoriesIds: string[] = [];
-    isAuth: boolean;
     searchPhrase = '';
 
     private destroy$ = new Subject();
