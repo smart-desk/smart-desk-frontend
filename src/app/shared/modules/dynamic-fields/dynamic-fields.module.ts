@@ -13,6 +13,8 @@ import { createDynamicFieldProvider } from './utils';
 import { DynamicFieldsMap } from './dynamic-fields.map';
 import { PhotoService } from '../../../modules/dynamic-fields/photo/photo.service';
 import { PhotoModule } from '../../../modules/dynamic-fields/photo/photo.module';
+import { PriceService } from '../../../modules/dynamic-fields/price/price.service';
+import { PriceModule } from '../../../modules/dynamic-fields/price/price.module';
 
 const providers = [
     createDynamicFieldProvider(FieldType.INPUT_TEXT, InputTextService),
@@ -20,6 +22,7 @@ const providers = [
     createDynamicFieldProvider(FieldType.TEXT, TextService),
     createDynamicFieldProvider(FieldType.TEXTAREA, TextareaService),
     createDynamicFieldProvider(FieldType.PHOTO, PhotoService),
+    createDynamicFieldProvider(FieldType.PRICE, PriceService),
 ];
 
 @NgModule({
@@ -31,6 +34,6 @@ const providers = [
         },
         ...providers,
     ],
-    imports: [CommonModule, InputTextModule, TextareaModule, RadioModule, TextModule, PhotoModule],
+    imports: [CommonModule, InputTextModule, TextareaModule, RadioModule, TextModule, PhotoModule, PriceModule],
 })
 export class DynamicFieldsModule {}
