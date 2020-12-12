@@ -40,12 +40,9 @@ export class PriceParamsComponent extends AbstractFieldParamsComponent implement
             ...this.form.getRawValue(),
         };
 
-        let request: Observable<FieldEntity>;
-        if (this.field.id) {
-            request = this.fieldService.updateField(this.field.id, this.field);
-        } else {
-            request = this.fieldService.createField(this.field);
-        }
+        const request = this.field.id
+            ? this.fieldService.updateField(this.field.id, this.field)
+            : this.fieldService.createField(this.field);
 
         request.subscribe(res => {
             this.state = OperationState.SUCCESS;
