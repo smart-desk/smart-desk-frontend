@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AbstractFieldViewComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-view.component';
 import { PriceEntity } from '../dto/price.entity';
 import { PriceParamsDto } from '../dto/price-params.dto';
@@ -10,20 +10,17 @@ import { getCurrencySymbolByCode, roundPrice } from '../helpers';
     styleUrls: ['./price-view.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PriceViewComponent extends AbstractFieldViewComponent<PriceEntity, PriceParamsDto> {
-    getCurrencySymbol(): string {
-        const { params } = this.field;
-        if (params && params.currency) {
-            return getCurrencySymbolByCode(params.currency);
-        }
-        return '';
-    }
+export class PriceViewComponent extends AbstractFieldViewComponent<PriceEntity, PriceParamsDto> implements OnInit {
+    currencySymbol = '';
+    price = '0';
 
-    getPrice(): string {
-        const { data } = this.field;
-        if (data && data.value) {
-            return roundPrice(data.value);
+    ngOnInit() {
+        const { params, data } = this.field;
+        if (params && params.currency) {
+            this.currencySymbol = getCurrencySymbolByCode(params.currency);
         }
-        return '0';
+        if (data && data.value) {
+            this.price = roundPrice(data.value);
+        }
     }
 }

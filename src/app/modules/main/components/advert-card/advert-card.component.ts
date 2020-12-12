@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Advert } from '../../../../shared/models/dto/advert.entity';
 import { SectionType } from '../../../../shared/models/dto/section.entity';
 import { FieldType } from '../../../../shared/models/dto/field.entity';
@@ -13,10 +13,19 @@ import { PriceParamsDto } from '../../../dynamic-fields/price/dto/price-params.d
     styleUrls: ['./advert-card.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdvertCardComponent {
+export class AdvertCardComponent implements OnInit {
     @Input() advert: Advert;
+    title = '';
+    description = '';
+    thumb = '';
 
-    getThumbSrc(): string {
+    ngOnInit() {
+        this.title = this.getTitle();
+        this.description = this.getDescription();
+        this.thumb = this.getThumbSrc();
+    }
+
+    private getThumbSrc(): string {
         const section = this.advert.sections.find(s => s.type === SectionType.PARAMS);
         if (!section || !section.fields.length) {
             return;
@@ -28,11 +37,11 @@ export class AdvertCardComponent {
         }
     }
 
-    getTitle(): string {
+    private getTitle(): string {
         return this.getPrice() ? this.getPrice() : this.advert.title;
     }
 
-    getDescription(): string {
+    private getDescription(): string {
         return this.getPrice() ? this.advert.title : '';
     }
 
