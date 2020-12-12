@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { PriceEntity } from '../dto/price.entity';
 import { PriceParamsDto } from '../dto/price-params.dto';
 import { getCurrencySymbolByCode } from '../helpers';
@@ -13,20 +13,19 @@ import { getCurrencySymbolByCode } from '../helpers';
 })
 export class PriceFormComponent extends AbstractFieldFormComponent<PriceEntity, PriceParamsDto> implements OnInit {
     form: FormGroup;
+    currencySymbol = '';
 
-    ngOnInit(): void {
-        const data = this.field.data;
-        this.form = new FormGroup({
-            value: new FormControl(data && data.value),
-        });
+    constructor(private fb: FormBuilder) {
+        super();
     }
 
-    getCurrencySymbol(): string {
-        const { params } = this.field;
+    ngOnInit(): void {
+        const { data, params } = this.field;
+        this.form = this.fb.group({ value: [data && data.value] });
+
         if (params && params.currency) {
-            return getCurrencySymbolByCode(params.currency);
+            this.currencySymbol = getCurrencySymbolByCode(params.currency);
         }
-        return '';
     }
 
     getFieldData(): PriceEntity {

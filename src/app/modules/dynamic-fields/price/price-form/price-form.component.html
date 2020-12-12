@@ -6,9 +6,7 @@
                 <nz-input-group [nzAddOnAfter]="currencySymbol">
                     <input nz-input formControlName="value" name="currency" placeholder="Введите цену" type="number" min="0" step="any" />
                 </nz-input-group>
-                <ng-template #currencySymbol>
-                    {{ getCurrencySymbol() }}
-                </ng-template>
+                <ng-template #currencySymbol>{{ currencySymbol }}</ng-template>
             </nz-form-control>
         </nz-form-item>
     </form>
