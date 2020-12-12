@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Output, EventEmitter, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FieldEntity, FieldType } from '../../../../shared/models/dto/field.entity';
 import { SectionType } from '../../../../shared/models/dto/section.entity';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
@@ -23,9 +23,9 @@ export class AddFieldComponent {
 
     sectionData = Object.values(SectionType);
     fieldData = {
-        [SectionType.PARAMS]: Object.values(FieldType),
+        [SectionType.PARAMS]: [FieldType.PHOTO, FieldType.INPUT_TEXT, FieldType.RADIO, FieldType.TEXTAREA, FieldType.TEXT],
         [SectionType.LOCATION]: [],
-        [SectionType.PRICE]: [],
+        [SectionType.PRICE]: [FieldType.PRICE],
         [SectionType.CONTACTS]: [],
     };
 

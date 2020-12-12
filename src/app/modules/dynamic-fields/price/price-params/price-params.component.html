@@ -1,0 +1,11 @@
+<form nz-form nzLayout="vertical" [formGroup]="form">
+    <nz-form-item>
+        <nz-form-label>Currency</nz-form-label>
+        <nz-select formControlName="currency">
+            <nz-option *ngFor="let c of currencies" [nzValue]="c.code" [nzLabel]="c.symbol"></nz-option>
+        </nz-select>
+    </nz-form-item>
+    <div class="buttons">
+        <button nz-button nzType="primary" (click)="save()" [nzLoading]="state === operationState.LOADING">Save</button>
+    </div>
+</form>

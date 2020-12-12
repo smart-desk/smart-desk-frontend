@@ -4,6 +4,7 @@ export enum FieldType {
     TEXT = 'text',
     RADIO = 'radio',
     PHOTO = 'photo',
+    PRICE = 'price',
 }
 
 export class FieldEntity {
