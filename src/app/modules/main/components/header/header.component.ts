@@ -5,6 +5,8 @@ import { filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
 import { AdvertDataService, CategoryService } from '../../../../shared/services';
 import { Category } from '../../../../shared/models/dto/category.entity';
+import { LoginService } from '../../../../shared/services/login/login.service';
+import { User } from '../../../../shared/models/dto/user.entity';
 
 @Component({
     selector: 'app-header',
@@ -17,17 +19,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
     currentCategory: Category;
     categoryTree$ = new BehaviorSubject<NzCascaderOption[]>([]);
     selectedCategoriesIds: string[] = [];
-
     searchPhrase = '';
-
     private destroy$ = new Subject();
+    private user: User;
 
     constructor(
         private cd: ChangeDetectorRef,
         private advertDataService: AdvertDataService,
         private categoryService: CategoryService,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private loginService: LoginService
     ) {}
 
     ngOnInit(): void {
@@ -59,6 +61,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
             .subscribe(tree => {
                 this.categoryTree$.next(tree);
             });
+
+        this.loginService.login$.subscribe(user => (this.user = user));
     }
 
     ngOnDestroy() {
@@ -83,5 +87,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
             return 'Поиск по категории ' + this.currentCategory.name;
         }
         return 'Поиск по объявлениям';
+    }
+
+    navigateToAdvertCreate(): void {
+        this.user ? this.router.navigate(['/adverts/create']) : this.loginService.openLoginModal();
     }
 }

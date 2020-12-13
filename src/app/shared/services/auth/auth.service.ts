@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { UserService } from '../user/user.service'; // direct import to avoid Circular dependency issue
+import { UserService } from '../user/user.service';
 
 export interface LoginResponse {
     access_token: string;
@@ -15,10 +15,5 @@ export class AuthService {
         return this.http.post<any>(`/auth/${type}/login`, {
             token: googleIdToken,
         });
-    }
-
-    logout(): void {
-        localStorage.removeItem('token');
-        this.userService.clearCurrentUser();
     }
 }

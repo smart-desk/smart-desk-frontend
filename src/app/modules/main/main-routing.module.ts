@@ -6,6 +6,7 @@ import { AdvertComponent } from './pages/advert/advert.component';
 import { AdvertEditComponent } from './pages/advert-edit/advert-edit.component';
 import { AdvertCreateComponent } from './pages/advert-create/advert-create.component';
 import { IndexComponent } from './pages/index/index.component';
+import { AuthGuard } from '../../shared/services/auth/auth.guard';
 
 const routes: Routes = [
     {
@@ -19,10 +20,12 @@ const routes: Routes = [
             {
                 path: 'adverts/create',
                 component: AdvertCreateComponent,
+                canActivate: [AuthGuard],
             },
             {
                 path: 'adverts/:advert_id/edit',
                 component: AdvertEditComponent,
+                canActivate: [AuthGuard],
             },
             {
                 path: ':category_id',

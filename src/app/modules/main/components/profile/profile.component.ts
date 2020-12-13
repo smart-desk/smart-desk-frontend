@@ -1,10 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { of } from 'rxjs';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { LoginComponent } from '../login/login.component';
-import { AuthService, UserService } from '../../../../shared/services';
-import { catchError, switchMap } from 'rxjs/operators';
+import { UserService } from '../../../../shared/services';
 import { User } from '../../../../shared/models/dto/user.entity';
+import { LoginService } from '../../../../shared/services/login/login.service';
 
 @Component({
     selector: 'app-profile',
@@ -19,39 +17,25 @@ export class ProfileComponent implements OnInit {
         private modalService: NzModalService,
         private userService: UserService,
         private cd: ChangeDetectorRef,
-        private authService: AuthService
+        private loginService: LoginService
     ) {}
 
     ngOnInit(): void {
-        this.userService
-            .getCurrentUser()
-            .pipe(catchError(() => of(null)))
-            .subscribe(user => {
-                this.user = user;
-                this.cd.detectChanges();
-            });
+        this.loginService.login$.subscribe(user => {
+            this.user = user;
+            this.cd.detectChanges();
+        });
     }
 
     getAvatarLetters(): string {
         return (this.user.firstName[0] || '') + (this.user.lastName[0] || '');
     }
 
-    openLoginModal(): void {
-        const modal = this.modalService.create({
-            nzTitle: 'Войти на сайт',
-            nzContent: LoginComponent,
-            nzFooter: null,
-        });
-
-        modal.afterClose.pipe(switchMap(() => this.userService.getCurrentUser())).subscribe(user => {
-            this.user = user;
-            this.cd.detectChanges();
-        });
+    logout(): void {
+        this.loginService.logout();
     }
 
-    logout(): void {
-        this.user = null;
-        this.authService.logout();
-        this.cd.detectChanges();
+    openLoginModal(): void {
+        this.loginService.openLoginModal();
     }
 }

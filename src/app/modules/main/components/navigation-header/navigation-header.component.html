@@ -1,8 +1,11 @@
 <nz-header>
     <div class="container">
         <nz-row [nzJustify]="'end'">
-            <nz-col><a routerLink="/admin" nz-button nzType="link">Управление сайтом</a></nz-col>
+            <nz-col *ngIf="user">
+                <a routerLink="/admin" nz-button nzType="link">Управление сайтом</a>
+            </nz-col>
             <nz-col><app-profile></app-profile></nz-col>
         </nz-row>
     </div>
 </nz-header>
+-
