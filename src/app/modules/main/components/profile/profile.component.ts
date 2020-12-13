@@ -1,8 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { of } from 'rxjs';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { AuthService, UserService } from '../../../../shared/services';
-import { catchError } from 'rxjs/operators';
+import { UserService } from '../../../../shared/services';
 import { User } from '../../../../shared/models/dto/user.entity';
 import { LoginService } from '../../../../shared/services/login/login.service';
 
@@ -19,19 +17,10 @@ export class ProfileComponent implements OnInit {
         private modalService: NzModalService,
         private userService: UserService,
         private cd: ChangeDetectorRef,
-        private authService: AuthService,
-        public loginService: LoginService
+        private loginService: LoginService
     ) {}
 
     ngOnInit(): void {
-        this.userService
-            .getCurrentUser()
-            .pipe(catchError(() => of(null)))
-            .subscribe(user => {
-                this.user = user;
-                this.cd.detectChanges();
-            });
-
         this.loginService.login$.subscribe(user => {
             this.user = user;
             this.cd.detectChanges();
@@ -43,8 +32,10 @@ export class ProfileComponent implements OnInit {
     }
 
     logout(): void {
-        this.user = null;
-        this.authService.logout();
-        this.cd.detectChanges();
+        this.loginService.logout();
+    }
+
+    openLoginModal(): void {
+        this.loginService.openLoginModal();
     }
 }

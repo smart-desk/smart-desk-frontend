@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { User } from '../../models/dto/user.entity';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { LoginComponent } from '../../components/login/login.component';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { UserService } from '..';
 import { NzModalService } from 'ng-zorro-antd/modal';
 
@@ -10,16 +10,23 @@ import { NzModalService } from 'ng-zorro-antd/modal';
     providedIn: 'root',
 })
 export class LoginService {
-    private login = new BehaviorSubject<User>(undefined);
+    private login = new Subject<User>();
+    constructor(private userService: UserService, private modalService: NzModalService) {
+        this.userService.getCurrentUser().subscribe(user => this.login.next(user));
+    }
 
-    constructor(private userService: UserService, private modalService: NzModalService) {}
-
-    openLoginModal() {
+    openLoginModal(): void {
         this.openModal().subscribe(user => this.login.next(user));
     }
 
-    get login$() {
+    get login$(): Observable<User> {
         return this.login.asObservable();
+    }
+
+    logout(): void {
+        localStorage.removeItem('token');
+        this.userService.clearCurrentUser();
+        this.login.next(undefined);
     }
 
     openModal(): Observable<User> {
