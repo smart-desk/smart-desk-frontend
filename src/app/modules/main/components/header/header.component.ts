@@ -3,9 +3,10 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, of, Subject } from 'rxjs';
 import { filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
-import { AdvertDataService, AuthService, CategoryService } from '../../../../shared/services';
+import { AdvertDataService, CategoryService } from '../../../../shared/services';
 import { Category } from '../../../../shared/models/dto/category.entity';
 import { LoginService } from '../../../../shared/services/login/login.service';
+import { User } from '../../../../shared/models/dto/user.entity';
 
 @Component({
     selector: 'app-header',
@@ -19,8 +20,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     categoryTree$ = new BehaviorSubject<NzCascaderOption[]>([]);
     selectedCategoriesIds: string[] = [];
     searchPhrase = '';
-
     private destroy$ = new Subject();
+    private user: User;
 
     constructor(
         private cd: ChangeDetectorRef,
@@ -28,7 +29,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         private categoryService: CategoryService,
         private router: Router,
         private route: ActivatedRoute,
-        private authService: AuthService,
         private loginService: LoginService
     ) {}
 
@@ -61,6 +61,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
             .subscribe(tree => {
                 this.categoryTree$.next(tree);
             });
+
+        this.loginService.login$.subscribe(user => (this.user = user));
     }
 
     ngOnDestroy() {
@@ -87,12 +89,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         return 'Поиск по объявлениям';
     }
 
-    checkRight() {
-        this.authService.isLoggedIn().subscribe(isAuth => {
-            if (isAuth) {
-                return this.router.navigate(['/adverts/create']);
-            }
-            return this.loginService.openLoginModal();
-        });
+    navigateToAdvertCreate(): void {
+        this.user ? this.router.navigate(['/adverts/create']) : this.loginService.openLoginModal();
     }
 }

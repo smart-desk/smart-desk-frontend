@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit {
                 this.cd.detectChanges();
             });
 
-        this.loginService.getLogin$().subscribe(user => {
+        this.loginService.login$.subscribe(user => {
             this.user = user;
             this.cd.detectChanges();
         });

@@ -22,11 +22,4 @@ export class AuthService {
         localStorage.removeItem('token');
         this.userService.clearCurrentUser();
     }
-
-    isLoggedIn(): Observable<boolean> {
-        return this.userService.getCurrentUser().pipe(
-            map(user => !!user),
-            catchError(() => of(false))
-        );
-    }
 }
