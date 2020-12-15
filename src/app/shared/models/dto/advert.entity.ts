@@ -7,6 +7,7 @@ export class Advert {
     // tslint:disable-next-line:variable-name
     model_id: string;
     title: string;
+    userId: string;
     createdAt: Date;
     updatedAt: Date;
     sections: Section[];

@@ -1,0 +1,9 @@
+@import 'src/assets/styles/variables';
+
+.user {
+    display: inline-grid;
+    align-items: start;
+    justify-items: start;
+    gap: $base-unit;
+    grid-auto-flow: column;
+}

@@ -9,9 +9,9 @@
         <div>
             <ng-container #price></ng-container>
         </div>
-        <div>
-            <h2>Контакты</h2>
-            <ng-container #contacts></ng-container>
+        <div class="user" *ngIf="user">
+            <nz-avatar nzIcon="user" nzSize="large"></nz-avatar>
+            <h3>{{ user?.firstName }} {{ user?.lastName }}</h3>
         </div>
         <div>
             <h2>Местоположение</h2>
