@@ -3,10 +3,10 @@
         <nz-form-item>
             <nz-form-label>Цена</nz-form-label>
             <nz-form-control class="price__input-group">
-                <nz-input-group [nzAddOnAfter]="currencySymbol">
+                <nz-input-group [nzAddOnAfter]="currencySymbolTemp">
                     <input nz-input formControlName="value" name="currency" placeholder="Введите цену" type="number" min="0" step="any" />
                 </nz-input-group>
-                <ng-template #currencySymbol>{{ currencySymbol }}</ng-template>
+                <ng-template #currencySymbolTemp>{{ currencySymbol }}</ng-template>
             </nz-form-control>
         </nz-form-item>
     </form>

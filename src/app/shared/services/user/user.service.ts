@@ -22,4 +22,8 @@ export class UserService {
     clearCurrentUser(): void {
         this.user = null;
     }
+
+    getUser(id: string): Observable<User> {
+        return this.http.get<any>(`/users/${id}`);
+    }
 }

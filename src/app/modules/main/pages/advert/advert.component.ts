@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
-import { switchMap } from 'rxjs/operators';
-import { AdvertService } from '../../../../shared/services';
+import { of } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
+import { AdvertService, UserService } from '../../../../shared/services';
 import { ActivatedRoute } from '@angular/router';
 import { Advert } from '../../../../shared/models/dto/advert.entity';
 import { SectionType } from '../../../../shared/models/dto/section.entity';
 import { FieldEntity } from '../../../../shared/models/dto/field.entity';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
+import { User } from '../../../../shared/models/dto/user.entity';
 
 @Component({
     selector: 'app-advert',
@@ -15,12 +17,10 @@ import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/
 })
 export class AdvertComponent implements OnInit {
     advert: Advert;
+    user: User;
 
     @ViewChild('params', { read: ViewContainerRef })
     private paramsContainerRef: ViewContainerRef;
-
-    @ViewChild('contacts', { read: ViewContainerRef })
-    private contactsContainerRef: ViewContainerRef;
 
     @ViewChild('location', { read: ViewContainerRef })
     private locationContainerRef: ViewContainerRef;
@@ -32,20 +32,28 @@ export class AdvertComponent implements OnInit {
         private advertService: AdvertService,
         private route: ActivatedRoute,
         private cd: ChangeDetectorRef,
-        private dynamicFieldsService: DynamicFieldsService
+        private dynamicFieldsService: DynamicFieldsService,
+        private userService: UserService
     ) {}
 
     ngOnInit(): void {
-        this.route.paramMap.pipe(switchMap(params => this.advertService.getAdvert(params.get('advert_id')))).subscribe(advert => {
-            this.advert = advert;
+        this.route.paramMap
+            .pipe(
+                switchMap(params => this.advertService.getAdvert(params.get('advert_id'))),
+                tap(advert => (this.advert = advert)),
+                switchMap(advert => {
+                    return advert.userId ? this.userService.getUser(advert.userId) : of(null);
+                })
+            )
+            .subscribe(user => {
+                this.user = user;
 
-            this.addParamsFields();
-            this.addContactsFields();
-            this.addPriceFields();
-            this.addLocationFields();
+                this.addParamsFields();
+                this.addPriceFields();
+                this.addLocationFields();
 
-            this.cd.detectChanges();
-        });
+                this.cd.detectChanges();
+            });
     }
 
     private addParamsFields(): void {
@@ -59,13 +67,6 @@ export class AdvertComponent implements OnInit {
         const section = this.advert.sections.find(s => s.type === SectionType.PRICE);
         if (section) {
             this.populateContainerWithFields(this.priceContainerRef, section.fields);
-        }
-    }
-
-    private addContactsFields(): void {
-        const section = this.advert.sections.find(s => s.type === SectionType.CONTACTS);
-        if (section) {
-            this.populateContainerWithFields(this.contactsContainerRef, section.fields);
         }
     }
 
