@@ -37,7 +37,7 @@ export class CategoryService {
      * Update category by id
      */
     updateCategory(id: string, category: UpdateCategoryDto): Observable<Category> {
-        return this.http.put<Category>(`/categories/${id}`, category);
+        return this.http.patch<Category>(`/categories/${id}`, category);
     }
 
     /**
