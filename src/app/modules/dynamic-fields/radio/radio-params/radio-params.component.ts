@@ -29,6 +29,7 @@ export class RadioParamsComponent extends AbstractFieldParamsComponent implement
         this.form = this.fb.group({
             title: [this.field.title || ''],
             radios: this.fb.array(radios),
+            filterable: [params && params.filterable || false]
         });
     }
 
@@ -49,7 +50,11 @@ export class RadioParamsComponent extends AbstractFieldParamsComponent implement
         this.field = {
             ...(this.field || {}),
             title,
-            params: { radios },
+            params: {
+                ...((this.field.params as object) || {}),
+                ...this.form.getRawValue(),
+                radios
+            },
         } as FieldEntity;
 
         let request: Observable<FieldEntity>;
