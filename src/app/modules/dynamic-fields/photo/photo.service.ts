@@ -1,8 +1,6 @@
 import { ComponentFactory, ComponentFactoryResolver, Injectable } from '@angular/core';
 import { AbstractFieldService } from '../../../shared/modules/dynamic-fields/abstract-field.service';
-import { AbstractFieldFormComponent } from '../../../shared/modules/dynamic-fields/abstract-field-form.component';
 import { PhotoFormComponent } from './photo-form/photo-form.component';
-import { AbstractFieldParamsComponent } from '../../../shared/modules/dynamic-fields/abstract-field-params.component';
 import { PhotoParamsComponent } from './photo-params/photo-params.component';
 import { PhotoViewComponent } from './photo-view/photo-view.component';
 
@@ -10,16 +8,20 @@ import { PhotoViewComponent } from './photo-view/photo-view.component';
 export class PhotoService implements AbstractFieldService {
     constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
-    getFormComponentResolver(): ComponentFactory<AbstractFieldFormComponent<any, any>> {
+    getFormComponentResolver(): ComponentFactory<PhotoFormComponent> {
         return this.componentFactoryResolver.resolveComponentFactory(PhotoFormComponent);
     }
 
-    getParamsComponentResolver(): ComponentFactory<AbstractFieldParamsComponent> {
+    getParamsComponentResolver(): ComponentFactory<PhotoParamsComponent> {
         return this.componentFactoryResolver.resolveComponentFactory(PhotoParamsComponent);
     }
 
     getViewComponentResolver(): ComponentFactory<PhotoViewComponent> {
         return this.componentFactoryResolver.resolveComponentFactory(PhotoViewComponent);
+    }
+
+    getFilterComponentResolver(): ComponentFactory<any> {  // todo set generic
+        return null;
     }
 
     getFieldName(): string {

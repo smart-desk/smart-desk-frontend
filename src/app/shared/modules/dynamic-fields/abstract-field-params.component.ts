@@ -6,6 +6,7 @@ import { OperationState } from '../../models/operation-state.enum';
 @Directive()
 // tslint:disable-next-line:directive-class-suffix
 export abstract class AbstractFieldParamsComponent implements OnDestroy {
+    // todo it should be generic
     @Input() field: FieldEntity;
 
     protected save$ = new Subject<OperationState>();

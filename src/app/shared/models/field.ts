@@ -1,6 +1,6 @@
 import { FieldEntity } from './dto/field.entity';
 
-export class Field<T, K> extends FieldEntity {
-    data: T;
-    params: K;
+export class Field<TData, TParams> extends FieldEntity {
+    data: TData;
+    params: TParams;
 }

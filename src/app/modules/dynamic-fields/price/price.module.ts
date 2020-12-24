@@ -13,6 +13,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { PriceViewComponent } from './price-view/price-view.component';
+import { NzCheckboxModule } from "ng-zorro-antd/checkbox";
+import { PriceFilterComponent } from './price-filter/price-filter.component';
 
 @NgModule({
     imports: [
@@ -27,9 +29,9 @@ import { PriceViewComponent } from './price-view/price-view.component';
         NzIconModule,
         NzGridModule,
         NzSelectModule,
+        NzCheckboxModule,
     ],
     providers: [PriceService],
-    declarations: [PriceFormComponent, PriceParamsComponent, PriceViewComponent],
-    exports: [PriceFormComponent, PriceParamsComponent, PriceViewComponent],
+    declarations: [PriceFormComponent, PriceParamsComponent, PriceViewComponent, PriceFilterComponent],
 })
 export class PriceModule {}

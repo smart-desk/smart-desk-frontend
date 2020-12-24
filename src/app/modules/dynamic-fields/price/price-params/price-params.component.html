@@ -5,6 +5,11 @@
             <nz-option *ngFor="let c of currencies" [nzValue]="c.code" [nzLabel]="c.symbol"></nz-option>
         </nz-select>
     </nz-form-item>
+
+    <nz-form-item>
+        <label nz-checkbox formControlName="filterable">Фильтровать по полю</label>
+    </nz-form-item>
+
     <div class="buttons">
         <button nz-button nzType="primary" (click)="save()" [nzLoading]="state === operationState.LOADING">Save</button>
     </div>
