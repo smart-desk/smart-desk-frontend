@@ -6,6 +6,7 @@ import { AbstractFieldViewComponent } from '../../../shared/modules/dynamic-fiel
 import { RadioEntity } from '../../../shared/models/dto/field-data/radio.entity';
 import { RadioParamsDto } from '../../../shared/models/dto/field-data/radio-params.dto';
 import { RadioViewComponent } from './radio-view/radio-view.component';
+import { RadioFilterComponent } from "./radio-filter/radio-filter.component";
 
 @Injectable()
 export class RadioService implements AbstractFieldService {
@@ -23,8 +24,8 @@ export class RadioService implements AbstractFieldService {
         return this.componentFactoryResolver.resolveComponentFactory(RadioViewComponent);
     }
 
-    getFilterComponentResolver(): ComponentFactory<any> { // todo set generic
-        return null;
+    getFilterComponentResolver(): ComponentFactory<RadioFilterComponent> {
+        return this.componentFactoryResolver.resolveComponentFactory(RadioFilterComponent);
     }
 
     getFieldName(): string {

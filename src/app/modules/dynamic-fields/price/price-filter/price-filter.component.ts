@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AbstractFieldFilterComponent, FilterParams } from '../../../../shared/modules/dynamic-fields/abstract-field-filter.component';
 import { PriceParamsDto } from '../dto/price-params.dto';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class PriceFilterComponent extends AbstractFieldFilterComponent<PriceParamsDto> {
     form: FormGroup;
 
-    constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+    constructor(private fb: FormBuilder) {
         super();
     }
 
