@@ -32,7 +32,7 @@ export class AdvertCardComponent implements OnInit {
         }
 
         const photoField = section.fields.find(f => f.type === FieldType.PHOTO);
-        if (photoField) {
+        if (photoField && photoField.data && (photoField.data as PhotoEntity).value) {
             return (photoField.data as PhotoEntity).value[0];
         }
     }
