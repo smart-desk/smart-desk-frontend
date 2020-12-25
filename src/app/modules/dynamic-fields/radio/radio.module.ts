@@ -13,6 +13,8 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { RadioViewComponent } from './radio-view/radio-view.component';
+import { NzCheckboxModule } from "ng-zorro-antd/checkbox";
+import { RadioFilterComponent } from './radio-filter/radio-filter.component';
 
 @NgModule({
     imports: [
@@ -27,9 +29,9 @@ import { RadioViewComponent } from './radio-view/radio-view.component';
         ReactiveFormsModule,
         NzRadioModule,
         NzDividerModule,
+        NzCheckboxModule,
     ],
     providers: [RadioService],
-    declarations: [RadioFormComponent, RadioParamsComponent, RadioViewComponent],
-    exports: [RadioFormComponent, RadioParamsComponent],
+    declarations: [RadioFormComponent, RadioParamsComponent, RadioViewComponent, RadioFilterComponent],
 })
 export class RadioModule {}

@@ -1,8 +1,6 @@
 import { ComponentFactory, ComponentFactoryResolver, Injectable } from '@angular/core';
 import { AbstractFieldService } from '../../../shared/modules/dynamic-fields/abstract-field.service';
-import { AbstractFieldFormComponent } from '../../../shared/modules/dynamic-fields/abstract-field-form.component';
 import { TextareaFormComponent } from './textarea-form/textarea-form.component';
-import { AbstractFieldParamsComponent } from '../../../shared/modules/dynamic-fields/abstract-field-params.component';
 import { TextareaParamsComponent } from './textarea-params/textarea-params.component';
 import { TextareaViewComponent } from './textarea-view/textarea-view.component';
 
@@ -10,16 +8,20 @@ import { TextareaViewComponent } from './textarea-view/textarea-view.component';
 export class TextareaService implements AbstractFieldService {
     constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
-    getFormComponentResolver(): ComponentFactory<AbstractFieldFormComponent<any, any>> {
+    getFormComponentResolver(): ComponentFactory<TextareaFormComponent> {
         return this.componentFactoryResolver.resolveComponentFactory(TextareaFormComponent);
     }
 
-    getParamsComponentResolver(): ComponentFactory<AbstractFieldParamsComponent> {
+    getParamsComponentResolver(): ComponentFactory<TextareaParamsComponent> {
         return this.componentFactoryResolver.resolveComponentFactory(TextareaParamsComponent);
     }
 
-    getViewComponentResolver(): ComponentFactory<any> {
+    getViewComponentResolver(): ComponentFactory<TextareaViewComponent> {
         return this.componentFactoryResolver.resolveComponentFactory(TextareaViewComponent);
+    }
+
+    getFilterComponentResolver(): ComponentFactory<any> {  // todo set generic
+        return null;
     }
 
     getFieldName(): string {

@@ -2,12 +2,12 @@
     <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
 </div>
 
-<h1 *ngIf="category$ | async as category">{{ category.name }}</h1>
+<h1 *ngIf="category">{{ category.name }}</h1>
 
 <nz-row [nzGutter]="16">
     <nz-col [nzSpan]="18">
         <div *ngIf="isLoaded && (!adverts || !adverts.length)">В этой категории еще нет объявлений</div>
-        <app-adverts-list *ngIf="isLoaded" [adverts]="adverts"> </app-adverts-list>
+        <app-adverts-list *ngIf="isLoaded" [adverts]="adverts"></app-adverts-list>
         <app-pagination
             class="pagination"
             *ngIf="totalAdverts > pageSize"
@@ -18,6 +18,6 @@
         ></app-pagination>
     </nz-col>
     <nz-col [nzSpan]="6">
-        <h2>Фильтры</h2>
+        <app-filters *ngIf="model" [model]="model"></app-filters>
     </nz-col>
 </nz-row>

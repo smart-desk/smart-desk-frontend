@@ -1,28 +1,31 @@
 import { ComponentFactory, ComponentFactoryResolver, Injectable } from '@angular/core';
 import { AbstractFieldService } from '../../../shared/modules/dynamic-fields/abstract-field.service';
-import { AbstractFieldFormComponent } from '../../../shared/modules/dynamic-fields/abstract-field-form.component';
 import { RadioFormComponent } from './radio-form/radio-form.component';
-import { AbstractFieldParamsComponent } from '../../../shared/modules/dynamic-fields/abstract-field-params.component';
 import { RadioParamsComponent } from './radio-params/radio-params.component';
 import { AbstractFieldViewComponent } from '../../../shared/modules/dynamic-fields/abstract-field-view.component';
 import { RadioEntity } from '../../../shared/models/dto/field-data/radio.entity';
 import { RadioParamsDto } from '../../../shared/models/dto/field-data/radio-params.dto';
 import { RadioViewComponent } from './radio-view/radio-view.component';
+import { RadioFilterComponent } from "./radio-filter/radio-filter.component";
 
 @Injectable()
 export class RadioService implements AbstractFieldService {
     constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
-    getFormComponentResolver(): ComponentFactory<AbstractFieldFormComponent<RadioEntity, RadioParamsDto>> {
+    getFormComponentResolver(): ComponentFactory<RadioFormComponent> {
         return this.componentFactoryResolver.resolveComponentFactory(RadioFormComponent);
     }
 
-    getParamsComponentResolver(): ComponentFactory<AbstractFieldParamsComponent> {
+    getParamsComponentResolver(): ComponentFactory<RadioParamsComponent> {
         return this.componentFactoryResolver.resolveComponentFactory(RadioParamsComponent);
     }
 
     getViewComponentResolver(): ComponentFactory<AbstractFieldViewComponent<RadioEntity, RadioParamsDto>> {
         return this.componentFactoryResolver.resolveComponentFactory(RadioViewComponent);
+    }
+
+    getFilterComponentResolver(): ComponentFactory<RadioFilterComponent> {
+        return this.componentFactoryResolver.resolveComponentFactory(RadioFilterComponent);
     }
 
     getFieldName(): string {

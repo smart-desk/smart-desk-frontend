@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { AdvertDataService, CategoryService } from '../../../../shared/services';
+import { AdvertDataService, CategoryService, ModelService } from '../../../../shared/services';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { AdvertsGetResponseDto } from '../../../../shared/models/dto/advert.dto';
 import { Category } from '../../../../shared/models/dto/category.entity';
 import { Advert } from '../../../../shared/models/dto/advert.entity';
+import { Model } from "../../../../shared/models/dto/model.entity";
 
 @Component({
     selector: 'app-category',
@@ -16,25 +16,35 @@ import { Advert } from '../../../../shared/models/dto/advert.entity';
 })
 export class CategoryComponent implements OnInit {
     adverts: Advert[];
+    model: Model;
     isLoaded: boolean;
     totalAdverts: number;
     pageSize: number;
     pageIndex: number;
-    category$: Observable<Category>;
+    category: Category;
 
     constructor(
         private categoryService: CategoryService,
         private advertDataService: AdvertDataService,
+        private modelService: ModelService,
         private cd: ChangeDetectorRef,
         private route: ActivatedRoute
     ) {}
 
     ngOnInit(): void {
-        this.category$ = this.route.paramMap.pipe(
+        this.route.paramMap.pipe(
             switchMap(params => {
                 return this.categoryService.getCategory(params.get('category_id'));
+            }),
+            switchMap(category => {
+                this.category = category;
+                return this.modelService.getModel(this.category.modelId);
             })
-        );
+        )
+            .subscribe(model => {
+                this.model = model;
+                this.cd.detectChanges();
+            });
 
         this.advertDataService.adverts$.subscribe(res => {
             this.initAdvertList(res);
