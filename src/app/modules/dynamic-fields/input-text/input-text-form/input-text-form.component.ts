@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { InputTextEntity } from '../../../../shared/models/dto/field-data/input-text.entity';
-import { InputTextParamsDto } from '../../../../shared/models/dto/field-data/input-text-params.dto';
+import { InputTextEntity } from '../dto/input-text.entity';
+import { InputTextParamsDto } from '../dto/input-text-params.dto';
 
 @Component({
     selector: 'app-input-text',

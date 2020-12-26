@@ -5,7 +5,7 @@ import { FieldService } from '../../../../shared/services';
 import { FieldEntity } from '../../../../shared/models/dto/field.entity';
 import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-params.component';
 import { OperationState } from '../../../../shared/models/operation-state.enum';
-import { TextareaParamsDto } from '../../../../shared/models/dto/field-data/textarea-params.dto';
+import { TextareaParamsDto } from '../dto/textarea-params.dto';
 
 @Component({
     selector: 'app-textarea',
@@ -27,6 +27,7 @@ export class TextareaParamsComponent extends AbstractFieldParamsComponent implem
         const params = this.field.params as TextareaParamsDto;
 
         this.form = this.fb.group({
+            filterable: [this.field.filterable, false],
             label: [(params && params.label) || '', Validators.required],
             placeholder: [(params && params.placeholder) || ''],
             required: [(params && params.required) || false],
@@ -42,6 +43,7 @@ export class TextareaParamsComponent extends AbstractFieldParamsComponent implem
             ...this.form.getRawValue(),
         };
         this.field.title = (this.field.params as TextareaParamsDto).label;
+        this.field.filterable = this.form.get('filterable').value;
 
         let request: Observable<FieldEntity>;
         if (this.field.id) {
@@ -58,8 +60,6 @@ export class TextareaParamsComponent extends AbstractFieldParamsComponent implem
             this.cd.detectChanges();
         });
     }
-
-    cancel(): void {}
 
     delete(): void {
         this.fieldService.deleteField(this.field.id).subscribe(() => {

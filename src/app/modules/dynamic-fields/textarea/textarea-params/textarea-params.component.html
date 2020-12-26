@@ -9,6 +9,9 @@
             <input nz-input formControlName="placeholder" name="placeholder" placeholder="Плейсхолдер" />
         </nz-form-control>
     </nz-form-item>
+    <nz-form-item>
+        <label nz-checkbox formControlName="filterable">Фильтровать по полю</label>
+    </nz-form-item>
     <div class="buttons">
         <label nz-checkbox formControlName="required">Обязательное поле</label>
         <button nz-button nzType="primary" (click)="save()" [nzLoading]="state === operationState.LOADING">Save</button>

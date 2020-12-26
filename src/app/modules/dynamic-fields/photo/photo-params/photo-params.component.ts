@@ -5,7 +5,7 @@ import { FieldService } from '../../../../shared/services';
 import { FieldEntity } from '../../../../shared/models/dto/field.entity';
 import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-params.component';
 import { OperationState } from '../../../../shared/models/operation-state.enum';
-import { PhotoParamsDto } from '../../../../shared/models/dto/field-data/photo-params.dto';
+import { PhotoParamsDto } from '../dto/photo-params.dto';
 
 @Component({
     selector: 'app-textarea',

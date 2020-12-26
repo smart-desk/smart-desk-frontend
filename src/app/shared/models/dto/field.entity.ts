@@ -13,6 +13,7 @@ export class FieldEntity {
     type: FieldType;
     // tslint:disable-next-line:variable-name
     section_id: string;
+    filterable: boolean;
     params: unknown;
     data: unknown;
 }
