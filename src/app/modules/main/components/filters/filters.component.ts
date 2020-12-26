@@ -1,7 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewChild, ViewContainerRef } from '@angular/core';
 import { Model } from '../../../../shared/models/dto/model.entity';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
-import { FieldEntity } from '../../../../shared/models/dto/field.entity';
 import { SectionType } from '../../../../shared/models/dto/section.entity';
 import { AbstractFieldFilterComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-filter.component';
 
@@ -33,9 +32,12 @@ export class FiltersComponent implements AfterViewInit {
             return;
         }
 
-        this.addParamsFields();
-        this.addPriceFields();
-        this.addLocationFields();
+        const containerTypeMap = new Map<SectionType, ViewContainerRef>();
+        containerTypeMap.set(SectionType.PARAMS, this.paramsContainerRef);
+        containerTypeMap.set(SectionType.PRICE, this.priceContainerRef);
+        containerTypeMap.set(SectionType.LOCATION, this.locationContainerRef);
+
+        containerTypeMap.forEach((container, type) => this.populateContainerWithFields(container, type));
 
         this.cdr.detectChanges();
     }
@@ -45,29 +47,13 @@ export class FiltersComponent implements AfterViewInit {
         console.log(filters);
     }
 
-    private addParamsFields(): void {
-        const section = this.model.sections.find(s => s.type === SectionType.PARAMS);
-        if (section) {
-            this.components = this.components.concat(this.populateContainerWithFields(this.paramsContainerRef, section.fields));
+    private populateContainerWithFields(container: ViewContainerRef, sectionType: SectionType): AbstractFieldFilterComponent<any>[] {
+        const section = this.model.sections.find(s => s.type === sectionType);
+        if (!section) {
+            return;
         }
-    }
 
-    private addPriceFields(): void {
-        const section = this.model.sections.find(s => s.type === SectionType.PRICE);
-        if (section) {
-            this.components = this.components.concat(this.populateContainerWithFields(this.priceContainerRef, section.fields));
-        }
-    }
-
-    private addLocationFields(): void {
-        const section = this.model.sections.find(s => s.type === SectionType.LOCATION);
-        if (section) {
-            this.components = this.components.concat(this.populateContainerWithFields(this.locationContainerRef, section.fields));
-        }
-    }
-
-    private populateContainerWithFields(container: ViewContainerRef, fields: FieldEntity[]): AbstractFieldFilterComponent<any>[] {
-        return fields
+        const components = section.fields
             .map(field => {
                 if (!field.filterable) {
                     return;
@@ -90,5 +76,7 @@ export class FiltersComponent implements AfterViewInit {
                 return component.instance;
             })
             .filter(f => !!f);
+
+        this.components = this.components.concat(components);
     }
 }
