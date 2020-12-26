@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AbstractFieldFilterComponent, FilterParams } from '../../../../shared/modules/dynamic-fields/abstract-field-filter.component';
-import { RadioParamsDto } from '../../../../shared/models/dto/field-data/radio-params.dto';
+import { RadioParamsDto } from '../dto/radio-params.dto';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -12,7 +12,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 export class RadioFilterComponent extends AbstractFieldFilterComponent<RadioParamsDto> {
     form: FormGroup;
 
-    constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+    constructor(private fb: FormBuilder) {
         super();
     }
 

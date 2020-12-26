@@ -5,10 +5,6 @@ import { FieldEntity } from '../../../../shared/models/dto/field.entity';
 import { SectionType } from '../../../../shared/models/dto/section.entity';
 import { AbstractFieldFilterComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-filter.component';
 
-interface Filterable {
-    filterable?: boolean;
-}
-
 @Component({
     selector: 'app-filters',
     templateUrl: './filters.component.html',
@@ -73,8 +69,7 @@ export class FiltersComponent implements AfterViewInit {
     private populateContainerWithFields(container: ViewContainerRef, fields: FieldEntity[]): AbstractFieldFilterComponent<any>[] {
         return fields
             .map(field => {
-                const params = field.params as Filterable;
-                if (!params || !params.filterable) {
+                if (!field.filterable) {
                     return;
                 }
 

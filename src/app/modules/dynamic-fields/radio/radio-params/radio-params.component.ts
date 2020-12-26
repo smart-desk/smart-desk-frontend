@@ -5,7 +5,7 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { FieldEntity } from '../../../../shared/models/dto/field.entity';
 import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-params.component';
 import { OperationState } from '../../../../shared/models/operation-state.enum';
-import { RadioItem, RadioParamsDto } from '../../../../shared/models/dto/field-data/radio-params.dto';
+import { RadioItem, RadioParamsDto } from '../dto/radio-params.dto';
 
 @Component({
     selector: 'app-radio',
@@ -28,8 +28,8 @@ export class RadioParamsComponent extends AbstractFieldParamsComponent implement
 
         this.form = this.fb.group({
             title: [this.field.title || ''],
+            filterable: [this.field.filterable || false],
             radios: this.fb.array(radios),
-            filterable: [params && params.filterable || false]
         });
     }
 
@@ -46,10 +46,12 @@ export class RadioParamsComponent extends AbstractFieldParamsComponent implement
 
         const radios = this.convertControlsToRadios(this.radios.getRawValue());
         const title = this.form.get('title').value;
+        const filterable = this.form.get('filterable').value;
 
         this.field = {
             ...(this.field || {}),
             title,
+            filterable,
             params: {
                 ...((this.field.params as object) || {}),
                 ...this.form.getRawValue(),
@@ -77,19 +79,6 @@ export class RadioParamsComponent extends AbstractFieldParamsComponent implement
 
     deleteRadio(i: number): void {
         this.radios.removeAt(i);
-    }
-
-    deleteField(): void {
-        this.updateState(OperationState.LOADING);
-
-        this.fieldService.deleteField(this.field.id).subscribe(
-            () => {
-                this.delete$.next(this);
-            },
-            () => {
-                this.updateState(OperationState.ERROR);
-            }
-        );
     }
 
     private updateState(state: OperationState): void {

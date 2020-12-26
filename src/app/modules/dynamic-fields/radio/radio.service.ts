@@ -3,8 +3,8 @@ import { AbstractFieldService } from '../../../shared/modules/dynamic-fields/abs
 import { RadioFormComponent } from './radio-form/radio-form.component';
 import { RadioParamsComponent } from './radio-params/radio-params.component';
 import { AbstractFieldViewComponent } from '../../../shared/modules/dynamic-fields/abstract-field-view.component';
-import { RadioEntity } from '../../../shared/models/dto/field-data/radio.entity';
-import { RadioParamsDto } from '../../../shared/models/dto/field-data/radio-params.dto';
+import { RadioEntity } from './dto/radio.entity';
+import { RadioParamsDto } from './dto/radio-params.dto';
 import { RadioViewComponent } from './radio-view/radio-view.component';
 import { RadioFilterComponent } from "./radio-filter/radio-filter.component";
 

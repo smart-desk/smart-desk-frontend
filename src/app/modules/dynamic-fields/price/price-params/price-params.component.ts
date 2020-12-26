@@ -25,14 +25,15 @@ export class PriceParamsComponent extends AbstractFieldParamsComponent implement
     ngOnInit(): void {
         const params = this.field.params as PriceParamsDto;
         this.form = this.fb.group({
+            filterable: [this.field.filterable || false],
             currency: [(params && params.currency) || '', Validators.required],
-            filterable: [(params && params.filterable) || false]
         });
     }
 
     save(): void {
         this.state = OperationState.LOADING;
         this.save$.next(this.state);
+        this.field.filterable = this.form.get('filterable').value;
 
         this.field.params = {
             ...((this.field.params as object) || {}),
