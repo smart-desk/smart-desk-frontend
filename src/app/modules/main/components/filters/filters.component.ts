@@ -1,4 +1,13 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    Input,
+    OnChanges,
+    ViewChild,
+    ViewContainerRef,
+} from '@angular/core';
 import { Model } from '../../../../shared/models/dto/model.entity';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
 import { SectionType } from '../../../../shared/models/dto/section.entity';
@@ -10,7 +19,7 @@ import { AbstractFieldFilterComponent } from '../../../../shared/modules/dynamic
     styleUrls: ['./filters.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FiltersComponent implements AfterViewInit {
+export class FiltersComponent implements AfterViewInit, OnChanges {
     @Input()
     model: Model;
 
@@ -23,14 +32,29 @@ export class FiltersComponent implements AfterViewInit {
     @ViewChild('price', { read: ViewContainerRef })
     private priceContainerRef: ViewContainerRef;
 
-    private components: AbstractFieldFilterComponent<any>[] = [];
+    private filterComponents: AbstractFieldFilterComponent<any>[] = [];
 
     constructor(private dynamicFieldService: DynamicFieldsService, private cdr: ChangeDetectorRef) {}
 
     ngAfterViewInit(): void {
-        if (!this.model || !this.model.sections) {
-            return;
-        }
+        this.updateFilters();
+    }
+
+    ngOnChanges() {
+        this.updateFilters();
+    }
+
+    apply(): void {
+        const filters = this.filterComponents.map(c => c.getFilterValue()).filter(f => !!f);
+        console.log(filters);
+    }
+
+    private updateFilters(): void {
+        if (!this.model || !this.model.sections) return;
+
+        if (!this.paramsContainerRef || !this.priceContainerRef || !this.locationContainerRef) return;
+
+        this.clearContainers();
 
         const containerTypeMap = new Map<SectionType, ViewContainerRef>();
         containerTypeMap.set(SectionType.PARAMS, this.paramsContainerRef);
@@ -38,36 +62,21 @@ export class FiltersComponent implements AfterViewInit {
         containerTypeMap.set(SectionType.LOCATION, this.locationContainerRef);
 
         containerTypeMap.forEach((container, type) => this.populateContainerWithFields(container, type));
-
-        this.cdr.detectChanges();
-    }
-
-    apply(): void {
-        const filters = this.components.map(c => c.getFilterValue()).filter(f => !!f);
-        console.log(filters);
     }
 
     private populateContainerWithFields(container: ViewContainerRef, sectionType: SectionType): AbstractFieldFilterComponent<any>[] {
         const section = this.model.sections.find(s => s.type === sectionType);
-        if (!section) {
-            return;
-        }
+        if (!section) return;
 
         const components = section.fields
             .map(field => {
-                if (!field.filterable) {
-                    return;
-                }
+                if (!field.filterable) return;
 
                 const service = this.dynamicFieldService.getService(field.type);
-                if (!service) {
-                    return;
-                }
+                if (!service) return;
 
                 const resolver = service.getFilterComponentResolver();
-                if (!resolver) {
-                    return;
-                }
+                if (!resolver) return;
 
                 const component = container.createComponent(resolver);
                 component.instance.field = field;
@@ -77,6 +86,13 @@ export class FiltersComponent implements AfterViewInit {
             })
             .filter(f => !!f);
 
-        this.components = this.components.concat(components);
+        this.filterComponents = this.filterComponents.concat(components);
+    }
+
+    private clearContainers(): void {
+        this.filterComponents = [];
+        this.paramsContainerRef.clear();
+        this.priceContainerRef.clear();
+        this.locationContainerRef.clear();
     }
 }
