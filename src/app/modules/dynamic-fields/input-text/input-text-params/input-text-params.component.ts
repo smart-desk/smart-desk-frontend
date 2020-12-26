@@ -5,7 +5,7 @@ import { FieldService } from '../../../../shared/services';
 import { FieldEntity } from '../../../../shared/models/dto/field.entity';
 import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-params.component';
 import { OperationState } from '../../../../shared/models/operation-state.enum';
-import { InputTextParamsDto } from '../../../../shared/models/dto/field-data/input-text-params.dto';
+import { InputTextParamsDto } from '../dto/input-text-params.dto';
 
 @Component({
     selector: 'app-input-text',

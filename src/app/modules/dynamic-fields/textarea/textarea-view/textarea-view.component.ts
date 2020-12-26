@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AbstractFieldViewComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-view.component';
-import { TextareaEntity } from '../../../../shared/models/dto/field-data/textarea.entity';
-import { TextareaParamsDto } from '../../../../shared/models/dto/field-data/textarea-params.dto';
+import { TextareaEntity } from '../dto/textarea.entity';
+import { TextareaParamsDto } from '../dto/textarea-params.dto';
 
 @Component({
     selector: 'app-textarea-view',
