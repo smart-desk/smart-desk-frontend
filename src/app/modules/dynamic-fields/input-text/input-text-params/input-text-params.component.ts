@@ -27,6 +27,7 @@ export class InputTextParamsComponent extends AbstractFieldParamsComponent imple
         const params = this.field.params as InputTextParamsDto;
 
         this.form = this.fb.group({
+            filterable: [this.field.filterable, false],
             label: [(params && params.label) || '', Validators.required],
             placeholder: [(params && params.placeholder) || ''],
             required: [(params && params.required) || false],
@@ -36,6 +37,7 @@ export class InputTextParamsComponent extends AbstractFieldParamsComponent imple
     save(): void {
         this.state = OperationState.LOADING;
         this.save$.next(this.state);
+        this.field.filterable = this.form.get('filterable').value;
 
         this.field.params = {
             ...((this.field.params as object) || {}),
@@ -57,8 +59,6 @@ export class InputTextParamsComponent extends AbstractFieldParamsComponent imple
             this.cd.detectChanges();
         });
     }
-
-    cancel(): void {}
 
     delete(): void {
         this.fieldService.deleteField(this.field.id).subscribe(() => {

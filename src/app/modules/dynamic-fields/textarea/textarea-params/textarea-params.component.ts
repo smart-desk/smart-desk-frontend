@@ -27,6 +27,7 @@ export class TextareaParamsComponent extends AbstractFieldParamsComponent implem
         const params = this.field.params as TextareaParamsDto;
 
         this.form = this.fb.group({
+            filterable: [this.field.filterable, false],
             label: [(params && params.label) || '', Validators.required],
             placeholder: [(params && params.placeholder) || ''],
             required: [(params && params.required) || false],
@@ -42,6 +43,7 @@ export class TextareaParamsComponent extends AbstractFieldParamsComponent implem
             ...this.form.getRawValue(),
         };
         this.field.title = (this.field.params as TextareaParamsDto).label;
+        this.field.filterable = this.form.get('filterable').value;
 
         let request: Observable<FieldEntity>;
         if (this.field.id) {
@@ -58,8 +60,6 @@ export class TextareaParamsComponent extends AbstractFieldParamsComponent implem
             this.cd.detectChanges();
         });
     }
-
-    cancel(): void {}
 
     delete(): void {
         this.fieldService.deleteField(this.field.id).subscribe(() => {
