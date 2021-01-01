@@ -2,6 +2,10 @@ import { Advert } from './advert.entity';
 import { DynamicFieldsBaseCreateDto } from './dynamic-fields-base-create.dto';
 import { DynamicFieldsBaseUpdateDto } from './dynamic-fields-base-update.dto';
 
+export interface Filters {
+    [key: string]: object | [];
+}
+
 export class CreateAdvertDto {
     category_id: string;
     model_id: string;
@@ -17,8 +21,8 @@ export class UpdateAdvertDto {
 export class AdvertsGetDto {
     page?: number = 1;
     limit?: number = 20;
-    category_id?: string;
     search?: string = '';
+    filters?: Filters[];
 }
 
 export class AdvertsGetResponseDto {

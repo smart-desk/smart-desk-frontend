@@ -3,7 +3,7 @@ import { AbstractFieldService } from '../../../shared/modules/dynamic-fields/abs
 import { PriceFormComponent } from './price-form/price-form.component';
 import { PriceParamsComponent } from './price-params/price-params.component';
 import { PriceViewComponent } from './price-view/price-view.component';
-import { PriceFilterComponent } from "./price-filter/price-filter.component";
+import { PriceFilterComponent } from './price-filter/price-filter.component';
 
 @Injectable()
 export class PriceService implements AbstractFieldService {

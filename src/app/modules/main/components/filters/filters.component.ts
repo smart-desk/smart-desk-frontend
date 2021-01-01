@@ -12,6 +12,7 @@ import { Model } from '../../../../shared/models/dto/model.entity';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
 import { SectionType } from '../../../../shared/models/dto/section.entity';
 import { AbstractFieldFilterComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-filter.component';
+import { AdvertDataService } from '../../../../shared/services';
 
 @Component({
     selector: 'app-filters',
@@ -34,7 +35,11 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
 
     private filterComponents: AbstractFieldFilterComponent<any>[] = [];
 
-    constructor(private dynamicFieldService: DynamicFieldsService, private cdr: ChangeDetectorRef) {}
+    constructor(
+        private dynamicFieldService: DynamicFieldsService,
+        private cdr: ChangeDetectorRef,
+        private advertDataService: AdvertDataService
+    ) {}
 
     ngAfterViewInit(): void {
         this.updateFilters();
@@ -46,13 +51,17 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
 
     apply(): void {
         const filters = this.filterComponents.map(c => c.getFilterValue()).filter(f => !!f);
-        console.log(filters);
+        this.advertDataService.applyFilters(filters);
     }
 
     private updateFilters(): void {
-        if (!this.model || !this.model.sections) return;
+        if (!this.model || !this.model.sections) {
+            return;
+        }
 
-        if (!this.paramsContainerRef || !this.priceContainerRef || !this.locationContainerRef) return;
+        if (!this.paramsContainerRef || !this.priceContainerRef || !this.locationContainerRef) {
+            return;
+        }
 
         this.clearContainers();
 
@@ -66,17 +75,25 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
 
     private populateContainerWithFields(container: ViewContainerRef, sectionType: SectionType): AbstractFieldFilterComponent<any>[] {
         const section = this.model.sections.find(s => s.type === sectionType);
-        if (!section) return;
+        if (!section) {
+            return;
+        }
 
         const components = section.fields
             .map(field => {
-                if (!field.filterable) return;
+                if (!field.filterable) {
+                    return;
+                }
 
                 const service = this.dynamicFieldService.getService(field.type);
-                if (!service) return;
+                if (!service) {
+                    return;
+                }
 
                 const resolver = service.getFilterComponentResolver();
-                if (!resolver) return;
+                if (!resolver) {
+                    return;
+                }
 
                 const component = container.createComponent(resolver);
                 component.instance.field = field;

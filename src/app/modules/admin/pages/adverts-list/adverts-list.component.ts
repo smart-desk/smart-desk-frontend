@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { AdvertRequestOptions, AdvertService, CategoryService } from '../../../../shared/services';
+import { AdvertService, CategoryService } from '../../../../shared/services';
 import { Router } from '@angular/router';
 import * as dayjs from 'dayjs';
 import { Advert } from '../../../../shared/models/dto/advert.entity';
 import { Category } from '../../../../shared/models/dto/category.entity';
+import { AdvertsGetDto } from '../../../../shared/models/dto/advert.dto';
 
 @Component({
     selector: 'app-table-adverts',
@@ -51,18 +52,13 @@ export class AdvertsListComponent implements OnInit {
         this.router.navigate([`/adverts/${id}/edit`]);
     }
 
-    getAdverts(options: AdvertRequestOptions): void {
-        this.advertService.getAdverts(options).subscribe(advertMeta => {
-            this.listAdverts = advertMeta.adverts;
-            this.totalAdverts = advertMeta.totalCount;
-            this.pageSize = advertMeta.limit;
-            this.cd.detectChanges();
-        });
-    }
-
-    search(value: string): void {
-        this.pageIndex = 1;
-        this.getAdverts({ search: value, page: this.pageIndex });
+    getAdverts(options: AdvertsGetDto): void {
+        // this.advertService.getAdverts(options).subscribe(advertMeta => {
+        //     this.listAdverts = advertMeta.adverts;
+        //     this.totalAdverts = advertMeta.totalCount;
+        //     this.pageSize = advertMeta.limit;
+        //     this.cd.detectChanges();
+        // });
     }
 
     updateSelectedItems(id: string, checked: boolean): void {
