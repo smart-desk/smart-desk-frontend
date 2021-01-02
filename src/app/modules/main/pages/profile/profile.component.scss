@@ -1,0 +1,17 @@
+.profile-wrap {
+    display: flex;
+}
+
+.profile-data {
+    margin: 0 auto;
+    width: 65%;
+
+    &__table {
+        width: 100%;
+        font-size: 16px;
+
+        td {
+            padding: 20px 0;
+        }
+    }
+}

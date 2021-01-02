@@ -37,6 +37,9 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { SavedComponent } from './pages/saved/saved.component';
+import { MyAdvertsComponent } from './pages/my-adverts/my-adverts.component';
+import { ProfileSideBarComponent } from './components/profile-side-bar/profile-side-bar.component';
 
 const NZModules = [
     NzModalModule,
@@ -72,6 +75,9 @@ const components = [
     ProfileComponent,
     ProfileMenuComponent,
     FiltersComponent,
+    SavedComponent,
+    MyAdvertsComponent,
+    ProfileSideBarComponent,
 ];
 
 @NgModule({
