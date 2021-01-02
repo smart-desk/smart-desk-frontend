@@ -50,7 +50,11 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
     }
 
     apply(): void {
-        const filters = this.filterComponents.map(c => c.getFilterValue()).filter(f => !!f);
+        const filters = this.filterComponents
+            .map(c => c.getFilterValue())
+            .filter(f => !!f)
+            .reduce((prev, cur, acc) => ({ ...prev, ...cur }), {});
+
         this.advertDataService.applyFilters(filters);
     }
 

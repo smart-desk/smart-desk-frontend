@@ -35,6 +35,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         if (this.route.snapshot.queryParamMap.has('search')) {
             this.searchPhrase = this.route.snapshot.queryParamMap.get('search');
+            this.cd.detectChanges();
         }
 
         this.router.events

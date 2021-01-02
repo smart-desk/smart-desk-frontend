@@ -19,10 +19,30 @@ export class UpdateAdvertDto {
 }
 
 export class AdvertsGetDto {
-    page?: number = 1;
-    limit?: number = 20;
-    search?: string = '';
-    filters?: Filters[];
+    page?: number = AdvertsGetDto.DEFAULT_PAGE;
+    limit?: number = AdvertsGetDto.DEFAULT_LIMIT;
+    search?: string = AdvertsGetDto.DEFAULT_SEARCH;
+    filters?: object = {};
+
+    static DEFAULT_PAGE = 1;
+    static DEFAULT_LIMIT = 20;
+    static DEFAULT_SEARCH = '';
+
+    get queryParamPage(): number {
+        return this.page === AdvertsGetDto.DEFAULT_PAGE ? null : this.page;
+    }
+
+    get queryParamLimit(): number {
+        return this.limit === AdvertsGetDto.DEFAULT_LIMIT ? null : this.limit;
+    }
+
+    get queryParamSearch(): string {
+        return this.search === AdvertsGetDto.DEFAULT_SEARCH ? null : this.search;
+    }
+
+    get queryParamFilters(): string {
+        return Object.keys(this.filters).length === 0 ? null : JSON.stringify(this.filters);
+    }
 }
 
 export class AdvertsGetResponseDto {

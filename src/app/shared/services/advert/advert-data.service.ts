@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { NavigationExtras, Router } from '@angular/router';
 import { AdvertService } from './advert.service';
-import { AdvertsGetDto, AdvertsGetResponseDto, Filters } from '../../models/dto/advert.dto';
+import { AdvertsGetDto, AdvertsGetResponseDto } from '../../models/dto/advert.dto';
 
 @Injectable()
 export class AdvertDataService {
@@ -12,75 +10,50 @@ export class AdvertDataService {
     private categoryId: string;
     private options: AdvertsGetDto = new AdvertsGetDto();
 
-    constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private advertService: AdvertService) {
-        // combineLatest([this.route.paramMap, this.route.queryParamMap])
-        //     .pipe(
-        //         switchMap(([params, queryParams]) => {
-        //             const category = params.get('category_id');
-        //             const requestOptions: AdvertsGetDto = {};
-        //
-        //             if (queryParams.has('page')) {
-        //                 try {
-        //                     requestOptions.page = parseInt(queryParams.get('page'), 10);
-        //                 } catch (e) {}
-        //             }
-        //
-        //             if (queryParams.has('limit')) {
-        //                 try {
-        //                     requestOptions.limit = parseInt(queryParams.get('limit'), 10);
-        //                 } catch (e) {}
-        //             }
-        //
-        //             if (queryParams.has('search')) {
-        //                 requestOptions.search = queryParams.get('search');
-        //             }
-        //
-        //             return this.advertService.getAdverts(category, requestOptions);
-        //         })
-        //     )
-        //     .subscribe(data => {
-        //         // todo !important! it is triggered on every page
-        //         this.adverts$.next(data);
-        //     });
-    }
+    constructor(private router: Router, private advertService: AdvertService) {}
 
     loadAdvertsForCategory(categoryId: string, options?: AdvertsGetDto): void {
         this.categoryId = categoryId;
         this.options = options ? options : this.options;
-        this.advertService.getAdverts(this.categoryId, this.options).subscribe(res => {
-            this.adverts$.next(res);
-        });
+        this.requestAdverts();
+        this.updateQueryParams();
     }
 
     changePage(page: number): void {
         this.options.page = page;
-        this.advertService.getAdverts(this.categoryId, this.options).subscribe(res => {
-            this.adverts$.next(res);
-        });
-        // todo update route
-    }
-
-    resetPage(): void {
-        this.options.page = 0;
-        this.advertService.getAdverts(this.categoryId, this.options).subscribe(res => {
-            this.adverts$.next(res);
-        });
-        // todo update route
+        this.requestAdverts();
+        this.updateQueryParams();
     }
 
     search(phrase: string) {
         this.options.search = phrase;
-        this.advertService.getAdverts(this.categoryId, this.options).subscribe(res => {
-            this.adverts$.next(res);
-        });
-        // todo update route
+        this.requestAdverts();
+        this.updateQueryParams();
     }
 
-    applyFilters(filters: Filters[]): void {
+    applyFilters(filters: object): void {
+        // todo
         this.options.filters = filters;
+        this.requestAdverts();
+        this.updateQueryParams();
+    }
+
+    private requestAdverts(): void {
         this.advertService.getAdverts(this.categoryId, this.options).subscribe(res => {
             this.adverts$.next(res);
         });
-        // todo update route
+    }
+
+    private updateQueryParams(): void {
+        const extras: NavigationExtras = {
+            queryParams: {
+                page: this.options.queryParamPage,
+                limit: this.options.queryParamLimit,
+                search: this.options.queryParamSearch,
+                filters: this.options.queryParamFilters,
+            },
+        };
+
+        this.router.navigate([], extras).then();
     }
 }

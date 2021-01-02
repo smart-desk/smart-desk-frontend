@@ -28,7 +28,7 @@ export class AdvertsListComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.getAdverts({ page: this.pageIndex });
+        // this.getAdverts({ page: this.pageIndex });
         this.categoryService.getCategories().subscribe(categories => (this.categories = categories));
     }
 
@@ -52,14 +52,14 @@ export class AdvertsListComponent implements OnInit {
         this.router.navigate([`/adverts/${id}/edit`]);
     }
 
-    getAdverts(options: AdvertsGetDto): void {
-        // this.advertService.getAdverts(options).subscribe(advertMeta => {
-        //     this.listAdverts = advertMeta.adverts;
-        //     this.totalAdverts = advertMeta.totalCount;
-        //     this.pageSize = advertMeta.limit;
-        //     this.cd.detectChanges();
-        // });
-    }
+    // getAdverts(options: AdvertsGetDto): void {
+    //     this.advertService.getAdverts(options).subscribe(advertMeta => {
+    //         this.listAdverts = advertMeta.adverts;
+    //         this.totalAdverts = advertMeta.totalCount;
+    //         this.pageSize = advertMeta.limit;
+    //         this.cd.detectChanges();
+    //     });
+    // }
 
     updateSelectedItems(id: string, checked: boolean): void {
         if (checked) {
@@ -75,7 +75,7 @@ export class AdvertsListComponent implements OnInit {
 
     changePage(event: number): void {
         if (event !== this.pageIndex) {
-            this.getAdverts({ page: event });
+            // this.getAdverts({ page: event });
         }
     }
 

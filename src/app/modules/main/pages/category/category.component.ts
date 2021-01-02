@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AdvertDataService, CategoryService, ModelService } from '../../../../shared/services';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { AdvertsGetResponseDto } from '../../../../shared/models/dto/advert.dto';
+import { AdvertsGetDto, AdvertsGetResponseDto } from '../../../../shared/models/dto/advert.dto';
 import { Category } from '../../../../shared/models/dto/category.entity';
 import { Advert } from '../../../../shared/models/dto/advert.entity';
 import { Model } from '../../../../shared/models/dto/model.entity';
@@ -32,13 +32,17 @@ export class CategoryComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.route.paramMap
+        const categoryId = this.route.snapshot.paramMap.get('category_id');
+        const options = this.parseQueryParams(this.route.snapshot.queryParamMap);
+
+        this.advertDataService.loadAdvertsForCategory(categoryId, options);
+        this.advertDataService.adverts$.subscribe(res => {
+            this.initAdvertList(res);
+        });
+
+        this.categoryService
+            .getCategory(categoryId)
             .pipe(
-                switchMap(params => {
-                    const categoryId = params.get('category_id');
-                    this.advertDataService.loadAdvertsForCategory(categoryId);
-                    return this.categoryService.getCategory(categoryId);
-                }),
                 switchMap(category => {
                     this.category = category;
                     return this.modelService.getModel(this.category.modelId);
@@ -48,10 +52,6 @@ export class CategoryComponent implements OnInit {
                 this.model = model;
                 this.cd.detectChanges();
             });
-
-        this.advertDataService.adverts$.subscribe(res => {
-            this.initAdvertList(res);
-        });
     }
 
     changePage(page: number) {
@@ -65,5 +65,32 @@ export class CategoryComponent implements OnInit {
         this.adverts = res.adverts;
         this.isLoaded = true;
         this.cd.detectChanges();
+    }
+
+    private parseQueryParams(queryParams: ParamMap): AdvertsGetDto {
+        const resultParams = new AdvertsGetDto();
+
+        if (queryParams.has('page')) {
+            try {
+                resultParams.page = parseInt(queryParams.get('page'), 10);
+            } catch (e) {}
+        }
+
+        if (queryParams.has('limit')) {
+            try {
+                resultParams.limit = parseInt(queryParams.get('limit'), 10);
+            } catch (e) {}
+        }
+
+        if (queryParams.has('search')) {
+            resultParams.search = queryParams.get('search');
+        }
+
+        if (queryParams.has('filters')) {
+            try {
+                resultParams.filters = JSON.parse(queryParams.get('filters'));
+            } catch (e) {}
+        }
+        return resultParams;
     }
 }
