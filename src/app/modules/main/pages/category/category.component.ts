@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { AdvertDataService, CategoryService, ModelService } from '../../../../shared/services';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { AdvertsGetDto, AdvertsGetResponseDto } from '../../../../shared/models/dto/advert.dto';
 import { Category } from '../../../../shared/models/dto/category.entity';
 import { Advert } from '../../../../shared/models/dto/advert.entity';
@@ -11,10 +12,9 @@ import { Model } from '../../../../shared/models/dto/model.entity';
     selector: 'app-category',
     templateUrl: './category.component.html',
     styleUrls: ['./category.component.scss'],
-    providers: [AdvertDataService],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CategoryComponent implements OnInit {
+export class CategoryComponent implements OnInit, OnDestroy {
     adverts: Advert[];
     model: Model;
     isLoaded: boolean;
@@ -22,6 +22,8 @@ export class CategoryComponent implements OnInit {
     pageSize: number;
     pageIndex: number;
     category: Category;
+
+    private destroy$ = new Subject();
 
     constructor(
         private categoryService: CategoryService,
@@ -32,17 +34,16 @@ export class CategoryComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        const categoryId = this.route.snapshot.paramMap.get('category_id');
-        const options = this.parseQueryParams(this.route.snapshot.queryParamMap);
-
-        this.advertDataService.loadAdvertsForCategory(categoryId, options);
-        this.advertDataService.adverts$.subscribe(res => {
-            this.initAdvertList(res);
-        });
-
-        this.categoryService
-            .getCategory(categoryId)
+        this.route.paramMap
             .pipe(
+                takeUntil(this.destroy$),
+                switchMap(paramMap => {
+                    const categoryId = paramMap.get('category_id');
+                    const options = this.parseQueryParams(this.route.snapshot.queryParamMap);
+
+                    this.advertDataService.loadAdvertsForCategory(categoryId, options);
+                    return this.categoryService.getCategory(categoryId);
+                }),
                 switchMap(category => {
                     this.category = category;
                     return this.modelService.getModel(this.category.modelId);
@@ -52,6 +53,15 @@ export class CategoryComponent implements OnInit {
                 this.model = model;
                 this.cd.detectChanges();
             });
+
+        this.advertDataService.adverts$.pipe(takeUntil(this.destroy$)).subscribe(res => {
+            this.initAdvertList(res);
+        });
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     changePage(page: number) {
