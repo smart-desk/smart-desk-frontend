@@ -22,7 +22,7 @@ export class AdvertsGetDto {
     page?: number = AdvertsGetDto.DEFAULT_PAGE;
     limit?: number = AdvertsGetDto.DEFAULT_LIMIT;
     search?: string = AdvertsGetDto.DEFAULT_SEARCH;
-    filters?: object = {};
+    filters?: Filters = {};
 
     static DEFAULT_PAGE = 1;
     static DEFAULT_LIMIT = 20;

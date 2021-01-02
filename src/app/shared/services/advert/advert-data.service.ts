@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { NavigationExtras, Router } from '@angular/router';
 import { AdvertService } from './advert.service';
-import { AdvertsGetDto, AdvertsGetResponseDto } from '../../models/dto/advert.dto';
+import { AdvertsGetDto, AdvertsGetResponseDto, Filters } from '../../models/dto/advert.dto';
 
 @Injectable({
     providedIn: 'root',
@@ -33,8 +33,7 @@ export class AdvertDataService {
         this.updateQueryParams();
     }
 
-    applyFilters(filters: object): void {
-        // todo
+    applyFilters(filters: Filters): void {
         this.options.filters = filters;
         this.requestAdverts();
         this.updateQueryParams();

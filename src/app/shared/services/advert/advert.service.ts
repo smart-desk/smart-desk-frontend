@@ -49,8 +49,7 @@ export class AdvertService {
         return this.http.delete<Advert>(`/adverts/${id}`);
     }
 
-    private buildFiltersQuery(filters: object): string {
-        // todo
+    private buildFiltersQuery(filters: Filters): string {
         const resultObject = { filters };
         return objectToQueryString(resultObject);
     }
