@@ -1,0 +1,79 @@
+<section class="profile">
+    <h1>Личные данные</h1>
+    <!--todo: левый side bar-->
+    <!--при сабмите выводим данные в консоль(без запроса к базе)-->
+    <!--пример реализации загрузки фото в PhotoFormComponent(без сохранения в таблицу)-->
+    <!--Заглушка "Мои объявления", "Избранное" (урлы, доступ к урлам)-->
+    <nz-table>
+        <tbody>
+            <tr>
+                <td>Profile</td>
+                <td>{{ profile?.firstName }} {{ profile?.lastName }}</td>
+                <td><a (click)="showProfile = !showProfile">Edit</a></td>
+            </tr>
+            <tr>
+                <td>Phone</td>
+                <td>{{ profile?.phone }}</td>
+                <td><a (click)="showPhone = !showPhone">Change</a></td>
+            </tr>
+            <tr>
+                <td>Town</td>
+                <td>{{ profile?.city }}</td>
+                <td><a (click)="showCity = !showCity">Specify</a></td>
+            </tr>
+        </tbody>
+    </nz-table>
+</section>
+
+<nz-modal [(nzVisible)]="showProfile" (nzOnCancel)="showProfile = !showProfile" (nzOnOk)="submitForm('name')">
+    <div class="user-avatar">
+        <nz-upload
+            nzAction="/s3/image"
+            nzListType="picture-card"
+            nzAccept="image/png, image/jpeg"
+            [nzLimit]="1"
+            (nzChange)="fileChanged($event)"
+        >
+            <div>
+                <i nz-icon nzType="plus"></i>
+                <div style="margin-top: 8px;">Upload</div>
+            </div>
+        </nz-upload>
+    </div>
+    <form nz-form [formGroup]="formName">
+        <nz-form-item>
+            <nz-form-control [nzSpan]="14">
+                <input nz-input name="fName" type="fName" value="{{ profile?.firstName }}" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control [nzSpan]="14">
+                <input nz-input name="lName" type="lName" value="{{ profile?.lastName }}" />
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="showPhone" nzTitle="Изменить номер телефона" (nzOnCancel)="showPhone = !showPhone" (nzOnOk)="submitForm('phone')">
+    <form nz-form [formGroup]="formPhone">
+        <label for="phone">Изменить номер телефона</label>
+        <nz-form-item>
+            <nz-form-control [nzSpan]="14">
+                <input type="tel" nz-input name="phone" type="phone" id="phone" value="{{ profile?.phone }}" />
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="showCity" nzTitle="Город" (nzOnCancel)="showCity = !showCity" (nzOnOk)="submitForm('city')">
+    <form nz-form [formGroup]="formCity">
+        <label for="city">
+            Укажите город, в котором вы находитесь
+        </label>
+        <nz-form-item>
+            <nz-form-control [nzSpan]="14">
+                <input nz-input name="city" type="phone" id="city" value="{{ profile?.city }}" />
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</nz-modal>

@@ -30,7 +30,7 @@ import { NavigationHeaderComponent } from './components/navigation-header/naviga
 import { IndexComponent } from './pages/index/index.component';
 import { AdvertCardComponent } from './components/advert-card/advert-card.component';
 import { SharedModule } from '../../shared/shared.module';
-import { ProfileComponent } from './components/profile/profile.component';
+import { ProfileMenuComponent } from './components/profile-menu/profile-menu.component';
 import { FiltersComponent } from './components/filters/filters.component';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 
@@ -62,6 +62,7 @@ const components = [
     AdvertCardComponent,
     AdvertsListComponent,
     ProfileComponent,
+    ProfileMenuComponent,
     FiltersComponent,
 ];
 

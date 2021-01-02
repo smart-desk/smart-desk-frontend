@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { AbstractFieldFilterComponent, FilterParams } from '../../../../shared/modules/dynamic-fields/abstract-field-filter.component';
+import { PriceParamsDto } from '../dto/price-params.dto';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { omitBy, isNull } from 'lodash';
 import { AbstractFieldFilterComponent } from '../../../../shared/modules/dynamic-fields/models/abstract-field-filter.component';
