@@ -8,6 +8,8 @@ export interface AdvertRequestOptions {
     categoryId?: string;
     page?: number;
     search?: string;
+    /* TODO: Нужно дополнить AdvertRequestOptions запроса
+        author?: string ; **/
 }
 
 @Injectable()
@@ -30,7 +32,11 @@ export class AdvertService {
         if (options.search) {
             optionsList.push(`search=${options.search}`);
         }
-
+        /* TODO: после дополнения требуется доп аброботка кейса
+        if (options.author) {
+            optionsList.push(`author=${options.author}`);
+        }
+**/
         path += optionsList.length ? `?${optionsList.join('&')}` : '';
         return this.http.get<AdvertsGetResponseDto>(path);
     }

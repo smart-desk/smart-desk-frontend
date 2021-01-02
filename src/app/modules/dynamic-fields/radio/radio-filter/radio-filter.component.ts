@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AbstractFieldFilterComponent, FilterParams } from '../../../../shared/modules/dynamic-fields/abstract-field-filter.component';
 import { RadioParamsDto } from '../dto/radio-params.dto';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
@@ -9,7 +9,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
     styleUrls: ['./radio-filter.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RadioFilterComponent extends AbstractFieldFilterComponent<RadioParamsDto> {
+export class RadioFilterComponent extends AbstractFieldFilterComponent<RadioParamsDto> implements OnInit {
     form: FormGroup;
 
     constructor(private fb: FormBuilder) {

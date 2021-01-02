@@ -50,9 +50,13 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
     }
 
     private updateFilters(): void {
-        if (!this.model || !this.model.sections) return;
+        if (!this.model || !this.model.sections) {
+            return;
+        }
 
-        if (!this.paramsContainerRef || !this.priceContainerRef || !this.locationContainerRef) return;
+        if (!this.paramsContainerRef || !this.priceContainerRef || !this.locationContainerRef) {
+            return;
+        }
 
         this.clearContainers();
 
@@ -66,17 +70,25 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
 
     private populateContainerWithFields(container: ViewContainerRef, sectionType: SectionType): AbstractFieldFilterComponent<any>[] {
         const section = this.model.sections.find(s => s.type === sectionType);
-        if (!section) return;
+        if (!section) {
+            return;
+        }
 
         const components = section.fields
             .map(field => {
-                if (!field.filterable) return;
+                if (!field.filterable) {
+                    return;
+                }
 
                 const service = this.dynamicFieldService.getService(field.type);
-                if (!service) return;
+                if (!service) {
+                    return;
+                }
 
                 const resolver = service.getFilterComponentResolver();
-                if (!resolver) return;
+                if (!resolver) {
+                    return;
+                }
 
                 const component = container.createComponent(resolver);
                 component.instance.field = field;

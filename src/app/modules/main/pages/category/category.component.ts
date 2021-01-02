@@ -5,7 +5,7 @@ import { switchMap } from 'rxjs/operators';
 import { AdvertsGetResponseDto } from '../../../../shared/models/dto/advert.dto';
 import { Category } from '../../../../shared/models/dto/category.entity';
 import { Advert } from '../../../../shared/models/dto/advert.entity';
-import { Model } from "../../../../shared/models/dto/model.entity";
+import { Model } from '../../../../shared/models/dto/model.entity';
 
 @Component({
     selector: 'app-category',
@@ -32,15 +32,16 @@ export class CategoryComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.route.paramMap.pipe(
-            switchMap(params => {
-                return this.categoryService.getCategory(params.get('category_id'));
-            }),
-            switchMap(category => {
-                this.category = category;
-                return this.modelService.getModel(this.category.modelId);
-            })
-        )
+        this.route.paramMap
+            .pipe(
+                switchMap(params => {
+                    return this.categoryService.getCategory(params.get('category_id'));
+                }),
+                switchMap(category => {
+                    this.category = category;
+                    return this.modelService.getModel(this.category.modelId);
+                })
+            )
             .subscribe(model => {
                 this.model = model;
                 this.cd.detectChanges();

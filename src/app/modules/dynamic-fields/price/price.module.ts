@@ -13,7 +13,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { PriceViewComponent } from './price-view/price-view.component';
-import { NzCheckboxModule } from "ng-zorro-antd/checkbox";
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { PriceFilterComponent } from './price-filter/price-filter.component';
 
 @NgModule({

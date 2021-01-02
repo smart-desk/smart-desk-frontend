@@ -6,11 +6,11 @@ import { LoginService } from '../../../../shared/services/login/login.service';
 
 @Component({
     selector: 'app-profile',
-    templateUrl: './profile.component.html',
-    styleUrls: ['./profile.component.scss'],
+    templateUrl: './profile-menu.component.html',
+    styleUrls: ['./profile-menu.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfileComponent implements OnInit {
+export class ProfileMenuComponent implements OnInit {
     user: User;
 
     constructor(

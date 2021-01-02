@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AbstractFieldFilterComponent, FilterParams } from '../../../../shared/modules/dynamic-fields/abstract-field-filter.component';
 import { PriceParamsDto } from '../dto/price-params.dto';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -9,7 +9,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
     styleUrls: ['./price-filter.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PriceFilterComponent extends AbstractFieldFilterComponent<PriceParamsDto> {
+export class PriceFilterComponent extends AbstractFieldFilterComponent<PriceParamsDto> implements OnInit {
     form: FormGroup;
 
     constructor(private fb: FormBuilder) {
