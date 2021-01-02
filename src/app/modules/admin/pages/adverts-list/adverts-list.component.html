@@ -15,13 +15,13 @@
         <i nz-icon nzType="delete"></i>Удалить
     </button>
     <div class="search-box">
-        <!--        <app-search placeholder="Поиск" (searchChange)="search($event)"></app-search>-->
+        <app-search placeholder="Поиск"></app-search>
     </div>
 </section>
 <nz-table #nzTable [nzData]="listAdverts" [nzFrontPagination]="false">
     <thead>
         <tr>
-            <th class="column-checkbox" (nzCheckedChange)="onAllChecked($event)"></th>
+            <th class="column-checkbox"></th>
             <th>ID</th>
             <th>Заголовок</th>
             <th>Дата создания</th>
@@ -37,9 +37,9 @@
             <td>{{ formatDate(data.created_at) }}</td>
             <td>{{ getCategoryName(data.category_id) }}</td>
             <td>
-                <a nz-popconfirm nzPopconfirmTitle="Вы уверены, что хотите удалить это объявление?" (nzOnConfirm)="delete(data.id)"
-                    >Удалить</a
-                >
+                <a nz-popconfirm nzPopconfirmTitle="Вы уверены, что хотите удалить это объявление?" (nzOnConfirm)="delete(data.id)">
+                    Удалить
+                </a>
                 <nz-divider nzType="vertical"></nz-divider>
                 <a (click)="edit(data.id)">Редактировать</a>
             </td>

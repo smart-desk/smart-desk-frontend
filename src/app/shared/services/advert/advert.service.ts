@@ -9,9 +9,37 @@ import { objectToQueryString } from '../../helpers/object-to-query-string.helper
 export class AdvertService {
     constructor(private http: HttpClient) {}
 
-    getAdverts(category: string, options: AdvertsGetDto): Observable<AdvertsGetResponseDto> {
-        let path = `/adverts/category/${category}`;
+    getAdvertsForCategory(category: string, options?: AdvertsGetDto): Observable<AdvertsGetResponseDto> {
+        const path = `/adverts/category/${category}${this.buildQueryParams(options)}`;
+        return this.http.get<AdvertsGetResponseDto>(path);
+    }
+
+    getAdverts(options?: AdvertsGetDto): Observable<AdvertsGetResponseDto> {
+        const path = `/adverts${this.buildQueryParams(options)}`;
+        return this.http.get<AdvertsGetResponseDto>(path);
+    }
+
+    getAdvert(id: string): Observable<Advert> {
+        return this.http.get<Advert>(`/adverts/${id}`);
+    }
+
+    createAdvert(advert: CreateAdvertDto): Observable<Advert> {
+        return this.http.post<Advert>(`/adverts`, advert);
+    }
+
+    updateAdvert(id: string, advert: UpdateAdvertDto): Observable<Advert> {
+        return this.http.patch<Advert>(`/adverts/${id}`, advert);
+    }
+
+    deleteAdvert(id: string): Observable<Advert> {
+        return this.http.delete<Advert>(`/adverts/${id}`);
+    }
+
+    private buildQueryParams(options: AdvertsGetDto): string {
         const optionsList: string[] = [];
+        if (!options) {
+            return '';
+        }
 
         if (options.limit) {
             optionsList.push(`limit=${options.limit}`);
@@ -29,24 +57,7 @@ export class AdvertService {
             optionsList.push(this.buildFiltersQuery(options.filters));
         }
 
-        path += optionsList.length ? `?${optionsList.join('&')}` : '';
-        return this.http.get<AdvertsGetResponseDto>(path);
-    }
-
-    getAdvert(id: string): Observable<Advert> {
-        return this.http.get<Advert>(`/adverts/${id}`);
-    }
-
-    createAdvert(advert: CreateAdvertDto): Observable<Advert> {
-        return this.http.post<Advert>(`/adverts`, advert);
-    }
-
-    updateAdvert(id: string, advert: UpdateAdvertDto): Observable<Advert> {
-        return this.http.patch<Advert>(`/adverts/${id}`, advert);
-    }
-
-    deleteAdvert(id: string): Observable<unknown> {
-        return this.http.delete<Advert>(`/adverts/${id}`);
+        return optionsList.length ? `?${optionsList.join('&')}` : '';
     }
 
     private buildFiltersQuery(filters: Filters): string {

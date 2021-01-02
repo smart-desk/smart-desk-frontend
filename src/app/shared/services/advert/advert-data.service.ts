@@ -40,7 +40,7 @@ export class AdvertDataService {
     }
 
     private requestAdverts(): void {
-        this.advertService.getAdverts(this.categoryId, this.options).subscribe(res => {
+        this.advertService.getAdvertsForCategory(this.categoryId, this.options).subscribe(res => {
             this.adverts$.next(res);
         });
     }

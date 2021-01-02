@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { AdvertService, CategoryService } from '../../../../shared/services';
 import { Router } from '@angular/router';
 import * as dayjs from 'dayjs';
+import { zip } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Advert } from '../../../../shared/models/dto/advert.entity';
 import { Category } from '../../../../shared/models/dto/category.entity';
 import { AdvertsGetDto } from '../../../../shared/models/dto/advert.dto';
@@ -28,38 +30,33 @@ export class AdvertsListComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        // this.getAdverts({ page: this.pageIndex });
+        this.getAdverts();
         this.categoryService.getCategories().subscribe(categories => (this.categories = categories));
     }
 
-    delete(id?: string): void {
-        this.advertService.deleteAdvert(id).subscribe();
-        this.listAdverts = this.listAdverts.filter(item => item.id !== id);
-        this.cd.detectChanges();
+    delete(id: string): void {
+        this.advertService.deleteAdvert(id).subscribe(() => {
+            this.listAdverts = this.listAdverts.filter(item => item.id !== id);
+            this.cd.detectChanges();
+        });
     }
 
     deleteSelectedAdverts(): void {
-        this.selectedItems.forEach(id => {
-            this.advertService.deleteAdvert(id).subscribe(() => {
-                this.listAdverts = this.listAdverts.filter(item => item.id !== id);
-                this.selectedItems.delete(id);
-                this.cd.detectChanges();
-            });
-        });
+        const requests = [...this.selectedItems].map(id =>
+            this.advertService.deleteAdvert(id).pipe(
+                tap(() => {
+                    this.listAdverts = this.listAdverts.filter(item => item.id !== id);
+                    this.selectedItems.delete(id);
+                })
+            )
+        );
+
+        zip(...requests).subscribe(() => this.cd.detectChanges());
     }
 
     edit(id: string): void {
         this.router.navigate([`/adverts/${id}/edit`]);
     }
-
-    // getAdverts(options: AdvertsGetDto): void {
-    //     this.advertService.getAdverts(options).subscribe(advertMeta => {
-    //         this.listAdverts = advertMeta.adverts;
-    //         this.totalAdverts = advertMeta.totalCount;
-    //         this.pageSize = advertMeta.limit;
-    //         this.cd.detectChanges();
-    //     });
-    // }
 
     updateSelectedItems(id: string, checked: boolean): void {
         if (checked) {
@@ -69,13 +66,12 @@ export class AdvertsListComponent implements OnInit {
         }
     }
 
-    onAllChecked(value: boolean): void {
-        this.listAdverts.forEach(item => this.updateSelectedItems(item.id, value));
-    }
-
-    changePage(event: number): void {
-        if (event !== this.pageIndex) {
-            // this.getAdverts({ page: event });
+    changePage(page: number): void {
+        if (page !== this.pageIndex) {
+            this.pageIndex = page;
+            const options = new AdvertsGetDto();
+            options.page = page;
+            this.getAdverts(options);
         }
     }
 
@@ -86,5 +82,14 @@ export class AdvertsListComponent implements OnInit {
     getCategoryName(id: string): string {
         const categoryAdvert = this.categories.find(category => category.id === id);
         return categoryAdvert ? categoryAdvert.name : 'Категория не определена';
+    }
+
+    private getAdverts(options?: AdvertsGetDto): void {
+        this.advertService.getAdverts(options).subscribe(advertMeta => {
+            this.listAdverts = advertMeta.adverts;
+            this.totalAdverts = advertMeta.totalCount;
+            this.pageSize = advertMeta.limit;
+            this.cd.detectChanges();
+        });
     }
 }
