@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
+import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/models/abstract-field-form.component';
 import { PhotoEntity } from '../dto/photo.entity';
 import { PhotoParamsDto } from '../dto/photo-params.dto';
 import { UploadImageResponse } from '../../../../shared/models/dto/upload-image-response';

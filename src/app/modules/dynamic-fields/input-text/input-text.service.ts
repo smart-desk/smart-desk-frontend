@@ -1,5 +1,5 @@
 import { ComponentFactory, ComponentFactoryResolver, Injectable } from '@angular/core';
-import { AbstractFieldService } from '../../../shared/modules/dynamic-fields/abstract-field.service';
+import { AbstractFieldService } from '../../../shared/modules/dynamic-fields/models/abstract-field.service';
 import { InputTextFormComponent } from './input-text-form/input-text-form.component';
 import { InputTextParamsComponent } from './input-text-params/input-text-params.component';
 import { InputTextViewComponent } from './input-text-view/input-text-view.component';
@@ -20,7 +20,8 @@ export class InputTextService implements AbstractFieldService {
         return this.componentFactoryResolver.resolveComponentFactory(InputTextViewComponent);
     }
 
-    getFilterComponentResolver(): ComponentFactory<any> { // todo set generic
+    getFilterComponentResolver(): ComponentFactory<any> {
+        // todo set generic
         return null;
     }
 

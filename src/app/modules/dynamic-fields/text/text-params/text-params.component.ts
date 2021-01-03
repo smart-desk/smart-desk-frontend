@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FieldService } from '../../../../shared/services';
-import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-params.component';
+import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/models/abstract-field-params.component';
 import { OperationState } from '../../../../shared/models/operation-state.enum';
 import { TextParamsDto } from '../dto/text-params.dto';
 

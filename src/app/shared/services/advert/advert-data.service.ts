@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { NavigationExtras, Router } from '@angular/router';
 import { AdvertService } from './advert.service';
-import { AdvertsGetDto, AdvertsGetResponseDto, Filters } from '../../models/dto/advert.dto';
+import { AdvertsGetDto, AdvertsGetResponseDto } from '../../models/dto/advert.dto';
+import { Filters } from '../../modules/dynamic-fields/models/filter';
 
 @Injectable({
     providedIn: 'root',

@@ -1,5 +1,5 @@
 import { ComponentFactory, ComponentFactoryResolver, Injectable } from '@angular/core';
-import { AbstractFieldService } from '../../../shared/modules/dynamic-fields/abstract-field.service';
+import { AbstractFieldService } from '../../../shared/modules/dynamic-fields/models/abstract-field.service';
 import { PriceFormComponent } from './price-form/price-form.component';
 import { PriceParamsComponent } from './price-params/price-params.component';
 import { PriceViewComponent } from './price-view/price-view.component';

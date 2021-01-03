@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
+import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/models/abstract-field-form.component';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { PriceEntity } from '../dto/price.entity';
 import { PriceParamsDto } from '../dto/price-params.dto';

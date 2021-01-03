@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, EventEmitter } from '@angular/core';
-import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
+import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/models/abstract-field-form.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TextareaEntity } from '../dto/textarea.entity';
 import { TextareaParamsDto } from '../dto/textarea-params.dto';

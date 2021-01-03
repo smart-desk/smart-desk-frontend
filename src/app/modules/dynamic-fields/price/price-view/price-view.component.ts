@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { AbstractFieldViewComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-view.component';
+import { AbstractFieldViewComponent } from '../../../../shared/modules/dynamic-fields/models/abstract-field-view.component';
 import { PriceEntity } from '../dto/price.entity';
 import { PriceParamsDto } from '../dto/price-params.dto';
 import { getCurrencySymbolByCode, roundPrice } from '../helpers';

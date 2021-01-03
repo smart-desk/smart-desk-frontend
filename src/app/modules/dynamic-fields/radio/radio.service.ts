@@ -1,8 +1,8 @@
 import { ComponentFactory, ComponentFactoryResolver, Injectable } from '@angular/core';
-import { AbstractFieldService } from '../../../shared/modules/dynamic-fields/abstract-field.service';
+import { AbstractFieldService } from '../../../shared/modules/dynamic-fields/models/abstract-field.service';
 import { RadioFormComponent } from './radio-form/radio-form.component';
 import { RadioParamsComponent } from './radio-params/radio-params.component';
-import { AbstractFieldViewComponent } from '../../../shared/modules/dynamic-fields/abstract-field-view.component';
+import { AbstractFieldViewComponent } from '../../../shared/modules/dynamic-fields/models/abstract-field-view.component';
 import { RadioEntity } from './dto/radio.entity';
 import { RadioParamsDto } from './dto/radio-params.dto';
 import { RadioViewComponent } from './radio-view/radio-view.component';

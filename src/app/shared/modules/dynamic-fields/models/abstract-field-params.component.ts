@@ -1,7 +1,7 @@
 import { Directive, Input, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { FieldEntity } from '../../models/dto/field.entity';
-import { OperationState } from '../../models/operation-state.enum';
+import { FieldEntity } from '../../../models/dto/field.entity';
+import { OperationState } from '../../../models/operation-state.enum';
 
 @Directive()
 // tslint:disable-next-line:directive-class-suffix
