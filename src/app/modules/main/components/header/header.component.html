@@ -18,7 +18,7 @@
         </nz-cascader>
     </div>
     <div class="search-box">
-        <app-search [placeholder]="getSearchPlaceholder()" (searchChange)="search($event)"></app-search>
+        <app-search [searchPhrase]="searchPhrase" [placeholder]="getSearchPlaceholder()" (searchChange)="search($event)"></app-search>
     </div>
     <div>
         <button (click)="navigateToAdvertCreate()" nz-button nzType="primary" nzShape="round">

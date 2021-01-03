@@ -6,7 +6,7 @@ import { AbstractFieldViewComponent } from '../../../shared/modules/dynamic-fiel
 import { RadioEntity } from './dto/radio.entity';
 import { RadioParamsDto } from './dto/radio-params.dto';
 import { RadioViewComponent } from './radio-view/radio-view.component';
-import { RadioFilterComponent } from "./radio-filter/radio-filter.component";
+import { RadioFilterComponent } from './radio-filter/radio-filter.component';
 
 @Injectable()
 export class RadioService implements AbstractFieldService {

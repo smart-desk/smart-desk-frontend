@@ -2,7 +2,7 @@ import { ComponentFactory } from '@angular/core';
 import { AbstractFieldFormComponent } from './abstract-field-form.component';
 import { AbstractFieldParamsComponent } from './abstract-field-params.component';
 import { AbstractFieldViewComponent } from './abstract-field-view.component';
-import { AbstractFieldFilterComponent } from "./abstract-field-filter.component";
+import { AbstractFieldFilterComponent } from './abstract-field-filter.component';
 
 export abstract class AbstractFieldService {
     /**

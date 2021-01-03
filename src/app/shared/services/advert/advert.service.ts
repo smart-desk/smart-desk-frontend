@@ -1,37 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AdvertsGetResponseDto, CreateAdvertDto, UpdateAdvertDto } from '../../models/dto/advert.dto';
+import { AdvertsGetDto, AdvertsGetResponseDto, CreateAdvertDto, Filters, UpdateAdvertDto } from '../../models/dto/advert.dto';
 import { Advert } from '../../models/dto/advert.entity';
-
-export interface AdvertRequestOptions {
-    categoryId?: string;
-    page?: number;
-    search?: string;
-}
+import { objectToQueryString } from '../../helpers/object-to-query-string.helper';
 
 @Injectable()
 export class AdvertService {
     constructor(private http: HttpClient) {}
 
-    // todo use AdvertsGetDto
-    getAdverts(options: AdvertRequestOptions): Observable<AdvertsGetResponseDto> {
-        let path = '/adverts';
-        const optionsList: string[] = [];
+    getAdvertsForCategory(category: string, options?: AdvertsGetDto): Observable<AdvertsGetResponseDto> {
+        const path = `/adverts/category/${category}${this.buildQueryParams(options)}`;
+        return this.http.get<AdvertsGetResponseDto>(path);
+    }
 
-        if (options.categoryId) {
-            optionsList.push(`category_id=${options.categoryId}`);
-        }
-
-        if (options.page) {
-            optionsList.push(`page=${options.page}`);
-        }
-
-        if (options.search) {
-            optionsList.push(`search=${options.search}`);
-        }
-
-        path += optionsList.length ? `?${optionsList.join('&')}` : '';
+    getAdverts(options?: AdvertsGetDto): Observable<AdvertsGetResponseDto> {
+        const path = `/adverts${this.buildQueryParams(options)}`;
         return this.http.get<AdvertsGetResponseDto>(path);
     }
 
@@ -47,7 +31,37 @@ export class AdvertService {
         return this.http.patch<Advert>(`/adverts/${id}`, advert);
     }
 
-    deleteAdvert(id: string): Observable<unknown> {
+    deleteAdvert(id: string): Observable<Advert> {
         return this.http.delete<Advert>(`/adverts/${id}`);
+    }
+
+    private buildQueryParams(options: AdvertsGetDto): string {
+        const optionsList: string[] = [];
+        if (!options) {
+            return '';
+        }
+
+        if (options.limit) {
+            optionsList.push(`limit=${options.limit}`);
+        }
+
+        if (options.page) {
+            optionsList.push(`page=${options.page}`);
+        }
+
+        if (options.search) {
+            optionsList.push(`search=${options.search}`);
+        }
+
+        if (options.filters) {
+            optionsList.push(this.buildFiltersQuery(options.filters));
+        }
+
+        return optionsList.length ? `?${optionsList.join('&')}` : '';
+    }
+
+    private buildFiltersQuery(filters: Filters): string {
+        const resultObject = { filters };
+        return objectToQueryString(resultObject);
     }
 }

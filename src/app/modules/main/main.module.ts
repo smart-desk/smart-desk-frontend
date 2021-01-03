@@ -32,7 +32,7 @@ import { AdvertCardComponent } from './components/advert-card/advert-card.compon
 import { SharedModule } from '../../shared/shared.module';
 import { ProfileComponent } from './components/profile/profile.component';
 import { FiltersComponent } from './components/filters/filters.component';
-import { NzCollapseModule } from "ng-zorro-antd/collapse";
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 
 const NZModules = [
     NzModalModule,
@@ -56,7 +56,14 @@ const NZModules = [
 
 const pages = [MainComponent, CategoryComponent, AdvertComponent, AdvertEditComponent, AdvertCreateComponent, IndexComponent];
 
-const components = [HeaderComponent, NavigationHeaderComponent, AdvertCardComponent, AdvertsListComponent, ProfileComponent, FiltersComponent];
+const components = [
+    HeaderComponent,
+    NavigationHeaderComponent,
+    AdvertCardComponent,
+    AdvertsListComponent,
+    ProfileComponent,
+    FiltersComponent,
+];
 
 @NgModule({
     declarations: [...pages, ...components],
