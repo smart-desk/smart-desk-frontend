@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
-import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
+import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/models/abstract-field-form.component';
 import { AdvertService, CategoryService, ModelService } from '../../../../shared/services';
 import { Category } from '../../../../shared/models/dto/category.entity';
 import { CreateAdvertDto } from '../../../../shared/models/dto/advert.dto';

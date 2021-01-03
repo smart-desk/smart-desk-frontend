@@ -1,5 +1,5 @@
 import { ComponentFactory, ComponentFactoryResolver, Injectable } from '@angular/core';
-import { AbstractFieldService } from '../../../shared/modules/dynamic-fields/abstract-field.service';
+import { AbstractFieldService } from '../../../shared/modules/dynamic-fields/models/abstract-field.service';
 import { TextFormComponent } from './text-form/text-form.component';
 import { TextParamsComponent } from './text-params/text-params.component';
 

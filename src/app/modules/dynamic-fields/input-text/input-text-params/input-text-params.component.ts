@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { FieldService } from '../../../../shared/services';
 import { FieldEntity } from '../../../../shared/models/dto/field.entity';
-import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-params.component';
+import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/models/abstract-field-params.component';
 import { OperationState } from '../../../../shared/models/operation-state.enum';
 import { InputTextParamsDto } from '../dto/input-text-params.dto';
 

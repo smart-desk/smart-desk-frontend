@@ -1,10 +1,7 @@
 import { Advert } from './advert.entity';
 import { DynamicFieldsBaseCreateDto } from './dynamic-fields-base-create.dto';
 import { DynamicFieldsBaseUpdateDto } from './dynamic-fields-base-update.dto';
-
-export interface Filters {
-    [key: string]: object | [];
-}
+import { Filters } from '../../modules/dynamic-fields/models/filter';
 
 export class CreateAdvertDto {
     category_id: string;

@@ -11,7 +11,7 @@ import {
 import { Model } from '../../../../shared/models/dto/model.entity';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
 import { SectionType } from '../../../../shared/models/dto/section.entity';
-import { AbstractFieldFilterComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-filter.component';
+import { AbstractFieldFilterComponent } from '../../../../shared/modules/dynamic-fields/models/abstract-field-filter.component';
 import { AdvertDataService } from '../../../../shared/services';
 
 @Component({
@@ -53,7 +53,7 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
         const filters = this.filterComponents
             .map(c => c.getFilterValue())
             .filter(f => !!f)
-            .reduce((prev, cur, acc) => ({ ...prev, ...cur }), {});
+            .reduce((prev, cur, acc) => ({ ...prev, ...cur.getFilterObject() }), {});
 
         this.advertDataService.applyFilters(filters);
     }

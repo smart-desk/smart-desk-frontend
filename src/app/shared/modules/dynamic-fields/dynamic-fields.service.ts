@@ -1,7 +1,7 @@
 import { Inject, Injectable, Injector } from '@angular/core';
 import { FieldType } from '../../models/dto/field.entity';
 import { DynamicFieldsMapType } from './dynamic-fields.map';
-import { AbstractFieldService } from './abstract-field.service';
+import { AbstractFieldService } from './models/abstract-field.service';
 
 @Injectable({
     providedIn: 'root',

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FieldService } from '../../../../shared/services';
-import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-params.component';
+import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/models/abstract-field-params.component';
 import { OperationState } from '../../../../shared/models/operation-state.enum';
 import { PriceParamsDto } from '../dto/price-params.dto';
 import { CURRENCIES } from '../constants';
