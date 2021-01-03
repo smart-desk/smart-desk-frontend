@@ -1,8 +1,10 @@
 export interface Filters {
+    // keys are field IDs
     [key: string]: object | [];
 }
 
 export interface FilterObject<T> {
+    // key is field ID, generic is type of filter DTO, e.g. RadioFilterDto
     [key: string]: T;
 }
 
