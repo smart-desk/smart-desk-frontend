@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { omitBy, isNull } from 'lodash';
 import { AbstractFieldFilterComponent } from '../../../../shared/modules/dynamic-fields/models/abstract-field-filter.component';
 import { PriceParamsDto } from '../dto/price-params.dto';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { Filter } from '../../../../shared/modules/dynamic-fields/models/filter';
 import { PriceFilterDto } from '../dto/price-filter.dto';
 
@@ -27,12 +28,17 @@ export class PriceFilterComponent extends AbstractFieldFilterComponent<PricePara
 
     getFilterValue(): Filter<PriceFilterDto> {
         if (this.form.touched || !this.emptyValues()) {
-            return new Filter(this.field.id, this.form.getRawValue());
+            const form = this.excludeEmptyValues();
+            return new Filter(this.field.id, form);
         }
         return;
     }
 
     private emptyValues(): boolean {
-        return this.form.get('from') === null && this.form.get('to') === null;
+        return isNull(this.form.get('from').value) && isNull(this.form.get('to').value);
+    }
+
+    private excludeEmptyValues(): PriceFilterDto {
+        return omitBy(this.form.getRawValue(), isNull);
     }
 }
