@@ -1,68 +1,61 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { combineLatest, Subject } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AdvertRequestOptions, AdvertService } from './advert.service';
-import { AdvertsGetResponseDto } from '../../models/dto/advert.dto';
+import { Subject } from 'rxjs';
+import { NavigationExtras, Router } from '@angular/router';
+import { AdvertService } from './advert.service';
+import { AdvertsGetDto, AdvertsGetResponseDto } from '../../models/dto/advert.dto';
+import { Filters } from '../../modules/dynamic-fields/models/filter';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class AdvertDataService {
     adverts$ = new Subject<AdvertsGetResponseDto>();
+    private categoryId: string;
+    private options: AdvertsGetDto = new AdvertsGetDto();
 
-    constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private advertService: AdvertService) {
-        combineLatest([this.route.paramMap, this.route.queryParamMap])
-            .pipe(
-                switchMap(([params, queryParams]) => {
-                    const requestOptions: AdvertRequestOptions = {};
+    constructor(private router: Router, private advertService: AdvertService) {}
 
-                    if (params.has('category_id')) {
-                        requestOptions.categoryId = params.get('category_id');
-                    }
-
-                    if (queryParams.has('page')) {
-                        try {
-                            requestOptions.page = parseInt(queryParams.get('page'), 10);
-                        } catch (e) {}
-                    }
-
-                    if (queryParams.has('search')) {
-                        requestOptions.search = queryParams.get('search');
-                    }
-
-                    return this.advertService.getAdverts(requestOptions);
-                })
-            )
-            .subscribe(data => {
-                // todo !important! it is triggered on every page
-                this.adverts$.next(data);
-            });
+    loadAdvertsForCategory(categoryId: string, options?: AdvertsGetDto): void {
+        this.categoryId = categoryId;
+        this.options = options ? options : this.options;
+        this.requestAdverts();
+        this.updateQueryParams();
     }
 
     changePage(page: number): void {
-        this.router.navigate([], {
-            queryParams: {
-                ...this.route.snapshot.queryParams,
-                page,
-            },
-        });
-    }
-
-    resetPage(): void {
-        this.router.navigate([], {
-            queryParams: {
-                ...this.route.snapshot.queryParams,
-                page: null,
-            },
-        });
+        this.options.page = page;
+        this.requestAdverts();
+        this.updateQueryParams();
     }
 
     search(phrase: string) {
-        this.router.navigate([], {
-            queryParams: {
-                ...this.route.snapshot.queryParams,
-                search: phrase,
-            },
+        this.options.search = phrase;
+        this.requestAdverts();
+        this.updateQueryParams();
+    }
+
+    applyFilters(filters: Filters): void {
+        this.options.filters = filters;
+        this.requestAdverts();
+        this.updateQueryParams();
+    }
+
+    private requestAdverts(): void {
+        this.advertService.getAdvertsForCategory(this.categoryId, this.options).subscribe(res => {
+            this.adverts$.next(res);
         });
+    }
+
+    private updateQueryParams(): void {
+        const extras: NavigationExtras = {
+            queryParams: {
+                page: this.options.queryParamPage,
+                limit: this.options.queryParamLimit,
+                search: this.options.queryParamSearch,
+                filters: this.options.queryParamFilters,
+            },
+        };
+
+        this.router.navigate([], extras).then();
     }
 }

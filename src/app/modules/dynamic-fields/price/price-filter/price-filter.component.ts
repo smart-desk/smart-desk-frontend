@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { AbstractFieldFilterComponent, FilterParams } from '../../../../shared/modules/dynamic-fields/abstract-field-filter.component';
+import { AbstractFieldFilterComponent } from '../../../../shared/modules/dynamic-fields/models/abstract-field-filter.component';
 import { PriceParamsDto } from '../dto/price-params.dto';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Filter } from '../../../../shared/modules/dynamic-fields/models/filter';
+import { PriceFilterDto } from '../dto/price-filter.dto';
 
 @Component({
     selector: 'app-price-filter',
@@ -18,18 +20,15 @@ export class PriceFilterComponent extends AbstractFieldFilterComponent<PricePara
 
     ngOnInit(): void {
         this.form = this.fb.group({
-            min: [null],
-            max: [null],
+            from: [null],
+            to: [null],
         });
     }
 
-    getFilterValue(): FilterParams {
+    getFilterValue(): Filter<PriceFilterDto> {
         if (!this.form.touched) {
             return;
         }
-        return {
-            fieldId: this.field.id,
-            value: this.form.getRawValue(),
-        };
+        return new Filter(this.field.id, this.form.getRawValue());
     }
 }

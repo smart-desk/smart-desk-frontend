@@ -11,7 +11,8 @@ import {
 import { Model } from '../../../../shared/models/dto/model.entity';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
 import { SectionType } from '../../../../shared/models/dto/section.entity';
-import { AbstractFieldFilterComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-filter.component';
+import { AbstractFieldFilterComponent } from '../../../../shared/modules/dynamic-fields/models/abstract-field-filter.component';
+import { AdvertDataService } from '../../../../shared/services';
 
 @Component({
     selector: 'app-filters',
@@ -34,7 +35,11 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
 
     private filterComponents: AbstractFieldFilterComponent<any>[] = [];
 
-    constructor(private dynamicFieldService: DynamicFieldsService, private cdr: ChangeDetectorRef) {}
+    constructor(
+        private dynamicFieldService: DynamicFieldsService,
+        private cdr: ChangeDetectorRef,
+        private advertDataService: AdvertDataService
+    ) {}
 
     ngAfterViewInit(): void {
         this.updateFilters();
@@ -45,8 +50,12 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
     }
 
     apply(): void {
-        const filters = this.filterComponents.map(c => c.getFilterValue()).filter(f => !!f);
-        console.log(filters);
+        const filters = this.filterComponents
+            .map(c => c.getFilterValue())
+            .filter(f => !!f)
+            .reduce((prev, cur, acc) => ({ ...prev, ...cur.getFilterObject() }), {});
+
+        this.advertDataService.applyFilters(filters);
     }
 
     private updateFilters(): void {

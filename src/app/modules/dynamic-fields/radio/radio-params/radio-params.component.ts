@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { FieldService } from '../../../../shared/services';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { FieldEntity } from '../../../../shared/models/dto/field.entity';
-import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-params.component';
+import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/models/abstract-field-params.component';
 import { OperationState } from '../../../../shared/models/operation-state.enum';
 import { RadioItem, RadioParamsDto } from '../dto/radio-params.dto';
 
@@ -55,7 +55,7 @@ export class RadioParamsComponent extends AbstractFieldParamsComponent implement
             params: {
                 ...((this.field.params as object) || {}),
                 ...this.form.getRawValue(),
-                radios
+                radios,
             },
         } as FieldEntity;
 

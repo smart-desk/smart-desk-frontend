@@ -1,5 +1,5 @@
 import { ComponentFactory, ComponentFactoryResolver, Injectable } from '@angular/core';
-import { AbstractFieldService } from '../../../shared/modules/dynamic-fields/abstract-field.service';
+import { AbstractFieldService } from '../../../shared/modules/dynamic-fields/models/abstract-field.service';
 import { TextareaFormComponent } from './textarea-form/textarea-form.component';
 import { TextareaParamsComponent } from './textarea-params/textarea-params.component';
 import { TextareaViewComponent } from './textarea-view/textarea-view.component';
@@ -20,7 +20,8 @@ export class TextareaService implements AbstractFieldService {
         return this.componentFactoryResolver.resolveComponentFactory(TextareaViewComponent);
     }
 
-    getFilterComponentResolver(): ComponentFactory<any> {  // todo set generic
+    getFilterComponentResolver(): ComponentFactory<any> {
+        // todo set generic
         return null;
     }
 

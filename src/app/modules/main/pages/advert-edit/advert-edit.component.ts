@@ -11,7 +11,7 @@ import {
 import { switchMap } from 'rxjs/operators';
 import { AdvertService, ModelService } from '../../../../shared/services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/abstract-field-form.component';
+import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/models/abstract-field-form.component';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Advert } from '../../../../shared/models/dto/advert.entity';

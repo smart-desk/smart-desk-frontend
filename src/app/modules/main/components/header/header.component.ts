@@ -12,7 +12,6 @@ import { User } from '../../../../shared/models/dto/user.entity';
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
-    providers: [AdvertDataService],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit, OnDestroy {
@@ -35,6 +34,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         if (this.route.snapshot.queryParamMap.has('search')) {
             this.searchPhrase = this.route.snapshot.queryParamMap.get('search');
+            this.cd.detectChanges();
         }
 
         this.router.events
@@ -62,7 +62,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 this.categoryTree$.next(tree);
             });
 
-        this.loginService.login$.subscribe(user => (this.user = user));
+        this.loginService.login$.pipe(takeUntil(this.destroy$)).subscribe(user => (this.user = user));
     }
 
     ngOnDestroy() {
