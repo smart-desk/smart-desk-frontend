@@ -13,6 +13,7 @@ import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/
 import { SectionType } from '../../../../shared/models/dto/section.entity';
 import { AbstractFieldFilterComponent } from '../../../../shared/modules/dynamic-fields/models/abstract-field-filter.component';
 import { AdvertDataService } from '../../../../shared/services';
+import { Filter, Filters } from '../../../../shared/modules/dynamic-fields/models/filter';
 
 @Component({
     selector: 'app-filters',
@@ -24,6 +25,9 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
     @Input()
     model: Model;
 
+    @Input()
+    filters: Filters;
+
     @ViewChild('params', { read: ViewContainerRef })
     private paramsContainerRef: ViewContainerRef;
 
@@ -33,7 +37,7 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
     @ViewChild('price', { read: ViewContainerRef })
     private priceContainerRef: ViewContainerRef;
 
-    private filterComponents: AbstractFieldFilterComponent<any>[] = [];
+    private filterComponents: AbstractFieldFilterComponent<any, any>[] = [];
 
     constructor(
         private dynamicFieldService: DynamicFieldsService,
@@ -77,7 +81,7 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
         containerTypeMap.forEach((container, type) => this.populateContainerWithFields(container, type));
     }
 
-    private populateContainerWithFields(container: ViewContainerRef, sectionType: SectionType): AbstractFieldFilterComponent<any>[] {
+    private populateContainerWithFields(container: ViewContainerRef, sectionType: SectionType): AbstractFieldFilterComponent<any, any>[] {
         const section = this.model.sections.find(s => s.type === sectionType);
         if (!section) {
             return;
@@ -101,6 +105,7 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
 
                 const component = container.createComponent(resolver);
                 component.instance.field = field;
+                component.instance.filter = this.getFilterForField(field.id);
                 component.changeDetectorRef.detectChanges();
 
                 return component.instance;
@@ -115,5 +120,17 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
         this.paramsContainerRef.clear();
         this.priceContainerRef.clear();
         this.locationContainerRef.clear();
+    }
+
+    private getFilterForField(fieldId: string): Filter<any> {
+        if (!this.filters) {
+            return;
+        }
+
+        const res = Object.entries(this.filters)
+            .map(([key, params]) => new Filter(key, params))
+            .find(filter => filter.getFieldId() === fieldId);
+
+        return res;
     }
 }

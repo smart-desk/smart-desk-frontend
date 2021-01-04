@@ -11,7 +11,7 @@ import { PriceFilterDto } from '../dto/price-filter.dto';
     styleUrls: ['./price-filter.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PriceFilterComponent extends AbstractFieldFilterComponent<PriceParamsDto> implements OnInit {
+export class PriceFilterComponent extends AbstractFieldFilterComponent<PriceParamsDto, PriceFilterDto> implements OnInit {
     form: FormGroup;
 
     constructor(private fb: FormBuilder) {
@@ -20,15 +20,19 @@ export class PriceFilterComponent extends AbstractFieldFilterComponent<PricePara
 
     ngOnInit(): void {
         this.form = this.fb.group({
-            from: [null],
-            to: [null],
+            from: [(this.filter && this.filter.getFilterParams() && this.filter.getFilterParams().from) || null],
+            to: [(this.filter && this.filter.getFilterParams() && this.filter.getFilterParams().to) || null],
         });
     }
 
     getFilterValue(): Filter<PriceFilterDto> {
-        if (!this.form.touched) {
-            return;
+        if (this.form.touched || !this.emptyValues()) {
+            return new Filter(this.field.id, this.form.getRawValue());
         }
-        return new Filter(this.field.id, this.form.getRawValue());
+        return;
+    }
+
+    private emptyValues(): boolean {
+        return this.form.get('from') === null && this.form.get('to') === null;
     }
 }

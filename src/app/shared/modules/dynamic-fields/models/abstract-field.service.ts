@@ -25,7 +25,7 @@ export abstract class AbstractFieldService {
     /**
      * Returns component resolver for filter form
      */
-    abstract getFilterComponentResolver(): ComponentFactory<AbstractFieldFilterComponent<any>>;
+    abstract getFilterComponentResolver(): ComponentFactory<AbstractFieldFilterComponent<any, any>>;
 
     /**
      * Returns human readable name of field
