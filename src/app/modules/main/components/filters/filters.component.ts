@@ -3,6 +3,7 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    ComponentRef,
     Input,
     OnChanges,
     ViewChild,
@@ -37,7 +38,7 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
     @ViewChild('price', { read: ViewContainerRef })
     private priceContainerRef: ViewContainerRef;
 
-    private filterComponents: AbstractFieldFilterComponent<any, any>[] = [];
+    private filterComponents: ComponentRef<AbstractFieldFilterComponent<any, any>>[] = [];
 
     constructor(
         private dynamicFieldService: DynamicFieldsService,
@@ -55,11 +56,21 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
 
     apply(): void {
         const filters = this.filterComponents
-            .map(c => c.getFilterValue())
+            .map(c => c.instance.getFilterValue())
             .filter(f => !!f)
             .reduce((prev, cur, acc) => ({ ...prev, ...cur.getFilterObject() }), {});
 
         this.advertDataService.applyFilters(filters);
+    }
+
+    dropFilters(): void {
+        this.filters = {};
+        this.advertDataService.applyFilters(this.filters);
+        this.filterComponents.forEach(component => {
+            component.instance.dropFilters();
+            component.changeDetectorRef.detectChanges();
+        })
+        this.cdr.detectChanges();
     }
 
     private updateFilters(): void {
@@ -108,7 +119,7 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
                 component.instance.filter = this.getFilterForField(field.id);
                 component.changeDetectorRef.detectChanges();
 
-                return component.instance;
+                return component;
             })
             .filter(f => !!f);
 
@@ -127,10 +138,8 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
             return;
         }
 
-        const res = Object.entries(this.filters)
+        return Object.entries(this.filters)
             .map(([key, params]) => new Filter(key, params))
             .find(filter => filter.getFieldId() === fieldId);
-
-        return res;
     }
 }

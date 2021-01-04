@@ -8,4 +8,5 @@ export abstract class AbstractFieldFilterComponent<TParams, TFilter> {
     @Input() field: Field<any, TParams>;
     @Input() filter: Filter<TFilter>;
     abstract getFilterValue(): Filter<TFilter>;
+    abstract dropFilters(): void;
 }

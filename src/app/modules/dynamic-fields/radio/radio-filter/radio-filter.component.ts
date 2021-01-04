@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnChanges, OnInit } from '@angular/core';
 import { AbstractFieldFilterComponent } from '../../../../shared/modules/dynamic-fields/models/abstract-field-filter.component';
-import { RadioParamsDto } from '../dto/radio-params.dto';
+import { RadioItem, RadioParamsDto } from '../dto/radio-params.dto';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Filter } from '../../../../shared/modules/dynamic-fields/models/filter';
 import { RadioFilterDto } from '../dto/radio-filter.dto';
@@ -20,12 +20,7 @@ export class RadioFilterComponent extends AbstractFieldFilterComponent<RadioPara
 
     ngOnInit(): void {
         this.form = this.fb.group({
-            radios: new FormArray(
-                this.field.params.radios.map(
-                    radio =>
-                        new FormControl(this.filter && this.filter.getFilterParams() && this.filter.getFilterParams().includes(radio.value))
-                )
-            ),
+            radios: this.fb.array(this.getRadioArrayOfControls()),
         });
     }
 
@@ -44,7 +39,24 @@ export class RadioFilterComponent extends AbstractFieldFilterComponent<RadioPara
         return;
     }
 
+    dropFilters(): void {
+        this.filter = undefined;
+        this.updateFormValues();
+    }
+
+    private updateFormValues(): void {
+        this.form.get('radios').patchValue(this.fb.control(this.getRadioArrayOfControls()));
+    }
+
     private emptyValues(): boolean {
         return this.form.value.radios.every(checked => !checked);
+    }
+
+    private getRadioArrayOfControls(): FormControl[] {
+        return this.field.params.radios.map(radio => this.fb.control(this.getCheckboxState(radio)));
+    }
+
+    private getCheckboxState(radio: RadioItem): boolean {
+        return !!this.filter && !!this.filter.getFilterParams() && this.filter.getFilterParams().includes(radio.value);
     }
 }

@@ -34,6 +34,21 @@ export class PriceFilterComponent extends AbstractFieldFilterComponent<PricePara
         return;
     }
 
+    dropFilters(): void {
+        this.filter = undefined;
+        this.updateFormValues();
+    }
+
+    private updateFormValues(): void {
+        this.form.patchValue(
+            {
+                from: [(this.filter && this.filter.getFilterParams() && this.filter.getFilterParams().from) || null],
+                to: [(this.filter && this.filter.getFilterParams() && this.filter.getFilterParams().to) || null],
+            },
+            { onlySelf: true }
+        );
+    }
+
     private emptyValues(): boolean {
         return isNull(this.form.get('from').value) && isNull(this.form.get('to').value);
     }
