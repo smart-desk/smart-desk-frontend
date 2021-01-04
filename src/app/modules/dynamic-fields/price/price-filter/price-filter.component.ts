@@ -42,8 +42,8 @@ export class PriceFilterComponent extends AbstractFieldFilterComponent<PricePara
     private updateFormValues(): void {
         this.form.patchValue(
             {
-                from: [(this.filter && this.filter.getFilterParams() && this.filter.getFilterParams().from) || null],
-                to: [(this.filter && this.filter.getFilterParams() && this.filter.getFilterParams().to) || null],
+                from: (this.filter && this.filter.getFilterParams() && this.filter.getFilterParams().from) || null,
+                to: (this.filter && this.filter.getFilterParams() && this.filter.getFilterParams().to) || null,
             },
             { onlySelf: true }
         );

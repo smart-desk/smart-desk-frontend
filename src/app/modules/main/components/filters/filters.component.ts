@@ -58,7 +58,7 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
         const filters = this.filterComponents
             .map(c => c.instance.getFilterValue())
             .filter(f => !!f)
-            .reduce((prev, cur, acc) => ({ ...prev, ...cur.getFilterObject() }), {});
+            .reduce((prev, cur) => ({ ...prev, ...cur.getFilterObject() }), {});
 
         this.advertDataService.applyFilters(filters);
     }
@@ -69,7 +69,7 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
         this.filterComponents.forEach(component => {
             component.instance.dropFilters();
             component.changeDetectorRef.detectChanges();
-        })
+        });
         this.cdr.detectChanges();
     }
 
