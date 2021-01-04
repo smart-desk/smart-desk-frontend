@@ -29,7 +29,7 @@ const routes: Routes = [
                 component: SavedComponent,
             },
             {
-                path: 'my_adverts',
+                path: 'my-adverts',
                 component: MyAdvertsComponent,
             },
             {
