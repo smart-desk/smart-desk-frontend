@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AdvertsGetResponseDto, CreateAdvertDto, UpdateAdvertDto } from '../../models/dto/advert.dto';
+import { AdvertsGetDto, AdvertsGetResponseDto, CreateAdvertDto, UpdateAdvertDto } from '../../models/dto/advert.dto';
 import { Advert } from '../../models/dto/advert.entity';
 import { objectToQueryString } from '../../helpers/object-to-query-string.helper';
 import { Filters } from '../../modules/dynamic-fields/models/filter';
