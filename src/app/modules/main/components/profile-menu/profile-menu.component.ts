@@ -5,7 +5,7 @@ import { User } from '../../../../shared/models/dto/user/user.entity';
 import { LoginService } from '../../../../shared/services/login/login.service';
 
 @Component({
-    selector: 'app-profile',
+    selector: 'app-profile-menu',
     templateUrl: './profile-menu.component.html',
     styleUrls: ['./profile-menu.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
