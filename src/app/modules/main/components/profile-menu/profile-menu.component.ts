@@ -1,8 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { UserService } from '../../../../shared/services';
 import { User } from '../../../../shared/models/dto/user.entity';
 import { LoginService } from '../../../../shared/services/login/login.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'app-profile-menu',
@@ -10,8 +12,9 @@ import { LoginService } from '../../../../shared/services/login/login.service';
     styleUrls: ['./profile-menu.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfileMenuComponent implements OnInit {
+export class ProfileMenuComponent implements OnInit, OnDestroy {
     user: User;
+    destroy$ = new Subject();
 
     constructor(
         private modalService: NzModalService,
@@ -21,7 +24,7 @@ export class ProfileMenuComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.loginService.login$.subscribe(user => {
+        this.loginService.login$.pipe(takeUntil(this.destroy$)).subscribe(user => {
             this.user = user;
             this.cd.detectChanges();
         });
@@ -37,5 +40,10 @@ export class ProfileMenuComponent implements OnInit {
 
     openLoginModal(): void {
         this.loginService.openLoginModal();
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next(null);
+        this.destroy$.complete();
     }
 }
