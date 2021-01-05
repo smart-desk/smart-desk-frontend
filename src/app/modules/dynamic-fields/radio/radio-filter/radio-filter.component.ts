@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnChanges, OnInit } from '@angular/core';
 import { AbstractFieldFilterComponent } from '../../../../shared/modules/dynamic-fields/models/abstract-field-filter.component';
-import { RadioParamsDto } from '../dto/radio-params.dto';
+import { RadioItem, RadioParamsDto } from '../dto/radio-params.dto';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Filter } from '../../../../shared/modules/dynamic-fields/models/filter';
 import { RadioFilterDto } from '../dto/radio-filter.dto';
@@ -11,7 +11,7 @@ import { RadioFilterDto } from '../dto/radio-filter.dto';
     styleUrls: ['./radio-filter.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RadioFilterComponent extends AbstractFieldFilterComponent<RadioParamsDto> implements OnInit {
+export class RadioFilterComponent extends AbstractFieldFilterComponent<RadioParamsDto, RadioFilterDto> implements OnInit {
     form: FormGroup;
 
     constructor(private fb: FormBuilder) {
@@ -20,7 +20,7 @@ export class RadioFilterComponent extends AbstractFieldFilterComponent<RadioPara
 
     ngOnInit(): void {
         this.form = this.fb.group({
-            radios: new FormArray(this.field.params.radios.map(() => new FormControl(false))),
+            radios: this.field.params.radios.map(radio => this.fb.control(this.getCheckboxState(radio))),
         });
     }
 
@@ -29,14 +29,31 @@ export class RadioFilterComponent extends AbstractFieldFilterComponent<RadioPara
     }
 
     getFilterValue(): Filter<RadioFilterDto> {
-        if (!this.form.touched) {
-            return;
+        if (this.form.touched || !this.emptyValues()) {
+            const selectedRadios = this.form.value.radios
+                .map((checked, i) => (checked ? this.field.params.radios[i].value : null))
+                .filter(v => !!v);
+
+            return new Filter(this.field.id, selectedRadios);
         }
+        return;
+    }
 
-        const selectedRadios = this.form.value.radios
-            .map((checked, i) => (checked ? this.field.params.radios[i].value : null))
-            .filter(v => !!v);
+    dropFilters(): void {
+        this.filter = undefined;
+        this.form.patchValue(
+            {
+                radios: this.field.params.radios.map(() => false),
+            },
+            { onlySelf: true }
+        );
+    }
 
-        return new Filter(this.field.id, selectedRadios);
+    private emptyValues(): boolean {
+        return this.form.value.radios.every(checked => !checked);
+    }
+
+    private getCheckboxState(radio: RadioItem): boolean {
+        return !!this.filter && !!this.filter.getFilterParams() && this.filter.getFilterParams().includes(radio.value);
     }
 }

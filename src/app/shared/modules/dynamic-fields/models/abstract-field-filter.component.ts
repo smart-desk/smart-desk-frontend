@@ -4,7 +4,9 @@ import { Filter } from './filter';
 
 @Directive()
 // tslint:disable-next-line:directive-class-suffix
-export abstract class AbstractFieldFilterComponent<TParams> {
+export abstract class AbstractFieldFilterComponent<TParams, TFilter> {
     @Input() field: Field<any, TParams>;
-    abstract getFilterValue(): Filter<any>;
+    @Input() filter: Filter<TFilter>;
+    abstract getFilterValue(): Filter<TFilter>;
+    abstract dropFilters(): void;
 }
