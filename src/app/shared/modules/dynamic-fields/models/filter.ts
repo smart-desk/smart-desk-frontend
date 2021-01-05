@@ -9,10 +9,14 @@ export interface FilterObject<T> {
 }
 
 export class Filter<T> {
-    constructor(private fieldId: string, private params?: T) {}
+    constructor(private fieldId: string, private params: T) {}
 
-    setFilterParams(params: T): void {
-        this.params = params;
+    getFieldId(): string {
+        return this.fieldId;
+    }
+
+    getFilterParams(): T {
+        return this.params;
     }
 
     getFilterObject(): FilterObject<T> {

@@ -42,15 +42,15 @@ export class AdvertService {
             return '';
         }
 
-        if (options.limit) {
+        if (options.limit && options.limit !== AdvertsGetDto.DEFAULT_LIMIT) {
             optionsList.push(`limit=${options.limit}`);
         }
 
-        if (options.page) {
+        if (options.page && options.page !== AdvertsGetDto.DEFAULT_PAGE) {
             optionsList.push(`page=${options.page}`);
         }
 
-        if (options.search) {
+        if (options.search && options.search !== AdvertsGetDto.DEFAULT_SEARCH) {
             optionsList.push(`search=${options.search}`);
         }
 

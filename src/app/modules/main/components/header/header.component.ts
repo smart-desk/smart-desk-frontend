@@ -72,6 +72,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     onCategorySelect($event): void {
         const selectedCat = $event[$event.length - 1];
+        if (this.currentCategory && this.currentCategory.id === selectedCat) {
+            return;
+        }
+
         this.searchPhrase = '';
         this.router.navigate([`/${selectedCat}`]);
     }

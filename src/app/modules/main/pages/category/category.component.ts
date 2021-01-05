@@ -7,6 +7,7 @@ import { AdvertsGetDto, AdvertsGetResponseDto } from '../../../../shared/models/
 import { Category } from '../../../../shared/models/dto/category.entity';
 import { Advert } from '../../../../shared/models/dto/advert.entity';
 import { Model } from '../../../../shared/models/dto/model.entity';
+import { Filters } from "../../../../shared/modules/dynamic-fields/models/filter";
 
 @Component({
     selector: 'app-category',
@@ -22,6 +23,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
     pageSize: number;
     pageIndex: number;
     category: Category;
+    filters: Filters;
 
     private destroy$ = new Subject();
 
@@ -40,6 +42,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
                 switchMap(paramMap => {
                     const categoryId = paramMap.get('category_id');
                     const options = this.parseQueryParams(this.route.snapshot.queryParamMap);
+                    this.filters = options.filters;
 
                     this.advertDataService.loadAdvertsForCategory(categoryId, options);
                     return this.categoryService.getCategory(categoryId);
