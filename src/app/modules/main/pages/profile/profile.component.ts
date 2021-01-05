@@ -15,7 +15,6 @@ import { ProfileFormEnum } from './profile-form.enum';
 })
 export class ProfileComponent implements OnInit {
     formName: FormGroup;
-    formEmail: FormGroup;
     formPhone: FormGroup;
     formCity: FormGroup;
     state: OperationState;
@@ -23,7 +22,7 @@ export class ProfileComponent implements OnInit {
     showProfile = false;
     showPhone = false;
     showCity = false;
-    file: NzUploadFile;
+    file: NzUploadFile[];
     profileForm = ProfileFormEnum;
 
     constructor(
@@ -66,9 +65,9 @@ export class ProfileComponent implements OnInit {
         }
     }
 
-    fileChanged(event: NzUploadChangeParam): void {
+    fileChanged(event: NzUploadChangeParam) {
         if (event.type === 'success') {
-            this.file = event.file;
+            this.file = [event.file];
         }
     }
 
