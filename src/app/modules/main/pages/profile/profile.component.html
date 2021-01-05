@@ -45,12 +45,12 @@
     <form nz-form [formGroup]="formName">
         <nz-form-item>
             <nz-form-control [nzSpan]="14">
-                <input nz-input name="fName" type="fName" value="{{ profile?.firstName }}" />
+                <input nz-input name="fName" type="text" formControlName="fName" />
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-control [nzSpan]="14">
-                <input nz-input name="lName" type="lName" value="{{ profile?.lastName }}" />
+                <input nz-input name="lName" type="text" formControlName="lName" />
             </nz-form-control>
         </nz-form-item>
     </form>
@@ -66,7 +66,7 @@
         <label for="phone">Изменить номер телефона</label>
         <nz-form-item>
             <nz-form-control [nzSpan]="14">
-                <input type="tel" nz-input name="phone" type="phone" id="phone" value="{{ profile?.phone }}" />
+                <input type="tel" nz-input name="phone" id="phone" formControlName="phone" />
             </nz-form-control>
         </nz-form-item>
     </form>
@@ -79,7 +79,7 @@
         </label>
         <nz-form-item>
             <nz-form-control [nzSpan]="14">
-                <input nz-input name="city" type="phone" id="city" value="{{ profile?.city }}" />
+                <input nz-input name="city" type="text" id="city" formControlName="city" />
             </nz-form-control>
         </nz-form-item>
     </form>
