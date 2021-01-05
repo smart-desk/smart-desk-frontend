@@ -58,15 +58,14 @@ export class ProfileComponent implements OnInit {
     }
 
     submitForm(formType): void {
-        // TODO: разобраться почему не попадает в нужный кейс
         switch (formType) {
-            case formType === ProfileFormEnum.EMAIL:
+            case ProfileFormEnum.EMAIL:
                 this.updateEmail();
                 break;
-            case formType === ProfileFormEnum.NAME:
+            case ProfileFormEnum.NAME:
                 this.updateName();
                 break;
-            case formType === ProfileFormEnum.PHONE:
+            case ProfileFormEnum.PHONE:
                 this.updatePhone();
                 break;
         }
