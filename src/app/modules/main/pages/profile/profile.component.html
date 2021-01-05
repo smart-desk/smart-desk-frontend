@@ -1,34 +1,29 @@
-<nz-layout class="layout">
+<nz-layout>
     <nz-sider [nzTheme]="'light'">
-        <app-profile-side-bar class="profile-bar"></app-profile-side-bar>
+        <app-profile-side-bar></app-profile-side-bar>
     </nz-sider>
-    <nz-layout class="right-layout">
-        <nz-content>
-            <section class="profile-data">
-                <h1>Личные данные</h1>
-                <table class="profile-data__table">
-                    <tbody>
-                        <tr>
-                            <td>Profile</td>
-                            <td>{{ profile?.firstName }} {{ profile?.lastName }}</td>
-                            <td><a (click)="showProfile = !showProfile">Edit</a></td>
-                        </tr>
-                        <tr>
-                            <td>Phone</td>
-                            <td>{{ profile?.phone }}</td>
-                            <td><a (click)="showPhone = !showPhone">Change</a></td>
-                        </tr>
-                        <tr>
-                            <td>Town</td>
-                            <td>{{ profile?.city }}</td>
-                            <td><a (click)="showCity = !showCity">Specify</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-        </nz-content>
-        <nz-footer></nz-footer>
-    </nz-layout>
+    <nz-content class="main">
+        <h1>Личные данные</h1>
+        <nz-table nzTemplateMode>
+            <tbody>
+                <tr>
+                    <td>Profile</td>
+                    <td>{{ profile?.firstName }} {{ profile?.lastName }}</td>
+                    <td><a (click)="showProfile = !showProfile">Edit</a></td>
+                </tr>
+                <tr>
+                    <td>Phone</td>
+                    <td>{{ profile?.phone }}</td>
+                    <td><a (click)="showPhone = !showPhone">Change</a></td>
+                </tr>
+                <tr>
+                    <td>Town</td>
+                    <td>{{ profile?.city }}</td>
+                    <td><a (click)="showCity = !showCity">Specify</a></td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </nz-content>
 </nz-layout>
 
 <nz-modal [(nzVisible)]="showProfile" (nzOnCancel)="showProfile = !showProfile" (nzOnOk)="submitForm(profileForm.NAME)">
