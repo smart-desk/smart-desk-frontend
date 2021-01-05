@@ -34,26 +34,21 @@ export class ProfileComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
+        this.formName = this.fb.group({
+            fName: [],
+            lName: [],
+        });
+        this.formPhone = this.fb.group({ phone: [] });
+        this.formCity = this.fb.group({ city: [] });
+
         this.userService.getCurrentUser().subscribe(user => {
             this.profile = user;
             this.cd.detectChanges();
-        });
 
-        this.formName = this.fb.group({
-            fName: [this.profile?.firstName || null],
-            lName: [this.profile?.lastName || null],
-        });
-
-        this.formEmail = this.fb.group({
-            email: [this.profile?.email || null],
-        });
-
-        this.formPhone = this.fb.group({
-            phone: [this.profile?.phone || null],
-        });
-
-        this.formCity = this.fb.group({
-            city: [this.profile?.city || null],
+            this.formName.get('fName').setValue(this.profile?.firstName);
+            this.formName.get('lName').setValue(this.profile?.lastName);
+            this.formPhone.get('phone').setValue(this.profile?.phone);
+            this.formCity.get('city').setValue(this.profile?.city);
         });
     }
 
