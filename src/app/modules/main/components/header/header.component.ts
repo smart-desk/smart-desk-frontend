@@ -6,7 +6,7 @@ import { NzCascaderOption } from 'ng-zorro-antd/cascader';
 import { AdvertDataService, CategoryService } from '../../../../shared/services';
 import { Category } from '../../../../shared/models/dto/category.entity';
 import { LoginService } from '../../../../shared/services/login/login.service';
-import { User } from '../../../../shared/models/dto/user.entity';
+import { User } from '../../../../shared/models/dto/user/user.entity';
 
 @Component({
     selector: 'app-header',
