@@ -20,7 +20,7 @@ export class RadioFilterComponent extends AbstractFieldFilterComponent<RadioPara
 
     ngOnInit(): void {
         this.form = this.fb.group({
-            radios: this.field.params.radios.map(radio => this.fb.control(this.getCheckboxState(radio))),
+            radios: this.fb.array(this.field.params.radios.map(radio => this.fb.control(this.getCheckboxState(radio)))),
         });
     }
 
