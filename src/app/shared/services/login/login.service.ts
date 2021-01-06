@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from '../../models/dto/user.entity';
+import { User } from '../../models/dto/user/user.entity';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { LoginComponent } from '../../components/login/login.component';
 import { switchMap } from 'rxjs/operators';

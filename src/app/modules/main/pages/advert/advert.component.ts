@@ -7,7 +7,7 @@ import { Advert } from '../../../../shared/models/dto/advert.entity';
 import { SectionType } from '../../../../shared/models/dto/section.entity';
 import { FieldEntity } from '../../../../shared/models/dto/field.entity';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
-import { User } from '../../../../shared/models/dto/user.entity';
+import { User } from '../../../../shared/models/dto/user/user.entity';
 
 @Component({
     selector: 'app-advert',

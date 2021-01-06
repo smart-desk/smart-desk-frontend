@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { UserService } from '../../../../shared/services';
-import { User } from '../../../../shared/models/dto/user.entity';
+import { User } from '../../../../shared/models/dto/user/user.entity';
 import { LoginService } from '../../../../shared/services/login/login.service';
 
 @Component({
