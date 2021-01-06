@@ -1,35 +1,35 @@
-<section class="profile">
-    <h1>Личные данные</h1>
-    <!--todo: левый side bar-->
-    <!--при сабмите выводим данные в консоль(без запроса к базе)-->
-    <!--пример реализации загрузки фото в PhotoFormComponent(без сохранения в таблицу)-->
-    <!--Заглушка "Мои объявления", "Избранное" (урлы, доступ к урлам)-->
-    <nz-table>
-        <tbody>
-            <tr>
-                <td>Profile</td>
-                <td>{{ profile?.firstName }} {{ profile?.lastName }}</td>
-                <td><a (click)="showProfile = !showProfile">Edit</a></td>
-            </tr>
-            <tr>
-                <td>Phone</td>
-                <td>{{ profile?.phone }}</td>
-                <td><a (click)="showPhone = !showPhone">Change</a></td>
-            </tr>
-            <tr>
-                <td>Town</td>
-                <td>{{ profile?.city }}</td>
-                <td><a (click)="showCity = !showCity">Specify</a></td>
-            </tr>
-        </tbody>
-    </nz-table>
-</section>
+<div class="profile-wrap">
+    <app-profile-side-bar class="profile-bar"></app-profile-side-bar>
+    <section class="profile-data">
+        <h1>Личные данные</h1>
+        <table class="profile-data__table">
+            <tbody>
+                <tr>
+                    <td>Profile</td>
+                    <td>{{ profile?.firstName }} {{ profile?.lastName }}</td>
+                    <td><a (click)="showProfile = !showProfile">Edit</a></td>
+                </tr>
+                <tr>
+                    <td>Phone</td>
+                    <td>{{ profile?.phone }}</td>
+                    <td><a (click)="showPhone = !showPhone">Change</a></td>
+                </tr>
+                <tr>
+                    <td>Town</td>
+                    <td>{{ profile?.city }}</td>
+                    <td><a (click)="showCity = !showCity">Specify</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</div>
 
 <nz-modal [(nzVisible)]="showProfile" (nzOnCancel)="showProfile = !showProfile" (nzOnOk)="submitForm('name')">
     <div class="user-avatar">
         <nz-upload
             nzAction="/s3/image"
             nzListType="picture-card"
+            [nzFileList]="file"
             nzAccept="image/png, image/jpeg"
             [nzLimit]="1"
             (nzChange)="fileChanged($event)"

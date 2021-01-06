@@ -33,6 +33,10 @@ import { SharedModule } from '../../shared/shared.module';
 import { ProfileMenuComponent } from './components/profile-menu/profile-menu.component';
 import { FiltersComponent } from './components/filters/filters.component';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
 
 const NZModules = [
     NzModalModule,
@@ -52,6 +56,10 @@ const NZModules = [
     NzNotificationModule,
     NzAvatarModule,
     NzDropDownModule,
+    NzCollapseModule,
+    NzDividerModule,
+    NzTableModule,
+    NzUploadModule,
 ];
 
 const pages = [MainComponent, CategoryComponent, AdvertComponent, AdvertEditComponent, AdvertCreateComponent, IndexComponent];
@@ -64,10 +72,13 @@ const components = [
     ProfileComponent,
     ProfileMenuComponent,
     FiltersComponent,
+    SavedComponent,
+    MyAdvertsComponent,
+    ProfileSideBarComponent,
 ];
 
 @NgModule({
     declarations: [...pages, ...components],
-    imports: [...NZModules, CommonModule, MainRoutingModule, FormsModule, ReactiveFormsModule, SharedModule, NzCollapseModule],
+    imports: [...NZModules, CommonModule, MainRoutingModule, FormsModule, ReactiveFormsModule, SharedModule],
 })
 export class MainModule {}

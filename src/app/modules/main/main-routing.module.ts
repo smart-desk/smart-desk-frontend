@@ -8,6 +8,8 @@ import { AdvertCreateComponent } from './pages/advert-create/advert-create.compo
 import { IndexComponent } from './pages/index/index.component';
 import { AuthGuard } from '../../shared/services/auth/auth.guard';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { SavedComponent } from './pages/saved/saved.component';
+import { MyAdvertsComponent } from './pages/my-adverts/my-adverts.component';
 
 const routes: Routes = [
     {
@@ -21,6 +23,14 @@ const routes: Routes = [
             {
                 path: 'profile',
                 component: ProfileComponent,
+            },
+            {
+                path: 'saved',
+                component: SavedComponent,
+            },
+            {
+                path: 'my_adverts',
+                component: MyAdvertsComponent,
             },
             {
                 path: 'adverts/create',
