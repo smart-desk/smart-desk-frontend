@@ -10,7 +10,7 @@
             <ng-container #price></ng-container>
         </div>
         <div class="user" *ngIf="user">
-            <nz-avatar nzIcon="user" nzSize="large"></nz-avatar>
+            <nz-avatar [nzSrc]="user?.avatar" nzIcon="user" nzSize="large"></nz-avatar>
             <h3>{{ user?.firstName }} {{ user?.lastName }}</h3>
         </div>
         <div>

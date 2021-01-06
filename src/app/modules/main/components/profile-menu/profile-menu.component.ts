@@ -30,10 +30,6 @@ export class ProfileMenuComponent implements OnInit, OnDestroy {
         });
     }
 
-    getAvatarLetters(): string {
-        return (this.user.firstName[0] || '') + (this.user.lastName[0] || '');
-    }
-
     logout(): void {
         this.loginService.logout();
     }
