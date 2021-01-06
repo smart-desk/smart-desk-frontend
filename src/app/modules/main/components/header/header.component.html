@@ -5,6 +5,8 @@
     <div class="category">
         <nz-cascader
             class="category-selector"
+            nzLabelProperty="name"
+            nzValueProperty="id"
             [nzShowInput]="false"
             [nzAllowClear]="false"
             [nzOptions]="categoryTree$ | async"

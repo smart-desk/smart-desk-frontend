@@ -53,12 +53,9 @@ export class AdvertCreateComponent implements OnInit {
     ngOnInit(): void {
         this.categoryService
             .getCategories()
-            .pipe(
-                tap(categories => (this.categories = [...categories])),
-                map(categories => this.categoryService.transformArrayToTree(categories))
-            )
+            .pipe(tap(categories => (this.categories = [...categories])))
             .subscribe(tree => {
-                this.categoryTree$.next(tree);
+                this.categoryTree$.next(tree as NzCascaderOption[]);
                 this.loadingCategories$.next(false);
             });
     }

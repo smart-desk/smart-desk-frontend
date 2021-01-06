@@ -11,6 +11,8 @@
 <ng-template #selectCategory>
     <nz-cascader
         class="category-selector"
+        nzLabelProperty="name"
+        nzValueProperty="id"
         [nzAllowClear]="false"
         [nzSize]="'large'"
         [nzOptions]="categoryTree$ | async"

@@ -13,7 +13,7 @@ export class CategoryService {
     constructor(private http: HttpClient) {}
 
     /**
-     * Returns array of existing categories
+     * Returns tree of categories
      */
     getCategories(): Observable<Category[]> {
         return this.http.get<Category[]>(`/categories`);
@@ -45,29 +45,5 @@ export class CategoryService {
      */
     deleteCategory(id: string): Observable<unknown> {
         return this.http.delete<Category>(`/categories/${id}`);
-    }
-
-    transformArrayToTree(categories: Category[]): NzCascaderOption[] {
-        const createNodesTree = (cats: any[]): NzCascaderOption[] => {
-            return cats.map(cat => {
-                if (cat.children) {
-                    cat.children = createNodesTree(cat.children);
-                    cat.isLeaf = false;
-                    return this.createCascaderOptionFromCategory(cat);
-                }
-                cat.isLeaf = true;
-                return this.createCascaderOptionFromCategory(cat);
-            });
-        };
-        return createNodesTree(arrayToTree(categories));
-    }
-
-    private createCascaderOptionFromCategory(category: any): NzCascaderOption {
-        return {
-            label: category.name,
-            value: category.id,
-            children: category.children,
-            isLeaf: category.isLeaf,
-        };
     }
 }

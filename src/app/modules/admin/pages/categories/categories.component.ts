@@ -82,7 +82,7 @@ export class CategoriesComponent implements OnInit {
     }
 
     private transformArrayToTree(categories: Category[]): NzTreeNode[] {
-        const createNodesTree = (cats: any[]): NzTreeNode[] => {
+        const createNodesTree = (cats: Category[]): NzTreeNode[] => {
             return cats.map(cat => {
                 const node = this.createNodeFromCategory(cat);
 

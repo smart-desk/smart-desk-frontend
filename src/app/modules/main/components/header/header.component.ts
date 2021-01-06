@@ -57,9 +57,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
         this.categoryService
             .getCategories()
-            .pipe(map(categories => this.categoryService.transformArrayToTree(categories)))
             .subscribe(tree => {
-                this.categoryTree$.next(tree);
+                this.categoryTree$.next(tree as NzCascaderOption[]);
             });
 
         this.loginService.login$.pipe(takeUntil(this.destroy$)).subscribe(user => (this.user = user));
