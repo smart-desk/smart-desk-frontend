@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { User } from '../../models/dto/user.entity';
-import { UpdateUserDto } from '../../models/dto/update-user.dto';
+import { User } from '../../models/dto/user/user.entity';
+import { UpdateUserDto } from '../../models/dto/user/update-user.dto';
 
 @Injectable({
     providedIn: 'root',

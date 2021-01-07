@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../../../../shared/services';
 import { LoginService } from '../../../../shared/services/login/login.service';
-import { User } from '../../../../shared/models/dto/user.entity';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { User } from '../../../../shared/models/dto/user/user.entity';
 
 @Component({
     selector: 'app-navigation-header',

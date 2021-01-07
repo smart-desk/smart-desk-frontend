@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { OperationState } from '../../../../shared/models/operation-state.enum';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { UserService } from '../../../../shared/services';
-import { User } from '../../../../shared/models/dto/user.entity';
+import { User } from '../../../../shared/models/dto/user/user.entity';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import { ProfileFormEnum } from './profile-form.enum';
 

@@ -2,7 +2,7 @@
 
 <p class="profile__name" nz-dropdown nzTrigger="click" *ngIf="user" [nzDropdownMenu]="profileMenu">
     <span>{{ user.firstName }} {{ user.lastName }}</span>
-    <nz-avatar class="profile__avatar" [nzText]="getAvatarLetters()" [nzSize]="24"></nz-avatar>
+    <nz-avatar class="profile__avatar" [nzSrc]="user?.avatar" nzIcon="user" [nzSize]="24"></nz-avatar>
 </p>
 
 <nz-dropdown-menu #profileMenu="nzDropdownMenu">

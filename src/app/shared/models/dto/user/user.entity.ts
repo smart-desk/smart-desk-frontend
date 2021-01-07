@@ -5,4 +5,5 @@ export class User {
     phone: string;
     city: string;
     email: string;
+    avatar?: string;
 }
