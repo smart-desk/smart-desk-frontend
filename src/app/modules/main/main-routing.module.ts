@@ -22,15 +22,20 @@ const routes: Routes = [
             },
             {
                 path: 'profile',
-                component: ProfileComponent,
-            },
-            {
-                path: 'saved',
-                component: SavedComponent,
-            },
-            {
-                path: 'my-adverts',
-                component: MyAdvertsComponent,
+                children: [
+                    {
+                        path: '',
+                        component: ProfileComponent,
+                    },
+                    {
+                        path: 'saved',
+                        component: SavedComponent,
+                    },
+                    {
+                        path: 'my-adverts',
+                        component: MyAdvertsComponent,
+                    },
+                ],
             },
             {
                 path: 'adverts/create',
