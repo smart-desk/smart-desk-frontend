@@ -59,7 +59,7 @@
 
 <nz-modal [(nzVisible)]="showPhone" nzTitle="Номер " (nzOnCancel)="showPhone = !showPhone" (nzOnOk)="submitForm(profileForm.PHONE)">
     <form nz-form [formGroup]="formPhone">
-        <nz-form-control-label for="phone">Изменить номер телефона</nz-form-control-label>
+        <nz-form-label for="phone">Изменить номер телефона</nz-form-label>
         <nz-form-item>
             <nz-form-control [nzSpan]="14">
                 <input type="tel" nz-input name="phone" id="phone" formControlName="phone" />
@@ -70,7 +70,7 @@
 
 <nz-modal [(nzVisible)]="showCity" nzTitle="Город" (nzOnCancel)="showCity = !showCity" (nzOnOk)="submitForm(profileForm.CITY)">
     <form nz-form [formGroup]="formCity">
-        <nz-form-control-label for="city">Укажите город, в котором вы находитесь</nz-form-control-label>
+        <nz-form-label for="city">Укажите город, в котором вы находитесь</nz-form-label>
         <nz-form-item>
             <nz-form-control [nzSpan]="14">
                 <input nz-input name="city" type="text" id="city" formControlName="city" />
