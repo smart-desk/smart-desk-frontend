@@ -13,8 +13,8 @@ export class UserService {
 
     constructor(private http: HttpClient) {}
 
-    getCurrentUser(): Observable<User> {
-        if (this.user) {
+    getCurrentUser(forceUpdate?: boolean): Observable<User> {
+        if (this.user && !forceUpdate) {
             return of(this.user);
         }
         return this.http.get<any>(`/users/profile`).pipe(tap(user => (this.user = user)));

@@ -6,6 +6,7 @@ import { UserService } from '../../../../shared/services';
 import { User } from '../../../../shared/models/dto/user/user.entity';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import { ProfileFormEnum } from './profile-form.enum';
+import { LoginService } from '../../../../shared/services/login/login.service';
 
 @Component({
     selector: 'app-user-settings',
@@ -22,30 +23,35 @@ export class ProfileComponent implements OnInit {
     showProfile = false;
     showPhone = false;
     showCity = false;
-    file: NzUploadFile[];
+    file: NzUploadFile[] = [];
     profileForm = ProfileFormEnum;
 
     constructor(
         private modalService: NzModalService,
         private userService: UserService,
         private fb: FormBuilder,
-        private cd: ChangeDetectorRef
+        private cd: ChangeDetectorRef,
+        private loginService: LoginService
     ) {}
 
     ngOnInit(): void {
         this.formName = this.fb.group({
             firstName: [],
             lastName: [],
+            avatar: [],
         });
         this.formPhone = this.fb.group({ phone: [] });
         this.formCity = this.fb.group({ city: [] });
 
         this.userService.getCurrentUser().subscribe(user => {
             this.profile = user;
-            this.cd.detectChanges();
+            const avatar = this.profile?.avatar;
+            this.file = [{ name: 'image.png', uid: '-1', url: avatar }];
 
+            this.cd.detectChanges();
             this.formName.get('firstName').setValue(this.profile?.firstName);
             this.formName.get('lastName').setValue(this.profile?.lastName);
+            this.formName.get('avatar').setValue(avatar);
             this.formPhone.get('phone').setValue(this.profile?.phone);
             this.formCity.get('city').setValue(this.profile?.city);
         });
@@ -68,6 +74,7 @@ export class ProfileComponent implements OnInit {
     fileChanged(event: NzUploadChangeParam) {
         if (event.type === 'success') {
             this.file = [event.file];
+            this.formName.get('avatar').setValue(this.file[0].response.url);
         }
     }
 
@@ -78,6 +85,8 @@ export class ProfileComponent implements OnInit {
     updateName(): void {
         this.userService.updateProfile(this.formName.value).subscribe(user => {
             this.profile = user;
+            this.loginService.updateLoginInfo();
+            this.showProfile = false;
             this.cd.detectChanges();
         });
     }
