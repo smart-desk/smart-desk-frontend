@@ -1,11 +1,15 @@
 <nz-row [nzGutter]="16">
-    <nz-col [nzSpan]="6"></nz-col>
+    <nz-col [nzSpan]="6">
+        <nz-avatar [nzSrc]="user?.avatar" nzIcon="user" [nzSize]="128"></nz-avatar>
+        <h1>{{user?.firstName}} {{user?.lastName}}</h1>
+    </nz-col>
     <nz-col [nzSpan]="18">
         <nz-tabset [nzAnimated]="false">
             <nz-tab nzTitle="Активные">
                 <app-adverts-list *ngIf="advertResponse" [adverts]="advertResponse?.adverts"></app-adverts-list>
             </nz-tab>
             <nz-tab nzTitle="Завершенные">
+                <!-- todo -->
                 <p>Todo</p>
             </nz-tab>
         </nz-tabset>
