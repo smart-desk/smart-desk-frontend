@@ -2,12 +2,14 @@
 
 <p class="profile__name" nz-dropdown nzTrigger="click" *ngIf="user" [nzDropdownMenu]="profileMenu">
     <span>{{ user.firstName }} {{ user.lastName }}</span>
-    <nz-avatar class="profile__avatar" [nzText]="getAvatarLetters()" [nzSize]="24"></nz-avatar>
+    <nz-avatar class="profile__avatar" [nzSrc]="user?.avatar" nzIcon="user" [nzSize]="24"></nz-avatar>
 </p>
 
 <nz-dropdown-menu #profileMenu="nzDropdownMenu">
     <ul nz-menu>
-        <li nz-menu-item>Настройки</li>
+        <li routerLink="profile" nz-menu-item>Профиль</li>
+        <li routerLink="saved" nz-menu-item>Избранные</li>
+        <li routerLink="my-adverts" nz-menu-item>Мои объявления</li>
         <li nz-menu-divider></li>
         <li nz-menu-item (click)="logout()">Выйти</li>
     </ul>

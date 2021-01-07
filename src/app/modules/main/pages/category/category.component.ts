@@ -7,7 +7,7 @@ import { AdvertsGetDto, AdvertsGetResponseDto } from '../../../../shared/models/
 import { Category } from '../../../../shared/models/dto/category.entity';
 import { Advert } from '../../../../shared/models/dto/advert.entity';
 import { Model } from '../../../../shared/models/dto/model.entity';
-import { Filters } from "../../../../shared/modules/dynamic-fields/models/filter";
+import { Filters } from '../../../../shared/modules/dynamic-fields/models/filter';
 
 @Component({
     selector: 'app-category',

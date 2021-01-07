@@ -57,7 +57,11 @@ export class AdvertService {
         if (options.filters) {
             optionsList.push(this.buildFiltersQuery(options.filters));
         }
-
+        /* TODO: после дополнения требуется доп аброботка кейса
+        if (options.author) {
+        optionsList.push(`author=${options.author}`);
+        }
+        **/
         return optionsList.length ? `?${optionsList.join('&')}` : '';
     }
 

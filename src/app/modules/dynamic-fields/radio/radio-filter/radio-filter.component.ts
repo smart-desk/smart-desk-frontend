@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnChanges, OnInit } from '@angular/core';
 import { AbstractFieldFilterComponent } from '../../../../shared/modules/dynamic-fields/models/abstract-field-filter.component';
 import { RadioItem, RadioParamsDto } from '../dto/radio-params.dto';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Filter } from '../../../../shared/modules/dynamic-fields/models/filter';
 import { RadioFilterDto } from '../dto/radio-filter.dto';
 

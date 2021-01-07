@@ -19,6 +19,10 @@ export class LoginService {
         this.openModal().subscribe(user => this.login.next(user));
     }
 
+    updateLoginInfo(): void {
+        this.userService.getCurrentUser(true).subscribe(user => this.login.next(user));
+    }
+
     get login$(): Observable<User> {
         return this.login.asObservable();
     }

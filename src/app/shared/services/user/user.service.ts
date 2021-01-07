@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { User } from '../../models/dto/user/user.entity';
+import { UpdateUserDto } from '../../models/dto/user/update-user.dto';
 
 @Injectable({
     providedIn: 'root',
@@ -12,8 +13,8 @@ export class UserService {
 
     constructor(private http: HttpClient) {}
 
-    getCurrentUser(): Observable<User> {
-        if (this.user) {
+    getCurrentUser(forceUpdate?: boolean): Observable<User> {
+        if (this.user && !forceUpdate) {
             return of(this.user);
         }
         return this.http.get<any>(`/users/profile`).pipe(tap(user => (this.user = user)));
@@ -25,5 +26,9 @@ export class UserService {
 
     getUser(id: string): Observable<User> {
         return this.http.get<any>(`/users/${id}`);
+    }
+
+    updateProfile(profile: UpdateUserDto): Observable<User> {
+        return this.http.patch<any>('/users/profile', profile);
     }
 }
