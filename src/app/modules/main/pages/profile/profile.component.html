@@ -27,7 +27,7 @@
 </nz-layout>
 
 <nz-modal [(nzVisible)]="showProfile" (nzOnCancel)="showProfile = !showProfile" (nzOnOk)="submitForm(profileForm.NAME)">
-    <form nz-form [formGroup]="formName">
+    <form nz-form [formGroup]="formName" [nzLayout]="'vertical'">
         <div class="user-avatar">
             <nz-upload
                 nzAction="/s3/image"
