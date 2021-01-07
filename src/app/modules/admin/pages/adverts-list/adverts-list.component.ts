@@ -6,7 +6,7 @@ import { zip } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Advert } from '../../../../shared/models/dto/advert.entity';
 import { Category } from '../../../../shared/models/dto/category.entity';
-import { AdvertsGetDto } from '../../../../shared/models/dto/advert.dto';
+import { GetAdvertsDto } from '../../../../shared/models/dto/advert.dto';
 
 @Component({
     selector: 'app-table-adverts',
@@ -69,7 +69,7 @@ export class AdvertsListComponent implements OnInit {
     changePage(page: number): void {
         if (page !== this.pageIndex) {
             this.pageIndex = page;
-            const options = new AdvertsGetDto();
+            const options = new GetAdvertsDto();
             options.page = page;
             this.getAdverts(options);
         }
@@ -84,7 +84,7 @@ export class AdvertsListComponent implements OnInit {
         return categoryAdvert ? categoryAdvert.name : 'Категория не определена';
     }
 
-    private getAdverts(options?: AdvertsGetDto): void {
+    private getAdverts(options?: GetAdvertsDto): void {
         this.advertService.getAdverts(options).subscribe(advertMeta => {
             this.listAdverts = advertMeta.adverts;
             this.totalAdverts = advertMeta.totalCount;

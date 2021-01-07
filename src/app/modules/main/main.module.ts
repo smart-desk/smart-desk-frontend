@@ -18,6 +18,10 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
 import { CategoryComponent } from './pages/category/category.component';
@@ -34,12 +38,10 @@ import { ProfileMenuComponent } from './components/profile-menu/profile-menu.com
 import { FiltersComponent } from './components/filters/filters.component';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { ProfileComponent } from './pages/profile/profile.component';
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzTableModule } from 'ng-zorro-antd/table';
-import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { SavedComponent } from './pages/saved/saved.component';
 import { MyAdvertsComponent } from './pages/my-adverts/my-adverts.component';
 import { ProfileSideBarComponent } from './components/profile-side-bar/profile-side-bar.component';
+import { UserComponent } from './pages/user/user.component';
 
 const NZModules = [
     NzModalModule,
@@ -63,9 +65,18 @@ const NZModules = [
     NzDividerModule,
     NzTableModule,
     NzUploadModule,
+    NzTabsModule,
 ];
 
-const pages = [MainComponent, CategoryComponent, AdvertComponent, AdvertEditComponent, AdvertCreateComponent, IndexComponent];
+const pages = [
+    MainComponent,
+    CategoryComponent,
+    AdvertComponent,
+    AdvertEditComponent,
+    AdvertCreateComponent,
+    IndexComponent,
+    UserComponent,
+];
 
 const components = [
     HeaderComponent,

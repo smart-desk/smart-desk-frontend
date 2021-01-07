@@ -2,20 +2,20 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { NavigationExtras, Router } from '@angular/router';
 import { AdvertService } from './advert.service';
-import { AdvertsGetDto, AdvertsGetResponseDto } from '../../models/dto/advert.dto';
+import { GetAdvertsDto, GetAdvertsResponseDto } from '../../models/dto/advert.dto';
 import { Filters } from '../../modules/dynamic-fields/models/filter';
 
 @Injectable({
     providedIn: 'root',
 })
 export class AdvertDataService {
-    adverts$ = new Subject<AdvertsGetResponseDto>();
+    adverts$ = new Subject<GetAdvertsResponseDto>();
     private categoryId: string;
-    private options: AdvertsGetDto = new AdvertsGetDto();
+    private options: GetAdvertsDto = new GetAdvertsDto();
 
     constructor(private router: Router, private advertService: AdvertService) {}
 
-    loadAdvertsForCategory(categoryId: string, options?: AdvertsGetDto): void {
+    loadAdvertsForCategory(categoryId: string, options?: GetAdvertsDto): void {
         this.categoryId = categoryId;
         this.options = options ? options : this.options;
         this.requestAdverts();

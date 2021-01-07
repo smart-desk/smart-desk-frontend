@@ -10,6 +10,7 @@ import { AuthGuard } from '../../shared/services/auth/auth.guard';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { SavedComponent } from './pages/saved/saved.component';
 import { MyAdvertsComponent } from './pages/my-adverts/my-adverts.component';
+import { UserComponent } from "./pages/user/user.component";
 
 const routes: Routes = [
     {
@@ -22,6 +23,7 @@ const routes: Routes = [
             },
             {
                 path: 'profile',
+                canActivate: [AuthGuard],
                 children: [
                     {
                         path: '',
@@ -36,6 +38,10 @@ const routes: Routes = [
                         component: MyAdvertsComponent,
                     },
                 ],
+            },
+            {
+                path: 'user/:id',
+                component: UserComponent,
             },
             {
                 path: 'adverts/create',
