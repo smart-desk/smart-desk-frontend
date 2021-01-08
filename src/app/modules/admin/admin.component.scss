@@ -13,4 +13,12 @@
     &__content {
         padding: 0 $base-unit * 3 $base-unit * 3;
     }
+
+    &__name {
+        color: white;
+    }
+
+    &__avatar {
+        margin-left: $base-unit;
+    }
 }
