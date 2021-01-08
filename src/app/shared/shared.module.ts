@@ -19,6 +19,7 @@ import { LoginService } from './services/login/login.service';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { LoginComponent } from './components/login/login.component';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { AdminGuard } from './services/auth/admin.guard';
 
 /**
  * Import here all modules which are used on app side
@@ -45,6 +46,7 @@ const services = [
     AdvertService,
     AuthService,
     AuthGuard,
+    AdminGuard,
     LoginService,
     NzModalService,
 ];
