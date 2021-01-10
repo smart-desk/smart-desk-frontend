@@ -1,19 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
-
 import { CreateModelComponent } from './pages/create-model/create-model.component';
 import { ModelsComponent } from './pages/models/models.component';
 import { EditModelComponent } from './pages/edit-model/edit-model.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { AdvertsListComponent } from './pages/adverts-list/adverts-list.component';
-import { AuthGuard } from '../../shared/services/auth/auth.guard';
+import { AdminGuard } from '../../shared/services/auth/admin.guard';
 
 const routes: Routes = [
     {
         path: '',
         component: AdminComponent,
-        canActivate: [AuthGuard],
+        canActivate: [AdminGuard],
         children: [
             {
                 path: 'models',

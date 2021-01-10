@@ -6,4 +6,5 @@ export class User {
     city: string;
     email: string;
     avatar?: string;
+    roles?: string[];
 }
