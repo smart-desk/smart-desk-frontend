@@ -1,6 +1,15 @@
 <nz-layout class="admin__layout">
     <nz-header>
-        <a routerLink="/admin" class="admin__logo">Smart Desk</a>
+        <nz-row [nzJustify]="'space-between'">
+            <nz-col>
+                <a routerLink="/" class="admin__logo">Smart Desk</a>
+            </nz-col>
+            <nz-col>
+                <!-- todo make it reusable -->
+                <span class="admin__name">{{ user?.firstName }} {{ user?.lastName }}</span>
+                <nz-avatar class="admin__avatar" [nzSrc]="user?.avatar" nzIcon="user" [nzSize]="32"></nz-avatar>
+            </nz-col>
+        </nz-row>
     </nz-header>
     <nz-layout>
         <nz-sider nzTheme="light">

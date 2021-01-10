@@ -32,6 +32,7 @@ import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { FieldSettingsComponent } from './components/field-settings/field-settings.component';
 import { PreviewToolsComponent } from './components/preview-tools/preview-tools.component';
 import { AddFieldComponent } from './components/add-field/add-field.component';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 
 const components = [
     PreviewComponent,
@@ -68,6 +69,7 @@ const pages = [AdminComponent, EditModelComponent, CreateModelComponent, ModelsC
         NzLayoutModule,
         NzTabsModule,
         NzDrawerModule,
+        NzAvatarModule,
     ],
     declarations: [...pages, ...components],
 })

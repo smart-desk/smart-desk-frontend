@@ -3,7 +3,7 @@ import { AdvertDataService, CategoryService, ModelService } from '../../../../sh
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
-import { AdvertsGetDto, AdvertsGetResponseDto } from '../../../../shared/models/dto/advert.dto';
+import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../shared/models/dto/advert.dto';
 import { Category } from '../../../../shared/models/dto/category.entity';
 import { Advert } from '../../../../shared/models/dto/advert.entity';
 import { Model } from '../../../../shared/models/dto/model.entity';
@@ -71,7 +71,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
         this.advertDataService.changePage(page);
     }
 
-    private initAdvertList(res: AdvertsGetResponseDto) {
+    private initAdvertList(res: GetAdvertsResponseDto) {
         this.pageIndex = res.page;
         this.totalAdverts = res.totalCount;
         this.pageSize = res.limit;
@@ -80,8 +80,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
         this.cd.detectChanges();
     }
 
-    private parseQueryParams(queryParams: ParamMap): AdvertsGetDto {
-        const resultParams = new AdvertsGetDto();
+    private parseQueryParams(queryParams: ParamMap): GetAdvertsDto {
+        const resultParams = new GetAdvertsDto();
 
         if (queryParams.has('page')) {
             try {

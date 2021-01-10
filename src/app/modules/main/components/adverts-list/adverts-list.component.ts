@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { AdvertsGetResponseDto } from '../../../../shared/models/dto/advert.dto';
+import { Advert } from '../../../../shared/models/dto/advert.entity';
 
 @Component({
     selector: 'app-adverts-list',
@@ -8,5 +8,5 @@ import { AdvertsGetResponseDto } from '../../../../shared/models/dto/advert.dto'
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdvertsListComponent {
-    @Input() adverts: AdvertsGetResponseDto[];
+    @Input() adverts: Advert[];
 }

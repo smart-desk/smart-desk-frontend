@@ -15,26 +15,27 @@ export class UpdateAdvertDto {
     fields: DynamicFieldsBaseUpdateDto[];
 }
 
-export class AdvertsGetDto {
-    page?: number = AdvertsGetDto.DEFAULT_PAGE;
-    limit?: number = AdvertsGetDto.DEFAULT_LIMIT;
-    search?: string = AdvertsGetDto.DEFAULT_SEARCH;
+export class GetAdvertsDto {
+    page?: number = GetAdvertsDto.DEFAULT_PAGE;
+    limit?: number = GetAdvertsDto.DEFAULT_LIMIT;
+    search?: string = GetAdvertsDto.DEFAULT_SEARCH;
     filters?: Filters = {};
+    user?: string;
 
     static DEFAULT_PAGE = 1;
     static DEFAULT_LIMIT = 20;
     static DEFAULT_SEARCH = '';
 
     get queryParamPage(): number {
-        return this.page === AdvertsGetDto.DEFAULT_PAGE ? null : this.page;
+        return this.page === GetAdvertsDto.DEFAULT_PAGE ? null : this.page;
     }
 
     get queryParamLimit(): number {
-        return this.limit === AdvertsGetDto.DEFAULT_LIMIT ? null : this.limit;
+        return this.limit === GetAdvertsDto.DEFAULT_LIMIT ? null : this.limit;
     }
 
     get queryParamSearch(): string {
-        return this.search === AdvertsGetDto.DEFAULT_SEARCH ? null : this.search;
+        return this.search === GetAdvertsDto.DEFAULT_SEARCH ? null : this.search;
     }
 
     get queryParamFilters(): string {
@@ -42,7 +43,7 @@ export class AdvertsGetDto {
     }
 }
 
-export class AdvertsGetResponseDto {
+export class GetAdvertsResponseDto {
     adverts: Advert[];
     totalCount: number;
     page: number;

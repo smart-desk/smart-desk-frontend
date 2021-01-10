@@ -9,7 +9,7 @@
         <div>
             <ng-container #price></ng-container>
         </div>
-        <div class="user" *ngIf="user">
+        <div class="user" *ngIf="user" [routerLink]="['/', 'user', user.id]">
             <nz-avatar [nzSrc]="user?.avatar" nzIcon="user" nzSize="large"></nz-avatar>
             <h3>{{ user?.firstName }} {{ user?.lastName }}</h3>
         </div>
