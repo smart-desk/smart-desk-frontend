@@ -20,6 +20,10 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { LoginComponent } from './components/login/login.component';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { AdminGuard } from './services/auth/admin.guard';
+import { NzResultModule } from 'ng-zorro-antd/result';
+import { RouterModule } from '@angular/router';
+import { ForbiddenComponent } from './pages/forbidden/forbidden.component';
+import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.component';
 
 /**
  * Import here all modules which are used on app side
@@ -33,6 +37,7 @@ const NZModules = [
     NzButtonModule,
     NzPaginationModule,
     NzSpinModule,
+    NzResultModule,
 ];
 
 /**
@@ -54,7 +59,7 @@ const services = [
 /**
  * Components from `./components` directory
  */
-const components = [SearchComponent, PaginationComponent, LoginComponent];
+const components = [SearchComponent, PaginationComponent, LoginComponent, ForbiddenComponent, UnauthorizedComponent];
 
 /**
  * Interceptors from `./interceptors` directory
@@ -78,7 +83,7 @@ const interceptors = [
 ];
 
 @NgModule({
-    imports: [...NZModules, HttpClientModule, CommonModule, FormsModule, ReactiveFormsModule, DynamicFieldsModule],
+    imports: [...NZModules, HttpClientModule, CommonModule, FormsModule, ReactiveFormsModule, DynamicFieldsModule, RouterModule],
     exports: [...components],
     declarations: [...components],
     providers: [...services, ...interceptors],

@@ -1,9 +1,10 @@
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { map, tap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { LoginService } from '../login/login.service';
 import { UserService } from '..';
+import { RolesEnum } from './user-roles.enum';
 
 @Injectable()
 export class AdminGuard implements CanActivate {
@@ -11,8 +12,17 @@ export class AdminGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
         return this.userService.getCurrentUser().pipe(
-            tap(user => !user && this.router.navigate([''])),
-            map(user => !!user.roles.find((role: string) => role === 'admin'))
+            map(user => {
+                if (!user || !user.roles.includes(RolesEnum.ADMIN)) {
+                    this.router.navigate(['forbidden']);
+                    return false;
+                }
+                return true;
+            }),
+            catchError(() => {
+                this.router.navigate(['forbidden']);
+                return of(false);
+            })
         );
     }
 }

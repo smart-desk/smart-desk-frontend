@@ -10,9 +10,19 @@ import { AuthGuard } from '../../shared/services/auth/auth.guard';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { SavedComponent } from './pages/saved/saved.component';
 import { MyAdvertsComponent } from './pages/my-adverts/my-adverts.component';
-import { UserComponent } from "./pages/user/user.component";
+import { UserComponent } from './pages/user/user.component';
+import { ForbiddenComponent } from '../../shared/pages/forbidden/forbidden.component';
+import { UnauthorizedComponent } from '../../shared/pages/unauthorized/unauthorized.component';
 
 const routes: Routes = [
+    {
+        path: 'forbidden',
+        component: ForbiddenComponent,
+    },
+    {
+        path: 'unauthorized',
+        component: UnauthorizedComponent,
+    },
     {
         path: '',
         component: MainComponent,

@@ -1,7 +1,7 @@
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { map, tap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { LoginService } from '../login/login.service';
 import { UserService } from '..';
 
@@ -11,9 +11,17 @@ export class AuthGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
         return this.userService.getCurrentUser().pipe(
-            // TODO: сделать компонент, для редиректа.
-            tap(user => !user && this.router.navigate([''])),
-            map(user => !!user)
+            map(user => {
+                if (!user) {
+                    this.router.navigate(['unauthorized']);
+                    return false;
+                }
+                return true;
+            }),
+            catchError(() => {
+                this.router.navigate(['unauthorized']);
+                return of(false);
+            })
         );
     }
 }
