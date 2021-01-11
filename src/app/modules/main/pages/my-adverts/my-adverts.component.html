@@ -1,1 +1,24 @@
-<p>my-adverts works!</p>
+<nz-row [nzGutter]="16">
+    <nz-col [nzSpan]="6">
+        <app-user-info [user]="user"></app-user-info>
+    </nz-col>
+    <nz-col [nzSpan]="18">
+        <nz-tabset [nzAnimated]="false">
+            <nz-tab nzTitle="Активные">
+                <app-adverts-list *ngIf="adverts" [adverts]="adverts?.adverts"></app-adverts-list>
+            </nz-tab>
+            <nz-tab nzTitle="На модерации">
+                <!-- todo -->
+                <p>Todo</p>
+            </nz-tab>
+            <nz-tab nzTitle="Завершенные">
+                <!-- todo -->
+                <p>Todo</p>
+            </nz-tab>
+            <nz-tab nzTitle="Заблокированные">
+                <!-- todo -->
+                <p>Todo</p>
+            </nz-tab>
+        </nz-tabset>
+    </nz-col>
+</nz-row>

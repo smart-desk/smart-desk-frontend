@@ -15,6 +15,11 @@ export class AdvertService {
         return this.http.get<GetAdvertsResponseDto>(path);
     }
 
+    getMyAdverts(options?: GetAdvertsDto): Observable<GetAdvertsResponseDto> {
+        const path = `/adverts/my${this.buildQueryParams(options)}`;
+        return this.http.get<GetAdvertsResponseDto>(path);
+    }
+
     getAdverts(options?: GetAdvertsDto): Observable<GetAdvertsResponseDto> {
         const path = `/adverts${this.buildQueryParams(options)}`;
         return this.http.get<GetAdvertsResponseDto>(path);
