@@ -1,7 +1,7 @@
+<!--todo make reusable template layout-->
 <nz-row [nzGutter]="16">
     <nz-col [nzSpan]="6">
-        <nz-avatar [nzSrc]="user?.avatar" nzIcon="user" [nzSize]="128"></nz-avatar>
-        <h1>{{user?.firstName}} {{user?.lastName}}</h1>
+        <app-user-info [user]="user"></app-user-info>
     </nz-col>
     <nz-col [nzSpan]="18">
         <nz-tabset [nzAnimated]="false">
