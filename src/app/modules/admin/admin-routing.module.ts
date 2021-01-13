@@ -7,6 +7,7 @@ import { EditModelComponent } from './pages/edit-model/edit-model.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { AdvertsListComponent } from './pages/adverts-list/adverts-list.component';
 import { AdminGuard } from '../../shared/services/auth/admin.guard';
+import { UsersComponent } from './pages/users/users.component';
 
 const routes: Routes = [
     {
@@ -33,6 +34,10 @@ const routes: Routes = [
             {
                 path: 'adverts',
                 component: AdvertsListComponent,
+            },
+            {
+                path: 'users',
+                component: UsersComponent,
             },
         ],
     },
