@@ -25,10 +25,14 @@ export class UserService {
     }
 
     getUser(id: string): Observable<User> {
-        return this.http.get<any>(`/users/${id}`);
+        return this.http.get<User>(`/users/${id}`);
+    }
+
+    getUsers(): Observable<User[]> {
+        return this.http.get<User[]>(`/users`);
     }
 
     updateProfile(profile: UpdateUserDto): Observable<User> {
-        return this.http.patch<any>('/users/profile', profile);
+        return this.http.patch<User>('/users/profile', profile);
     }
 }

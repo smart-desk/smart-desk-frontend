@@ -33,6 +33,7 @@ import { FieldSettingsComponent } from './components/field-settings/field-settin
 import { PreviewToolsComponent } from './components/preview-tools/preview-tools.component';
 import { AddFieldComponent } from './components/add-field/add-field.component';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { UsersComponent } from './pages/users/users.component';
 
 const components = [
     PreviewComponent,
@@ -43,7 +44,15 @@ const components = [
     AddFieldComponent,
 ];
 
-const pages = [AdminComponent, EditModelComponent, CreateModelComponent, ModelsComponent, CategoriesComponent, AdvertsListComponent];
+const pages = [
+    AdminComponent,
+    EditModelComponent,
+    CreateModelComponent,
+    ModelsComponent,
+    CategoriesComponent,
+    AdvertsListComponent,
+    UsersComponent,
+];
 
 @NgModule({
     imports: [

@@ -1,0 +1,31 @@
+<nz-page-header>
+    <nz-page-header-title>Пользователи</nz-page-header-title>
+    <nz-page-header-subtitle>Тут вы можете найти заблокировать или удалить пользователя</nz-page-header-subtitle>
+</nz-page-header>
+
+<div class="users__content">
+    <nz-table nzTemplateMode>
+        <thead>
+            <tr>
+                <th>Имя</th>
+                <th>Email</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users">
+                <td>
+                    <a [routerLink]="['/', 'user', user.id]">{{ user.firstName }} {{ user.lastName }}</a>
+                </td>
+                <td>
+                    {{ user.email }}
+                </td>
+                <td>
+                    <a nz-button nzType="link">Изменить роль</a>
+                    <a nz-button nzType="link">Заблокировать</a>
+                    <a nz-button nzType="link" nzDanger>Удалить</a>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>
