@@ -21,7 +21,7 @@
                     {{ user.email }}
                 </td>
                 <td>
-                    <a nz-button nzType="link">Изменить роль</a>
+                    <a nz-button nzType="link" (click)="showRolesForm = true">Изменить роль</a>
                     <a nz-button nzType="link">Заблокировать</a>
                     <a nz-button nzType="link" nzDanger>Удалить</a>
                 </td>
@@ -29,3 +29,11 @@
         </tbody>
     </nz-table>
 </div>
+
+<nz-modal [(nzVisible)]="showRolesForm" (nzOnCancel)="showRolesForm = !showRolesForm">
+    <form nz-form [formGroup]="rolesForm" [nzLayout]="'vertical'">
+        <div formArrayName="roles" *ngFor="let role of roles.controls; let i = index">
+            <label nz-checkbox [formControlName]="i"> {{ rolesArray[i] }}</label>
+        </div>
+    </form>
+</nz-modal>

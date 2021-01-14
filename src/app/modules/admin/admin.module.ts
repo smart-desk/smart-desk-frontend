@@ -34,6 +34,8 @@ import { PreviewToolsComponent } from './components/preview-tools/preview-tools.
 import { AddFieldComponent } from './components/add-field/add-field.component';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { UsersComponent } from './pages/users/users.component';
+import { NzModalModule } from "ng-zorro-antd/modal";
+import { NzCheckboxModule } from "ng-zorro-antd/checkbox";
 
 const components = [
     PreviewComponent,
@@ -79,6 +81,8 @@ const pages = [
         NzTabsModule,
         NzDrawerModule,
         NzAvatarModule,
+        NzModalModule,
+        NzCheckboxModule,
     ],
     declarations: [...pages, ...components],
 })
