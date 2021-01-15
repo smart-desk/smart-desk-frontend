@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { User } from '../../models/dto/user/user.entity';
 import { UpdateUserDto } from '../../models/dto/user/update-user.dto';
+import { UpdateUserRolesDto } from '../../models/dto/user/update-user-roles.dto';
 
 @Injectable({
     providedIn: 'root',
@@ -34,5 +35,9 @@ export class UserService {
 
     updateProfile(profile: UpdateUserDto): Observable<User> {
         return this.http.patch<User>('/users/profile', profile);
+    }
+
+    updateUserRoles(id: string, body: UpdateUserRolesDto): Observable<User> {
+        return this.http.patch<User>(`/users/${id}/roles`, body);
     }
 }

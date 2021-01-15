@@ -1,0 +1,10 @@
+<form nz-form [formGroup]="rolesForm" [nzLayout]="'vertical'" (ngSubmit)="update()">
+    <nz-form-item>
+        <nz-form-control>
+            <div formArrayName="roles" *ngFor="let role of roles.controls; let i = index">
+                <label nz-checkbox [formControlName]="i" [nzDisabled]="rolesArray[i] === rolesEnum.USER"> {{ rolesArray[i] }}</label>
+            </div>
+        </nz-form-control>
+    </nz-form-item>
+    <button nz-button type="submit" nzType="primary">Сохранить</button>
+</form>
