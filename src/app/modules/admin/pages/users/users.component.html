@@ -21,7 +21,7 @@
                     {{ user.email }}
                 </td>
                 <td>
-                    <a nz-button nzType="link">Изменить роль</a>
+                    <a nz-button nzType="link" (click)="updateUserRoles(user)">Изменить роль</a>
                     <a nz-button nzType="link">Заблокировать</a>
                     <a nz-button nzType="link" nzDanger>Удалить</a>
                 </td>
