@@ -34,8 +34,8 @@ import { PreviewToolsComponent } from './components/preview-tools/preview-tools.
 import { AddFieldComponent } from './components/add-field/add-field.component';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { UsersComponent } from './pages/users/users.component';
-import { NzModalModule } from "ng-zorro-antd/modal";
-import { NzCheckboxModule } from "ng-zorro-antd/checkbox";
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { RolesFormComponent } from './components/roles-form/roles-form.component';
 
 const components = [
@@ -45,7 +45,7 @@ const components = [
     PreviewToolsComponent,
     FieldSettingsComponent,
     AddFieldComponent,
-    RolesFormComponent
+    RolesFormComponent,
 ];
 
 const pages = [
