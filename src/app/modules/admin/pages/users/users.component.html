@@ -9,6 +9,7 @@
             <tr>
                 <th>Имя</th>
                 <th>Email</th>
+                <th>Роли</th>
                 <th>Действия</th>
             </tr>
         </thead>
@@ -21,9 +22,14 @@
                     {{ user.email }}
                 </td>
                 <td>
+                    {{ user.roles.join(', ') }}
+                </td>
+                <td>
                     <a nz-button nzType="link" (click)="updateUserRoles(user)">Изменить роль</a>
-                    <a nz-button nzType="link">Заблокировать</a>
-                    <a nz-button nzType="link" nzDanger>Удалить</a>
+                    <a *ngIf="user.status === userStatus.BLOCKED" nz-button nzType="link" (click)="blockUser(user, false)">
+                        Разблокировать
+                    </a>
+                    <a *ngIf="user.status === userStatus.ACTIVE" nz-button nzType="link" (click)="blockUser(user, true)">Заблокировать</a>
                 </td>
             </tr>
         </tbody>

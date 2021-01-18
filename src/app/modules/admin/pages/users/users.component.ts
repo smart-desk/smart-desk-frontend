@@ -4,6 +4,7 @@ import { User } from '../../../../shared/models/dto/user/user.entity';
 import { combineLatest } from 'rxjs';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { RolesFormComponent } from '../../components/roles-form/roles-form.component';
+import { UserStatus } from '../../../../shared/models/dto/user/user-status.enum';
 
 @Component({
     selector: 'app-users',
@@ -12,6 +13,7 @@ import { RolesFormComponent } from '../../components/roles-form/roles-form.compo
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersComponent implements OnInit {
+    userStatus = UserStatus;
     users: User[];
     constructor(private userService: UserService, private cdr: ChangeDetectorRef, private modalService: NzModalService) {}
 
@@ -28,6 +30,14 @@ export class UsersComponent implements OnInit {
             nzContent: RolesFormComponent,
             nzComponentParams: { user },
             nzFooter: null,
+        });
+    }
+
+    blockUser(user: User, value: boolean): void {
+        this.userService.blockUser(user.id, { value }).subscribe(res => {
+            user.status = res.status;
+            user.roles = res.roles;
+            this.cdr.detectChanges();
         });
     }
 }

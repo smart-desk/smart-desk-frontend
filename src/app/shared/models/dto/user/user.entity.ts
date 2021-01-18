@@ -1,3 +1,5 @@
+import { UserStatus } from './user-status.enum';
+
 export class User {
     id: string;
     firstName: string;
@@ -5,6 +7,7 @@ export class User {
     phone: string;
     city: string;
     email: string;
+    status: UserStatus;
     avatar?: string;
     roles?: string[];
 }
