@@ -1,4 +1,14 @@
-<ul nz-menu>
+<ul nz-menu nzMode="inline">
+    <li nz-submenu nzOpen nzTitle="Объявления" nzIcon="laptop">
+        <ul>
+            <li [nzMatchRouterExact]="true" nz-menu-item routerLink="/admin/adverts">
+                <span>Активные</span>
+            </li>
+            <li [nzMatchRouterExact]="true" nz-menu-item routerLink="/admin/adverts/blocked">
+                <span>Заблокированные</span>
+            </li>
+        </ul>
+    </li>
     <li nz-menu-item [nzMatchRouter]="true" routerLink="/admin/models">
         <i nz-icon nzType="apartment" nzTheme="outline"></i>
         <span>Модели</span>
@@ -6,10 +16,6 @@
     <li nz-menu-item [nzMatchRouter]="true" routerLink="/admin/categories">
         <i nz-icon nzType="appstore" nzTheme="outline"></i>
         <span>Категории</span>
-    </li>
-    <li nz-menu-item [nzMatchRouter]="true" routerLink="/admin/adverts">
-        <i nz-icon nzType="table" nzTheme="outline"></i>
-        <span>Объявления</span>
     </li>
     <li nz-menu-item [nzMatchRouter]="true" routerLink="/admin/users">
         <i nz-icon nzType="user" nzTheme="outline"></i>
