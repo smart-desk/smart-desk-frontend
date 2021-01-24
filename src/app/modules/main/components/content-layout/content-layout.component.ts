@@ -8,7 +8,7 @@ import { ChangeDetectionStrategy, Component, Input, TemplateRef } from '@angular
 })
 export class ContentLayoutComponent {
     @Input()
-    title: TemplateRef<any>;
+    title: string;
 
     @Input()
     left: TemplateRef<any>;
