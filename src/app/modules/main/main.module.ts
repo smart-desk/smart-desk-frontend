@@ -29,7 +29,6 @@ import { AdvertComponent } from './pages/advert/advert.component';
 import { AdvertEditComponent } from './pages/advert-edit/advert-edit.component';
 import { AdvertCreateComponent } from './pages/advert-create/advert-create.component';
 import { HeaderComponent } from './components/header/header.component';
-import { AdvertsListComponent } from './components/adverts-list/adverts-list.component';
 import { NavigationHeaderComponent } from './components/navigation-header/navigation-header.component';
 import { IndexComponent } from './pages/index/index.component';
 import { AdvertCardComponent } from './components/advert-card/advert-card.component';
@@ -43,6 +42,8 @@ import { MyAdvertsComponent } from './pages/my-adverts/my-adverts.component';
 import { ProfileSideBarComponent } from './components/profile-side-bar/profile-side-bar.component';
 import { UserComponent } from './pages/user/user.component';
 import { UserInfoComponent } from './components/profile-info/user-info.component';
+import { AdvertsComponent } from './components/adverts/adverts.component';
+import { AdvertsListComponent } from './components/adverts-list/adverts-list.component';
 
 const NZModules = [
     NzModalModule,
@@ -83,7 +84,6 @@ const components = [
     HeaderComponent,
     NavigationHeaderComponent,
     AdvertCardComponent,
-    AdvertsListComponent,
     ProfileComponent,
     ProfileMenuComponent,
     FiltersComponent,
@@ -91,6 +91,8 @@ const components = [
     MyAdvertsComponent,
     ProfileSideBarComponent,
     UserInfoComponent,
+    AdvertsComponent,
+    AdvertsListComponent,
 ];
 
 @NgModule({
