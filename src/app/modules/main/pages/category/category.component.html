@@ -1,11 +1,10 @@
-<h1 *ngIf="category">{{ category.name }}</h1>
+<app-content-layout [title]="category?.name" [main]="main" [right]="right"></app-content-layout>
 
-<nz-row [nzGutter]="16">
-    <nz-col [nzSpan]="18">
-        <div *ngIf="!advertsResponse || !advertsResponse.totalCount">В этой категории еще нет объявлений</div>
-        <app-adverts [advertsResponse]="advertsResponse" (changePage)="changePage($event)"></app-adverts>
-    </nz-col>
-    <nz-col [nzSpan]="6">
-        <app-filters *ngIf="model" [model]="model" [filters]="filters"></app-filters>
-    </nz-col>
-</nz-row>
+<ng-template #main>
+    <div *ngIf="!advertsResponse || !advertsResponse.totalCount">В этой категории еще нет объявлений</div>
+    <app-adverts [advertsResponse]="advertsResponse" (changePage)="changePage($event)"></app-adverts>
+</ng-template>
+
+<ng-template #right>
+    <app-filters *ngIf="model" [model]="model" [filters]="filters"></app-filters>
+</ng-template>

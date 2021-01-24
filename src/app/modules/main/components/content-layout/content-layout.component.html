@@ -1,0 +1,12 @@
+<h1 *ngIf="title">{{ title }}</h1>
+<nz-row [nzGutter]="16">
+    <nz-col [nzSpan]="6" *ngIf="left">
+        <ng-container *ngTemplateOutlet="left"></ng-container>
+    </nz-col>
+    <nz-col [nzSpan]="18" *ngIf="main">
+        <ng-container *ngTemplateOutlet="main"></ng-container>
+    </nz-col>
+    <nz-col [nzSpan]="6" *ngIf="right">
+        <ng-container *ngTemplateOutlet="right"></ng-container>
+    </nz-col>
+</nz-row>

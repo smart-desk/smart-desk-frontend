@@ -1,17 +1,17 @@
-<!--todo make reusable template layout-->
-<nz-row [nzGutter]="16">
-    <nz-col [nzSpan]="6">
-        <app-user-info [user]="user"></app-user-info>
-    </nz-col>
-    <nz-col [nzSpan]="18">
-        <nz-tabset [nzAnimated]="false">
-            <nz-tab nzTitle="Активные">
-                <app-adverts-list *ngIf="advertResponse" [adverts]="advertResponse?.adverts"></app-adverts-list>
-            </nz-tab>
-            <nz-tab nzTitle="Завершенные">
-                <!-- todo -->
-                <p>Todo</p>
-            </nz-tab>
-        </nz-tabset>
-    </nz-col>
-</nz-row>
+<app-content-layout [main]="main" [left]="left"></app-content-layout>
+
+<ng-template #main>
+    <nz-tabset [nzAnimated]="false">
+        <nz-tab nzTitle="Активные">
+            <app-adverts-list *ngIf="advertResponse" [adverts]="advertResponse?.adverts"></app-adverts-list>
+        </nz-tab>
+        <nz-tab nzTitle="Завершенные">
+            <!-- todo -->
+            <p>Todo</p>
+        </nz-tab>
+    </nz-tabset>
+</ng-template>
+
+<ng-template #left>
+    <app-user-info [user]="user"></app-user-info>
+</ng-template>
