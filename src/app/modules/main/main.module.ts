@@ -37,7 +37,7 @@ import { ProfileMenuComponent } from './components/profile-menu/profile-menu.com
 import { FiltersComponent } from './components/filters/filters.component';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { ProfileComponent } from './pages/profile/profile.component';
-import { SavedComponent } from './pages/saved/saved.component';
+import { BookmarksComponent } from './pages/bookmarks/bookmarks.component';
 import { MyAdvertsComponent } from './pages/my-adverts/my-adverts.component';
 import { ProfileSideBarComponent } from './components/profile-side-bar/profile-side-bar.component';
 import { UserComponent } from './pages/user/user.component';
@@ -87,7 +87,7 @@ const components = [
     ProfileComponent,
     ProfileMenuComponent,
     FiltersComponent,
-    SavedComponent,
+    BookmarksComponent,
     MyAdvertsComponent,
     ProfileSideBarComponent,
     UserInfoComponent,
