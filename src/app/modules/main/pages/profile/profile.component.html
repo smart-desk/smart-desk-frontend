@@ -1,30 +1,30 @@
-<nz-layout>
-    <nz-sider [nzTheme]="'light'">
-        <app-profile-side-bar></app-profile-side-bar>
-    </nz-sider>
-    <nz-content class="main">
-        <h1>Личные данные</h1>
-        <nz-table nzTemplateMode>
-            <tbody>
-                <tr>
-                    <td>Profile</td>
-                    <td>{{ profile?.firstName }} {{ profile?.lastName }}</td>
-                    <td><a (click)="showProfile = !showProfile">Edit</a></td>
-                </tr>
-                <tr>
-                    <td>Phone</td>
-                    <td>{{ profile?.phone }}</td>
-                    <td><a (click)="showPhone = !showPhone">Change</a></td>
-                </tr>
-                <tr>
-                    <td>Town</td>
-                    <td>{{ profile?.city }}</td>
-                    <td><a (click)="showCity = !showCity">Specify</a></td>
-                </tr>
-            </tbody>
-        </nz-table>
-    </nz-content>
-</nz-layout>
+<app-content-layout title="Ваш профиль" [left]="left" [main]="main"></app-content-layout>
+
+<ng-template #left>
+    <app-user-info [user]="profile"></app-user-info>
+</ng-template>
+
+<ng-template #main>
+    <nz-table nzTemplateMode>
+        <tbody>
+            <tr>
+                <td>Profile</td>
+                <td>{{ profile?.firstName }} {{ profile?.lastName }}</td>
+                <td><a (click)="showProfile = !showProfile">Edit</a></td>
+            </tr>
+            <tr>
+                <td>Phone</td>
+                <td>{{ profile?.phone }}</td>
+                <td><a (click)="showPhone = !showPhone">Change</a></td>
+            </tr>
+            <tr>
+                <td>Town</td>
+                <td>{{ profile?.city }}</td>
+                <td><a (click)="showCity = !showCity">Specify</a></td>
+            </tr>
+        </tbody>
+    </nz-table>
+</ng-template>
 
 <nz-modal [(nzVisible)]="showProfile" (nzOnCancel)="showProfile = !showProfile" (nzOnOk)="submitForm(profileForm.NAME)">
     <form nz-form [formGroup]="formName" [nzLayout]="'vertical'">
