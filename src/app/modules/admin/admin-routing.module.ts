@@ -8,6 +8,7 @@ import { CategoriesComponent } from './pages/categories/categories.component';
 import { AdvertsListComponent } from './pages/adverts-list/adverts-list.component';
 import { AdminGuard } from '../../shared/services/auth/admin.guard';
 import { UsersComponent } from './pages/users/users.component';
+import { AdvertsBlockedComponent } from './pages/adverts-blocked/adverts-blocked.component';
 
 const routes: Routes = [
     {
@@ -34,6 +35,10 @@ const routes: Routes = [
             {
                 path: 'adverts',
                 component: AdvertsListComponent,
+            },
+            {
+                path: 'adverts/blocked',
+                component: AdvertsBlockedComponent,
             },
             {
                 path: 'users',

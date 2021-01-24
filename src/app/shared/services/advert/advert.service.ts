@@ -25,6 +25,16 @@ export class AdvertService {
         return this.http.get<GetAdvertsResponseDto>(path);
     }
 
+    getBlocked(options?: GetAdvertsDto): Observable<GetAdvertsResponseDto> {
+        const path = `/adverts/blocked${this.buildQueryParams(options)}`;
+        return this.http.get<GetAdvertsResponseDto>(path);
+    }
+
+    getPending(options?: GetAdvertsDto): Observable<GetAdvertsResponseDto> {
+        const path = `/adverts/pending${this.buildQueryParams(options)}`;
+        return this.http.get<GetAdvertsResponseDto>(path);
+    }
+
     getAdvert(id: string): Observable<Advert> {
         return this.http.get<Advert>(`/adverts/${id}`);
     }
@@ -35,6 +45,14 @@ export class AdvertService {
 
     updateAdvert(id: string, advert: UpdateAdvertDto): Observable<Advert> {
         return this.http.patch<Advert>(`/adverts/${id}`, advert);
+    }
+
+    blockAdvert(id: string): Observable<Advert> {
+        return this.http.patch<Advert>(`/adverts/${id}/block`, null);
+    }
+
+    publishAdvert(id: string): Observable<Advert> {
+        return this.http.patch<Advert>(`/adverts/${id}/publish`, null);
     }
 
     deleteAdvert(id: string): Observable<Advert> {

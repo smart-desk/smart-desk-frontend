@@ -37,6 +37,7 @@ import { UsersComponent } from './pages/users/users.component';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { RolesFormComponent } from './components/roles-form/roles-form.component';
+import { AdvertsBlockedComponent } from './pages/adverts-blocked/adverts-blocked.component';
 
 const components = [
     PreviewComponent,
@@ -56,6 +57,7 @@ const pages = [
     CategoriesComponent,
     AdvertsListComponent,
     UsersComponent,
+    AdvertsBlockedComponent,
 ];
 
 @NgModule({
