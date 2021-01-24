@@ -1,21 +1,9 @@
-<div class="spiner" *ngIf="!isLoaded">
-    <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
-</div>
-
 <h1 *ngIf="category">{{ category.name }}</h1>
 
 <nz-row [nzGutter]="16">
     <nz-col [nzSpan]="18">
-        <div *ngIf="isLoaded && (!adverts || !adverts.length)">В этой категории еще нет объявлений</div>
-        <app-adverts-list *ngIf="isLoaded" [adverts]="adverts"></app-adverts-list>
-        <app-pagination
-            class="pagination"
-            *ngIf="totalAdverts > pageSize"
-            [pageIndex]="pageIndex"
-            [totalItems]="totalAdverts"
-            [pageSize]="pageSize"
-            (page)="changePage($event)"
-        ></app-pagination>
+        <div *ngIf="!advertsResponse || !advertsResponse.totalCount">В этой категории еще нет объявлений</div>
+        <app-adverts [advertsResponse]="advertsResponse" (changePage)="changePage($event)"></app-adverts>
     </nz-col>
     <nz-col [nzSpan]="6">
         <app-filters *ngIf="model" [model]="model" [filters]="filters"></app-filters>

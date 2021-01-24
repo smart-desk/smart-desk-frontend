@@ -1,0 +1,10 @@
+<app-search *ngIf="showSearch" [searchPhrase]="''" [placeholder]="" (searchChange)="search($event)"> </app-search>
+<app-adverts-list [adverts]="advertsResponse?.adverts"></app-adverts-list>
+<app-pagination
+    class="pagination"
+    *ngIf="advertsResponse?.totalCount > advertsResponse?.limit"
+    [pageIndex]="advertsResponse?.page"
+    [totalItems]="advertsResponse?.totalCount"
+    [pageSize]="advertsResponse?.limit"
+    (changePage)="changePage.emit($event)"
+></app-pagination>

@@ -5,7 +5,6 @@ import { Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../shared/models/dto/advert.dto';
 import { Category } from '../../../../shared/models/dto/category.entity';
-import { Advert } from '../../../../shared/models/dto/advert.entity';
 import { Model } from '../../../../shared/models/dto/model.entity';
 import { Filters } from '../../../../shared/modules/dynamic-fields/models/filter';
 
@@ -16,12 +15,8 @@ import { Filters } from '../../../../shared/modules/dynamic-fields/models/filter
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryComponent implements OnInit, OnDestroy {
-    adverts: Advert[];
+    advertsResponse: GetAdvertsResponseDto;
     model: Model;
-    isLoaded: boolean;
-    totalAdverts: number;
-    pageSize: number;
-    pageIndex: number;
     category: Category;
     filters: Filters;
 
@@ -58,7 +53,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
             });
 
         this.advertDataService.adverts$.pipe(takeUntil(this.destroy$)).subscribe(res => {
-            this.initAdvertList(res);
+            this.advertsResponse = res;
+            this.cd.detectChanges();
         });
     }
 
@@ -69,15 +65,6 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
     changePage(page: number) {
         this.advertDataService.changePage(page);
-    }
-
-    private initAdvertList(res: GetAdvertsResponseDto) {
-        this.pageIndex = res.page;
-        this.totalAdverts = res.totalCount;
-        this.pageSize = res.limit;
-        this.adverts = res.adverts;
-        this.isLoaded = true;
-        this.cd.detectChanges();
     }
 
     private parseQueryParams(queryParams: ParamMap): GetAdvertsDto {
