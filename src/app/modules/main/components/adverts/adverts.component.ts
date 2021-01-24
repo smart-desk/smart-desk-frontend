@@ -11,6 +11,7 @@ export class AdvertsComponent {
     @Input() advertsResponse: GetAdvertsResponseDto;
     @Input() showSearch = false;
     @Output() changePage = new EventEmitter<number>();
+    @Output() addBookmark = new EventEmitter<string>();
 
     // todo: заглушка на метод поиска
     search($event: string) {}

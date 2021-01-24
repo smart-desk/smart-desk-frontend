@@ -1,6 +1,10 @@
-<nz-card nzHoverable [nzCover]="coverTemplate" [routerLink]="['/', advert.category_id, advert.id]">
+<nz-card [nzActions]="[actionEllipsis]" nzHoverable [nzCover]="coverTemplate">
     <nz-card-meta [nzTitle]="title" [nzDescription]="description"></nz-card-meta>
 </nz-card>
 <ng-template #coverTemplate>
     <img alt="example" [src]="thumb || 'assets/images/not-found.png'" />
+</ng-template>
+
+<ng-template #actionEllipsis>
+    <i (click)="addBookmark.emit(advert.id)" nz-icon nzType="heart" nzTheme="outline"></i>
 </ng-template>

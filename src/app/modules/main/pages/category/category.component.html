@@ -3,7 +3,11 @@
 <nz-row [nzGutter]="16">
     <nz-col [nzSpan]="18">
         <div *ngIf="!advertsResponse || !advertsResponse.totalCount">В этой категории еще нет объявлений</div>
-        <app-adverts [advertsResponse]="advertsResponse" (changePage)="changePage($event)"></app-adverts>
+        <app-adverts
+            [advertsResponse]="advertsResponse"
+            (changePage)="changePage($event)"
+            (addBookmark)="addBookmarkEvent($event)"
+        ></app-adverts>
     </nz-col>
     <nz-col [nzSpan]="6">
         <app-filters *ngIf="model" [model]="model" [filters]="filters"></app-filters>

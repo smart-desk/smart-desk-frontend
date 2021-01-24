@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Advert } from '../../../../shared/models/dto/advert.entity';
 import { SectionType } from '../../../../shared/models/dto/section.entity';
 import { FieldType } from '../../../../shared/models/dto/field.entity';
@@ -15,6 +15,7 @@ import { PriceParamsDto } from '../../../dynamic-fields/price/dto/price-params.d
 })
 export class AdvertCardComponent implements OnInit {
     @Input() advert: Advert;
+    @Output() addBookmark = new EventEmitter<string>();
     title = '';
     description = '';
     thumb = '';

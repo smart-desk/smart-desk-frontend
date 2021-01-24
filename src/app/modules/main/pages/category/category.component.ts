@@ -7,6 +7,7 @@ import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../shared/models/
 import { Category } from '../../../../shared/models/dto/category.entity';
 import { Model } from '../../../../shared/models/dto/model.entity';
 import { Filters } from '../../../../shared/modules/dynamic-fields/models/filter';
+import { BookmarksService } from '../../../../shared/services/bookmarks/bookmarks.service';
 
 @Component({
     selector: 'app-category',
@@ -27,7 +28,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
         private advertDataService: AdvertDataService,
         private modelService: ModelService,
         private cd: ChangeDetectorRef,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private bookmarksService: BookmarksService
     ) {}
 
     ngOnInit(): void {
@@ -65,6 +67,10 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
     changePage(page: number) {
         this.advertDataService.changePage(page);
+    }
+
+    addBookmarkEvent(advertId: string) {
+        this.bookmarksService.createBookmark(advertId).subscribe();
     }
 
     private parseQueryParams(queryParams: ParamMap): GetAdvertsDto {

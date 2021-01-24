@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Advert } from '../../../../shared/models/dto/advert.entity';
 
 @Component({
@@ -9,4 +9,5 @@ import { Advert } from '../../../../shared/models/dto/advert.entity';
 })
 export class AdvertsListComponent {
     @Input() adverts: Advert[];
+    @Output() addBookmark = new EventEmitter<string>();
 }
