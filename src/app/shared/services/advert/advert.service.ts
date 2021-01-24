@@ -35,6 +35,11 @@ export class AdvertService {
         return this.http.get<GetAdvertsResponseDto>(path);
     }
 
+    getCompleted(options?: GetAdvertsDto): Observable<GetAdvertsResponseDto> {
+        const path = `/adverts/completed${this.buildQueryParams(options)}`;
+        return this.http.get<GetAdvertsResponseDto>(path);
+    }
+
     getAdvert(id: string): Observable<Advert> {
         return this.http.get<Advert>(`/adverts/${id}`);
     }
@@ -53,6 +58,10 @@ export class AdvertService {
 
     publishAdvert(id: string): Observable<Advert> {
         return this.http.patch<Advert>(`/adverts/${id}/publish`, null);
+    }
+
+    completeAdvert(id: string): Observable<Advert> {
+        return this.http.patch<Advert>(`/adverts/${id}/complete`, null);
     }
 
     deleteAdvert(id: string): Observable<Advert> {

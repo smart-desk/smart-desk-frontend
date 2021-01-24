@@ -7,19 +7,16 @@
 <ng-template #main>
     <nz-tabset [nzAnimated]="false">
         <nz-tab nzTitle="Активные">
-            <app-adverts-list *ngIf="adverts" [adverts]="adverts?.adverts"></app-adverts-list>
+            <app-adverts [advertsResponse]="activeAdvertsResponse"></app-adverts>
         </nz-tab>
         <nz-tab nzTitle="На модерации">
-            <!-- todo -->
-            <p>Todo</p>
-        </nz-tab>
-        <nz-tab nzTitle="Завершенные">
-            <!-- todo -->
-            <p>Todo</p>
+            <app-adverts [advertsResponse]="pendingAdvertsResponse"></app-adverts>
         </nz-tab>
         <nz-tab nzTitle="Заблокированные">
-            <!-- todo -->
-            <p>Todo</p>
+            <app-adverts [advertsResponse]="blockedAdvertsResponse"></app-adverts>
+        </nz-tab>
+        <nz-tab nzTitle="Завершенные">
+            <app-adverts [advertsResponse]="completedAdvertsResponse"></app-adverts>
         </nz-tab>
     </nz-tabset>
 </ng-template>

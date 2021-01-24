@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { zip } from 'rxjs';
 import { AdvertService, UserService } from '../../../../shared/services';
 import { GetAdvertsResponseDto } from '../../../../shared/models/dto/advert.dto';
 import { User } from '../../../../shared/models/dto/user/user.entity';
@@ -10,7 +11,10 @@ import { User } from '../../../../shared/models/dto/user/user.entity';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MyAdvertsComponent implements OnInit {
-    adverts: GetAdvertsResponseDto;
+    activeAdvertsResponse: GetAdvertsResponseDto;
+    blockedAdvertsResponse: GetAdvertsResponseDto;
+    pendingAdvertsResponse: GetAdvertsResponseDto;
+    completedAdvertsResponse: GetAdvertsResponseDto;
     user: User;
 
     constructor(private advertService: AdvertService, private cdr: ChangeDetectorRef, private userService: UserService) {}
@@ -20,9 +24,20 @@ export class MyAdvertsComponent implements OnInit {
             this.user = res;
             this.cdr.detectChanges();
         });
+        this.getAdverts();
+    }
 
-        this.advertService.getMyAdverts().subscribe(res => {
-            this.adverts = res;
+    getAdverts(): void {
+        zip(
+            this.advertService.getMyAdverts(),
+            this.advertService.getPending(),
+            this.advertService.getBlocked(),
+            this.advertService.getCompleted()
+        ).subscribe(([active, pending, blocked, completed]) => {
+            this.activeAdvertsResponse = active;
+            this.pendingAdvertsResponse = pending;
+            this.blockedAdvertsResponse = blocked;
+            this.completedAdvertsResponse = completed;
             this.cdr.detectChanges();
         });
     }
