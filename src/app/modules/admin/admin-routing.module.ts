@@ -9,6 +9,7 @@ import { AdvertsListComponent } from './pages/adverts-list/adverts-list.componen
 import { AdminGuard } from '../../shared/services/auth/admin.guard';
 import { UsersComponent } from './pages/users/users.component';
 import { AdvertsBlockedComponent } from './pages/adverts-blocked/adverts-blocked.component';
+import { AdvertsPendingComponent } from './pages/adverts-pending/adverts-pending.component';
 
 const routes: Routes = [
     {
@@ -39,6 +40,10 @@ const routes: Routes = [
             {
                 path: 'adverts/blocked',
                 component: AdvertsBlockedComponent,
+            },
+            {
+                path: 'adverts/pending',
+                component: AdvertsPendingComponent,
             },
             {
                 path: 'users',
