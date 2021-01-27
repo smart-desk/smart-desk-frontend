@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { QuillModule } from 'ngx-quill';
 import { TextareaFormComponent } from './textarea-form/textarea-form.component';
 import { TextareaParamsComponent } from './textarea-params/textarea-params.component';
 import { TextareaService } from './textarea.service';
@@ -29,6 +30,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
         NzIconModule,
         NzGridModule,
         NzDividerModule,
+        QuillModule,
     ],
     providers: [TextareaService],
     declarations: [TextareaFormComponent, TextareaParamsComponent, TextareaViewComponent],
