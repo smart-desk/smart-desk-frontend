@@ -43,7 +43,6 @@ import { ProfileSideBarComponent } from './components/profile-side-bar/profile-s
 import { UserComponent } from './pages/user/user.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
 import { AdvertsComponent } from './components/adverts/adverts.component';
-import { AdvertsListComponent } from './components/adverts-list/adverts-list.component';
 import { ContentLayoutComponent } from './components/content-layout/content-layout.component';
 
 const NZModules = [
@@ -94,7 +93,6 @@ const components = [
     ProfileSideBarComponent,
     UserInfoComponent,
     AdvertsComponent,
-    AdvertsListComponent,
 ];
 
 @NgModule({
