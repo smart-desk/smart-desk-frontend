@@ -6,5 +6,7 @@
 </ng-template>
 
 <ng-template #actionEllipsis>
-    <i (click)="addBookmark.emit(advert.id)" nz-icon nzType="heart" nzTheme="outline"></i>
+    <i *ngIf="advert?.isBookmark" (click)="addBookmark.emit(advert.id)" nz-icon [nzType]="'heart'" [nzTheme]="'outline'"> </i>
+
+    <i *ngIf="!advert?.isBookmark" (click)="addBookmark.emit(advert.id)" nz-icon [nzType]="'smile'" [nzTheme]="'outline'"> </i>
 </ng-template>

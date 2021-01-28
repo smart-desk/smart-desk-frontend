@@ -5,6 +5,7 @@
         <div *ngIf="!advertsResponse || !advertsResponse.totalCount">В этой категории еще нет объявлений</div>
         <app-adverts
             [advertsResponse]="advertsResponse"
+            [bookmarks]="bookmarks"
             (changePage)="changePage($event)"
             (addBookmark)="addBookmarkEvent($event)"
         ></app-adverts>

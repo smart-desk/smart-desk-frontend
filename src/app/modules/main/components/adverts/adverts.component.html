@@ -1,5 +1,9 @@
 <app-search *ngIf="showSearch" [searchPhrase]="''" [placeholder]="" (searchChange)="search($event)"> </app-search>
-<app-adverts-list [adverts]="advertsResponse?.adverts" (addBookmark)="addBookmark.emit($event)"></app-adverts-list>
+<div class="box__adverts">
+    <div class="box__advert" *ngFor="let advert of advertsResponse?.adverts">
+        <app-advert-card [advert]="advert" (addBookmark)="addBookmark.emit($event)"></app-advert-card>
+    </div>
+</div>
 <app-pagination
     class="pagination"
     *ngIf="advertsResponse?.totalCount > advertsResponse?.limit"

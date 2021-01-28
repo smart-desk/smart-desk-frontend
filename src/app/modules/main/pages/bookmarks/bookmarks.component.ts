@@ -9,12 +9,13 @@ import { GetAdvertsResponseDto } from '../../../../shared/models/dto/advert.dto'
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookmarksComponent implements OnInit {
-    advertDto = new GetAdvertsResponseDto();
+    advertDto: GetAdvertsResponseDto;
 
     constructor(private bookmarksService: BookmarksService, private cd: ChangeDetectorRef) {}
 
     ngOnInit(): void {
         this.bookmarksService.getUserBookmarks().subscribe(bookmarks => {
+            this.advertDto = new GetAdvertsResponseDto();
             this.advertDto.adverts = bookmarks.map(bookmark => bookmark.advert);
             this.cd.detectChanges();
         });

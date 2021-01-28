@@ -8,6 +8,7 @@ import { Category } from '../../../../shared/models/dto/category.entity';
 import { Model } from '../../../../shared/models/dto/model.entity';
 import { Filters } from '../../../../shared/modules/dynamic-fields/models/filter';
 import { BookmarksService } from '../../../../shared/services/bookmarks/bookmarks.service';
+import { Bookmark } from '../../../../shared/models/dto/bookmarks/bookmark.entity';
 
 @Component({
     selector: 'app-category',
@@ -21,6 +22,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
     category: Category;
     filters: Filters;
 
+    bookmarks: Bookmark[];
     private destroy$ = new Subject();
 
     constructor(
@@ -54,10 +56,21 @@ export class CategoryComponent implements OnInit, OnDestroy {
                 this.cd.detectChanges();
             });
 
-        this.advertDataService.adverts$.pipe(takeUntil(this.destroy$)).subscribe(res => {
-            this.advertsResponse = res;
-            this.cd.detectChanges();
-        });
+        this.advertDataService.adverts$
+            .pipe(takeUntil(this.destroy$))
+
+            .subscribe(res => {
+                this.advertsResponse = res;
+                this.cd.detectChanges();
+                this.bookmarksService.getUserBookmarks().subscribe((bookmarks: Bookmark[]) => {
+                    res.adverts.forEach(advert => {
+                        const bookmarkAdvert = this.bookmarks.find(bookmark => bookmark.advert.id === advert.id);
+                        bookmarkAdvert ? (advert.isBookmark = true) : (advert.isBookmark = false);
+                    });
+                });
+            });
+
+        this.bookmarksService.getUserBookmarks().subscribe((bookmarks: Bookmark[]) => (this.bookmarks = bookmarks));
     }
 
     ngOnDestroy() {
