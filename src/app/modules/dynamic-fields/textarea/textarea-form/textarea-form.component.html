@@ -5,12 +5,18 @@
             <nz-form-label [nzRequired]="field?.params?.required">{{ field?.params?.label }}</nz-form-label>
             <nz-form-control>
                 <textarea
+                    *ngIf="!field?.params?.richTextEditor"
                     rows="4"
                     nz-input
                     formControlName="value"
                     [required]="field?.params?.required"
                     [placeholder]="field?.params?.placeholder"
                 ></textarea>
+                <quill-editor
+                    *ngIf="field?.params?.richTextEditor"
+                    formControlName="value"
+                    [required]="field?.params?.required"
+                ></quill-editor>
             </nz-form-control>
         </nz-form-item>
     </form>
