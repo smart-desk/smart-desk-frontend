@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild, ViewContainerRef } from '@angular/core';
 import { of } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { AdvertService, UserService } from '../../../../shared/services';
@@ -15,7 +15,7 @@ import { User } from '../../../../shared/models/dto/user/user.entity';
     styleUrls: ['./advert.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdvertComponent implements OnInit {
+export class AdvertComponent implements AfterViewInit {
     advert: Advert;
     user: User;
 
@@ -36,7 +36,7 @@ export class AdvertComponent implements OnInit {
         private userService: UserService
     ) {}
 
-    ngOnInit(): void {
+    ngAfterViewInit(): void {
         this.route.paramMap
             .pipe(
                 switchMap(params => this.advertService.getAdvert(params.get('advert_id'))),

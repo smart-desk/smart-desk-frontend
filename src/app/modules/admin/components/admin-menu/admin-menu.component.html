@@ -1,6 +1,10 @@
 <ul nz-menu nzMode="inline">
     <li nz-submenu nzOpen nzTitle="Объявления" nzIcon="laptop">
         <ul>
+            <!-- todo add badge with number-->
+            <li [nzMatchRouterExact]="true" nz-menu-item routerLink="/admin/adverts/pending">
+                <span>На модерации</span>
+            </li>
             <li [nzMatchRouterExact]="true" nz-menu-item routerLink="/admin/adverts">
                 <span>Активные</span>
             </li>
