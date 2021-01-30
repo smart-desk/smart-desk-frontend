@@ -112,6 +112,7 @@ const components = [
         SharedModule,
         AgmCoreModule.forRoot({
             apiKey: environment.googleMapsApiKey,
+            libraries: ['places'],
             language: 'ru',
         }),
     ],

@@ -1,2 +1,11 @@
-<p nz-typography>{{ address }}</p>
+<p nz-typography>{{ address || 'Не выбрано' }}</p>
+
+<form nz-form>
+    <nz-form-item>
+        <nz-form-control>
+            <input #search nz-input name="title" placeholder="Введите адрес" />
+        </nz-form-control>
+    </nz-form-item>
+</form>
+
 <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" (mapReady)="mapReadyHandler($event)"></agm-map>

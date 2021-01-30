@@ -40,6 +40,7 @@ export class NavigationHeaderComponent implements OnInit, OnDestroy {
         this.modalService.create({
             nzTitle: 'Ваше местоположение',
             nzContent: LocationFormComponent,
+            nzWidth: 848,
         });
     }
 }
