@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AgmCoreModule } from '@agm/core';
 import { NzCascaderModule } from 'ng-zorro-antd/cascader';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -22,6 +23,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { environment } from '../../../environments/environment';
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
 import { CategoryComponent } from './pages/category/category.component';
@@ -45,6 +47,7 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
 import { AdvertsComponent } from './components/adverts/adverts.component';
 import { AdvertsListComponent } from './components/adverts-list/adverts-list.component';
 import { ContentLayoutComponent } from './components/content-layout/content-layout.component';
+import { LocationFormComponent } from './components/location-form/location-form.component';
 
 const NZModules = [
     NzModalModule,
@@ -95,10 +98,22 @@ const components = [
     UserInfoComponent,
     AdvertsComponent,
     AdvertsListComponent,
+    LocationFormComponent,
 ];
 
 @NgModule({
     declarations: [...pages, ...components],
-    imports: [...NZModules, CommonModule, MainRoutingModule, FormsModule, ReactiveFormsModule, SharedModule],
+    imports: [
+        ...NZModules,
+        CommonModule,
+        MainRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        SharedModule,
+        AgmCoreModule.forRoot({
+            apiKey: environment.googleMapsApiKey,
+            language: 'ru',
+        }),
+    ],
 })
 export class MainModule {}

@@ -1,11 +1,17 @@
 <nz-header>
     <div class="container">
-        <nz-row [nzJustify]="'end'">
-            <nz-col *ngIf="user">
-                <a routerLink="/admin" nz-button nzType="link">Управление сайтом</a>
-            </nz-col>
+        <nz-row [nzJustify]="'space-between'">
+            <nz-col> Местоположение: <a (click)="openLocationModal()">Выбрать</a> </nz-col>
             <nz-col>
-                <app-profile-menu></app-profile-menu>
+                <nz-row [nzJustify]="'space-between'">
+                    <nz-col>
+                        <!-- todo check if admin-->
+                        <a *ngIf="user" routerLink="/admin" nz-button nzType="link">Управление сайтом</a>
+                    </nz-col>
+                    <nz-col>
+                        <app-profile-menu></app-profile-menu>
+                    </nz-col>
+                </nz-row>
             </nz-col>
         </nz-row>
     </div>
