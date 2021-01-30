@@ -31,6 +31,7 @@ export class TextareaParamsComponent extends AbstractFieldParamsComponent implem
             label: [(params && params.label) || '', Validators.required],
             placeholder: [(params && params.placeholder) || ''],
             required: [(params && params.required) || false],
+            richTextEditor: [(params && params.richTextEditor) || false],
         });
     }
 
