@@ -1,1 +1,13 @@
-<app-adverts [advertsResponse]="advertDto" (removeBookmark)="deleteBookmark($event)" (addBookmark)="createBookmark($event)"></app-adverts>
+<app-content-layout [main]="main" [left]="left"></app-content-layout>
+
+<ng-template #main>
+    <app-adverts
+        [advertsResponse]="advertDto"
+        (deleteBookmark)="deleteBookmark($event)"
+        (createBookmark)="createBookmark($event)"
+    ></app-adverts>
+</ng-template>
+
+<ng-template #left>
+    <app-user-info [user]="user"></app-user-info>
+</ng-template>
