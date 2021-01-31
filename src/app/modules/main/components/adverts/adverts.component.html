@@ -3,6 +3,7 @@
     <app-advert-card
         *ngFor="let advert of advertsResponse?.adverts"
         [advert]="advert"
+        [extraActions]="cardActions"
         (createBookmark)="createBookmark.emit($event)"
         (deleteBookmark)="deleteBookmark.emit($event)"
     ></app-advert-card>
