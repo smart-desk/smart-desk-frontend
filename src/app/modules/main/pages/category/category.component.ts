@@ -7,9 +7,9 @@ import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../shared/models/
 import { Category } from '../../../../shared/models/dto/category.entity';
 import { Model } from '../../../../shared/models/dto/model.entity';
 import { Filters } from '../../../../shared/modules/dynamic-fields/models/filter';
-import { BookmarksService } from '../../../../shared/services/bookmarks/bookmarks.service';
 import { Bookmark } from '../../../../shared/models/dto/bookmarks/bookmark.entity';
 import { cloneDeep } from 'lodash';
+import { BookmarksStoreService } from '../../../../shared/services/bookmarks/bookmarks-store.service';
 
 @Component({
     selector: 'app-category',
@@ -22,8 +22,6 @@ export class CategoryComponent implements OnInit, OnDestroy {
     model: Model;
     category: Category;
     filters: Filters;
-
-    bookmarks: Bookmark[];
     private destroy$ = new Subject();
 
     constructor(
@@ -32,10 +30,12 @@ export class CategoryComponent implements OnInit, OnDestroy {
         private modelService: ModelService,
         private cd: ChangeDetectorRef,
         private route: ActivatedRoute,
-        private bookmarksService: BookmarksService
+        private bookmarksStoreService: BookmarksStoreService
     ) {}
 
     ngOnInit(): void {
+        this.bookmarksStoreService.loadBookmarks();
+
         this.route.paramMap
             .pipe(
                 takeUntil(this.destroy$),
@@ -57,10 +57,14 @@ export class CategoryComponent implements OnInit, OnDestroy {
                 this.cd.detectChanges();
             });
 
-        this.getBookmarks();
+        this.bookmarksStoreService.bookmarks$.pipe(takeUntil(this.destroy$)).subscribe(bookmarks => {
+            this.advertsResponse = this.updateAdvertsWithBookmarks(this.advertsResponse, bookmarks);
+            this.cd.detectChanges();
+        });
 
         this.advertDataService.adverts$.pipe(takeUntil(this.destroy$)).subscribe(res => {
-            this.updateAdvertsWithBookmarks(res);
+            this.advertsResponse = this.updateAdvertsWithBookmarks(res, this.bookmarksStoreService.bookmarks$.getValue());
+            this.cd.detectChanges();
         });
     }
 
@@ -74,39 +78,31 @@ export class CategoryComponent implements OnInit, OnDestroy {
     }
 
     addBookmarkEvent(advertId: string) {
-        this.bookmarksService.createBookmark(advertId).subscribe(() => this.cd.detectChanges());
+        // this.bookmarksService.createBookmark(advertId).subscribe(() => this.cd.detectChanges());
     }
 
     removeBookmarkEvent(advertId: string) {
-        const removedBookmark = this.bookmarks.find(bookmark => bookmark.advert.id === advertId);
-        if (!removedBookmark) {
-            return;
-        }
-        this.bookmarksService.deleteBookmark(removedBookmark.id).subscribe(() => {
-            this.advertsResponse = { ...this.advertsResponse };
-            this.cd.detectChanges();
-        });
+        // const removedBookmark = this.bookmarks.find(bookmark => bookmark.advert.id === advertId);
+        // if (!removedBookmark) {
+        //     return;
+        // }
+        // this.bookmarksService.deleteBookmark(removedBookmark.id).subscribe(() => {
+        //     this.advertsResponse = { ...this.advertsResponse };
+        //     this.cd.detectChanges();
+        // });
     }
 
-    private getBookmarks() {
-        this.bookmarksService.getUserBookmarks().subscribe(bookmarks => {
-            this.bookmarks = bookmarks;
-            this.updateAdvertsWithBookmarks(this.advertsResponse);
-        });
-    }
-
-    private updateAdvertsWithBookmarks(advertsResponse) {
+    private updateAdvertsWithBookmarks(advertsResponse: GetAdvertsResponseDto, bookmarks?: Bookmark[]): GetAdvertsResponseDto {
         if (!advertsResponse) {
             return;
         }
-        if (this.bookmarks) {
+        if (bookmarks) {
             advertsResponse.adverts.forEach(advert => {
-                const bookmarkAdvert = this.bookmarks.find(bookmark => bookmark.advert.id === advert.id);
+                const bookmarkAdvert = bookmarks.find(bookmark => bookmark.advert.id === advert.id);
                 advert.isBookmark = !!bookmarkAdvert;
             });
         }
-        this.advertsResponse = cloneDeep(advertsResponse);
-        this.cd.detectChanges();
+        return cloneDeep(advertsResponse);
     }
 
     private parseQueryParams(queryParams: ParamMap): GetAdvertsDto {
