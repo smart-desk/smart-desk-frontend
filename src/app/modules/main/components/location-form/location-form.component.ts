@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone, ViewChild } from '@angular/core';
 import MapsEventListener = google.maps.MapsEventListener;
 import { MapsAPILoader } from '@agm/core';
 import { take } from 'rxjs/operators';
@@ -12,7 +12,7 @@ import PlaceResult = google.maps.places.PlaceResult;
     styleUrls: ['./location-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LocationFormComponent {
+export class LocationFormComponent implements AfterViewInit {
     @ViewChild('search')
     searchElementRef: ElementRef;
     address = '';
@@ -25,7 +25,10 @@ export class LocationFormComponent {
     lat: number = 51.673858;
     lng: number = 7.815982;
 
-    constructor(private zone: NgZone, private mapsAPILoader: MapsAPILoader, private cdr: ChangeDetectorRef) {
+    constructor(private zone: NgZone, private mapsAPILoader: MapsAPILoader, private cdr: ChangeDetectorRef) {}
+
+    // todo set marker on place
+    ngAfterViewInit() {
         fromPromise(this.mapsAPILoader.load())
             .pipe(take(1))
             .subscribe(() => {
@@ -61,6 +64,7 @@ export class LocationFormComponent {
         this.geocoder.geocode({ location: e.latLng }, (results, status) => {
             if (status === 'OK') {
                 const place = results[0];
+                // todo update autocomplete
                 this.updateAddress(place);
             } else {
                 // todo should throw sentry message
