@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Advert } from '../../../../shared/models/dto/advert.entity';
 import { SectionType } from '../../../../shared/models/dto/section.entity';
 import { FieldType } from '../../../../shared/models/dto/field.entity';
@@ -15,14 +15,29 @@ import { PriceParamsDto } from '../../../dynamic-fields/price/dto/price-params.d
 })
 export class AdvertCardComponent implements OnInit {
     @Input() advert: Advert;
+    @Output() createBookmark = new EventEmitter<string>();
+    @Output() deleteBookmark = new EventEmitter<string>();
     title = '';
     description = '';
     thumb = '';
+
+    constructor(private cd: ChangeDetectorRef) {}
 
     ngOnInit() {
         this.title = this.getTitle();
         this.description = this.getDescription();
         this.thumb = this.getThumbSrc();
+        this.cd.detectChanges();
+    }
+
+    toggleBookmark(advertId: string): void {
+        if (this.advert.isBookmark) {
+            this.deleteBookmark.emit(advertId);
+        } else {
+            this.createBookmark.emit(advertId);
+        }
+        this.advert.isBookmark = !this.advert.isBookmark;
+        this.cd.detectChanges();
     }
 
     private getThumbSrc(): string {

@@ -3,7 +3,9 @@
 <ng-template #main>
     <nz-tabset [nzAnimated]="false">
         <nz-tab nzTitle="Активные">
-            <app-adverts-list *ngIf="advertResponse" [adverts]="advertResponse?.adverts"></app-adverts-list>
+            <div class="box__advert" *ngFor="let advert of advertResponse?.adverts">
+                <app-advert-card [advert]="advert" (createBookmark)="addBookmark($event)"></app-advert-card>
+            </div>
         </nz-tab>
         <nz-tab nzTitle="Завершенные">
             <!-- todo -->

@@ -11,4 +11,5 @@ export class Advert {
     createdAt: Date;
     updatedAt: Date;
     sections: Section[];
+    isBookmark: boolean;
 }

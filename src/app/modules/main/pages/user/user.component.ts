@@ -40,4 +40,8 @@ export class UserComponent implements OnInit {
                 this.cdr.detectChanges();
             });
     }
+
+    addBookmark($event) {
+        console.log('Заглушка');
+    }
 }
