@@ -5,8 +5,8 @@
     <app-adverts
         [advertsResponse]="advertsResponse"
         (changePage)="changePage($event)"
-        (addBookmark)="addBookmarkEvent($event)"
-        (removeBookmark)="removeBookmarkEvent($event)"
+        (createBookmark)="addBookmarkEvent($event)"
+        (deleteBookmark)="removeBookmarkEvent($event)"
     >
     </app-adverts>
 </ng-template>
