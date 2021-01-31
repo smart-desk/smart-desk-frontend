@@ -78,18 +78,11 @@ export class CategoryComponent implements OnInit, OnDestroy {
     }
 
     addBookmarkEvent(advertId: string) {
-        // this.bookmarksService.createBookmark(advertId).subscribe(() => this.cd.detectChanges());
+        this.bookmarksStoreService.createBookmark(advertId);
     }
 
     removeBookmarkEvent(advertId: string) {
-        // const removedBookmark = this.bookmarks.find(bookmark => bookmark.advert.id === advertId);
-        // if (!removedBookmark) {
-        //     return;
-        // }
-        // this.bookmarksService.deleteBookmark(removedBookmark.id).subscribe(() => {
-        //     this.advertsResponse = { ...this.advertsResponse };
-        //     this.cd.detectChanges();
-        // });
+        this.bookmarksStoreService.deleteBookmark(advertId);
     }
 
     private updateAdvertsWithBookmarks(advertsResponse: GetAdvertsResponseDto, bookmarks?: Bookmark[]): GetAdvertsResponseDto {

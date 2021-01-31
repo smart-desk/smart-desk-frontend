@@ -3,8 +3,8 @@
     <div class="box__advert" *ngFor="let advert of advertsResponse?.adverts">
         <app-advert-card
             [advert]="advert"
-            (addBookmark)="addBookmark.emit($event)"
-            (removeBookmark)="removeBookmark.emit($event)"
+            (createBookmark)="addBookmark.emit($event)"
+            (deleteBookmark)="removeBookmark.emit($event)"
         ></app-advert-card>
     </div>
 </div>

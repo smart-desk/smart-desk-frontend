@@ -15,8 +15,8 @@ import { PriceParamsDto } from '../../../dynamic-fields/price/dto/price-params.d
 })
 export class AdvertCardComponent implements OnInit {
     @Input() advert: Advert;
-    @Output() addBookmark = new EventEmitter<string>();
-    @Output() removeBookmark = new EventEmitter<string>();
+    @Output() createBookmark = new EventEmitter<string>();
+    @Output() deleteBookmark = new EventEmitter<string>();
     title = '';
     description = '';
     thumb = '';
@@ -32,9 +32,9 @@ export class AdvertCardComponent implements OnInit {
 
     toggleBookmark(advertId: string): void {
         if (this.advert.isBookmark) {
-            this.removeBookmark.emit(advertId);
+            this.deleteBookmark.emit(advertId);
         } else {
-            this.addBookmark.emit(advertId);
+            this.createBookmark.emit(advertId);
         }
         this.advert.isBookmark = !this.advert.isBookmark;
         this.cd.detectChanges();
