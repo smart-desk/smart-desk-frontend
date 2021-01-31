@@ -28,7 +28,16 @@ export class AdvertCardComponent implements OnInit {
         this.description = this.getDescription();
         this.thumb = this.getThumbSrc();
         this.cd.detectChanges();
-        console.log(this.advert);
+    }
+
+    toggleBookmark(advertId: string): void {
+        if (this.advert.isBookmark) {
+            this.removeBookmark.emit(advertId);
+        } else {
+            this.addBookmark.emit(advertId);
+        }
+        this.advert.isBookmark = !this.advert.isBookmark;
+        this.cd.detectChanges();
     }
 
     private getThumbSrc(): string {

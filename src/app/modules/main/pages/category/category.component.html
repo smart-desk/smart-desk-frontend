@@ -2,8 +2,12 @@
 
 <ng-template #main>
     <div *ngIf="!advertsResponse || !advertsResponse.totalCount">В этой категории еще нет объявлений</div>
-    <app-adverts [advertsResponse]="advertsResponse" (changePage)="changePage($event)">
-        [bookmarks]="bookmarks" (addBookmark)="addBookmarkEvent($event)"
+    <app-adverts
+        [advertsResponse]="advertsResponse"
+        (changePage)="changePage($event)"
+        (addBookmark)="addBookmarkEvent($event)"
+        (removeBookmark)="removeBookmarkEvent($event)"
+    >
     </app-adverts>
 </ng-template>
 

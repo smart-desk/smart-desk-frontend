@@ -1,7 +1,11 @@
-<app-search *ngIf="showSearch" [searchPhrase]="''" [placeholder]="" (searchChange)="search($event)"> </app-search>
+<app-search *ngIf="showSearch" [searchPhrase]="''" [placeholder]="" (searchChange)="search($event)"></app-search>
 <div class="box__adverts">
     <div class="box__advert" *ngFor="let advert of advertsResponse?.adverts">
-        <app-advert-card [advert]="advert" (addBookmark)="addBookmark.emit($event)"></app-advert-card>
+        <app-advert-card
+            [advert]="advert"
+            (addBookmark)="addBookmark.emit($event)"
+            (removeBookmark)="removeBookmark.emit($event)"
+        ></app-advert-card>
     </div>
 </div>
 <app-pagination

@@ -9,6 +9,7 @@ import { Model } from '../../../../shared/models/dto/model.entity';
 import { Filters } from '../../../../shared/modules/dynamic-fields/models/filter';
 import { BookmarksService } from '../../../../shared/services/bookmarks/bookmarks.service';
 import { Bookmark } from '../../../../shared/models/dto/bookmarks/bookmark.entity';
+import { cloneDeep } from 'lodash';
 
 @Component({
     selector: 'app-category',
@@ -56,21 +57,11 @@ export class CategoryComponent implements OnInit, OnDestroy {
                 this.cd.detectChanges();
             });
 
-        this.advertDataService.adverts$
-            .pipe(takeUntil(this.destroy$))
+        this.getBookmarks();
 
-            .subscribe(res => {
-                this.advertsResponse = res;
-                this.cd.detectChanges();
-                this.bookmarksService.getUserBookmarks().subscribe((bookmarks: Bookmark[]) => {
-                    res.adverts.forEach(advert => {
-                        const bookmarkAdvert = this.bookmarks.find(bookmark => bookmark.advert.id === advert.id);
-                        bookmarkAdvert ? (advert.isBookmark = true) : (advert.isBookmark = false);
-                    });
-                });
-            });
-
-        this.bookmarksService.getUserBookmarks().subscribe((bookmarks: Bookmark[]) => (this.bookmarks = bookmarks));
+        this.advertDataService.adverts$.pipe(takeUntil(this.destroy$)).subscribe(res => {
+            this.updateAdvertsWithBookmarks(res);
+        });
     }
 
     ngOnDestroy() {
@@ -83,7 +74,39 @@ export class CategoryComponent implements OnInit, OnDestroy {
     }
 
     addBookmarkEvent(advertId: string) {
-        this.bookmarksService.createBookmark(advertId).subscribe();
+        this.bookmarksService.createBookmark(advertId).subscribe(() => this.cd.detectChanges());
+    }
+
+    removeBookmarkEvent(advertId: string) {
+        const removedBookmark = this.bookmarks.find(bookmark => bookmark.advert.id === advertId);
+        if (!removedBookmark) {
+            return;
+        }
+        this.bookmarksService.deleteBookmark(removedBookmark.id).subscribe(() => {
+            this.advertsResponse = { ...this.advertsResponse };
+            this.cd.detectChanges();
+        });
+    }
+
+    private getBookmarks() {
+        this.bookmarksService.getUserBookmarks().subscribe(bookmarks => {
+            this.bookmarks = bookmarks;
+            this.updateAdvertsWithBookmarks(this.advertsResponse);
+        });
+    }
+
+    private updateAdvertsWithBookmarks(advertsResponse) {
+        if (!advertsResponse) {
+            return;
+        }
+        if (this.bookmarks) {
+            advertsResponse.adverts.forEach(advert => {
+                const bookmarkAdvert = this.bookmarks.find(bookmark => bookmark.advert.id === advert.id);
+                advert.isBookmark = !!bookmarkAdvert;
+            });
+        }
+        this.advertsResponse = cloneDeep(advertsResponse);
+        this.cd.detectChanges();
     }
 
     private parseQueryParams(queryParams: ParamMap): GetAdvertsDto {
