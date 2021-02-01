@@ -7,16 +7,16 @@
 <ng-template #main>
     <nz-tabset [nzAnimated]="false">
         <nz-tab nzTitle="Активные">
-            <app-adverts [advertsResponse]="activeAdvertsResponse"></app-adverts>
+            <app-adverts [advertsResponse]="activeAdvertsResponse" [cardActions]="activeAdvertsActions"></app-adverts>
         </nz-tab>
         <nz-tab nzTitle="На модерации">
-            <app-adverts [advertsResponse]="pendingAdvertsResponse"></app-adverts>
+            <app-adverts [advertsResponse]="pendingAdvertsResponse" [cardActions]="pendingAdvertsActions"></app-adverts>
         </nz-tab>
         <nz-tab nzTitle="Заблокированные">
-            <app-adverts [advertsResponse]="blockedAdvertsResponse"></app-adverts>
+            <app-adverts [advertsResponse]="blockedAdvertsResponse" [cardActions]="blockedAdvertsActions"></app-adverts>
         </nz-tab>
         <nz-tab nzTitle="Завершенные">
-            <app-adverts [advertsResponse]="completedAdvertsResponse"></app-adverts>
+            <app-adverts [advertsResponse]="completedAdvertsResponse" [cardActions]="completedAdvertsActions"></app-adverts>
         </nz-tab>
     </nz-tabset>
 </ng-template>

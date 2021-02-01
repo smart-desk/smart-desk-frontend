@@ -7,6 +7,11 @@ import { PriceEntity } from '../../../dynamic-fields/price/dto/price.entity';
 import { getCurrencySymbolByCode, roundPrice } from '../../../dynamic-fields/price/helpers';
 import { PriceParamsDto } from '../../../dynamic-fields/price/dto/price-params.dto';
 
+export interface ExtraActions {
+    title: string;
+    action: (advert: Advert) => void;
+}
+
 @Component({
     selector: 'app-advert-card',
     templateUrl: './advert-card.component.html',
@@ -15,6 +20,7 @@ import { PriceParamsDto } from '../../../dynamic-fields/price/dto/price-params.d
 })
 export class AdvertCardComponent implements OnInit {
     @Input() advert: Advert;
+    @Input() extraActions: ExtraActions[];
     @Output() createBookmark = new EventEmitter<string>();
     @Output() deleteBookmark = new EventEmitter<string>();
     title = '';
