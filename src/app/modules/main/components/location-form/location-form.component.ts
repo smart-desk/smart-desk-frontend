@@ -1,4 +1,13 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone, ViewChild } from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    NgZone,
+    OnDestroy,
+    ViewChild
+} from '@angular/core';
 import MapsEventListener = google.maps.MapsEventListener;
 import { MapsAPILoader } from '@agm/core';
 import { take } from 'rxjs/operators';
@@ -12,7 +21,7 @@ import PlaceResult = google.maps.places.PlaceResult;
     styleUrls: ['./location-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LocationFormComponent implements AfterViewInit {
+export class LocationFormComponent implements AfterViewInit, OnDestroy {
     @ViewChild('search')
     searchElementRef: ElementRef;
     address = '';
@@ -21,9 +30,9 @@ export class LocationFormComponent implements AfterViewInit {
     autocomplete: google.maps.places.Autocomplete;
     mapClickListener: MapsEventListener;
     autocompleteListener: MapsEventListener;
-    zoom: number = 8;
-    lat: number = 51.673858;
-    lng: number = 7.815982;
+    zoom = 8;
+    lat = 51.673858;
+    lng = 7.815982;
 
     constructor(private zone: NgZone, private mapsAPILoader: MapsAPILoader, private cdr: ChangeDetectorRef) {}
 
