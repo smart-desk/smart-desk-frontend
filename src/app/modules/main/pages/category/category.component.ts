@@ -7,6 +7,9 @@ import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../shared/models/
 import { Category } from '../../../../shared/models/dto/category.entity';
 import { Model } from '../../../../shared/models/dto/model.entity';
 import { Filters } from '../../../../shared/modules/dynamic-fields/models/filter';
+import { Bookmark } from '../../../../shared/models/dto/bookmarks/bookmark.entity';
+import { cloneDeep } from 'lodash';
+import { BookmarksStoreService } from '../../../../shared/services/bookmarks/bookmarks-store.service';
 
 @Component({
     selector: 'app-category',
@@ -19,7 +22,6 @@ export class CategoryComponent implements OnInit, OnDestroy {
     model: Model;
     category: Category;
     filters: Filters;
-
     private destroy$ = new Subject();
 
     constructor(
@@ -27,10 +29,13 @@ export class CategoryComponent implements OnInit, OnDestroy {
         private advertDataService: AdvertDataService,
         private modelService: ModelService,
         private cd: ChangeDetectorRef,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private bookmarksStoreService: BookmarksStoreService
     ) {}
 
     ngOnInit(): void {
+        this.bookmarksStoreService.loadBookmarks();
+
         this.route.paramMap
             .pipe(
                 takeUntil(this.destroy$),
@@ -52,8 +57,13 @@ export class CategoryComponent implements OnInit, OnDestroy {
                 this.cd.detectChanges();
             });
 
+        this.bookmarksStoreService.bookmarks$.pipe(takeUntil(this.destroy$)).subscribe(bookmarks => {
+            this.advertsResponse = this.updateAdvertsWithBookmarks(this.advertsResponse, bookmarks);
+            this.cd.detectChanges();
+        });
+
         this.advertDataService.adverts$.pipe(takeUntil(this.destroy$)).subscribe(res => {
-            this.advertsResponse = res;
+            this.advertsResponse = this.updateAdvertsWithBookmarks(res, this.bookmarksStoreService.bookmarks$.getValue());
             this.cd.detectChanges();
         });
     }
@@ -65,6 +75,27 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
     changePage(page: number) {
         this.advertDataService.changePage(page);
+    }
+
+    addBookmarkEvent(advertId: string) {
+        this.bookmarksStoreService.createBookmark(advertId);
+    }
+
+    removeBookmarkEvent(advertId: string) {
+        this.bookmarksStoreService.deleteBookmark(advertId);
+    }
+
+    private updateAdvertsWithBookmarks(advertsResponse: GetAdvertsResponseDto, bookmarks?: Bookmark[]): GetAdvertsResponseDto {
+        if (!advertsResponse) {
+            return;
+        }
+        if (bookmarks) {
+            advertsResponse.adverts.forEach(advert => {
+                const bookmarkAdvert = bookmarks.find(bookmark => bookmark.advert.id === advert.id);
+                advert.isBookmark = !!bookmarkAdvert;
+            });
+        }
+        return cloneDeep(advertsResponse);
     }
 
     private parseQueryParams(queryParams: ParamMap): GetAdvertsDto {

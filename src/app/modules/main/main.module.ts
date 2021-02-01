@@ -39,13 +39,12 @@ import { ProfileMenuComponent } from './components/profile-menu/profile-menu.com
 import { FiltersComponent } from './components/filters/filters.component';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { ProfileComponent } from './pages/profile/profile.component';
-import { SavedComponent } from './pages/saved/saved.component';
+import { BookmarksComponent } from './pages/bookmarks/bookmarks.component';
 import { MyAdvertsComponent } from './pages/my-adverts/my-adverts.component';
 import { ProfileSideBarComponent } from './components/profile-side-bar/profile-side-bar.component';
 import { UserComponent } from './pages/user/user.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
 import { AdvertsComponent } from './components/adverts/adverts.component';
-import { AdvertsListComponent } from './components/adverts-list/adverts-list.component';
 import { ContentLayoutComponent } from './components/content-layout/content-layout.component';
 import { LocationFormComponent } from './components/location-form/location-form.component';
 
@@ -92,12 +91,11 @@ const components = [
     ProfileComponent,
     ProfileMenuComponent,
     FiltersComponent,
-    SavedComponent,
+    BookmarksComponent,
     MyAdvertsComponent,
     ProfileSideBarComponent,
     UserInfoComponent,
     AdvertsComponent,
-    AdvertsListComponent,
     LocationFormComponent,
 ];
 

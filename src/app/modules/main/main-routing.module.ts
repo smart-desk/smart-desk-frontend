@@ -8,7 +8,7 @@ import { AdvertCreateComponent } from './pages/advert-create/advert-create.compo
 import { IndexComponent } from './pages/index/index.component';
 import { AuthGuard } from '../../shared/services/auth/auth.guard';
 import { ProfileComponent } from './pages/profile/profile.component';
-import { SavedComponent } from './pages/saved/saved.component';
+import { BookmarksComponent } from './pages/bookmarks/bookmarks.component';
 import { MyAdvertsComponent } from './pages/my-adverts/my-adverts.component';
 import { UserComponent } from './pages/user/user.component';
 import { ForbiddenComponent } from '../../shared/pages/forbidden/forbidden.component';
@@ -40,8 +40,8 @@ const routes: Routes = [
                         component: ProfileComponent,
                     },
                     {
-                        path: 'saved',
-                        component: SavedComponent,
+                        path: 'bookmarks',
+                        component: BookmarksComponent,
                     },
                     {
                         path: 'my-adverts',
