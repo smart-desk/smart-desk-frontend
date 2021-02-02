@@ -1,7 +1,7 @@
 <nz-header>
     <div class="container">
         <nz-row [nzJustify]="'end'">
-            <nz-col *ngIf="user">
+            <nz-col *ngIf="user?.roles.includes('admin')">
                 <a routerLink="/admin" nz-button nzType="link">Управление сайтом</a>
             </nz-col>
             <nz-col>
