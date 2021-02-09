@@ -1,13 +1,15 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild, ViewContainerRef } from '@angular/core';
-import { of } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
-import { AdvertService, UserService } from '../../../../shared/services';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { of, Subject } from 'rxjs';
+import { switchMap, takeUntil, tap } from 'rxjs/operators';
+import { AdvertDataService, AdvertService, UserService } from '../../../../shared/services';
 import { ActivatedRoute } from '@angular/router';
 import { Advert } from '../../../../shared/models/dto/advert.entity';
 import { SectionType } from '../../../../shared/models/dto/section.entity';
 import { FieldEntity } from '../../../../shared/models/dto/field.entity';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
 import { User } from '../../../../shared/models/dto/user/user.entity';
+import { GetAdvertsResponseDto } from '../../../../shared/models/dto/advert.dto';
+import { BookmarksStoreService } from '../../../../shared/services/bookmarks/bookmarks-store.service';
 
 @Component({
     selector: 'app-advert',
@@ -15,9 +17,11 @@ import { User } from '../../../../shared/models/dto/user/user.entity';
     styleUrls: ['./advert.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdvertComponent implements AfterViewInit {
+export class AdvertComponent implements OnInit, AfterViewInit {
     advert: Advert;
     user: User;
+    advertsResponse: GetAdvertsResponseDto;
+    private destroy$ = new Subject();
 
     @ViewChild('params', { read: ViewContainerRef })
     private paramsContainerRef: ViewContainerRef;
@@ -33,8 +37,19 @@ export class AdvertComponent implements AfterViewInit {
         private route: ActivatedRoute,
         private cd: ChangeDetectorRef,
         private dynamicFieldsService: DynamicFieldsService,
-        private userService: UserService
+        private userService: UserService,
+        private advertDataService: AdvertDataService,
+        private bookmarksStoreService: BookmarksStoreService
     ) {}
+
+    ngOnInit(): void {
+        this.advertDataService.adverts$.pipe(takeUntil(this.destroy$)).subscribe(res => {
+            this.advertsResponse = res;
+            this.cd.detectChanges();
+        });
+        // TODO: заглушка заполнения объявлений
+        this.advertDataService.loadAdvertsForCategory('475dc5b8-7818-4596-8934-080e75b4b682');
+    }
 
     ngAfterViewInit(): void {
         this.route.paramMap
@@ -54,6 +69,18 @@ export class AdvertComponent implements AfterViewInit {
 
                 this.cd.detectChanges();
             });
+    }
+
+    changePage(page: number) {
+        this.advertDataService.changePage(page);
+    }
+
+    addBookmarkEvent(advertId: string) {
+        this.bookmarksStoreService.createBookmark(advertId);
+    }
+
+    removeBookmarkEvent(advertId: string) {
+        this.bookmarksStoreService.deleteBookmark(advertId);
     }
 
     private addParamsFields(): void {
