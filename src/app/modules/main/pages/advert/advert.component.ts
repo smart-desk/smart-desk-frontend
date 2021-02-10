@@ -48,7 +48,7 @@ export class AdvertComponent implements OnInit, AfterViewInit {
             this.cd.detectChanges();
         });
         // TODO: заглушка заполнения объявлений
-        this.advertDataService.loadAdvertsForCategory('475dc5b8-7818-4596-8934-080e75b4b682');
+        this.advertDataService.loadAdvertsForCategory('cdad7290-07c9-4419-a9d7-2c6c843fef50');
     }
 
     ngAfterViewInit(): void {
