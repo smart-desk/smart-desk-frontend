@@ -14,12 +14,14 @@ import { User } from '../../../../shared/models/dto/user/user.entity';
 export class NavigationHeaderComponent implements OnInit, OnDestroy {
     user: User;
     destroy$ = new Subject();
+    isAdmin: boolean;
 
     constructor(private authService: AuthService, private loginService: LoginService, private cd: ChangeDetectorRef) {}
 
     ngOnInit() {
         this.loginService.login$.pipe(takeUntil(this.destroy$)).subscribe(user => {
             this.user = user;
+            this.isAdmin = user?.roles.includes('admin');
             this.cd.detectChanges();
         });
     }
