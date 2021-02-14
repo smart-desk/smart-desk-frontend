@@ -6,7 +6,7 @@
                 <nz-row [nzJustify]="'space-between'">
                     <nz-col>
                         <!-- todo check if admin-->
-                        <a *ngIf="user" routerLink="/admin" nz-button nzType="link">Управление сайтом</a>
+                        <a *ngIf="isAdmin" routerLink="/admin" nz-button nzType="link">Управление сайтом</a>
                     </nz-col>
                     <nz-col>
                         <app-profile-menu></app-profile-menu>

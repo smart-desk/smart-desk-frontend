@@ -16,6 +16,7 @@ import { LocationFormComponent } from '../location-form/location-form.component'
 export class NavigationHeaderComponent implements OnInit, OnDestroy {
     user: User;
     destroy$ = new Subject();
+    isAdmin: boolean;
 
     constructor(
         private authService: AuthService,
@@ -27,6 +28,7 @@ export class NavigationHeaderComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.loginService.login$.pipe(takeUntil(this.destroy$)).subscribe(user => {
             this.user = user;
+            this.isAdmin = user?.roles.includes('admin');
             this.cd.detectChanges();
         });
     }

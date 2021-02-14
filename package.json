@@ -64,6 +64,7 @@
   },
   "husky": {
     "hooks": {
+      "run": "pretty-quick --staged && ng lint",
       "pre-commit": "pretty-quick --staged && ng lint"
     }
   }
