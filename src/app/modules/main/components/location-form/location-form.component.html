@@ -9,3 +9,7 @@
 </form>
 
 <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" (mapReady)="mapReadyHandler($event)"></agm-map>
+<div class="button-wrap">
+    <button nz-button nzType="default" (click)="closeModal()">Отмена</button>
+    <button nz-button nzType="primary" (click)="saveAddress()">Ок</button>
+</div>

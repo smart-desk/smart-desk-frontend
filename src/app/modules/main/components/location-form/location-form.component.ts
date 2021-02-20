@@ -6,7 +6,7 @@ import {
     ElementRef,
     NgZone,
     OnDestroy,
-    ViewChild
+    ViewChild,
 } from '@angular/core';
 import MapsEventListener = google.maps.MapsEventListener;
 import { MapsAPILoader } from '@agm/core';
@@ -14,6 +14,9 @@ import { take } from 'rxjs/operators';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import GeocoderResult = google.maps.GeocoderResult;
 import PlaceResult = google.maps.places.PlaceResult;
+import { NzModalRef } from 'ng-zorro-antd/modal';
+import { AddressService } from '../../../../shared/services/address/address.service';
+import { CreateAddressDto } from '../../../../shared/models/dto/address/create-address.dto';
 
 @Component({
     selector: 'app-location-form',
@@ -34,10 +37,18 @@ export class LocationFormComponent implements AfterViewInit, OnDestroy {
     lat = 51.673858;
     lng = 7.815982;
 
-    constructor(private zone: NgZone, private mapsAPILoader: MapsAPILoader, private cdr: ChangeDetectorRef) {}
+    constructor(
+        private zone: NgZone,
+        private mapsAPILoader: MapsAPILoader,
+        private cdr: ChangeDetectorRef,
+        private nzModalRef: NzModalRef,
+        private addressService: AddressService
+    ) {}
 
     // todo set marker on place
     ngAfterViewInit() {
+        this.nzModalRef.afterClose.subscribe(data => console.log(' data ', data));
+
         fromPromise(this.mapsAPILoader.load())
             .pipe(take(1))
             .subscribe(() => {
@@ -81,6 +92,20 @@ export class LocationFormComponent implements AfterViewInit, OnDestroy {
             }
             this.cdr.detectChanges();
         });
+    }
+
+    saveAddress() {
+        const address: CreateAddressDto = {
+            lat: this.lat,
+            lng: this.lng,
+            title: this.address,
+            radius: 50,
+        };
+        this.addressService.saveAddress(address).subscribe(() => this.closeModal());
+    }
+
+    closeModal() {
+        this.nzModalRef.close();
     }
 
     private updateAddress(place: GeocoderResult | PlaceResult): void {

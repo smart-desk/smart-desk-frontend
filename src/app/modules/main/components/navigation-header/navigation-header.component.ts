@@ -43,6 +43,7 @@ export class NavigationHeaderComponent implements OnInit, OnDestroy {
             nzTitle: 'Ваше местоположение',
             nzContent: LocationFormComponent,
             nzWidth: 848,
+            nzFooter: null,
         });
     }
 }
