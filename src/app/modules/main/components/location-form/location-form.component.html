@@ -8,7 +8,10 @@
     </nz-form-item>
 </form>
 
-<agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" (mapReady)="mapReadyHandler($event)"></agm-map>
+<agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" (mapReady)="mapReadyHandler($event)">
+    <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+</agm-map>
+
 <div class="button-wrap">
     <button nz-button nzType="default" (click)="closeModal()">Отмена</button>
     <button nz-button nzType="primary" (click)="saveAddress()">Ок</button>
