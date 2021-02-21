@@ -20,6 +20,8 @@ import { AddressService } from '../../../../shared/services/address/address.serv
 import { CreateAddressDto } from '../../../../shared/models/dto/address/create-address.dto';
 import { Address } from '../../../../shared/models/dto/address/address.entity';
 
+const M_IN_KM = 1000;
+
 @Component({
     selector: 'app-location-form',
     templateUrl: './location-form.component.html',
@@ -29,16 +31,14 @@ import { Address } from '../../../../shared/models/dto/address/address.entity';
 export class LocationFormComponent implements AfterViewInit, OnDestroy, OnInit {
     @ViewChild('search')
     searchElementRef: ElementRef;
-    radius: 500;
     map: google.maps.Map;
     geocoder: google.maps.Geocoder;
     autocomplete: google.maps.places.Autocomplete;
     mapClickListener: MapsEventListener;
     autocompleteListener: MapsEventListener;
     zoom = 8;
-    lat = 51.673858;
-    lng = 7.815982;
     address: Address;
+    mapCircle: google.maps.Circle;
 
     constructor(
         private zone: NgZone,
@@ -51,6 +51,9 @@ export class LocationFormComponent implements AfterViewInit, OnDestroy, OnInit {
     ngOnInit() {
         if (!this.address) {
             this.address = new Address();
+            this.address.lng = 2.2592045;
+            this.address.lat = 48.8286554;
+            this.address.radius = 10;
         }
     }
 
@@ -85,6 +88,16 @@ export class LocationFormComponent implements AfterViewInit, OnDestroy, OnInit {
         this.mapClickListener = this.map.addListener('click', (e: google.maps.MouseEvent) => {
             this.zone.run(() => this.onMapClick(e));
         });
+        this.mapCircle = new google.maps.Circle({
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35,
+            map: this.map,
+            center: { lat: this.address.lat, lng: this.address.lng },
+            radius: this.address.radius * M_IN_KM,
+        });
     }
 
     onMapClick(e: google.maps.MouseEvent): void {
@@ -103,10 +116,10 @@ export class LocationFormComponent implements AfterViewInit, OnDestroy, OnInit {
 
     saveAddress() {
         const address: CreateAddressDto = {
-            lat: this.lat,
-            lng: this.lng,
+            lat: this.address.lat,
+            lng: this.address.lng,
             title: this.address.title,
-            radius: 50,
+            radius: this.address.radius,
         };
         this.addressService.saveAddress(address).subscribe(() => this.nzModalRef.close(address));
     }
@@ -115,13 +128,18 @@ export class LocationFormComponent implements AfterViewInit, OnDestroy, OnInit {
         this.nzModalRef.close();
     }
 
+    changeRadius(radius: number) {
+        this.mapCircle.setRadius(radius * M_IN_KM);
+    }
+
     private updateAddress(place: GeocoderResult | PlaceResult): void {
         if (place.geometry === undefined || place.geometry === null) {
             return;
         }
         this.address.title = place.formatted_address;
-        this.lat = place.geometry.location.lat();
-        this.lng = place.geometry.location.lng();
+        this.address.lat = place.geometry.location.lat();
+        this.address.lng = place.geometry.location.lng();
+        this.mapCircle.setCenter({ lng: this.address.lng, lat: this.address.lat });
         this.zoom = 12;
         this.cdr.detectChanges();
     }

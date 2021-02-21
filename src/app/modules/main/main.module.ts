@@ -47,6 +47,7 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
 import { AdvertsComponent } from './components/adverts/adverts.component';
 import { ContentLayoutComponent } from './components/content-layout/content-layout.component';
 import { LocationFormComponent } from './components/location-form/location-form.component';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 
 const NZModules = [
     NzModalModule,
@@ -71,6 +72,7 @@ const NZModules = [
     NzTableModule,
     NzUploadModule,
     NzTabsModule,
+    NzRadioModule,
 ];
 
 const pages = [
