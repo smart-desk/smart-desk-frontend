@@ -6,6 +6,7 @@ import {
     ElementRef,
     NgZone,
     OnDestroy,
+    OnInit,
     ViewChild,
 } from '@angular/core';
 import MapsEventListener = google.maps.MapsEventListener;
@@ -17,6 +18,7 @@ import PlaceResult = google.maps.places.PlaceResult;
 import { NzModalRef } from 'ng-zorro-antd/modal';
 import { AddressService } from '../../../../shared/services/address/address.service';
 import { CreateAddressDto } from '../../../../shared/models/dto/address/create-address.dto';
+import { Address } from '../../../../shared/models/dto/address/address.entity';
 
 @Component({
     selector: 'app-location-form',
@@ -24,10 +26,10 @@ import { CreateAddressDto } from '../../../../shared/models/dto/address/create-a
     styleUrls: ['./location-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LocationFormComponent implements AfterViewInit, OnDestroy {
+export class LocationFormComponent implements AfterViewInit, OnDestroy, OnInit {
     @ViewChild('search')
     searchElementRef: ElementRef;
-    address = '';
+    radius: 500;
     map: google.maps.Map;
     geocoder: google.maps.Geocoder;
     autocomplete: google.maps.places.Autocomplete;
@@ -36,6 +38,7 @@ export class LocationFormComponent implements AfterViewInit, OnDestroy {
     zoom = 8;
     lat = 51.673858;
     lng = 7.815982;
+    address: Address;
 
     constructor(
         private zone: NgZone,
@@ -45,10 +48,14 @@ export class LocationFormComponent implements AfterViewInit, OnDestroy {
         private addressService: AddressService
     ) {}
 
+    ngOnInit() {
+        if (!this.address) {
+            this.address = new Address();
+        }
+    }
+
     // todo set marker on place
     ngAfterViewInit() {
-        this.nzModalRef.afterClose.subscribe(data => console.log(' data ', data));
-
         fromPromise(this.mapsAPILoader.load())
             .pipe(take(1))
             .subscribe(() => {
@@ -98,10 +105,10 @@ export class LocationFormComponent implements AfterViewInit, OnDestroy {
         const address: CreateAddressDto = {
             lat: this.lat,
             lng: this.lng,
-            title: this.address,
+            title: this.address.title,
             radius: 50,
         };
-        this.addressService.saveAddress(address).subscribe(() => this.closeModal());
+        this.addressService.saveAddress(address).subscribe(() => this.nzModalRef.close(address));
     }
 
     closeModal() {
@@ -112,7 +119,7 @@ export class LocationFormComponent implements AfterViewInit, OnDestroy {
         if (place.geometry === undefined || place.geometry === null) {
             return;
         }
-        this.address = place.formatted_address;
+        this.address.title = place.formatted_address;
         this.lat = place.geometry.location.lat();
         this.lng = place.geometry.location.lng();
         this.zoom = 12;
