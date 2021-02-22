@@ -20,7 +20,7 @@ import { AddressService } from '../../../../shared/services/address/address.serv
 import { CreateAddressDto } from '../../../../shared/models/dto/address/create-address.dto';
 import { Address } from '../../../../shared/models/dto/address/address.entity';
 
-const M_IN_KM = 1000;
+const METERS_IN_KM = 1000;
 
 @Component({
     selector: 'app-location-form',
@@ -57,7 +57,6 @@ export class LocationFormComponent implements AfterViewInit, OnDestroy, OnInit {
         }
     }
 
-    // todo set marker on place
     ngAfterViewInit() {
         fromPromise(this.mapsAPILoader.load())
             .pipe(take(1))
@@ -96,7 +95,7 @@ export class LocationFormComponent implements AfterViewInit, OnDestroy, OnInit {
             fillOpacity: 0.35,
             map: this.map,
             center: { lat: this.address.lat, lng: this.address.lng },
-            radius: this.address.radius * M_IN_KM,
+            radius: this.address.radius * METERS_IN_KM,
         });
     }
 
@@ -129,7 +128,7 @@ export class LocationFormComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     changeRadius(radius: number) {
-        this.mapCircle.setRadius(radius * M_IN_KM);
+        this.mapCircle.setRadius(radius * METERS_IN_KM);
     }
 
     private updateAddress(place: GeocoderResult | PlaceResult): void {
