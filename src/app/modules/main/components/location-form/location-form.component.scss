@@ -1,0 +1,18 @@
+@import 'src/assets/styles/variables';
+
+agm-map {
+    height: 400px;
+    width: 800px;
+}
+
+.actions {
+    padding-top: 2 * $base-unit;
+
+    &__button-wrap {
+        margin-left: auto;
+    }
+
+    &__button {
+        margin-left: $base-unit;
+    }
+}

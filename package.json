@@ -12,6 +12,7 @@
   },
   "private": true,
   "dependencies": {
+    "@agm/core": "^3.0.0-beta.0",
     "@angular/animations": "~10.0.2",
     "@angular/cdk": "~10.2.7",
     "@angular/common": "~10.0.2",
@@ -40,6 +41,7 @@
     "@angular-devkit/build-angular": "~0.1000.1",
     "@angular/cli": "~10.0.1",
     "@angular/compiler-cli": "~10.0.2",
+    "@types/googlemaps": "3.39.13",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/lodash": "^4.14.167",
@@ -62,6 +64,7 @@
   },
   "husky": {
     "hooks": {
+      "run": "pretty-quick --staged && ng lint",
       "pre-commit": "pretty-quick --staged && ng lint"
     }
   }

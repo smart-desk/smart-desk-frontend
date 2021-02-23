@@ -1,0 +1,35 @@
+<p nz-typography>{{ address?.title || 'Не выбрано' }}</p>
+
+<form nz-form>
+    <nz-form-item>
+        <nz-form-control>
+            <input #search nz-input name="title" placeholder="Введите адрес" />
+        </nz-form-control>
+    </nz-form-item>
+</form>
+
+<agm-map [latitude]="address.lat" [longitude]="address.lng" [zoom]="zoom" (mapReady)="mapReadyHandler($event)">
+    <agm-marker [latitude]="address.lat" [longitude]="address.lng"></agm-marker>
+</agm-map>
+
+<nz-row class="actions">
+    <nz-col>
+        <nz-radio-group
+            [(ngModel)]="address.radius"
+            nzButtonStyle="solid"
+            (ngModelChange)="changeRadius($event)"
+            [ngModelOptions]="{ standalone: true }"
+        >
+            <label nz-radio-button [nzValue]="1">1</label>
+            <label nz-radio-button [nzValue]="5">5</label>
+            <label nz-radio-button [nzValue]="10">10</label>
+            <label nz-radio-button [nzValue]="25">25</label>
+            <label nz-radio-button [nzValue]="50">50</label>
+            <label nz-radio-button [nzValue]="0">more 50</label>
+        </nz-radio-group>
+    </nz-col>
+    <nz-col class="actions__button-wrap">
+        <button class="actions__button" nz-button nzType="default" (click)="closeModal()">Отмена</button>
+        <button class="actions__button" nz-button nzType="primary" (click)="saveAddress()">Ок</button>
+    </nz-col>
+</nz-row>
