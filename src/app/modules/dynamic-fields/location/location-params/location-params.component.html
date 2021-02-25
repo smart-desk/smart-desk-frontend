@@ -1,0 +1,16 @@
+<form nz-form nzLayout="vertical" [formGroup]="form">
+    <nz-form-item>
+        <nz-form-label nzFor="title">Заголовок</nz-form-label>
+        <nz-form-control>
+            <input nz-input formControlName="title" name="title" placeholder="Заголовок" formGroupName="title" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <label nz-checkbox formControlName="filterable">Фильтровать по полю</label>
+    </nz-form-item>
+
+    <div class="buttons">
+        <button nz-button nzType="primary" (click)="save()" [nzLoading]="state === operationState.LOADING">Save</button>
+    </div>
+</form>
