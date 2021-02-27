@@ -1,1 +1,17 @@
 <p>{{ field.title }}</p>
+<p>{{ location.title || 'Не выбрано' }}</p>
+<form nz-form>
+    <nz-form-item>
+        <nz-form-control>
+            <input class="google-search" #search nz-input name="title" placeholder="Введите адрес" />
+        </nz-form-control>
+    </nz-form-item>
+</form>
+
+<p><a (click)="toggleMap()">Указать на карте</a></p>
+
+<div [style.display]="showMap ? '' : 'none'">
+    <agm-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="zoom" (mapReady)="mapReadyHandler($event)">
+        <agm-marker [latitude]="location.lat" [longitude]="location.lng"></agm-marker>
+    </agm-map>
+</div>
