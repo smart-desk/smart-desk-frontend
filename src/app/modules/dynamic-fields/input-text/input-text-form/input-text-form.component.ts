@@ -25,7 +25,7 @@ export class InputTextFormComponent extends AbstractFieldFormComponent<InputText
         });
     }
 
-    getFieldData(): any {
+    getFieldData(): InputTextEntity {
         if (this.field.data) {
             this.field.data.value = this.form.get('value').value;
             return this.field.data;
