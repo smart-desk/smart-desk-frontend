@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, O
 import { of, Subject } from 'rxjs';
 import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { AdvertDataService, AdvertService, UserService } from '../../../../shared/services';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Advert } from '../../../../shared/models/dto/advert.entity';
 import { SectionType } from '../../../../shared/models/dto/section.entity';
 import { FieldEntity } from '../../../../shared/models/dto/field.entity';
@@ -43,12 +43,15 @@ export class AdvertComponent implements OnInit, AfterViewInit {
     ) {}
 
     ngOnInit(): void {
-        this.advertDataService.adverts$.pipe(takeUntil(this.destroy$)).subscribe(res => {
-            this.advertsResponse = res;
-            this.cd.detectChanges();
-        });
-        // TODO: заглушка заполнения объявлений
-        this.advertDataService.loadAdvertsForCategory('cdad7290-07c9-4419-a9d7-2c6c843fef50');
+        this.route.paramMap
+            .pipe(
+                takeUntil(this.destroy$),
+                switchMap((param: ParamMap) => this.advertService.getRecommendedByAdvertId(param.get('advert_id')))
+            )
+            .subscribe(res => {
+                this.advertsResponse = res;
+                this.cd.detectChanges();
+            });
     }
 
     ngAfterViewInit(): void {
