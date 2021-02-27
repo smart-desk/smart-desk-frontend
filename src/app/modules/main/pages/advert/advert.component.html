@@ -5,8 +5,7 @@
     <section class="similar">
         <h1>Похожие объявления</h1>
         <app-adverts
-            [advertsResponse]="advertsResponse"
-            (changePage)="changePage($event)"
+            [advertsResponse]="similarAdverts"
             (createBookmark)="addBookmarkEvent($event)"
             (deleteBookmark)="removeBookmarkEvent($event)"
         >

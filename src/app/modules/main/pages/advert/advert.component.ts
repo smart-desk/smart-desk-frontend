@@ -20,7 +20,7 @@ import { BookmarksStoreService } from '../../../../shared/services/bookmarks/boo
 export class AdvertComponent implements OnInit, AfterViewInit {
     advert: Advert;
     user: User;
-    advertsResponse: GetAdvertsResponseDto;
+    similarAdverts: GetAdvertsResponseDto;
     private destroy$ = new Subject();
 
     @ViewChild('params', { read: ViewContainerRef })
@@ -49,7 +49,7 @@ export class AdvertComponent implements OnInit, AfterViewInit {
                 switchMap((param: ParamMap) => this.advertService.getRecommendedByAdvertId(param.get('advert_id')))
             )
             .subscribe(res => {
-                this.advertsResponse = res;
+                this.similarAdverts = res;
                 this.cd.detectChanges();
             });
     }
@@ -73,11 +73,6 @@ export class AdvertComponent implements OnInit, AfterViewInit {
                 this.cd.detectChanges();
             });
     }
-
-    changePage(page: number) {
-        this.advertDataService.changePage(page);
-    }
-
     addBookmarkEvent(advertId: string) {
         this.bookmarksStoreService.createBookmark(advertId);
     }
