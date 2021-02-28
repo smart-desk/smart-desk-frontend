@@ -42,11 +42,11 @@ export class LocationFormComponent extends AbstractFieldFormComponent<LocationEn
     }
 
     ngOnInit() {
-        if (!this.location) {
-            this.location = new LocationEntity();
-            this.location.lng = 2.2592045;
-            this.location.lat = 48.8286554;
-        }
+        this.location = new LocationEntity();
+        this.location.lat = this.field?.data?.lat || 48.8286554;
+        this.location.lng = this.field?.data?.lng || 2.2592045;
+        this.location.title = this.field?.data?.title || '';
+        this.cdr.detectChanges();
     }
 
     ngAfterViewInit() {
