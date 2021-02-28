@@ -12,6 +12,10 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { AgmCoreModule } from '@agm/core';
 import { environment } from '../../../../environments/environment';
+import { LocationModalComponent } from './location-modal/location-modal.component';
+import { NzRadioModule } from "ng-zorro-antd/radio";
+import { NzTypographyModule } from "ng-zorro-antd/typography";
+import { NzIconModule } from "ng-zorro-antd/icon";
 
 @NgModule({
     imports: [
@@ -27,9 +31,12 @@ import { environment } from '../../../../environments/environment';
             libraries: ['places'],
             language: 'ru',
         }),
+        NzRadioModule,
+        NzTypographyModule,
+        NzIconModule,
     ],
     providers: [LocationService],
-    declarations: [LocationFormComponent, LocationParamsComponent, LocationViewComponent, LocationFilterComponent],
+    declarations: [LocationFormComponent, LocationParamsComponent, LocationViewComponent, LocationFilterComponent, LocationModalComponent],
     exports: [LocationFormComponent, LocationParamsComponent],
 })
 export class LocationModule {}

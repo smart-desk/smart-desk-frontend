@@ -96,6 +96,13 @@ export class LocationFormComponent extends AbstractFieldFormComponent<LocationEn
     }
 
     getFieldData(): LocationEntity {
+        if (this.field?.data?.id) {
+            this.field.data.lat = this.location.lat;
+            this.field.data.lng = this.location.lng;
+            this.field.data.title = this.location.title;
+            return this.field.data;
+        }
+
         const location = new LocationEntity();
         location.lat = this.location.lat;
         location.lng = this.location.lng;
