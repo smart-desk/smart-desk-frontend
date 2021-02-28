@@ -9,51 +9,48 @@ import {
     OnInit,
     ViewChild,
 } from '@angular/core';
-import MapsEventListener = google.maps.MapsEventListener;
 import { MapsAPILoader } from '@agm/core';
 import { take } from 'rxjs/operators';
+import { isNil } from 'ng-zorro-antd/core/util';
 import { fromPromise } from 'rxjs/internal-compatibility';
-import GeocoderResult = google.maps.GeocoderResult;
-import PlaceResult = google.maps.places.PlaceResult;
 import { NzModalRef } from 'ng-zorro-antd/modal';
-import { AddressService } from '../../../../shared/services/address/address.service';
-import { CreateAddressDto } from '../../../../shared/models/dto/address/create-address.dto';
-import { Address } from '../../../../shared/models/dto/address/address.entity';
+import { Area } from '../location.class';
 
 const METERS_IN_KM = 1000;
 
 @Component({
     selector: 'app-location-form',
-    templateUrl: './location-form.component.html',
-    styleUrls: ['./location-form.component.scss'],
+    templateUrl: './location-modal.component.html',
+    styleUrls: ['./location-modal.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LocationFormComponent implements AfterViewInit, OnDestroy, OnInit {
-    @ViewChild('search')
-    searchElementRef: ElementRef;
-    map: google.maps.Map;
-    geocoder: google.maps.Geocoder;
-    autocomplete: google.maps.places.Autocomplete;
-    mapClickListener: MapsEventListener;
-    autocompleteListener: MapsEventListener;
-    zoom = 8;
-    address: Address;
+export class LocationModalComponent implements AfterViewInit, OnDestroy, OnInit {
+    zoom = 12;
+    area: Area;
     mapCircle: google.maps.Circle;
+
+    @ViewChild('search')
+    private searchElementRef: ElementRef;
+
+    private map: google.maps.Map;
+    private geocoder: google.maps.Geocoder;
+    private autocomplete: google.maps.places.Autocomplete;
+    private mapClickListener: google.maps.MapsEventListener;
+    private autocompleteListener: google.maps.MapsEventListener;
 
     constructor(
         private zone: NgZone,
         private mapsAPILoader: MapsAPILoader,
         private cdr: ChangeDetectorRef,
-        private nzModalRef: NzModalRef,
-        private addressService: AddressService
+        private nzModalRef: NzModalRef
     ) {}
 
     ngOnInit() {
-        if (!this.address) {
-            this.address = new Address();
-            this.address.lng = 2.2592045;
-            this.address.lat = 48.8286554;
-            this.address.radius = 10;
+        if (!this.area) {
+            this.area = new Area();
+            this.area.lng = 2.2592045;
+            this.area.lat = 48.8286554;
+            this.area.radius = 10;
         }
     }
 
@@ -66,7 +63,7 @@ export class LocationFormComponent implements AfterViewInit, OnDestroy, OnInit {
                 this.autocompleteListener = this.autocomplete.addListener('place_changed', () => {
                     this.zone.run(() => {
                         const place: google.maps.places.PlaceResult = this.autocomplete.getPlace();
-                        this.updateAddress(place);
+                        this.updateArea(place);
                     });
                 });
             });
@@ -94,8 +91,8 @@ export class LocationFormComponent implements AfterViewInit, OnDestroy, OnInit {
             fillColor: '#FF0000',
             fillOpacity: 0.35,
             map: this.map,
-            center: { lat: this.address.lat, lng: this.address.lng },
-            radius: this.address.radius * METERS_IN_KM,
+            center: { lat: this.area.lat, lng: this.area.lng },
+            radius: this.area.radius * METERS_IN_KM,
         });
     }
 
@@ -104,7 +101,7 @@ export class LocationFormComponent implements AfterViewInit, OnDestroy, OnInit {
             if (status === 'OK') {
                 const place = results[0];
                 // todo update autocomplete
-                this.updateAddress(place);
+                this.updateArea(place);
             } else {
                 // todo should throw sentry message
                 console.warn(status);
@@ -113,14 +110,8 @@ export class LocationFormComponent implements AfterViewInit, OnDestroy, OnInit {
         });
     }
 
-    saveAddress() {
-        const address: CreateAddressDto = {
-            lat: this.address.lat,
-            lng: this.address.lng,
-            title: this.address.title,
-            radius: this.address.radius,
-        };
-        this.addressService.saveAddress(address).subscribe(() => this.nzModalRef.close(address));
+    saveArea() {
+        this.nzModalRef.close(this.area);
     }
 
     closeModal() {
@@ -131,15 +122,14 @@ export class LocationFormComponent implements AfterViewInit, OnDestroy, OnInit {
         this.mapCircle.setRadius(radius * METERS_IN_KM);
     }
 
-    private updateAddress(place: GeocoderResult | PlaceResult): void {
-        if (place.geometry === undefined || place.geometry === null) {
+    private updateArea(place: google.maps.GeocoderResult | google.maps.places.PlaceResult): void {
+        if (isNil(place.geometry)) {
             return;
         }
-        this.address.title = place.formatted_address;
-        this.address.lat = place.geometry.location.lat();
-        this.address.lng = place.geometry.location.lng();
-        this.mapCircle.setCenter({ lng: this.address.lng, lat: this.address.lat });
-        this.zoom = 12;
+        this.area.title = place.formatted_address;
+        this.area.lat = place.geometry.location.lat();
+        this.area.lng = place.geometry.location.lng();
+        this.mapCircle.setCenter({ lng: this.area.lng, lat: this.area.lat });
         this.cdr.detectChanges();
     }
 }
