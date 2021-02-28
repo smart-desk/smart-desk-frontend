@@ -25,6 +25,11 @@ export class AdvertService {
         return this.http.get<GetAdvertsResponseDto>(path);
     }
 
+    getRecommendedByAdvertId(id: string): Observable<GetAdvertsResponseDto> {
+        const path = `/adverts/${id}/recommended`;
+        return this.http.get<GetAdvertsResponseDto>(path);
+    }
+
     getBlocked(options?: GetAdvertsDto): Observable<GetAdvertsResponseDto> {
         const path = `/adverts/blocked${this.buildQueryParams(options)}`;
         return this.http.get<GetAdvertsResponseDto>(path);
