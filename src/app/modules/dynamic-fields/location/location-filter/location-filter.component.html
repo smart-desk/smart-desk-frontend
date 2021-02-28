@@ -1,5 +1,8 @@
+<p class="title">{{ field?.title }}</p>
 <ng-container *ngIf="area">
-    <p>{{ area.title }}</p>
-    <p>Радиус: {{ area.radius }}</p>
+    <p>
+        {{ area.title }}<br />
+        Радиус: {{ area.radius }}
+    </p>
 </ng-container>
-<a (click)="openLocationModal()">Изменить</a>
+<p><a (click)="openLocationModal()">Изменить</a></p>
