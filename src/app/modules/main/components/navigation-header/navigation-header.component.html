@@ -1,13 +1,10 @@
 <nz-header>
     <div class="container">
         <nz-row [nzJustify]="'space-between'">
-            <nz-col>
-                Местоположение: <a (click)="openLocationModal()">{{ address?.title || 'Выбрать' }}</a></nz-col
-            >
+            <nz-col> </nz-col>
             <nz-col>
                 <nz-row [nzJustify]="'space-between'">
                     <nz-col>
-                        <!-- todo check if admin-->
                         <a *ngIf="isAdmin" routerLink="/admin" nz-button nzType="link">Управление сайтом</a>
                     </nz-col>
                     <nz-col>

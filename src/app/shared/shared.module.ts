@@ -25,7 +25,6 @@ import { RouterModule } from '@angular/router';
 import { ForbiddenComponent } from './pages/forbidden/forbidden.component';
 import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.component';
 import { BookmarksService } from './services/bookmarks/bookmarks.service';
-import { AddressService } from './services/address/address.service';
 
 /**
  * Import here all modules which are used on app side
@@ -57,7 +56,6 @@ const services = [
     LoginService,
     NzModalService,
     BookmarksService,
-    AddressService,
 ];
 
 /**

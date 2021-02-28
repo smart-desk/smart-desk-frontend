@@ -1,4 +1,4 @@
-<p nz-typography>{{ address?.title || 'Не выбрано' }}</p>
+<p nz-typography>{{ area?.title || 'Не выбрано' }}</p>
 
 <form nz-form>
     <nz-form-item>
@@ -8,14 +8,14 @@
     </nz-form-item>
 </form>
 
-<agm-map [latitude]="address.lat" [longitude]="address.lng" [zoom]="zoom" (mapReady)="mapReadyHandler($event)">
-    <agm-marker [latitude]="address.lat" [longitude]="address.lng"></agm-marker>
+<agm-map [latitude]="area.lat" [longitude]="area.lng" [zoom]="zoom" (mapReady)="mapReadyHandler($event)">
+    <agm-marker [latitude]="area.lat" [longitude]="area.lng"></agm-marker>
 </agm-map>
 
 <nz-row class="actions">
     <nz-col>
         <nz-radio-group
-            [(ngModel)]="address.radius"
+            [(ngModel)]="area.radius"
             nzButtonStyle="solid"
             (ngModelChange)="changeRadius($event)"
             [ngModelOptions]="{ standalone: true }"
@@ -30,6 +30,6 @@
     </nz-col>
     <nz-col class="actions__button-wrap">
         <button class="actions__button" nz-button nzType="default" (click)="closeModal()">Отмена</button>
-        <button class="actions__button" nz-button nzType="primary" (click)="saveAddress()">Ок</button>
+        <button class="actions__button" nz-button nzType="primary" (click)="saveArea()">Ок</button>
     </nz-col>
 </nz-row>
