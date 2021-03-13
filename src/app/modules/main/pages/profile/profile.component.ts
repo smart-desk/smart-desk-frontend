@@ -7,6 +7,9 @@ import { User } from '../../../../shared/models/dto/user/user.entity';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import { ProfileFormEnum } from './profile-form.enum';
 import { LoginService } from '../../../../shared/services/login/login.service';
+import { UpdateUserDto } from '../../../../shared/models/dto/user/update-user.dto';
+import { PhoneService } from '../../../../shared/services/phone/phone.service';
+import { PhoneVerifyCheckDto } from '../../../../shared/models/dto/phone/phone-verify-check.dto';
 
 @Component({
     selector: 'app-user-settings',
@@ -18,25 +21,23 @@ export class ProfileComponent implements OnInit {
     formName: FormGroup;
     formPhone: FormGroup;
     formConfirm: FormGroup;
-    formCity: FormGroup;
-    isConfirmPhone = false;
     state: OperationState;
     profile: User;
     showProfile = false;
     showPhone = false;
-    showCity = false;
     showConfirmPhone = false;
     confirmMode = false;
     file: NzUploadFile[] = [];
     profileForm = ProfileFormEnum;
-    verifyId: string;
+    verificationRequestId: string;
 
     constructor(
         private modalService: NzModalService,
         private userService: UserService,
         private fb: FormBuilder,
         private cd: ChangeDetectorRef,
-        private loginService: LoginService
+        private loginService: LoginService,
+        private phoneService: PhoneService
     ) {}
 
     ngOnInit(): void {
@@ -47,7 +48,6 @@ export class ProfileComponent implements OnInit {
         });
         this.formPhone = this.fb.group({ phone: [] });
         this.formConfirm = this.fb.group({ code: [] });
-        this.formCity = this.fb.group({ city: [] });
 
         this.userService.getCurrentUser().subscribe(user => {
             this.profile = user;
@@ -59,7 +59,6 @@ export class ProfileComponent implements OnInit {
             this.formName.get('lastName').setValue(this.profile?.lastName);
             this.formName.get('avatar').setValue(avatar);
             this.formPhone.get('phone').setValue(this.profile?.phone);
-            this.formCity.get('city').setValue(this.profile?.city);
         });
     }
 
@@ -75,7 +74,7 @@ export class ProfileComponent implements OnInit {
                 this.updatePhone();
                 break;
             case ProfileFormEnum.CONFIRM:
-                this.confirmPhone();
+                this.checkVerification();
                 break;
         }
     }
@@ -85,11 +84,6 @@ export class ProfileComponent implements OnInit {
             this.file = [event.file];
             this.formName.get('avatar').setValue(this.file[0].response.url);
         }
-    }
-
-    confirmPhone(): void {
-        this.userService.confirmPhone(this.formConfirm.value.code, this.verifyId).subscribe(() => this.closeConfirmForm());
-        // todo: разрулить ответ
     }
 
     updateEmail(): void {
@@ -106,19 +100,26 @@ export class ProfileComponent implements OnInit {
     }
 
     updatePhone(): void {
-        this.userService.changePhone(this.formPhone.value).subscribe(() => {
+        const userDto = new UpdateUserDto();
+        userDto.phone = this.formPhone.get('phone').value;
+        this.userService.updateProfile(userDto).subscribe(() => {
             this.showPhone = false;
             this.cd.detectChanges();
         });
     }
 
-    verify(): void {
+    requestVerification(): void {
         this.confirmMode = true;
-        this.userService.verifyPhone().subscribe(verifyId => (this.verifyId = verifyId));
+        this.phoneService.requestVerification().subscribe(verificationRequestId => (this.verificationRequestId = verificationRequestId));
     }
 
-    closeConfirmForm(): void {
-        this.showConfirmPhone = !this.showConfirmPhone;
-        this.confirmMode = false;
+    checkVerification(): void {
+        const verificationDto = new PhoneVerifyCheckDto();
+        verificationDto.requestId = this.verificationRequestId;
+        verificationDto.code = this.formConfirm.get('code').value.toString();
+        this.phoneService.checkVerification(verificationDto).subscribe(() => {
+            this.showConfirmPhone = !this.showConfirmPhone;
+            this.confirmMode = false;
+        });
     }
 }

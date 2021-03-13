@@ -16,19 +16,12 @@
                 <td>Phone</td>
                 <td>{{ profile?.phone }}</td>
                 <td class="cell-action">
-                    <div *ngIf="profile.phone">
+                    <div *ngIf="profile.phone && !profile.isPhoneVerified">
                         <a (click)="showConfirmPhone = !showConfirmPhone">Confirm</a>
                         <span class="cell-action__separate">/</span>
                     </div>
-                    <a (click)="showPhone = !showPhone">
-                        Change
-                    </a>
+                    <a (click)="showPhone = !showPhone">Change</a>
                 </td>
-            </tr>
-            <tr>
-                <td>Town</td>
-                <td>{{ profile?.city }}</td>
-                <td><a (click)="showCity = !showCity">Specify</a></td>
             </tr>
         </tbody>
     </nz-table>
@@ -78,10 +71,15 @@
     </form>
 </nz-modal>
 
-<nz-modal [(nzVisible)]="showConfirmPhone" nzTitle="Code" (nzOnCancel)="closeConfirmForm()" (nzOnOk)="submitForm(profileForm.CONFIRM)">
+<nz-modal
+    [(nzVisible)]="showConfirmPhone"
+    nzTitle="Code"
+    (nzOnCancel)="showConfirmPhone = !showConfirmPhone"
+    (nzOnOk)="submitForm(profileForm.CONFIRM)"
+>
     <form nz-form [formGroup]="formConfirm">
         <nz-button-group>
-            <button *ngIf="!confirmMode" nz-button nzType="primary" (click)="verify()" nzSize="small">
+            <button *ngIf="!confirmMode" nz-button nzType="primary" (click)="requestVerification()" nzSize="small">
                 Подтвердить
             </button>
         </nz-button-group>
@@ -91,17 +89,6 @@
             </nz-form-label>
             <nz-form-control [nzSpan]="14">
                 <input type="number" nz-input name="code" id="code" formControlName="code" />
-            </nz-form-control>
-        </nz-form-item>
-    </form>
-</nz-modal>
-
-<nz-modal [(nzVisible)]="showCity" nzTitle="Город" (nzOnCancel)="showCity = !showCity" (nzOnOk)="submitForm(profileForm.CITY)">
-    <form nz-form [formGroup]="formCity">
-        <nz-form-item>
-            <nz-form-label for="city">Укажите город, в котором вы находитесь</nz-form-label>
-            <nz-form-control [nzSpan]="14">
-                <input nz-input name="city" type="text" id="city" formControlName="city" />
             </nz-form-control>
         </nz-form-item>
     </form>

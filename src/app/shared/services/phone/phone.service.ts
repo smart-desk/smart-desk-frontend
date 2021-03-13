@@ -7,11 +7,15 @@ import { PhoneVerifyCheckDto } from '../../models/dto/phone/phone-verify-check.d
 export class PhoneService {
     constructor(private http: HttpClient) {}
 
-    verifyPhone(): Observable<string> {
-        return this.http.post<string>('/phone/verify/request', null);
+    requestVerification(): Observable<string> {
+        return this.http.post('/phone/verify/request', null, {
+            responseType: 'text',
+        });
     }
 
-    confirmPhone(body: PhoneVerifyCheckDto): Observable<string> {
-        return this.http.post<string>('/phone/verify/check', body);
+    checkVerification(body: PhoneVerifyCheckDto): Observable<string> {
+        return this.http.post('/phone/verify/check', body, {
+            responseType: 'text',
+        });
     }
 }
