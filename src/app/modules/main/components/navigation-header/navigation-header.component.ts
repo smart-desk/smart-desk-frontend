@@ -3,7 +3,7 @@ import { AuthService } from '../../../../shared/services';
 import { LoginService } from '../../../../shared/services/login/login.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { User } from '../../../../shared/models/dto/user/user.entity';
+import { User } from '../../../../shared/models/user/user.entity';
 
 @Component({
     selector: 'app-navigation-header',

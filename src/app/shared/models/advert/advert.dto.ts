@@ -1,6 +1,6 @@
 import { Advert } from './advert.entity';
-import { DynamicFieldsBaseCreateDto } from './dynamic-fields-base-create.dto';
-import { DynamicFieldsBaseUpdateDto } from './dynamic-fields-base-update.dto';
+import { DynamicFieldsBaseCreateDto } from '../field/dynamic-fields-base-create.dto';
+import { DynamicFieldsBaseUpdateDto } from '../field/dynamic-fields-base-update.dto';
 import { Filters } from '../../modules/dynamic-fields/models/filter';
 
 export class CreateAdvertDto {

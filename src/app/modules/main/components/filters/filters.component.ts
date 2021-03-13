@@ -9,9 +9,9 @@ import {
     ViewChild,
     ViewContainerRef,
 } from '@angular/core';
-import { Model } from '../../../../shared/models/dto/model.entity';
+import { Model } from '../../../../shared/models/model/model.entity';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
-import { SectionType } from '../../../../shared/models/dto/section.entity';
+import { SectionType } from '../../../../shared/models/section/section.entity';
 import { AbstractFieldFilterComponent } from '../../../../shared/modules/dynamic-fields/models/abstract-field-filter.component';
 import { AdvertDataService } from '../../../../shared/services';
 import { Filter, Filters } from '../../../../shared/modules/dynamic-fields/models/filter';

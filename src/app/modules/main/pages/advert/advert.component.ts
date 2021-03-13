@@ -3,12 +3,12 @@ import { of, Subject } from 'rxjs';
 import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { AdvertDataService, AdvertService, UserService } from '../../../../shared/services';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Advert } from '../../../../shared/models/dto/advert.entity';
-import { SectionType } from '../../../../shared/models/dto/section.entity';
-import { FieldEntity } from '../../../../shared/models/dto/field.entity';
+import { Advert } from '../../../../shared/models/advert/advert.entity';
+import { SectionType } from '../../../../shared/models/section/section.entity';
+import { FieldEntity } from '../../../../shared/models/field/field.entity';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
-import { User } from '../../../../shared/models/dto/user/user.entity';
-import { GetAdvertsResponseDto } from '../../../../shared/models/dto/advert.dto';
+import { User } from '../../../../shared/models/user/user.entity';
+import { GetAdvertsResponseDto } from '../../../../shared/models/advert/advert.dto';
 import { BookmarksStoreService } from '../../../../shared/services/bookmarks/bookmarks-store.service';
 
 @Component({

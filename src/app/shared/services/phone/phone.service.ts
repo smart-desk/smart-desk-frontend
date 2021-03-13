@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PhoneVerifyCheckDto } from '../../models/dto/phone/phone-verify-check.dto';
+import { PhoneVerifyCheckDto } from '../../models/phone/phone-verify-check.dto';
 
 @Injectable()
 export class PhoneService {

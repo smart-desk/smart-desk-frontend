@@ -1,4 +1,4 @@
-import { Section } from './section.entity';
+import { Section } from '../section/section.entity';
 
 export class Advert {
     id: string;

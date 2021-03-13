@@ -1,4 +1,4 @@
-import { DynamicFieldsBaseUpdateDto } from '../../../../shared/models/dto/dynamic-fields-base-update.dto';
+import { DynamicFieldsBaseUpdateDto } from '../../../../shared/models/field/dynamic-fields-base-update.dto';
 
 export class UpdateInputTextDto extends DynamicFieldsBaseUpdateDto {
     value: string;

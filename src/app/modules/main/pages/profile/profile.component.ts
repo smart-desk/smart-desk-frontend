@@ -3,13 +3,13 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { OperationState } from '../../../../shared/models/operation-state.enum';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { UserService } from '../../../../shared/services';
-import { User } from '../../../../shared/models/dto/user/user.entity';
+import { User } from '../../../../shared/models/user/user.entity';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import { ProfileFormEnum } from './profile-form.enum';
 import { LoginService } from '../../../../shared/services/login/login.service';
-import { UpdateUserDto } from '../../../../shared/models/dto/user/update-user.dto';
+import { UpdateUserDto } from '../../../../shared/models/user/update-user.dto';
 import { PhoneService } from '../../../../shared/services/phone/phone.service';
-import { PhoneVerifyCheckDto } from '../../../../shared/models/dto/phone/phone-verify-check.dto';
+import { PhoneVerifyCheckDto } from '../../../../shared/models/phone/phone-verify-check.dto';
 
 @Component({
     selector: 'app-user-settings',

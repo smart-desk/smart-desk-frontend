@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FieldEntity } from '../../models/dto/field.entity';
-import { FieldCreateDto, FieldUpdateDto } from '../../models/dto/field.dto';
+import { FieldEntity } from '../../models/field/field.entity';
+import { FieldCreateDto, FieldUpdateDto } from '../../models/field/field.dto';
 
 @Injectable()
 export class FieldService {

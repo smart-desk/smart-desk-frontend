@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { FieldService, ModelService } from '../../../../shared/services';
-import { Section } from '../../../../shared/models/dto/section.entity';
-import { FieldEntity } from '../../../../shared/models/dto/field.entity';
+import { Section } from '../../../../shared/models/section/section.entity';
+import { FieldEntity } from '../../../../shared/models/field/field.entity';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
 import { NzDrawerService } from 'ng-zorro-antd/drawer';
 import { PreviewToolsComponent } from '../preview-tools/preview-tools.component';
 import { FieldSettingsComponent } from '../field-settings/field-settings.component';
 import { AddFieldComponent } from '../add-field/add-field.component';
-import { Model } from '../../../../shared/models/dto/model.entity';
+import { Model } from '../../../../shared/models/model/model.entity';
 
 const DRAWER_BASE_CONFIG = {
     nzWidth: 400,

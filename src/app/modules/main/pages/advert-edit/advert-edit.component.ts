@@ -14,11 +14,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/models/abstract-field-form.component';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Advert } from '../../../../shared/models/dto/advert.entity';
-import { Model } from '../../../../shared/models/dto/model.entity';
-import { UpdateAdvertDto } from '../../../../shared/models/dto/advert.dto';
-import { Section } from '../../../../shared/models/dto/section.entity';
-import { FieldEntity } from '../../../../shared/models/dto/field.entity';
+import { Advert } from '../../../../shared/models/advert/advert.entity';
+import { Model } from '../../../../shared/models/model/model.entity';
+import { UpdateAdvertDto } from '../../../../shared/models/advert/advert.dto';
+import { Section } from '../../../../shared/models/section/section.entity';
+import { FieldEntity } from '../../../../shared/models/field/field.entity';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
 
 @Component({
