@@ -1,3 +1,11 @@
 .main {
     background: white;
 }
+
+.cell-action {
+    display: flex;
+
+    &__separate {
+        margin: 0 5px;
+    }
+}

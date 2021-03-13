@@ -15,7 +15,15 @@
             <tr>
                 <td>Phone</td>
                 <td>{{ profile?.phone }}</td>
-                <td><a (click)="showPhone = !showPhone">Change</a></td>
+                <td class="cell-action">
+                    <div *ngIf="profile.phone">
+                        <a (click)="showConfirmPhone = !showConfirmPhone">Confirm</a>
+                        <span class="cell-action__separate">/</span>
+                    </div>
+                    <a (click)="showPhone = !showPhone">
+                        Change
+                    </a>
+                </td>
             </tr>
             <tr>
                 <td>Town</td>
@@ -57,12 +65,32 @@
     </form>
 </nz-modal>
 
-<nz-modal [(nzVisible)]="showPhone" nzTitle="Номер " (nzOnCancel)="showPhone = !showPhone" (nzOnOk)="submitForm(profileForm.PHONE)">
+<nz-modal [(nzVisible)]="showPhone" nzTitle="Номер" (nzOnCancel)="showPhone = !showPhone" (nzOnOk)="submitForm(profileForm.PHONE)">
     <form nz-form [formGroup]="formPhone">
         <nz-form-item>
-            <nz-form-label for="phone">Изменить номер телефона</nz-form-label>
+            <nz-form-label for="phone">
+                Изменить номер телефона
+            </nz-form-label>
             <nz-form-control [nzSpan]="14">
                 <input type="tel" nz-input name="phone" id="phone" formControlName="phone" />
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="showConfirmPhone" nzTitle="Code" (nzOnCancel)="closeConfirmForm()" (nzOnOk)="submitForm(profileForm.CONFIRM)">
+    <form nz-form [formGroup]="formConfirm">
+        <nz-button-group>
+            <button *ngIf="!confirmMode" nz-button nzType="primary" (click)="verify()" nzSize="small">
+                Подтвердить
+            </button>
+        </nz-button-group>
+        <nz-form-item *ngIf="confirmMode">
+            <nz-form-label for="code">
+                enter the code from sms
+            </nz-form-label>
+            <nz-form-control [nzSpan]="14">
+                <input type="number" nz-input name="code" id="code" formControlName="code" />
             </nz-form-control>
         </nz-form-item>
     </form>

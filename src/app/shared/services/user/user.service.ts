@@ -45,4 +45,16 @@ export class UserService {
     blockUser(id: string, value: BlockUserDto): Observable<User> {
         return this.http.patch<User>(`/users/${id}/block`, value);
     }
+
+    changePhone(phone: string) {
+        return this.http.patch<string>('/users/profile', phone);
+    }
+
+    verifyPhone() {
+        return this.http.post<string>('/phone/verify/request', null);
+    }
+
+    confirmPhone(code, requestId) {
+        return this.http.post('/phone/verify/check', { code, requestId });
+    }
 }

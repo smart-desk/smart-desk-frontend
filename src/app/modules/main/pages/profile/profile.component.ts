@@ -17,14 +17,19 @@ import { LoginService } from '../../../../shared/services/login/login.service';
 export class ProfileComponent implements OnInit {
     formName: FormGroup;
     formPhone: FormGroup;
+    formConfirm: FormGroup;
     formCity: FormGroup;
+    isConfirmPhone = false;
     state: OperationState;
     profile: User;
     showProfile = false;
     showPhone = false;
     showCity = false;
+    showConfirmPhone = false;
+    confirmMode = false;
     file: NzUploadFile[] = [];
     profileForm = ProfileFormEnum;
+    verifyId: string;
 
     constructor(
         private modalService: NzModalService,
@@ -41,6 +46,7 @@ export class ProfileComponent implements OnInit {
             avatar: [],
         });
         this.formPhone = this.fb.group({ phone: [] });
+        this.formConfirm = this.fb.group({ code: [] });
         this.formCity = this.fb.group({ city: [] });
 
         this.userService.getCurrentUser().subscribe(user => {
@@ -68,14 +74,22 @@ export class ProfileComponent implements OnInit {
             case ProfileFormEnum.PHONE:
                 this.updatePhone();
                 break;
+            case ProfileFormEnum.CONFIRM:
+                this.confirmPhone();
+                break;
         }
     }
 
-    fileChanged(event: NzUploadChangeParam) {
+    fileChanged(event: NzUploadChangeParam): void {
         if (event.type === 'success') {
             this.file = [event.file];
             this.formName.get('avatar').setValue(this.file[0].response.url);
         }
+    }
+
+    confirmPhone(): void {
+        this.userService.confirmPhone(this.formConfirm.value.code, this.verifyId).subscribe(() => this.closeConfirmForm());
+        // todo: разрулить ответ
     }
 
     updateEmail(): void {
@@ -92,6 +106,19 @@ export class ProfileComponent implements OnInit {
     }
 
     updatePhone(): void {
-        console.log('updatePhone start');
+        this.userService.changePhone(this.formPhone.value).subscribe(() => {
+            this.showPhone = false;
+            this.cd.detectChanges();
+        });
+    }
+
+    verify(): void {
+        this.confirmMode = true;
+        this.userService.verifyPhone().subscribe(verifyId => (this.verifyId = verifyId));
+    }
+
+    closeConfirmForm(): void {
+        this.showConfirmPhone = !this.showConfirmPhone;
+        this.confirmMode = false;
     }
 }

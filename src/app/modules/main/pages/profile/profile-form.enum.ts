@@ -3,4 +3,5 @@ export enum ProfileFormEnum {
     PHONE,
     NAME,
     CITY,
+    CONFIRM,
 }
