@@ -65,7 +65,16 @@
                 Изменить номер телефона
             </nz-form-label>
             <nz-form-control [nzSpan]="14">
-                <input type="tel" nz-input name="phone" id="phone" formControlName="phone" />
+                <input
+                    type="text"
+                    nz-input
+                    name="phone"
+                    id="phone"
+                    type="text"
+                    prefix="+7 "
+                    mask="(000) 000 00 00"
+                    formControlName="phone"
+                />
             </nz-form-control>
         </nz-form-item>
     </form>

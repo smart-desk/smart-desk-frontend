@@ -47,6 +47,7 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
 import { AdvertsComponent } from './components/adverts/adverts.component';
 import { ContentLayoutComponent } from './components/content-layout/content-layout.component';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NgxMaskModule } from 'ngx-mask';
 
 const NZModules = [
     NzModalModule,
@@ -113,6 +114,7 @@ const components = [
             libraries: ['places'],
             language: 'ru',
         }),
+        NgxMaskModule,
     ],
 })
 export class MainModule {}
