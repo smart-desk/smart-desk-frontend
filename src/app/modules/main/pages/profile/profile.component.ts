@@ -10,6 +10,7 @@ import { LoginService } from '../../../../shared/services/login/login.service';
 import { UpdateUserDto } from '../../../../shared/models/user/update-user.dto';
 import { PhoneService } from '../../../../shared/services/phone/phone.service';
 import { PhoneVerifyCheckDto } from '../../../../shared/models/phone/phone-verify-check.dto';
+import { FormNameDataInterface } from '../../components/modal-name/form-name-data.interface';
 
 @Component({
     selector: 'app-user-settings',
@@ -18,17 +19,18 @@ import { PhoneVerifyCheckDto } from '../../../../shared/models/phone/phone-verif
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileComponent implements OnInit {
-    formName: FormGroup;
+    formNameData: FormNameDataInterface;
+    formPhoneData: string;
     formPhone: FormGroup;
     formConfirm: FormGroup;
     state: OperationState;
     profile: User;
+    showName = false;
     showProfile = false;
     showPhone = false;
     showConfirmPhone = false;
     confirmMode = false;
     file: NzUploadFile[] = [];
-    profileForm = ProfileFormEnum;
     verificationRequestId: string;
 
     constructor(
@@ -41,37 +43,34 @@ export class ProfileComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.formName = this.fb.group({
-            firstName: [],
-            lastName: [],
-            avatar: [],
-        });
-        this.formPhone = this.fb.group({ phone: [] });
-        this.formConfirm = this.fb.group({ code: [] });
-
         this.userService.getCurrentUser().subscribe(user => {
             this.profile = user;
             const avatar = this.profile?.avatar;
             this.file = [{ name: 'image.png', uid: '-1', url: avatar }];
 
             this.cd.detectChanges();
-            this.formName.get('firstName').setValue(this.profile?.firstName);
-            this.formName.get('lastName').setValue(this.profile?.lastName);
-            this.formName.get('avatar').setValue(avatar);
-            this.formPhone.get('phone').setValue(this.profile?.phone);
+            this.formNameData = {
+                profile: {
+                    avatar,
+                    firstName: this.profile?.firstName,
+                    lastName: this.profile?.lastName,
+                },
+                file: this.file,
+            };
+            this.formPhoneData = this.profile?.phone.slice(1);
         });
     }
 
-    submitForm(formType): void {
-        switch (formType) {
+    submitForm(data: { formType: ProfileFormEnum; formValue: void }): void {
+        switch (data.formType) {
             case ProfileFormEnum.EMAIL:
                 this.updateEmail();
                 break;
             case ProfileFormEnum.NAME:
-                this.updateName();
+                this.updateName(data.formValue);
                 break;
             case ProfileFormEnum.PHONE:
-                this.updatePhone();
+                this.updatePhone(data.formValue);
                 break;
             case ProfileFormEnum.CONFIRM:
                 this.checkVerification();
@@ -82,7 +81,7 @@ export class ProfileComponent implements OnInit {
     fileChanged(event: NzUploadChangeParam): void {
         if (event.type === 'success') {
             this.file = [event.file];
-            this.formName.get('avatar').setValue(this.file[0].response.url);
+            this.formNameData.profile.avatar = this.file[0].response.url;
         }
     }
 
@@ -90,8 +89,8 @@ export class ProfileComponent implements OnInit {
         console.log('updateEmail start');
     }
 
-    updateName(): void {
-        this.userService.updateProfile(this.formName.value).subscribe(user => {
+    updateName(formValue): void {
+        this.userService.updateProfile(formValue).subscribe(user => {
             this.profile = user;
             this.loginService.updateLoginInfo();
             this.showProfile = false;
@@ -99,9 +98,9 @@ export class ProfileComponent implements OnInit {
         });
     }
 
-    updatePhone(): void {
+    updatePhone(phone: void): void {
         const userDto = new UpdateUserDto();
-        userDto.phone = this.formPhone.get('phone').value;
+        userDto.phone = (('+' + phone) as unknown) as string;
         this.userService.updateProfile(userDto).subscribe(() => {
             this.showPhone = false;
             this.cd.detectChanges();
