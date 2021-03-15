@@ -1,4 +1,4 @@
-import { DynamicFieldsBaseEntity } from "../../../../shared/models/dto/dynamic-fields-base.entity";
+import { DynamicFieldsBaseEntity } from '../../../../shared/models/dto/dynamic-fields-base.entity';
 
 export class LocationEntity extends DynamicFieldsBaseEntity {
     title: string;

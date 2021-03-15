@@ -3,7 +3,7 @@ import { AbstractFieldService } from '../../../shared/modules/dynamic-fields/mod
 import { LocationFormComponent } from './location-form/location-form.component';
 import { LocationParamsComponent } from './location-params/location-params.component';
 import { LocationViewComponent } from './location-view/location-view.component';
-import { LocationFilterComponent } from "./location-filter/location-filter.component";
+import { LocationFilterComponent } from './location-filter/location-filter.component';
 
 @Injectable()
 export class LocationService implements AbstractFieldService {
