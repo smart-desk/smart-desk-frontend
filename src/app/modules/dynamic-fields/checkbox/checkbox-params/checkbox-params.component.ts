@@ -8,7 +8,7 @@ import { OperationState } from '../../../../shared/models/operation-state.enum';
 import { CheckboxItem, CheckboxParamsDto } from '../dto/checkbox-params.dto';
 
 @Component({
-    selector: 'app-radio',
+    selector: 'app-checkbox',
     templateUrl: './checkbox-params.component.html',
     styleUrls: ['./checkbox-params.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,27 +25,27 @@ export class CheckboxParamsComponent extends AbstractFieldParamsComponent implem
     ngOnInit() {
         const params = this.field.params as CheckboxParamsDto;
         const checkboxes =
-            params && params.checkboxes ? params.checkboxes.map(data => this.createRadioControl(data)) : [this.createRadioControl()];
+            params && params.checkboxes ? params.checkboxes.map(data => this.createCheckboxControl(data)) : [this.createCheckboxControl()];
 
         this.form = this.fb.group({
             title: [this.field.title || ''],
             filterable: [this.field.filterable || false],
-            radios: this.fb.array(checkboxes),
+            checkboxes: this.fb.array(checkboxes),
         });
     }
 
-    get radios() {
-        return this.form.get('radios') as FormArray;
+    get checkboxes() {
+        return this.form.get('checkboxes') as FormArray;
     }
 
-    addRadio(): void {
-        this.radios.push(this.createRadioControl());
+    addCheckbox(): void {
+        this.checkboxes.push(this.createCheckboxControl());
     }
 
     save(): void {
         this.updateState(OperationState.LOADING);
 
-        const radios = this.convertControlsToRadios(this.radios.getRawValue());
+        const checkboxes = this.convertControlsToCheckboxes(this.checkboxes.getRawValue());
         const title = this.form.get('title').value;
         const filterable = this.form.get('filterable').value;
 
@@ -56,7 +56,7 @@ export class CheckboxParamsComponent extends AbstractFieldParamsComponent implem
             params: {
                 ...((this.field.params as object) || {}),
                 ...this.form.getRawValue(),
-                radios,
+                checkboxes,
             },
         } as FieldEntity;
 
@@ -78,8 +78,8 @@ export class CheckboxParamsComponent extends AbstractFieldParamsComponent implem
         );
     }
 
-    deleteRadio(i: number): void {
-        this.radios.removeAt(i);
+    deleteCheckbox(i: number): void {
+        this.checkboxes.removeAt(i);
     }
 
     private updateState(state: OperationState): void {
@@ -87,14 +87,14 @@ export class CheckboxParamsComponent extends AbstractFieldParamsComponent implem
         this.save$.next(this.state);
     }
 
-    private createRadioControl(checkbox?: CheckboxItem): FormGroup {
+    private createCheckboxControl(checkbox?: CheckboxItem): FormGroup {
         return this.fb.group({
             label: (checkbox && checkbox.label) || '',
             value: (checkbox && checkbox.value) || '',
         });
     }
 
-    private convertControlsToRadios(controls: { label: string; value: string }[]): CheckboxItem[] {
+    private convertControlsToCheckboxes(controls: { label: string; value: string }[]): CheckboxItem[] {
         return controls.map((data: CheckboxItem) => {
             const value = new CheckboxItem();
             value.label = data.label;
