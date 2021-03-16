@@ -48,7 +48,6 @@ import { AdvertsComponent } from './components/adverts/adverts.component';
 import { ContentLayoutComponent } from './components/content-layout/content-layout.component';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NgxMaskModule } from 'ngx-mask';
-import { ModalEmailComponent } from './components/modal-email/modal-email.component';
 import { ModalNameComponent } from './components/modal-name/modal-name.component';
 import { ModalPhoneComponent } from './components/modal-phone/modal-phone.component';
 import { ModalVerifyComponent } from './components/modal-verify/modal-verify.component';
@@ -102,7 +101,6 @@ const components = [
     ProfileSideBarComponent,
     UserInfoComponent,
     AdvertsComponent,
-    ModalEmailComponent,
     ModalNameComponent,
     ModalPhoneComponent,
     ModalVerifyComponent,
