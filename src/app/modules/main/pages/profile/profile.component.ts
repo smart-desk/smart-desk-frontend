@@ -29,7 +29,6 @@ export class ProfileComponent implements OnInit {
     showPhone = false;
     showConfirmPhone = false;
     confirmMode = false;
-    file: NzUploadFile[] = [];
     verificationRequestId: string;
     submitFormName$ = new Subject<void>();
 
