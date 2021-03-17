@@ -1,0 +1,69 @@
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges,
+} from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
+import { ProfileFormEnum } from '../../pages/profile/profile-form.enum';
+import { User } from '../../../../shared/models/user/user.entity';
+import { ProfileComponent } from '../../pages/profile/profile.component';
+
+@Component({
+    selector: 'app-modal-name',
+    templateUrl: './form-name.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class FormNameComponent implements OnInit, OnChanges {
+    @Input() profile: User;
+    @Output() submitEvent = new EventEmitter<{ formType: ProfileFormEnum; value: User }>();
+    file: NzUploadFile[] = [];
+    formName: FormGroup;
+
+    constructor(private fb: FormBuilder, private cd: ChangeDetectorRef, private profileComponent: ProfileComponent) {}
+
+    ngOnInit(): void {
+        this.profileComponent.submitFormName$.pipe().subscribe(() => this.submit());
+
+        this.formName = this.fb.group({
+            firstName: [this.profile.firstName],
+            lastName: [this.profile.lastName],
+            avatar: [this.profile.avatar],
+        });
+
+        const avatar = this.profile?.avatar;
+        this.file = [{ uid: '-1', name: 'image.png', url: avatar }];
+        this.cd.detectChanges();
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (this.profile && changes.profile?.currentValue.profile) {
+            this.profile = changes.profile?.currentValue.profile;
+        }
+        this.cd.detectChanges();
+    }
+
+    fileChanged(event: NzUploadChangeParam): void {
+        if (event.type === 'success') {
+            this.file = [event.file];
+            this.profile.avatar = this.file[0].response.url;
+        }
+    }
+
+    submit(): void {
+        this.setValue();
+        this.submitEvent.emit({ formType: ProfileFormEnum.NAME, value: this.profile });
+    }
+
+    setValue(): void {
+        this.profile.lastName = this.formName.get('lastName').value;
+        this.profile.firstName = this.formName.get('firstName').value;
+        this.profile.avatar = this.formName.get('avatar').value;
+    }
+}

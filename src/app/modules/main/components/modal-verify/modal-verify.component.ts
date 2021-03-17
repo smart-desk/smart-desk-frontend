@@ -1,14 +1,13 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProfileFormEnum } from '../../pages/profile/profile-form.enum';
-import { FormNameDataInterface } from '../modal-name/form-name-data.interface';
 
 @Component({
     selector: 'app-modal-verify',
     templateUrl: './modal-verify.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalVerifyComponent implements OnInit, OnChanges {
-    @Input() formConfirmData: FormNameDataInterface;
     @Input() showConfirmPhone = false;
     @Input() confirmMode = false;
     @Output() submitFormEvent = new EventEmitter<{ formType: ProfileFormEnum; formValue: void }>();

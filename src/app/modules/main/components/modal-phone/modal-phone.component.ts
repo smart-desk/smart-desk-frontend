@@ -1,16 +1,16 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormNameDataInterface } from '../modal-name/form-name-data.interface';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ProfileFormEnum } from '../../pages/profile/profile-form.enum';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'app-modal-phone',
     templateUrl: './modal-phone.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalPhoneComponent implements OnInit, OnChanges {
     @Input() formPhoneData;
     @Input() showPhone = false;
-    @Output() submitFormEvent = new EventEmitter<{ formType: ProfileFormEnum; formValue: string }>();
+    @Output() submitFormEvent = new EventEmitter<{ formType: ProfileFormEnum; value: string }>();
     @Output() updatePhoneEvent = new EventEmitter<void>();
     formPhone: FormGroup;
 
@@ -30,6 +30,6 @@ export class ModalPhoneComponent implements OnInit, OnChanges {
     }
 
     submitForm(): void {
-        this.submitFormEvent.emit({ formType: ProfileFormEnum.PHONE, formValue: this.formPhone.get('phone').value });
+        this.submitFormEvent.emit({ formType: ProfileFormEnum.PHONE, value: this.formPhone.get('phone').value });
     }
 }

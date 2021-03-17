@@ -26,8 +26,9 @@
         </tbody>
     </nz-table>
 </ng-template>
-
-<app-modal-name [formNameData]="formNameData" [showProfile]="showProfile" (submitFormEvent)="submitForm($event)"> </app-modal-name>
+<nz-modal [(nzVisible)]="showProfile" (nzOnCancel)="showProfile = !showProfile" (nzOnOk)="submitFormName()">
+    <app-modal-name [profile]="profile" (submitEvent)="submitForm($event)"> </app-modal-name>
+</nz-modal>
 <app-modal-verify [showConfirmPhone]="showConfirmPhone" [confirmMode]="confirmMode" (requestVerificationEvent)="requestVerification()">
 </app-modal-verify>
 <app-modal-phone [formPhoneData]="formPhoneData" [showPhone]="showPhone" (submitFormEvent)="submitForm($event)"></app-modal-phone>
