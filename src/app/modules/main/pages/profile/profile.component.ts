@@ -65,8 +65,8 @@ export class ProfileComponent implements OnInit {
         }
     }
 
-    updateName(formValue): void {
-        this.userService.updateProfile(formValue).subscribe(user => {
+    updateName(profile): void {
+        this.userService.updateProfile(profile).subscribe(user => {
             this.profile = user;
             this.loginService.updateLoginInfo();
             this.showProfile = false;
