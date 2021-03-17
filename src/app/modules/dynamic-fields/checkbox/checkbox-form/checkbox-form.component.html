@@ -1,6 +1,16 @@
-<form nz-form nzLayout="vertical" [formGroup]="form">
+<form nz-form nzLayout="vertical">
     <nz-form-item>
         <nz-form-label>{{ field.title }}</nz-form-label>
-        <nz-checkbox-group formControlName="value"></nz-checkbox-group>
+        <nz-checkbox-wrapper (nzOnChange)="checkboxChecked($event)">
+            <label
+                *ngFor="let checkbox of field.params.checkboxes"
+                nz-checkbox
+                [ngModel]="isChecked(checkbox)"
+                [nzValue]="checkbox.value"
+                [ngModelOptions]="{ standalone: true }"
+            >
+                {{ checkbox.label }}
+            </label>
+        </nz-checkbox-wrapper>
     </nz-form-item>
 </form>
