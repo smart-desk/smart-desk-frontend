@@ -51,7 +51,7 @@ export class ProfileComponent implements OnInit {
         });
     }
 
-    submitForm(data: { formType: ProfileFormEnum; value: User | string }): void {
+    submitForm(data: { formType: ProfileFormEnum; value: UpdateUserDto }): void {
         switch (data.formType) {
             case ProfileFormEnum.NAME:
                 this.updateName(data.value);
@@ -74,7 +74,7 @@ export class ProfileComponent implements OnInit {
         });
     }
 
-    updatePhone(phone: User | string): void {
+    updatePhone(phone: UpdateUserDto): void {
         const userDto = new UpdateUserDto();
         userDto.phone = '+' + phone;
         this.userService.updateProfile(userDto).subscribe(() => {
