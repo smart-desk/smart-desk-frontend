@@ -17,8 +17,8 @@ export class CheckboxViewComponent extends AbstractFieldViewComponent<CheckboxEn
     }
 
     ngOnInit() {
-        this.valueText = this.field.params.checkboxes
-            .filter(ch => this.field.data.value.includes(ch.value))
+        this.valueText = this.field?.params?.checkboxes
+            .filter(ch => this.field?.data?.value.includes(ch.value))
             .map(ch => ch.label)
             .join(', ');
         this.cdr.detectChanges();
