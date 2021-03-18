@@ -6,7 +6,7 @@ import { Filter } from '../../../../shared/modules/dynamic-fields/models/filter'
 import { CheckboxFilterDto } from '../dto/checkbox-filter.dto';
 
 @Component({
-    selector: 'app-radio-filter',
+    selector: 'app-checkbox-filter',
     templateUrl: './checkbox-filter.component.html',
     styleUrls: ['./checkbox-filter.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,7 +20,7 @@ export class CheckboxFilterComponent extends AbstractFieldFilterComponent<Checkb
 
     ngOnInit(): void {
         this.form = this.fb.group({
-            checkboxes: this.fb.array(this.field.params.checkboxes.map(radio => this.fb.control(this.getCheckboxState(radio)))),
+            checkboxes: this.fb.array(this.field.params.checkboxes.map(cb => this.fb.control(this.getCheckboxState(cb)))),
         });
     }
 
@@ -30,11 +30,11 @@ export class CheckboxFilterComponent extends AbstractFieldFilterComponent<Checkb
 
     getFilterValue(): Filter<CheckboxFilterDto> {
         if (this.form.touched || !this.emptyValues()) {
-            const selectedRadios = this.form.value.checkboxes
+            const selectedCbs = this.form.value.checkboxes
                 .map((checked, i) => (checked ? this.field.params.checkboxes[i].value : null))
                 .filter(v => !!v);
 
-            return new Filter(this.field.id, selectedRadios);
+            return new Filter(this.field.id, selectedCbs);
         }
         return;
     }
@@ -43,14 +43,14 @@ export class CheckboxFilterComponent extends AbstractFieldFilterComponent<Checkb
         this.filter = undefined;
         this.form.patchValue(
             {
-                radios: this.field.params.checkboxes.map(() => false),
+                checkboxes: this.field.params.checkboxes.map(() => false),
             },
             { onlySelf: true }
         );
     }
 
     private emptyValues(): boolean {
-        return this.form.value.radios.every(checked => !checked);
+        return this.form.value.checkboxes.every(checked => !checked);
     }
 
     private getCheckboxState(checkbox: CheckboxItem): boolean {

@@ -4,7 +4,7 @@ import { CheckboxEntity } from '../dto/checkbox.entity';
 import { CheckboxItem, CheckboxParamsDto } from '../dto/checkbox-params.dto';
 
 @Component({
-    selector: 'app-radio',
+    selector: 'app-checkbox-form',
     templateUrl: './checkbox-form.component.html',
     styleUrls: ['./checkbox-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
