@@ -13,9 +13,9 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { AgmCoreModule } from '@agm/core';
 import { environment } from '../../../../environments/environment';
 import { LocationModalComponent } from './location-modal/location-modal.component';
-import { NzRadioModule } from "ng-zorro-antd/radio";
-import { NzTypographyModule } from "ng-zorro-antd/typography";
-import { NzIconModule } from "ng-zorro-antd/icon";
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @NgModule({
     imports: [

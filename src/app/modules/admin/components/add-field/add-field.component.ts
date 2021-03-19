@@ -23,7 +23,14 @@ export class AddFieldComponent {
 
     sectionData = Object.values(SectionType);
     fieldData = {
-        [SectionType.PARAMS]: [FieldType.PHOTO, FieldType.INPUT_TEXT, FieldType.RADIO, FieldType.TEXTAREA, FieldType.TEXT],
+        [SectionType.PARAMS]: [
+            FieldType.PHOTO,
+            FieldType.INPUT_TEXT,
+            FieldType.RADIO,
+            FieldType.CHECKBOX,
+            FieldType.TEXTAREA,
+            FieldType.TEXT,
+        ],
         [SectionType.LOCATION]: [FieldType.LOCATION],
         [SectionType.PRICE]: [FieldType.PRICE],
         [SectionType.CONTACTS]: [],
