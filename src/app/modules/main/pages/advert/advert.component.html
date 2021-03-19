@@ -1,6 +1,7 @@
 <app-content-layout [title]="advert?.title" [main]="main" [right]="right"></app-content-layout>
 
 <ng-template #main>
+    <div class="meta"><i nz-icon nzType="eye" nzTheme="outline"></i> {{ advert?.views }}</div>
     <ng-container #params></ng-container>
     <section class="similar">
         <h1>Похожие объявления</h1>
