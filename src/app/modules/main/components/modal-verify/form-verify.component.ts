@@ -3,15 +3,14 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProfileFormEnum } from '../../pages/profile/profile-form.enum';
 
 @Component({
-    selector: 'app-modal-verify',
-    templateUrl: './modal-verify.component.html',
+    selector: 'app-form-verify',
+    templateUrl: './form-verify.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ModalVerifyComponent implements OnInit, OnChanges {
-    @Input() showConfirmPhone = false;
+export class FormVerifyComponent implements OnInit, OnChanges {
     @Input() confirmMode = false;
-    @Output() submitFormEvent = new EventEmitter<{ formType: ProfileFormEnum; formValue: void }>();
-    @Output() requestVerificationEvent = new EventEmitter<void>();
+    @Output() submitFormEvent$ = new EventEmitter<{ formType: ProfileFormEnum; formValue: void }>();
+    @Output() requestVerificationEvent$ = new EventEmitter<void>();
     formConfirm: FormGroup;
 
     constructor(private fb: FormBuilder) {}
@@ -21,19 +20,16 @@ export class ModalVerifyComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes.showConfirmPhone) {
-            this.showConfirmPhone = changes.showConfirmPhone?.currentValue;
-        }
         if (changes.confirmMode) {
             this.confirmMode = changes.confirmMode?.currentValue;
         }
     }
 
     submitForm(): void {
-        this.submitFormEvent.emit({ formType: ProfileFormEnum.CONFIRM, formValue: this.formConfirm.value });
+        this.submitFormEvent$.emit({ formType: ProfileFormEnum.CONFIRM, formValue: this.formConfirm.value });
     }
 
     requestVerification(): void {
-        this.requestVerificationEvent.emit();
+        this.requestVerificationEvent$.emit();
     }
 }

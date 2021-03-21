@@ -48,8 +48,8 @@ import { AdvertsComponent } from './components/adverts/adverts.component';
 import { ContentLayoutComponent } from './components/content-layout/content-layout.component';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { FormNameComponent } from './components/modal-name/form-name.component';
-import { ModalPhoneComponent } from './components/modal-phone/modal-phone.component';
-import { ModalVerifyComponent } from './components/modal-verify/modal-verify.component';
+import { FormPhoneComponent } from './components/modal-phone/form-phone.component';
+import { FormVerifyComponent } from './components/modal-verify/form-verify.component';
 
 const NZModules = [
     NzModalModule,
@@ -101,8 +101,8 @@ const components = [
     UserInfoComponent,
     AdvertsComponent,
     FormNameComponent,
-    ModalPhoneComponent,
-    ModalVerifyComponent,
+    FormPhoneComponent,
+    FormVerifyComponent,
 ];
 
 @NgModule({

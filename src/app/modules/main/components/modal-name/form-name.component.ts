@@ -13,7 +13,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import { ProfileFormEnum } from '../../pages/profile/profile-form.enum';
 import { User } from '../../../../shared/models/user/user.entity';
-import { ProfileComponent } from '../../pages/profile/profile.component';
 
 @Component({
     selector: 'app-modal-name',
@@ -22,15 +21,20 @@ import { ProfileComponent } from '../../pages/profile/profile.component';
 })
 export class FormNameComponent implements OnInit, OnChanges {
     @Input() profile: User;
-    @Output() submitEvent = new EventEmitter<{ formType: ProfileFormEnum; value: User }>();
+    @Output() submitEvent$ = new EventEmitter<{ formType: ProfileFormEnum; value: User }>();
     file: NzUploadFile[] = [];
     formName: FormGroup;
 
-    constructor(private fb: FormBuilder, private cd: ChangeDetectorRef, private profileComponent: ProfileComponent) {}
+    constructor(private fb: FormBuilder, private cd: ChangeDetectorRef) {}
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (this.profile && changes.profile?.currentValue) {
+            this.profile = changes.profile?.currentValue;
+        }
+        this.cd.detectChanges();
+    }
 
     ngOnInit(): void {
-        this.profileComponent.submitFormName$.pipe().subscribe(() => this.submit());
-
         this.formName = this.fb.group({
             firstName: [this.profile.firstName],
             lastName: [this.profile.lastName],
@@ -42,23 +46,18 @@ export class FormNameComponent implements OnInit, OnChanges {
         this.cd.detectChanges();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        if (this.profile && changes.profile?.currentValue.profile) {
-            this.profile = changes.profile?.currentValue.profile;
-        }
-        this.cd.detectChanges();
-    }
-
     fileChanged(event: NzUploadChangeParam): void {
         if (event.type === 'success') {
             this.file = [event.file];
-            this.profile.avatar = this.file[0].response.url;
+            const fileUrl = this.file[0].response.url;
+            this.profile.avatar = fileUrl;
+            this.formName.get('avatar').setValue(fileUrl);
         }
     }
 
     submit(): void {
         this.setValue();
-        this.submitEvent.emit({ formType: ProfileFormEnum.NAME, value: this.profile });
+        this.submitEvent$.emit({ formType: ProfileFormEnum.NAME, value: this.profile });
     }
 
     setValue(): void {

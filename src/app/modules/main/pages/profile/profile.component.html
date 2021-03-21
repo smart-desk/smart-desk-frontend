@@ -10,25 +10,19 @@
             <tr>
                 <td>Profile</td>
                 <td>{{ profile?.firstName }} {{ profile?.lastName }}</td>
-                <td><a (click)="showProfile = !showProfile">Edit</a></td>
+                <td><a (click)="openProfileForm()">Edit</a></td>
             </tr>
             <tr>
                 <td>Phone</td>
                 <td>{{ profile?.phone }}</td>
                 <td class="cell-action">
                     <div *ngIf="profile.phone && !profile.isPhoneVerified">
-                        <a (click)="showConfirmPhone = !showConfirmPhone">Confirm</a>
+                        <a (click)="openConfirmPhone()">Confirm</a>
                         <span class="cell-action__separate">/</span>
                     </div>
-                    <a (click)="showPhone = !showPhone">Change</a>
+                    <a (click)="openChangePhone()">Change</a>
                 </td>
             </tr>
         </tbody>
     </nz-table>
 </ng-template>
-<nz-modal [(nzVisible)]="showProfile" (nzOnCancel)="showProfile = !showProfile" (nzOnOk)="submitFormName()">
-    <app-modal-name [profile]="profile" (submitEvent)="submitForm($event)"> </app-modal-name>
-</nz-modal>
-<app-modal-verify [showConfirmPhone]="showConfirmPhone" [confirmMode]="confirmMode" (requestVerificationEvent)="requestVerification()">
-</app-modal-verify>
-<app-modal-phone [formPhoneData]="formPhoneData" [showPhone]="showPhone" (submitFormEvent)="submitForm($event)"></app-modal-phone>
