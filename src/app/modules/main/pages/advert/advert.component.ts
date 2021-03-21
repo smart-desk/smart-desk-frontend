@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
-import { of, Subject } from 'rxjs';
-import { switchMap, takeUntil, tap } from 'rxjs/operators';
+import { EMPTY, of, Subject } from 'rxjs';
+import { switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import { AdvertDataService, AdvertService, UserService } from '../../../../shared/services';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Advert } from '../../../../shared/models/advert/advert.entity';
@@ -58,7 +58,10 @@ export class AdvertComponent implements OnInit, AfterViewInit {
         this.route.paramMap
             .pipe(
                 switchMap(params => this.advertService.getAdvert(params.get('advert_id'))),
-                tap(advert => (this.advert = advert)),
+                tap(advert => {
+                    this.advert = advert;
+                    this.countView();
+                }),
                 switchMap(advert => {
                     return advert.userId ? this.userService.getUser(advert.userId) : of(null);
                 })
@@ -116,5 +119,20 @@ export class AdvertComponent implements OnInit, AfterViewInit {
             component.instance.field = field;
             component.changeDetectorRef.detectChanges();
         });
+    }
+
+    private countView(): void {
+        this.userService
+            .getCurrentUser()
+            .pipe(
+                switchMap(currentUser => {
+                    if (currentUser && currentUser.id === this.advert.userId) {
+                        return EMPTY;
+                    }
+                    return this.advertService.countView(this.advert.id);
+                }),
+                take(1)
+            )
+            .subscribe();
     }
 }

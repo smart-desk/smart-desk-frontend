@@ -12,4 +12,5 @@ export class Advert {
     updatedAt: Date;
     sections: Section[];
     isBookmark: boolean;
+    views: number;
 }

@@ -57,6 +57,10 @@ export class AdvertService {
         return this.http.patch<Advert>(`/adverts/${id}`, advert);
     }
 
+    countView(id: string): Observable<Advert> {
+        return this.http.post<Advert>(`/adverts/${id}/view`, null);
+    }
+
     blockAdvert(id: string): Observable<Advert> {
         return this.http.patch<Advert>(`/adverts/${id}/block`, null);
     }
