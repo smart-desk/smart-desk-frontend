@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    Input,
+    OnInit,
+    ViewChild,
+    ViewContainerRef,
+} from '@angular/core';
 import { FieldService, ModelService } from '../../../../shared/services';
 import { Section } from '../../../../shared/models/dto/section.entity';
 import { FieldEntity } from '../../../../shared/models/dto/field.entity';
@@ -8,6 +17,7 @@ import { PreviewToolsComponent } from '../preview-tools/preview-tools.component'
 import { FieldSettingsComponent } from '../field-settings/field-settings.component';
 import { AddFieldComponent } from '../add-field/add-field.component';
 import { Model } from '../../../../shared/models/dto/model.entity';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 const DRAWER_BASE_CONFIG = {
     nzWidth: 400,
@@ -34,7 +44,8 @@ export class PreviewComponent implements OnInit {
         private dynamicFieldService: DynamicFieldsService,
         private drawerService: NzDrawerService,
         private componentFactoryResolver: ComponentFactoryResolver,
-        private fieldService: FieldService
+        private fieldService: FieldService,
+        private cd: ChangeDetectorRef
     ) {}
 
     ngOnInit(): void {
@@ -66,6 +77,18 @@ export class PreviewComponent implements OnInit {
                 this.onEdit(f);
             });
         });
+    }
+
+    drop(event: CdkDragDrop<string[]>) {
+        const paramSection = this.model.sections.find(section => section.type === 'params');
+        moveItemInArray(paramSection.fields, event.previousIndex, event.currentIndex);
+        this.model.sections.forEach(section => {
+            if (section.type === 'params') {
+                section.fields = paramSection.fields;
+            }
+        });
+        this.model = { ...this.model };
+        this.cd.detectChanges();
     }
 
     private populateFormWithInputs(sections: Section[]): void {
