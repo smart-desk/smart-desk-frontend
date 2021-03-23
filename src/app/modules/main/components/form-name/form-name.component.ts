@@ -19,20 +19,13 @@ import { User } from '../../../../shared/models/user/user.entity';
     templateUrl: './form-name.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormNameComponent implements OnInit, OnChanges {
+export class FormNameComponent implements OnInit {
     @Input() profile: User;
     @Output() submitEvent$ = new EventEmitter<{ formType: ProfileFormEnum; value: User }>();
     file: NzUploadFile[] = [];
     formName: FormGroup;
 
     constructor(private fb: FormBuilder, private cd: ChangeDetectorRef) {}
-
-    ngOnChanges(changes: SimpleChanges) {
-        if (this.profile && changes.profile?.currentValue) {
-            this.profile = changes.profile?.currentValue;
-        }
-        this.cd.detectChanges();
-    }
 
     ngOnInit(): void {
         this.formName = this.fb.group({

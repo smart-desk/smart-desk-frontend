@@ -7,7 +7,7 @@ import { ProfileFormEnum } from '../../pages/profile/profile-form.enum';
     templateUrl: './form-verify.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormVerifyComponent implements OnInit, OnChanges {
+export class FormVerifyComponent implements OnInit {
     @Input() confirmMode = false;
     @Output() submitFormEvent$ = new EventEmitter<{ formType: ProfileFormEnum; formValue: void }>();
     @Output() requestVerificationEvent$ = new EventEmitter<void>();
@@ -19,14 +19,8 @@ export class FormVerifyComponent implements OnInit, OnChanges {
         this.formConfirm = this.fb.group({ code: [] });
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes.confirmMode) {
-            this.confirmMode = changes.confirmMode?.currentValue;
-        }
-    }
-
     submitForm(): void {
-        this.submitFormEvent$.emit({ formType: ProfileFormEnum.CONFIRM, formValue: this.formConfirm.value });
+        this.submitFormEvent$.emit({ formType: ProfileFormEnum.VERIFY, formValue: this.formConfirm.value });
     }
 
     requestVerification(): void {

@@ -47,9 +47,9 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
 import { AdvertsComponent } from './components/adverts/adverts.component';
 import { ContentLayoutComponent } from './components/content-layout/content-layout.component';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
-import { FormNameComponent } from './components/modal-name/form-name.component';
-import { FormPhoneComponent } from './components/modal-phone/form-phone.component';
-import { FormVerifyComponent } from './components/modal-verify/form-verify.component';
+import { FormNameComponent } from './components/form-name/form-name.component';
+import { FormPhoneComponent } from './components/form-phone/form-phone.component';
+import { FormVerifyComponent } from './components/form-verify/form-verify.component';
 
 const NZModules = [
     NzModalModule,

@@ -8,18 +8,12 @@ import { User } from '../../../../shared/models/user/user.entity';
     templateUrl: './form-phone.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormPhoneComponent implements OnInit, OnChanges {
+export class FormPhoneComponent implements OnInit {
     @Input() profile: User;
     @Output() submitFormEvent$ = new EventEmitter<{ formType: ProfileFormEnum; value: User }>();
     formPhone: FormGroup;
 
     constructor(private fb: FormBuilder) {}
-
-    ngOnChanges(changes: SimpleChanges): void {
-        if (this.formPhone && changes.profile?.currentValue) {
-            this.profile = changes.profile?.currentValue;
-        }
-    }
 
     ngOnInit(): void {
         this.formPhone = this.fb.group({ phone: [this.profile.phone] });

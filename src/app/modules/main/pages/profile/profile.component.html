@@ -10,17 +10,17 @@
             <tr>
                 <td>Profile</td>
                 <td>{{ profile?.firstName }} {{ profile?.lastName }}</td>
-                <td><a (click)="openProfileForm()">Edit</a></td>
+                <td><a (click)="openFormName()">Edit</a></td>
             </tr>
             <tr>
                 <td>Phone</td>
                 <td>{{ profile?.phone }}</td>
                 <td class="cell-action">
                     <div *ngIf="profile.phone && !profile.isPhoneVerified">
-                        <a (click)="openConfirmPhone()">Confirm</a>
+                        <a (click)="openFormConfirmPhone()">Confirm</a>
                         <span class="cell-action__separate">/</span>
                     </div>
-                    <a (click)="openChangePhone()">Change</a>
+                    <a (click)="openFormChangePhone()">Change</a>
                 </td>
             </tr>
         </tbody>

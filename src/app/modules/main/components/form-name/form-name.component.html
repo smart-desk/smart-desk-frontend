@@ -3,7 +3,7 @@
         <nz-upload
             nzAction="/s3/image"
             nzListType="picture-card"
-            [nzFileList]="this.file"
+            [nzFileList]="file"
             nzAccept="image/png, image/jpeg"
             [nzLimit]="1"
             (nzChange)="fileChanged($event)"

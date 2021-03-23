@@ -8,9 +8,9 @@ import { UpdateUserDto } from '../../../../shared/models/user/update-user.dto';
 import { PhoneService } from '../../../../shared/services/phone/phone.service';
 import { PhoneVerifyCheckDto } from '../../../../shared/models/phone/phone-verify-check.dto';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
-import { FormNameComponent } from '../../components/modal-name/form-name.component';
-import { FormVerifyComponent } from '../../components/modal-verify/form-verify.component';
-import { FormPhoneComponent } from '../../components/modal-phone/form-phone.component';
+import { FormNameComponent } from '../../components/form-name/form-name.component';
+import { FormVerifyComponent } from '../../components/form-verify/form-verify.component';
+import { FormPhoneComponent } from '../../components/form-phone/form-phone.component';
 
 @Component({
     selector: 'app-user-settings',
@@ -58,14 +58,12 @@ export class ProfileComponent implements OnInit {
     }
 
     updatePhone(profile: UpdateUserDto): void {
-        const userDto = new UpdateUserDto();
-        userDto.phone = profile.phone;
-        this.userService.updateProfile(userDto).subscribe(() => {
+        this.userService.updateProfile(profile).subscribe(() => {
             this.cd.detectChanges();
         });
     }
 
-    openProfileForm() {
+    openFormName() {
         const modalRef = this.modalService.create({
             nzContent: FormNameComponent,
             nzComponentParams: { profile: this.profile },
@@ -75,7 +73,7 @@ export class ProfileComponent implements OnInit {
         modalRef.getContentComponent().submitEvent$.subscribe(data => this.submitForm(data));
     }
 
-    openConfirmPhone() {
+    openFormConfirmPhone() {
         const modalRef = this.modalService.create({
             nzTitle: 'Confirm',
             nzContent: FormVerifyComponent,
@@ -88,7 +86,7 @@ export class ProfileComponent implements OnInit {
         modalRef.getContentComponent().submitFormEvent$.subscribe(() => this.checkVerification(modalRef));
     }
 
-    openChangePhone() {
+    openFormChangePhone() {
         const modalRef = this.modalService.create({
             nzTitle: 'Phone',
             nzContent: FormPhoneComponent,
