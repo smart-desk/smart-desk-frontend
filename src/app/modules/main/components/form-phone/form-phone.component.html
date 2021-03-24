@@ -1,0 +1,10 @@
+<form nz-form [formGroup]="formPhone">
+    <nz-form-item>
+        <nz-form-label for="phone">
+            Изменить номер телефона
+        </nz-form-label>
+        <nz-form-control [nzSpan]="14">
+            <input nz-input name="phone" id="phone" type="text" mask="+0 (000) 000 00 00" formControlName="phone" />
+        </nz-form-control>
+    </nz-form-item>
+</form>

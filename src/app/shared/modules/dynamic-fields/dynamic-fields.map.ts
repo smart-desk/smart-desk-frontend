@@ -1,4 +1,4 @@
-import { FieldType } from '../../models/dto/field.entity';
+import { FieldType } from '../../models/field/field.entity';
 import { InjectionToken } from '@angular/core';
 import { AbstractFieldService } from './models/abstract-field.service';
 

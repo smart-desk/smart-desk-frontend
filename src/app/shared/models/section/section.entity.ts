@@ -1,4 +1,4 @@
-import { FieldEntity } from './field.entity';
+import { FieldEntity } from '../field/field.entity';
 
 export enum SectionType {
     PARAMS = 'params',

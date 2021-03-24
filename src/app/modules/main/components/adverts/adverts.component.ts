@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { GetAdvertsResponseDto } from '../../../../shared/models/dto/advert.dto';
+import { GetAdvertsResponseDto } from '../../../../shared/models/advert/advert.dto';
 import { ExtraActions } from '../advert-card/advert-card.component';
 
 @Component({

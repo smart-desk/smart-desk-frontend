@@ -10,7 +10,7 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
-import { FieldEntity } from '../../../../shared/models/dto/field.entity';
+import { FieldEntity } from '../../../../shared/models/field/field.entity';
 import { OperationState } from '../../../../shared/models/operation-state.enum';
 import { NzDrawerRef } from 'ng-zorro-antd/drawer';
 

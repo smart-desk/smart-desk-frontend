@@ -1,0 +1,28 @@
+<form nz-form [formGroup]="formName" [nzLayout]="'vertical'">
+    <div class="user-avatar">
+        <nz-upload
+            nzAction="/s3/image"
+            nzListType="picture-card"
+            [nzFileList]="file"
+            nzAccept="image/png, image/jpeg"
+            [nzLimit]="1"
+            (nzChange)="fileChanged($event)"
+        >
+            <div>
+                <i nz-icon nzType="plus"></i>
+                <div style="margin-top: 8px;">Upload</div>
+            </div>
+        </nz-upload>
+    </div>
+
+    <nz-form-item>
+        <nz-form-control [nzSpan]="14">
+            <input nz-input placeholder="firstName" name="firstName" type="text" formControlName="firstName" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-control [nzSpan]="14">
+            <input nz-input placeholder="lastName" name="lastName" type="text" formControlName="lastName" />
+        </nz-form-control>
+    </nz-form-item>
+</form>

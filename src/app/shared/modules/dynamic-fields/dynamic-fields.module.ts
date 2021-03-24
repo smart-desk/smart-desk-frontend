@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FieldType } from '../../models/dto/field.entity';
+import { FieldType } from '../../models/field/field.entity';
 import { InputTextModule } from '../../../modules/dynamic-fields/input-text/input-text.module';
 import { InputTextService } from '../../../modules/dynamic-fields/input-text/input-text.service';
 import { RadioService } from '../../../modules/dynamic-fields/radio/radio.service';

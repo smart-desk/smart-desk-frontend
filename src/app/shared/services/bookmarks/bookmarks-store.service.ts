@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BookmarksService } from './bookmarks.service';
 import { BehaviorSubject } from 'rxjs';
-import { Bookmark } from '../../models/dto/bookmarks/bookmark.entity';
+import { Bookmark } from '../../models/bookmarks/bookmark.entity';
 
 @Injectable({
     providedIn: 'root',
