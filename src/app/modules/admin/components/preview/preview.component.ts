@@ -4,6 +4,7 @@ import {
     Component,
     ComponentFactoryResolver,
     Input,
+    OnDestroy,
     OnInit,
     ViewChild,
     ViewContainerRef,
@@ -18,6 +19,8 @@ import { FieldSettingsComponent } from '../field-settings/field-settings.compone
 import { AddFieldComponent } from '../add-field/add-field.component';
 import { Model } from '../../../../shared/models/dto/model.entity';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { forkJoin, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 const DRAWER_BASE_CONFIG = {
     nzWidth: 400,
@@ -30,14 +33,16 @@ const DRAWER_BASE_CONFIG = {
     styleUrls: ['./preview.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PreviewComponent implements OnInit {
+export class PreviewComponent implements OnInit, OnDestroy {
     @Input()
     modelId: string;
+    sort;
 
     @ViewChild('fields', { read: ViewContainerRef })
     private fieldsFormContainerRef: ViewContainerRef;
 
     private model: Model;
+    private destroy$ = new Subject();
 
     constructor(
         private modelService: ModelService,
@@ -50,6 +55,11 @@ export class PreviewComponent implements OnInit {
 
     ngOnInit(): void {
         this.update();
+    }
+
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     update(): void {
@@ -87,13 +97,28 @@ export class PreviewComponent implements OnInit {
                 section.fields = paramSection.fields;
             }
         });
-        this.model = { ...this.model };
+
+        const fields = this.setOrder(paramSection.fields, event.previousIndex, event.currentIndex);
+        const responseObservables = fields.map(field => this.fieldService.updateField(field.id, field));
+
+        forkJoin(responseObservables)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(() => this.update());
         this.cd.detectChanges();
     }
 
     private populateFormWithInputs(sections: Section[]): void {
         sections.forEach(section => {
             if (section.fields) {
+                section.fields.sort((a: FieldEntity, b: FieldEntity) => {
+                    if (a.order < b.order) {
+                        return -1;
+                    }
+                    if (a.order > b.order) {
+                        return 1;
+                    }
+                    return 0;
+                });
                 section.fields.forEach(field => {
                     this.resolveFieldComponent(field);
                 });
@@ -134,5 +159,52 @@ export class PreviewComponent implements OnInit {
 
     private onDelete(field: FieldEntity): void {
         this.fieldService.deleteField(field.id).subscribe(() => this.update());
+    }
+
+    private setOrder(fields: FieldEntity[], previousIndex: number, currentIndex: number): FieldEntity[] {
+        fields.sort((a: FieldEntity, b: FieldEntity) => {
+            if (a.order < b.order) {
+                return -1;
+            }
+            if (a.order > b.order) {
+                return 1;
+            }
+            return 0;
+        });
+
+        for (let i = 0; fields.length > i; i++) {
+            if (fields[i].order === null) {
+                fields[i].order = i;
+            }
+
+            if (currentIndex < previousIndex) {
+                if (currentIndex === i) {
+                    fields[i].order += 1;
+                    fields[previousIndex].order = currentIndex;
+                }
+                if (currentIndex < i && previousIndex > i) {
+                    fields[i].order = i + 1;
+                }
+            } else {
+                if (currentIndex === i) {
+                    fields[i].order -= 1;
+                    fields[previousIndex].order = currentIndex;
+                }
+
+                if (currentIndex < i && previousIndex > i) {
+                    fields[i].order = i - 1;
+                }
+            }
+
+            if (previousIndex < i) {
+                fields[i].order = i;
+            }
+
+            if (currentIndex > i) {
+                fields[i].order = i;
+            }
+        }
+
+        return fields;
     }
 }
