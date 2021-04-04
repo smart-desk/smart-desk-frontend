@@ -110,15 +110,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
     private populateFormWithInputs(sections: Section[]): void {
         sections.forEach(section => {
             if (section.fields) {
-                section.fields.sort((a: FieldEntity, b: FieldEntity) => {
-                    if (a.order < b.order) {
-                        return -1;
-                    }
-                    if (a.order > b.order) {
-                        return 1;
-                    }
-                    return 0;
-                });
+                section.fields.sort((a: FieldEntity, b: FieldEntity) => a.order - b.order);
                 section.fields.forEach(field => {
                     this.resolveFieldComponent(field);
                 });
@@ -162,15 +154,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
     }
 
     private setOrder(fields: FieldEntity[], previousIndex: number, currentIndex: number): FieldEntity[] {
-        fields.sort((a: FieldEntity, b: FieldEntity) => {
-            if (a.order < b.order) {
-                return -1;
-            }
-            if (a.order > b.order) {
-                return 1;
-            }
-            return 0;
-        });
+        fields.sort((a: FieldEntity, b: FieldEntity) => a.order - b.order);
 
         for (let i = 0; fields.length > i; i++) {
             if (fields[i].order === null) {
