@@ -8,7 +8,7 @@ import { OperationState } from '../../../../shared/models/operation-state.enum';
 import { PhotoParamsDto } from '../dto/photo-params.dto';
 
 @Component({
-    selector: 'app-textarea',
+    selector: 'app-photo-params',
     templateUrl: './photo-params.component.html',
     styleUrls: ['./photo-params.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
