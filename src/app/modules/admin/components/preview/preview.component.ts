@@ -185,26 +185,29 @@ export class PreviewComponent implements OnInit, OnDestroy {
                 if (currentIndex < i && previousIndex > i) {
                     fields[i].order = i + 1;
                 }
+                if (previousIndex < i) {
+                    fields[i].order = i;
+                }
+                if (currentIndex > i) {
+                    fields[i].order = i;
+                }
             } else {
-                if (currentIndex === i) {
-                    fields[i].order -= 1;
+                if (previousIndex === i) {
+                    fields[previousIndex + 1].order -= 1;
                     fields[previousIndex].order = currentIndex;
                 }
-
-                if (currentIndex < i && previousIndex > i) {
+                if ((currentIndex > i && previousIndex < i && previousIndex + 1 !== i) || currentIndex === i) {
                     fields[i].order = i - 1;
                 }
-            }
 
-            if (previousIndex < i) {
-                fields[i].order = i;
-            }
-
-            if (currentIndex > i) {
-                fields[i].order = i;
+                if (currentIndex < i) {
+                    fields[i].order = i;
+                }
+                if (previousIndex > i) {
+                    fields[i].order = i;
+                }
             }
         }
-
         return fields;
     }
 }
