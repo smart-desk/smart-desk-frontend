@@ -14,6 +14,7 @@ export class InputTextFormComponent extends AbstractFieldFormComponent<InputText
     form: FormGroup;
 
     ngOnInit(): void {
+        console.log('InputTextFormComponent');
         const valueValidators = [];
         const params = this.field.params;
         if (params && params.required) {
