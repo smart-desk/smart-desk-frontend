@@ -1,6 +1,5 @@
 import {
     ChangeDetectionStrategy,
-    ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
     Input,
@@ -49,8 +48,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
         private dynamicFieldService: DynamicFieldsService,
         private drawerService: NzDrawerService,
         private componentFactoryResolver: ComponentFactoryResolver,
-        private fieldService: FieldService,
-        private cd: ChangeDetectorRef
+        private fieldService: FieldService
     ) {}
 
     ngOnInit(): void {
@@ -63,9 +61,6 @@ export class PreviewComponent implements OnInit, OnDestroy {
     }
 
     update(): void {
-        if (this.fieldsFormContainerRef) {
-            this.fieldsFormContainerRef.clear();
-        }
         this.modelService.getModel(this.modelId).subscribe(model => {
             this.model = model;
             this.populateFormWithInputs(this.model.sections);
@@ -98,16 +93,17 @@ export class PreviewComponent implements OnInit, OnDestroy {
             }
         });
 
-        const fields = this.setOrder(paramSection.fields, event.previousIndex, event.currentIndex);
-        const responseObservables = fields.map(field => this.fieldService.updateField(field.id, field));
+        paramSection.fields.forEach((field: FieldEntity, index: number) => (field.order = index + 1));
 
-        forkJoin(responseObservables)
-            .pipe(takeUntil(this.destroy$))
-            .subscribe(() => this.update());
-        this.cd.detectChanges();
+        const responseObservables = paramSection.fields.map(field => this.fieldService.updateField(field.id, field));
+        this.populateFormWithInputs([paramSection]);
+        forkJoin(responseObservables).pipe(takeUntil(this.destroy$)).subscribe();
     }
 
     private populateFormWithInputs(sections: Section[]): void {
+        if (this.fieldsFormContainerRef) {
+            this.fieldsFormContainerRef.clear();
+        }
         sections.forEach(section => {
             if (section.fields) {
                 section.fields.sort((a: FieldEntity, b: FieldEntity) => a.order - b.order);
@@ -151,47 +147,5 @@ export class PreviewComponent implements OnInit, OnDestroy {
 
     private onDelete(field: FieldEntity): void {
         this.fieldService.deleteField(field.id).subscribe(() => this.update());
-    }
-
-    private setOrder(fields: FieldEntity[], previousIndex: number, currentIndex: number): FieldEntity[] {
-        fields.sort((a: FieldEntity, b: FieldEntity) => a.order - b.order);
-
-        for (let i = 0; fields.length > i; i++) {
-            if (fields[i].order === null) {
-                fields[i].order = i;
-            }
-
-            if (currentIndex < previousIndex) {
-                if (currentIndex === i) {
-                    fields[i].order += 1;
-                    fields[previousIndex].order = currentIndex;
-                }
-                if (currentIndex < i && previousIndex > i) {
-                    fields[i].order = i + 1;
-                }
-                if (previousIndex < i) {
-                    fields[i].order = i;
-                }
-                if (currentIndex > i) {
-                    fields[i].order = i;
-                }
-            } else {
-                if (previousIndex === i) {
-                    fields[previousIndex + 1].order -= 1;
-                    fields[previousIndex].order = currentIndex;
-                }
-                if ((currentIndex > i && previousIndex < i && previousIndex + 1 !== i) || currentIndex === i) {
-                    fields[i].order = i - 1;
-                }
-
-                if (currentIndex < i) {
-                    fields[i].order = i;
-                }
-                if (previousIndex > i) {
-                    fields[i].order = i;
-                }
-            }
-        }
-        return fields;
     }
 }

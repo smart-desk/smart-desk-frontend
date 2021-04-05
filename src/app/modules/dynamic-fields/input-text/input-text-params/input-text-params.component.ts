@@ -24,7 +24,6 @@ export class InputTextParamsComponent extends AbstractFieldParamsComponent imple
     }
 
     ngOnInit(): void {
-        console.log('InputTextFormComponent');
         const params = this.field.params as InputTextParamsDto;
 
         this.form = this.fb.group({
