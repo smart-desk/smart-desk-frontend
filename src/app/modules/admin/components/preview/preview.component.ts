@@ -35,8 +35,6 @@ const DRAWER_BASE_CONFIG = {
 export class PreviewComponent implements OnInit, OnDestroy {
     @Input()
     modelId: string;
-    sort;
-
     @ViewChild('fields', { read: ViewContainerRef })
     private fieldsFormContainerRef: ViewContainerRef;
 
