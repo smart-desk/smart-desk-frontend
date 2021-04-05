@@ -1,5 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ChatService } from '../../../../shared/services/chat/chat.service';
+import { Chat } from '../../../../shared/models/chat/chat.entity';
+import { takeUntil, tap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { ChatMessage } from '../../../../shared/models/chat/chat-message.entity';
+import { CreateChatMessageDto } from '../../../../shared/models/chat/create-chat-message.dto';
 
 @Component({
     selector: 'app-chat',
@@ -7,19 +12,58 @@ import { ChatService } from '../../../../shared/services/chat/chat.service';
     styleUrls: ['./chat.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChatComponent implements OnInit {
-    constructor(private chatService: ChatService) {}
+export class ChatComponent implements OnInit, OnDestroy {
+    chats: Chat[];
+    messages: ChatMessage[];
+
+    private destroy$ = new Subject();
+
+    constructor(private chatService: ChatService, private cdr: ChangeDetectorRef) {
+        this.chatService.joinChat$
+            .pipe(
+                takeUntil(this.destroy$),
+                tap(res => this.chatService.getMessages({ chatId: res.chatId }))
+            )
+            .subscribe(res => {
+                console.log('Connected to chat', res);
+            });
+
+        this.chatService.leaveChat$.pipe(takeUntil(this.destroy$)).subscribe(res => {
+            console.log('Left chat', res);
+        });
+
+        this.chatService.newMessage$.pipe(takeUntil(this.destroy$)).subscribe(message => {
+            this.messages.push(message);
+            this.cdr.detectChanges();
+        });
+
+        this.chatService.getMessages$.pipe(takeUntil(this.destroy$)).subscribe(messages => {
+            this.messages = messages;
+            this.cdr.detectChanges();
+        });
+    }
+
+    ngOnDestroy(): void {
+        this.chats.forEach(chat => this.chatService.leaveChat({ chatId: chat.id }));
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
 
     ngOnInit(): void {
-        this.chatService.newMessages$.subscribe(msg => console.log('new message', msg));
-        this.chatService.joinChat$.subscribe(msg => console.log('join chat', msg));
+        this.chatService
+            .getProfileChats()
+            .pipe(tap(chats => chats.forEach(chat => this.chatService.joinChat({ chatId: chat.id }))))
+            .subscribe(chats => {
+                this.chats = chats;
+                this.cdr.detectChanges();
+            });
     }
 
-    sendMessage(chatId: string): void {
-        this.chatService.sendMessage({ chatId, message: Math.random().toString() });
-    }
+    sendMessage(): void {
+        const message = new CreateChatMessageDto();
+        message.content = Math.random().toString();
+        message.chatId = this.chats[0].id;
 
-    joinChat(chatId: string): void {
-        this.chatService.joinChat({ chatId });
+        this.chatService.sendMessage(message);
     }
 }
