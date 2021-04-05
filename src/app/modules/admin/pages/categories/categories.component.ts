@@ -3,8 +3,8 @@ import { map, switchMap, tap } from 'rxjs/operators';
 import arrayToTree from 'array-to-tree';
 import { BehaviorSubject } from 'rxjs';
 import { CategoryService, ModelService } from '../../../../shared/services/';
-import { Model } from '../../../../shared/models/dto/model.entity';
-import { Category } from '../../../../shared/models/dto/category.entity';
+import { Model } from '../../../../shared/models/model/model.entity';
+import { Category } from '../../../../shared/models/category/category.entity';
 import { NzTreeNode } from 'ng-zorro-antd/tree';
 import { NzPopoverDirective } from 'ng-zorro-antd/popover';
 

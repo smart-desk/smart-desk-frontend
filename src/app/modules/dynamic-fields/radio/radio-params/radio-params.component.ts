@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { Observable } from 'rxjs';
 import { FieldService } from '../../../../shared/services';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { FieldEntity } from '../../../../shared/models/dto/field.entity';
+import { FieldEntity } from '../../../../shared/models/field/field.entity';
 import { AbstractFieldParamsComponent } from '../../../../shared/modules/dynamic-fields/models/abstract-field-params.component';
 import { OperationState } from '../../../../shared/models/operation-state.enum';
 import { RadioItem, RadioParamsDto } from '../dto/radio-params.dto';

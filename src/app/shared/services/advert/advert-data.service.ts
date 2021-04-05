@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { NavigationExtras, Router } from '@angular/router';
 import { AdvertService } from './advert.service';
-import { GetAdvertsDto, GetAdvertsResponseDto } from '../../models/dto/advert.dto';
+import { GetAdvertsDto, GetAdvertsResponseDto } from '../../models/advert/advert.dto';
 import { Filters } from '../../modules/dynamic-fields/models/filter';
 
 @Injectable({

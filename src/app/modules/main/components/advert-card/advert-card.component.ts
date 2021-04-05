@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Advert } from '../../../../shared/models/dto/advert.entity';
-import { SectionType } from '../../../../shared/models/dto/section.entity';
-import { FieldType } from '../../../../shared/models/dto/field.entity';
+import { Advert } from '../../../../shared/models/advert/advert.entity';
+import { SectionType } from '../../../../shared/models/section/section.entity';
+import { FieldType } from '../../../../shared/models/field/field.entity';
 import { PhotoEntity } from '../../../dynamic-fields/photo/dto/photo.entity';
 import { PriceEntity } from '../../../dynamic-fields/price/dto/price.entity';
 import { getCurrencySymbolByCode, roundPrice } from '../../../dynamic-fields/price/helpers';

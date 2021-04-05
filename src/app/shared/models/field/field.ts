@@ -1,4 +1,4 @@
-import { FieldEntity } from './dto/field.entity';
+import { FieldEntity } from './field.entity';
 
 export class Field<TData, TParams> extends FieldEntity {
     data: TData;

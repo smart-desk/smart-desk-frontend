@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Section } from '../../models/dto/section.entity';
-import { SectionCreateDto } from '../../models/dto/section.dto';
+import { Section } from '../../models/section/section.entity';
+import { SectionCreateDto } from '../../models/section/section.dto';
 
 @Injectable()
 export class SectionService {

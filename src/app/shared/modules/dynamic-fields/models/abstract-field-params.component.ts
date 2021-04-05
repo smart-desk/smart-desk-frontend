@@ -1,6 +1,6 @@
 import { Directive, Input, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { FieldEntity } from '../../../models/dto/field.entity';
+import { FieldEntity } from '../../../models/field/field.entity';
 import { OperationState } from '../../../models/operation-state.enum';
 
 @Directive()

@@ -5,7 +5,7 @@ export class User {
     firstName: string;
     lastName: string;
     phone: string;
-    city: string;
+    isPhoneVerified: boolean;
     email: string;
     status: UserStatus;
     avatar?: string;

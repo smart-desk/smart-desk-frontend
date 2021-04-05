@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/models/abstract-field-form.component';
 import { PhotoEntity } from '../dto/photo.entity';
 import { PhotoParamsDto } from '../dto/photo-params.dto';
-import { UploadImageResponse } from '../../../../shared/models/dto/upload-image-response';
+import { UploadImageResponse } from '../../../../shared/models/image/upload-image-response';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 
 @Component({

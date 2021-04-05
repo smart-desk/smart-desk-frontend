@@ -1,5 +1,5 @@
 import { Directive, Input } from '@angular/core';
-import { Field } from '../../../models/field';
+import { Field } from '../../../models/field/field';
 import { Filter } from './filter';
 
 @Directive()

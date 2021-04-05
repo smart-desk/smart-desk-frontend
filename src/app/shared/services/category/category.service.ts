@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 // todo we can do it on backend
 import arrayToTree from 'array-to-tree';
-import { Category } from '../../models/dto/category.entity';
-import { CreateCategoryDto } from '../../models/dto/create-category.dto';
-import { UpdateCategoryDto } from '../../models/dto/update-category.dto';
+import { Category } from '../../models/category/category.entity';
+import { CreateCategoryDto } from '../../models/category/create-category.dto';
+import { UpdateCategoryDto } from '../../models/category/update-category.dto';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
 
 @Injectable()
