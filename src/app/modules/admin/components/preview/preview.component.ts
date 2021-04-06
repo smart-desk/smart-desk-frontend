@@ -85,16 +85,9 @@ export class PreviewComponent implements OnInit, OnDestroy {
     drop(event: CdkDragDrop<string[]>) {
         const paramSection = this.model.sections.find(section => section.type === 'params');
         moveItemInArray(paramSection.fields, event.previousIndex, event.currentIndex);
-        this.model.sections.forEach(section => {
-            if (section.type === 'params') {
-                section.fields = paramSection.fields;
-            }
-        });
-
         paramSection.fields.forEach((field: FieldEntity, index: number) => (field.order = index + 1));
-
         const responseObservables = paramSection.fields.map(field => this.fieldService.updateField(field.id, field));
-        this.populateFormWithInputs([paramSection]);
+        this.populateFormWithInputs(this.model.sections);
         forkJoin(responseObservables).pipe(takeUntil(this.destroy$)).subscribe();
     }
 
