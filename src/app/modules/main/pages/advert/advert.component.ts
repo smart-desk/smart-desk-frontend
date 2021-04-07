@@ -21,6 +21,7 @@ export class AdvertComponent implements OnInit, AfterViewInit {
     advert: Advert;
     user: User;
     similarAdverts: GetAdvertsResponseDto;
+    showContacts = false;
     private destroy$ = new Subject();
 
     @ViewChild('params', { read: ViewContainerRef })

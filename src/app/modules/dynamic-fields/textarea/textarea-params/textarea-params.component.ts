@@ -8,7 +8,7 @@ import { OperationState } from '../../../../shared/models/operation-state.enum';
 import { TextareaParamsDto } from '../dto/textarea-params.dto';
 
 @Component({
-    selector: 'app-textarea',
+    selector: 'app-textarea-params',
     templateUrl: './textarea-params.component.html',
     styleUrls: ['./textarea-params.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,

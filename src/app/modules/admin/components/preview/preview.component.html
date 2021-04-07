@@ -2,7 +2,9 @@
     <nz-tab nzTitle="Форма">
         <button nz-button nzType="dashed" (click)="addField()"><i nz-icon nzType="plus"></i> Add field</button>
         <nz-divider></nz-divider>
-        <ng-container #fields></ng-container>
+        <div cdkDropList (cdkDropListDropped)="drop($event)">
+            <ng-container #fields></ng-container>
+        </div>
     </nz-tab>
     <nz-tab nzTitle="Объявление">
         <p>Пример объявления</p>

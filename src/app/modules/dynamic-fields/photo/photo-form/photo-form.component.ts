@@ -6,7 +6,7 @@ import { UploadImageResponse } from '../../../../shared/models/image/upload-imag
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 
 @Component({
-    selector: 'app-textarea',
+    selector: 'app-photo',
     templateUrl: './photo-form.component.html',
     styleUrls: ['./photo-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
