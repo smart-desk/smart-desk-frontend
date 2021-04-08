@@ -1,8 +1,17 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+    ViewContainerRef,
+} from '@angular/core';
 import { EMPTY, of, Subject } from 'rxjs';
-import { switchMap, take, takeUntil, tap } from 'rxjs/operators';
+import { catchError, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import { AdvertDataService, AdvertService, UserService } from '../../../../shared/services';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Advert } from '../../../../shared/models/advert/advert.entity';
 import { SectionType } from '../../../../shared/models/section/section.entity';
 import { FieldEntity } from '../../../../shared/models/field/field.entity';
@@ -10,6 +19,8 @@ import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/
 import { User } from '../../../../shared/models/user/user.entity';
 import { GetAdvertsResponseDto } from '../../../../shared/models/advert/advert.dto';
 import { BookmarksStoreService } from '../../../../shared/services/bookmarks/bookmarks-store.service';
+import { LoginService } from '../../../../shared/services/login/login.service';
+import { PhoneService } from '../../../../shared/services/phone/phone.service';
 
 @Component({
     selector: 'app-advert',
@@ -17,11 +28,13 @@ import { BookmarksStoreService } from '../../../../shared/services/bookmarks/boo
     styleUrls: ['./advert.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdvertComponent implements OnInit, AfterViewInit {
+export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
     advert: Advert;
     user: User;
+    currentUser: User;
     similarAdverts: GetAdvertsResponseDto;
-    showContacts = false;
+    isShowContacts = false;
+    userPhone: string;
     private destroy$ = new Subject();
 
     @ViewChild('params', { read: ViewContainerRef })
@@ -40,7 +53,10 @@ export class AdvertComponent implements OnInit, AfterViewInit {
         private dynamicFieldsService: DynamicFieldsService,
         private userService: UserService,
         private advertDataService: AdvertDataService,
-        private bookmarksStoreService: BookmarksStoreService
+        private bookmarksStoreService: BookmarksStoreService,
+        private router: Router,
+        private loginService: LoginService,
+        private phoneService: PhoneService
     ) {}
 
     ngOnInit(): void {
@@ -52,6 +68,12 @@ export class AdvertComponent implements OnInit, AfterViewInit {
             .subscribe(res => {
                 this.similarAdverts = res;
                 this.cd.detectChanges();
+            });
+        this.userService
+            .getCurrentUser()
+            .pipe()
+            .subscribe(currentUser => {
+                this.currentUser = currentUser;
             });
     }
 
@@ -65,11 +87,14 @@ export class AdvertComponent implements OnInit, AfterViewInit {
                 }),
                 switchMap(advert => {
                     return advert.userId ? this.userService.getUser(advert.userId) : of(null);
+                }),
+                tap(user => (this.user = user)),
+                switchMap(user => {
+                    return this.phoneService.getUserPhone(user.id);
                 })
             )
-            .subscribe(user => {
-                this.user = user;
-
+            .subscribe(phone => {
+                this.userPhone = phone;
                 this.addParamsFields();
                 this.addPriceFields();
                 this.addLocationFields();
@@ -77,6 +102,12 @@ export class AdvertComponent implements OnInit, AfterViewInit {
                 this.cd.detectChanges();
             });
     }
+
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
+
     addBookmarkEvent(advertId: string) {
         this.bookmarksStoreService.createBookmark(advertId);
     }
@@ -85,11 +116,42 @@ export class AdvertComponent implements OnInit, AfterViewInit {
         this.bookmarksStoreService.deleteBookmark(advertId);
     }
 
+    showContact(): any {
+        if (!this.currentUser) {
+            this.loginUser();
+        } else {
+            this.isShowContacts = true;
+            this.cd.detectChanges();
+        }
+    }
+
     private addParamsFields(): void {
         const section = this.advert.sections.find(s => s.type === SectionType.PARAMS);
         if (section) {
             this.populateContainerWithFields(this.paramsContainerRef, section.fields);
         }
+    }
+
+    private loginUser(): void {
+        this.loginService
+            .openModal()
+            .pipe(
+                takeUntil(this.destroy$),
+                tap((currentUser: User) => (this.currentUser = currentUser)),
+                switchMap(() => this.phoneService.getUserPhone(this.user.id)),
+                catchError(e => {
+                    console.error(e);
+                    return of();
+                })
+            )
+            .subscribe((phone: string) => {
+                this.userPhone = phone;
+                if (this.currentUser) {
+                    this.loginService.updateLoginInfo();
+                    this.isShowContacts = true;
+                    this.cd.detectChanges();
+                }
+            });
     }
 
     private addPriceFields(): void {

@@ -26,6 +26,6 @@
         <h2>Местоположение</h2>
         <ng-container #location></ng-container>
     </div>
-    <div class="contacts" *ngIf="showContacts">{{ user?.phone }}</div>
-    <button class="contacts" nz-button (click)="showContacts = !showContacts" *ngIf="!showContacts">contacts</button>
+    <div class="contacts" *ngIf="isShowContacts">{{ userPhone }}</div>
+    <button class="contacts" nz-button (click)="showContact()" *ngIf="!isShowContacts">contacts</button>
 </ng-template>
