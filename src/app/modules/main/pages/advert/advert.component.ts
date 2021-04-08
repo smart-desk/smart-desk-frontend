@@ -10,6 +10,7 @@ import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/
 import { User } from '../../../../shared/models/user/user.entity';
 import { GetAdvertsResponseDto } from '../../../../shared/models/advert/advert.dto';
 import { BookmarksStoreService } from '../../../../shared/services/bookmarks/bookmarks-store.service';
+import { ChatModalService } from '../../../../shared/modules/chat/services/chat-modal.service';
 
 @Component({
     selector: 'app-advert',
@@ -39,7 +40,8 @@ export class AdvertComponent implements OnInit, AfterViewInit {
         private dynamicFieldsService: DynamicFieldsService,
         private userService: UserService,
         private advertDataService: AdvertDataService,
-        private bookmarksStoreService: BookmarksStoreService
+        private bookmarksStoreService: BookmarksStoreService,
+        private chatModalService: ChatModalService
     ) {}
 
     ngOnInit(): void {
@@ -82,6 +84,10 @@ export class AdvertComponent implements OnInit, AfterViewInit {
 
     removeBookmarkEvent(advertId: string) {
         this.bookmarksStoreService.deleteBookmark(advertId);
+    }
+
+    openChat(): void {
+        this.chatModalService.open();
     }
 
     private addParamsFields(): void {

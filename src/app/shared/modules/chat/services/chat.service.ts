@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { Observable } from 'rxjs';
-import { CreateChatMessageDto } from '../../models/chat/create-chat-message.dto';
-import { ChatId } from '../../models/chat/chat-id';
+import { CreateChatMessageDto } from '../../../models/chat/create-chat-message.dto';
+import { ChatId } from '../../../models/chat/chat-id';
 import { HttpClient } from '@angular/common/http';
-import { CreateChatDto } from '../../models/chat/create-chat.dto';
-import { Chat } from '../../models/chat/chat.entity';
-import { ChatMessage } from '../../models/chat/chat-message.entity';
+import { CreateChatDto } from '../../../models/chat/create-chat.dto';
+import { Chat } from '../../../models/chat/chat.entity';
+import { ChatMessage } from '../../../models/chat/chat-message.entity';
 
 enum ChatEvent {
     GET_MESSAGES = 'getMessages',

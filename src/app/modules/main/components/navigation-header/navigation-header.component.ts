@@ -4,8 +4,7 @@ import { LoginService } from '../../../../shared/services/login/login.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { User } from '../../../../shared/models/user/user.entity';
-import { NzModalService } from 'ng-zorro-antd/modal';
-import { ChatComponent } from '../chat/chat.component';
+import { ChatModalService } from '../../../../shared/modules/chat/services/chat-modal.service';
 
 @Component({
     selector: 'app-navigation-header',
@@ -22,7 +21,7 @@ export class NavigationHeaderComponent implements OnInit, OnDestroy {
         private authService: AuthService,
         private loginService: LoginService,
         private cd: ChangeDetectorRef,
-        private modalService: NzModalService
+        private chatModalService: ChatModalService
     ) {}
 
     ngOnInit() {
@@ -39,9 +38,6 @@ export class NavigationHeaderComponent implements OnInit, OnDestroy {
     }
 
     openChat(): void {
-        this.modalService.create({
-            nzContent: ChatComponent,
-            nzFooter: null,
-        });
+        this.chatModalService.open();
     }
 }

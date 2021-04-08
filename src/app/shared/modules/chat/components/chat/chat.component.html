@@ -1,0 +1,10 @@
+<!-- todo reuse layout component -->
+<nz-row [nzGutter]="16">
+    <nz-col [nzSpan]="6">
+        <app-chat-list [chats]="chats"></app-chat-list>
+    </nz-col>
+    <nz-col [nzSpan]="18">
+        Сообщения
+    </nz-col>
+</nz-row>
+<button nz-button (click)="sendMessage()">Отправить рандомный текст</button>

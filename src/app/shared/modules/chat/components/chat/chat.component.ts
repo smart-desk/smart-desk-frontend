@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { ChatService } from '../../../../shared/services/chat/chat.service';
-import { Chat } from '../../../../shared/models/chat/chat.entity';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChatService } from '../../services/chat.service';
+import { Chat } from '../../../../models/chat/chat.entity';
 import { takeUntil, tap } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { ChatMessage } from '../../../../shared/models/chat/chat-message.entity';
-import { CreateChatMessageDto } from '../../../../shared/models/chat/create-chat-message.dto';
+import { ChatMessage } from '../../../../models/chat/chat-message.entity';
+import { CreateChatMessageDto } from '../../../../models/chat/create-chat-message.dto';
 
 @Component({
     selector: 'app-chat',
@@ -15,6 +15,10 @@ import { CreateChatMessageDto } from '../../../../shared/models/chat/create-chat
 export class ChatComponent implements OnInit, OnDestroy {
     chats: Chat[];
     messages: ChatMessage[];
+    activeChat: Chat;
+
+    @Input()
+    advertId: string;
 
     private destroy$ = new Subject();
 
@@ -55,6 +59,7 @@ export class ChatComponent implements OnInit, OnDestroy {
             .pipe(tap(chats => chats.forEach(chat => this.chatService.joinChat({ chatId: chat.id }))))
             .subscribe(chats => {
                 this.chats = chats;
+                this.activeChat = this.chats.find(c => c.advertId === this.advertId);
                 this.cdr.detectChanges();
             });
     }
