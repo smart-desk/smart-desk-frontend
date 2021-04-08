@@ -28,8 +28,8 @@ export class ChatService {
         return this.socket.fromEvent(ChatEvent.NEW_MESSAGE);
     }
 
-    getMessages(message: ChatId) {
-        this.socket.emit(ChatEvent.GET_MESSAGES, message);
+    getMessages(chatId: ChatId) {
+        this.socket.emit(ChatEvent.GET_MESSAGES, chatId);
     }
     get getMessages$(): Observable<ChatMessage[]> {
         return this.socket.fromEvent(ChatEvent.GET_MESSAGES);

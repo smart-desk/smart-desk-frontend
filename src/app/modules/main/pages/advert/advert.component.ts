@@ -87,7 +87,7 @@ export class AdvertComponent implements OnInit, AfterViewInit {
     }
 
     openChat(): void {
-        this.chatModalService.open();
+        this.chatModalService.open(this.advert.id);
     }
 
     private addParamsFields(): void {

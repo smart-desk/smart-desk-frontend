@@ -6,11 +6,14 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 export class ChatModalService {
     constructor(private modalService: NzModalService) {}
 
-    open(): void {
+    open(advertId?: string): void {
         this.modalService.create({
             nzContent: ChatComponent,
             nzFooter: null,
             nzWidth: '80%',
+            nzComponentParams: {
+                advertId,
+            },
         });
     }
 }

@@ -59,14 +59,21 @@ export class ChatComponent implements OnInit, OnDestroy {
             .pipe(tap(chats => chats.forEach(chat => this.chatService.joinChat({ chatId: chat.id }))))
             .subscribe(chats => {
                 this.chats = chats;
-                this.activeChat = this.chats.find(c => c.advertId === this.advertId);
+                this.activeChat = this.chats.find(c => c.advertId === this.advertId) || this.chats[0];
                 this.cdr.detectChanges();
             });
     }
 
-    sendMessage(): void {
+    changeActiveChat(chat: Chat): void {
+        this.activeChat = chat;
+        this.messages = [];
+        this.chatService.getMessages({ chatId: this.activeChat.id });
+        this.cdr.detectChanges();
+    }
+
+    sendMessage(content: string): void {
         const message = new CreateChatMessageDto();
-        message.content = Math.random().toString();
+        message.content = content;
         message.chatId = this.chats[0].id;
 
         this.chatService.sendMessage(message);

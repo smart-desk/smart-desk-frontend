@@ -5,10 +5,15 @@ import { ChatListComponent } from './components/chat-list/chat-list.component';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { ChatModalService } from './services/chat-modal.service';
+import { NzListModule } from 'ng-zorro-antd/list';
+import { ChatMessagesComponent } from './components/chat-messages/chat-messages.component';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     providers: [ChatModalService],
-    declarations: [ChatComponent, ChatListComponent],
-    imports: [CommonModule, NzButtonModule, NzGridModule],
+    declarations: [ChatComponent, ChatListComponent, ChatMessagesComponent],
+    imports: [CommonModule, NzButtonModule, NzGridModule, NzListModule, NzInputModule, NzIconModule, FormsModule],
 })
 export class ChatModule {}
