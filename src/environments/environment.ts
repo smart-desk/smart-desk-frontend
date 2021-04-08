@@ -8,7 +8,7 @@ export const environment = {
     retry: 0,
     googleClientId: '725037573536-orc0fpben8knki7kfqrl3d734t173t3c.apps.googleusercontent.com',
     googleMapsApiKey: 'AIzaSyAdJwILlE4YP3369mGiGjqbpwRRnKxRDYI',
-    webSocketUrl: 'http://localhost:3001/',
+    webSocketUrl: 'http://localhost:3001',
 };
 
 /*

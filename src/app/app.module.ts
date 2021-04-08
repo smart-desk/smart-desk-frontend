@@ -13,7 +13,9 @@ import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 
 // todo move to service
 const token = localStorage.getItem('token');
-const options: any = {};
+const options: any = {
+    path: '/socket',
+};
 if (token) {
     options.transportOptions = {
         polling: {
