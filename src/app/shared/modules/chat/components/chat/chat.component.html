@@ -1,0 +1,9 @@
+<!-- todo reuse layout component -->
+<nz-row [nzGutter]="16">
+    <nz-col [nzSpan]="8">
+        <app-chat-list [chats]="chats"></app-chat-list>
+    </nz-col>
+    <nz-col [nzSpan]="16">
+        <app-chat-messages [messages]="messages" (newMessage)="sendMessage($event)"></app-chat-messages>
+    </nz-col>
+</nz-row>

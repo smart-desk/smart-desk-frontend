@@ -5,6 +5,12 @@
             <nz-col>
                 <nz-row [nzJustify]="'space-between'">
                     <nz-col>
+                        <a *ngIf="user" (click)="openChat()" nz-button nzType="link">
+                            Сообщения
+                            <i nz-icon nzType="message" nzTheme="outline"></i>
+                        </a>
+                    </nz-col>
+                    <nz-col>
                         <a *ngIf="isAdmin" routerLink="/admin" nz-button nzType="link">Управление сайтом</a>
                     </nz-col>
                     <nz-col>

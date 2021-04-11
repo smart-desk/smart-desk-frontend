@@ -19,6 +19,7 @@ import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/
 import { User } from '../../../../shared/models/user/user.entity';
 import { GetAdvertsResponseDto } from '../../../../shared/models/advert/advert.dto';
 import { BookmarksStoreService } from '../../../../shared/services/bookmarks/bookmarks-store.service';
+import { ChatModalService } from '../../../../shared/modules/chat/services/chat-modal.service';
 import { LoginService } from '../../../../shared/services/login/login.service';
 import { PhoneService } from '../../../../shared/services/phone/phone.service';
 
@@ -54,6 +55,7 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
         private userService: UserService,
         private advertDataService: AdvertDataService,
         private bookmarksStoreService: BookmarksStoreService,
+        private chatModalService: ChatModalService,
         private loginService: LoginService,
         private phoneService: PhoneService
     ) {}
@@ -105,6 +107,10 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
 
     removeBookmarkEvent(advertId: string) {
         this.bookmarksStoreService.deleteBookmark(advertId);
+    }
+
+    openChat(): void {
+        this.chatModalService.open(this.advert.id);
     }
 
     showPhone(): void {

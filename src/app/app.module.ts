@@ -8,10 +8,24 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { environment } from 'src/environments/environment';
-import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 
-export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
+// todo move to service
+const token = localStorage.getItem('token');
+const options: any = {
+    path: '/socket',
+};
+if (token) {
+    options.transportOptions = {
+        polling: {
+            extraHeaders: {
+                Authorization: `Bearer ${token}`,
+            },
+        },
+    };
+}
+const socketIoConfig: SocketIoConfig = { url: environment.webSocketUrl, options };
 
 registerLocaleData(en);
 
@@ -31,7 +45,14 @@ const socialProviders = {
 @NgModule({
     providers: [{ provide: NZ_I18N, useValue: en_US }, socialProviders],
     declarations: [AppComponent],
-    imports: [BrowserModule, AppRoutingModule, SharedModule, BrowserAnimationsModule, SocialLoginModule, NgxMaskModule.forRoot()],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        SharedModule,
+        BrowserAnimationsModule,
+        SocialLoginModule,
+        SocketIoModule.forRoot(socketIoConfig),
+    ],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

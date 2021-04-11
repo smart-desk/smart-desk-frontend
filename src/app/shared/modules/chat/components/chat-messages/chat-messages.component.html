@@ -1,0 +1,16 @@
+<p *ngFor="let message of messages">
+    {{ message?.content }}
+</p>
+<div class="input-group">
+    <input
+        class="input-group__input"
+        type="text"
+        nz-input
+        placeholder="Напишите сообщение..."
+        [(ngModel)]="currentMessage"
+        ngModelOptions="{ standalone: true }"
+    />
+    <button nz-button nzType="primary" nzShape="round" (click)="sendMessage()">
+        <i nz-icon nzType="send" nzTheme="outline"></i>
+    </button>
+</div>

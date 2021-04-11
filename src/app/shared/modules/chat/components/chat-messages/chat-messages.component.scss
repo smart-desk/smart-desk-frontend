@@ -1,0 +1,11 @@
+@import 'src/assets/styles/variables';
+
+.input-group {
+    display: flex;
+    position: sticky;
+    bottom: 0;
+
+    &__input {
+        margin-right: $base-unit * 2;
+    }
+}

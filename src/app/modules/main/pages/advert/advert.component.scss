@@ -18,6 +18,7 @@
 }
 
 .contacts {
-    font-size: $base-unit * 3;
-    height: auto;
+    &__phone {
+        margin-bottom: $base-unit * 2;
+    }
 }

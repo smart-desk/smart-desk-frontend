@@ -1,0 +1,17 @@
+<p *ngIf="!chats?.length">
+    Пока что у вас нет переписок
+</p>
+
+<nz-list>
+    <nz-list-item *ngFor="let chat of chats">
+        <!-- todo info about the user and advert-->
+        <nz-list-item-meta
+            nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+            nzDescription="Тут должно быть последнее сообщение из этого чата"
+        >
+            <nz-list-item-meta-title>
+                <a>Ссылка на объяву</a>
+            </nz-list-item-meta-title>
+        </nz-list-item-meta>
+    </nz-list-item>
+</nz-list>
