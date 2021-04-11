@@ -8,7 +8,7 @@ import {
     ViewChild,
     ViewContainerRef,
 } from '@angular/core';
-import { EMPTY, of, Subject } from 'rxjs';
+import { EMPTY, Observable, of, Subject } from 'rxjs';
 import { catchError, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import { AdvertDataService, AdvertService, UserService } from '../../../../shared/services';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -33,7 +33,7 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
     user: User;
     currentUser: User;
     similarAdverts: GetAdvertsResponseDto;
-    isShowContacts = false;
+    isShowPhone = false;
     userPhone: string;
     private destroy$ = new Subject();
 
@@ -71,7 +71,7 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
             });
         this.userService
             .getCurrentUser()
-            .pipe()
+            .pipe(takeUntil(this.destroy$))
             .subscribe(currentUser => {
                 this.currentUser = currentUser;
             });
@@ -87,18 +87,13 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
                 }),
                 switchMap(advert => {
                     return advert.userId ? this.userService.getUser(advert.userId) : of(null);
-                }),
-                tap(user => (this.user = user)),
-                switchMap(user => {
-                    return this.phoneService.getUserPhone(user.id);
                 })
             )
-            .subscribe(phone => {
-                this.userPhone = phone;
+            .subscribe(user => {
+                this.user = user;
                 this.addParamsFields();
                 this.addPriceFields();
                 this.addLocationFields();
-
                 this.cd.detectChanges();
             });
     }
@@ -116,13 +111,17 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
         this.bookmarksStoreService.deleteBookmark(advertId);
     }
 
-    showContact(): any {
-        if (!this.currentUser) {
-            this.loginUser();
-        } else {
-            this.isShowContacts = true;
+    showPhone(): void {
+        const showPhoneReq: Observable<string> = !this.currentUser ? this.openModalLogin() : this.phoneService.getUserPhone(this.user.id);
+
+        showPhoneReq.pipe(takeUntil(this.destroy$)).subscribe((phone: string) => {
+            this.userPhone = phone;
+            if (this.currentUser) {
+                this.loginService.updateLoginInfo();
+            }
+            this.isShowPhone = true;
             this.cd.detectChanges();
-        }
+        });
     }
 
     private addParamsFields(): void {
@@ -132,26 +131,11 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    private loginUser(): void {
-        this.loginService
-            .openModal()
-            .pipe(
-                takeUntil(this.destroy$),
-                tap((currentUser: User) => (this.currentUser = currentUser)),
-                switchMap(() => this.phoneService.getUserPhone(this.user.id)),
-                catchError(e => {
-                    console.error(e);
-                    return of();
-                })
-            )
-            .subscribe((phone: string) => {
-                this.userPhone = phone;
-                if (this.currentUser) {
-                    this.loginService.updateLoginInfo();
-                    this.isShowContacts = true;
-                    this.cd.detectChanges();
-                }
-            });
+    private openModalLogin(): Observable<string> {
+        return this.loginService.openModal().pipe(
+            tap((currentUser: User) => (this.currentUser = currentUser)),
+            switchMap(() => this.phoneService.getUserPhone(this.user.id))
+        );
     }
 
     private addPriceFields(): void {
