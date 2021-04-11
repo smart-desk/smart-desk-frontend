@@ -9,9 +9,9 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import { EMPTY, Observable, of, Subject } from 'rxjs';
-import { catchError, switchMap, take, takeUntil, tap } from 'rxjs/operators';
+import { switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import { AdvertDataService, AdvertService, UserService } from '../../../../shared/services';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Advert } from '../../../../shared/models/advert/advert.entity';
 import { SectionType } from '../../../../shared/models/section/section.entity';
 import { FieldEntity } from '../../../../shared/models/field/field.entity';
@@ -54,7 +54,6 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
         private userService: UserService,
         private advertDataService: AdvertDataService,
         private bookmarksStoreService: BookmarksStoreService,
-        private router: Router,
         private loginService: LoginService,
         private phoneService: PhoneService
     ) {}
@@ -69,12 +68,9 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.similarAdverts = res;
                 this.cd.detectChanges();
             });
-        this.userService
-            .getCurrentUser()
-            .pipe(takeUntil(this.destroy$))
-            .subscribe(currentUser => {
-                this.currentUser = currentUser;
-            });
+        this.loginService.login$.pipe(takeUntil(this.destroy$)).subscribe(currentUser => {
+            this.currentUser = currentUser;
+        });
     }
 
     ngAfterViewInit(): void {
@@ -116,9 +112,6 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
 
         showPhoneReq.pipe(takeUntil(this.destroy$)).subscribe((phone: string) => {
             this.userPhone = phone;
-            if (this.currentUser) {
-                this.loginService.updateLoginInfo();
-            }
             this.isShowPhone = true;
             this.cd.detectChanges();
         });
