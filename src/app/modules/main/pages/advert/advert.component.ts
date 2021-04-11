@@ -1,5 +1,14 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
-import { EMPTY, of, Subject } from 'rxjs';
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+    ViewContainerRef,
+} from '@angular/core';
+import { EMPTY, Observable, of, Subject } from 'rxjs';
 import { switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import { AdvertDataService, AdvertService, UserService } from '../../../../shared/services';
 import { ActivatedRoute, ParamMap } from '@angular/router';
@@ -11,6 +20,8 @@ import { User } from '../../../../shared/models/user/user.entity';
 import { GetAdvertsResponseDto } from '../../../../shared/models/advert/advert.dto';
 import { BookmarksStoreService } from '../../../../shared/services/bookmarks/bookmarks-store.service';
 import { ChatModalService } from '../../../../shared/modules/chat/services/chat-modal.service';
+import { LoginService } from '../../../../shared/services/login/login.service';
+import { PhoneService } from '../../../../shared/services/phone/phone.service';
 
 @Component({
     selector: 'app-advert',
@@ -18,10 +29,13 @@ import { ChatModalService } from '../../../../shared/modules/chat/services/chat-
     styleUrls: ['./advert.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdvertComponent implements OnInit, AfterViewInit {
+export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
     advert: Advert;
     user: User;
+    currentUser: User;
     similarAdverts: GetAdvertsResponseDto;
+    isShowPhone = false;
+    userPhone: string;
     private destroy$ = new Subject();
 
     @ViewChild('params', { read: ViewContainerRef })
@@ -41,7 +55,9 @@ export class AdvertComponent implements OnInit, AfterViewInit {
         private userService: UserService,
         private advertDataService: AdvertDataService,
         private bookmarksStoreService: BookmarksStoreService,
-        private chatModalService: ChatModalService
+        private chatModalService: ChatModalService,
+        private loginService: LoginService,
+        private phoneService: PhoneService
     ) {}
 
     ngOnInit(): void {
@@ -54,6 +70,9 @@ export class AdvertComponent implements OnInit, AfterViewInit {
                 this.similarAdverts = res;
                 this.cd.detectChanges();
             });
+        this.loginService.login$.pipe(takeUntil(this.destroy$)).subscribe(currentUser => {
+            this.currentUser = currentUser;
+        });
     }
 
     ngAfterViewInit(): void {
@@ -70,14 +89,18 @@ export class AdvertComponent implements OnInit, AfterViewInit {
             )
             .subscribe(user => {
                 this.user = user;
-
                 this.addParamsFields();
                 this.addPriceFields();
                 this.addLocationFields();
-
                 this.cd.detectChanges();
             });
     }
+
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
+
     addBookmarkEvent(advertId: string) {
         this.bookmarksStoreService.createBookmark(advertId);
     }
@@ -90,11 +113,28 @@ export class AdvertComponent implements OnInit, AfterViewInit {
         this.chatModalService.open(this.advert.id);
     }
 
+    showPhone(): void {
+        const showPhoneReq: Observable<string> = !this.currentUser ? this.openModalLogin() : this.phoneService.getUserPhone(this.user.id);
+
+        showPhoneReq.pipe(takeUntil(this.destroy$)).subscribe((phone: string) => {
+            this.userPhone = phone;
+            this.isShowPhone = true;
+            this.cd.detectChanges();
+        });
+    }
+
     private addParamsFields(): void {
         const section = this.advert.sections.find(s => s.type === SectionType.PARAMS);
         if (section) {
             this.populateContainerWithFields(this.paramsContainerRef, section.fields);
         }
+    }
+
+    private openModalLogin(): Observable<string> {
+        return this.loginService.openModal().pipe(
+            tap((currentUser: User) => (this.currentUser = currentUser)),
+            switchMap(() => this.phoneService.getUserPhone(this.user.id))
+        );
     }
 
     private addPriceFields(): void {

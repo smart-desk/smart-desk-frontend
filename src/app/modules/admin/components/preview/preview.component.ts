@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    ComponentFactoryResolver,
+    Input,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+    ViewContainerRef,
+} from '@angular/core';
 import { FieldService, ModelService } from '../../../../shared/services';
 import { Section } from '../../../../shared/models/section/section.entity';
 import { FieldEntity } from '../../../../shared/models/field/field.entity';
@@ -8,6 +17,9 @@ import { PreviewToolsComponent } from '../preview-tools/preview-tools.component'
 import { FieldSettingsComponent } from '../field-settings/field-settings.component';
 import { AddFieldComponent } from '../add-field/add-field.component';
 import { Model } from '../../../../shared/models/model/model.entity';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { forkJoin, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 const DRAWER_BASE_CONFIG = {
     nzWidth: 400,
@@ -20,14 +32,14 @@ const DRAWER_BASE_CONFIG = {
     styleUrls: ['./preview.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PreviewComponent implements OnInit {
+export class PreviewComponent implements OnInit, OnDestroy {
     @Input()
     modelId: string;
-
     @ViewChild('fields', { read: ViewContainerRef })
     private fieldsFormContainerRef: ViewContainerRef;
 
     private model: Model;
+    private destroy$ = new Subject();
 
     constructor(
         private modelService: ModelService,
@@ -41,10 +53,12 @@ export class PreviewComponent implements OnInit {
         this.update();
     }
 
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
+
     update(): void {
-        if (this.fieldsFormContainerRef) {
-            this.fieldsFormContainerRef.clear();
-        }
         this.modelService.getModel(this.modelId).subscribe(model => {
             this.model = model;
             this.populateFormWithInputs(this.model.sections);
@@ -68,9 +82,22 @@ export class PreviewComponent implements OnInit {
         });
     }
 
+    drop(event: CdkDragDrop<string[]>) {
+        const paramSection = this.model.sections.find(section => section.type === 'params');
+        moveItemInArray(paramSection.fields, event.previousIndex, event.currentIndex);
+        paramSection.fields.forEach((field: FieldEntity, index: number) => (field.order = index + 1));
+        const responseObservables = paramSection.fields.map(field => this.fieldService.updateField(field.id, field));
+        this.populateFormWithInputs(this.model.sections);
+        forkJoin(responseObservables).pipe(takeUntil(this.destroy$)).subscribe();
+    }
+
     private populateFormWithInputs(sections: Section[]): void {
+        if (this.fieldsFormContainerRef) {
+            this.fieldsFormContainerRef.clear();
+        }
         sections.forEach(section => {
             if (section.fields) {
+                section.fields.sort((a: FieldEntity, b: FieldEntity) => a.order - b.order);
                 section.fields.forEach(field => {
                     this.resolveFieldComponent(field);
                 });

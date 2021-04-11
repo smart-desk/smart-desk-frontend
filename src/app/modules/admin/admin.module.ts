@@ -39,6 +39,7 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { RolesFormComponent } from './components/roles-form/roles-form.component';
 import { AdvertsBlockedComponent } from './pages/adverts-blocked/adverts-blocked.component';
 import { AdvertsPendingComponent } from './pages/adverts-pending/adverts-pending.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 const components = [
     PreviewComponent,
@@ -89,6 +90,7 @@ const pages = [
         NzAvatarModule,
         NzModalModule,
         NzCheckboxModule,
+        DragDropModule,
     ],
     declarations: [...pages, ...components],
 })
