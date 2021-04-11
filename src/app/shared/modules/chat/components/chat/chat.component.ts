@@ -23,21 +23,16 @@ export class ChatComponent implements OnInit, OnDestroy {
     private destroy$ = new Subject();
 
     constructor(private chatService: ChatService, private cdr: ChangeDetectorRef) {
-        this.chatService.joinChat$
-            .pipe(
-                takeUntil(this.destroy$),
-                tap(res => this.chatService.getMessages({ chatId: res.chatId }))
-            )
-            .subscribe(res => {
-                console.log('Connected to chat', res);
-            });
+        this.chatService.joinChat$.pipe(takeUntil(this.destroy$)).subscribe(res => {
+            console.log('Connected to chat', res);
+        });
 
         this.chatService.leaveChat$.pipe(takeUntil(this.destroy$)).subscribe(res => {
             console.log('Left chat', res);
         });
 
         this.chatService.newMessage$.pipe(takeUntil(this.destroy$)).subscribe(message => {
-            this.messages.push(message);
+            this.messages = [...this.messages, message];
             this.cdr.detectChanges();
         });
 
@@ -60,6 +55,7 @@ export class ChatComponent implements OnInit, OnDestroy {
             .subscribe(chats => {
                 this.chats = chats;
                 this.activeChat = this.chats.find(c => c.advertId === this.advertId) || this.chats[0];
+                this.chatService.getMessages({ chatId: this.activeChat.id });
                 this.cdr.detectChanges();
             });
     }
