@@ -54,13 +54,16 @@ export class ChatComponent implements OnInit, OnDestroy {
             .pipe(tap(chats => chats.forEach(chat => this.chatService.joinChat({ chatId: chat.id }))))
             .subscribe(chats => {
                 this.chats = chats;
-                this.activeChat = this.chats.find(c => c.advertId === this.advertId) || this.chats[0];
+                this.activeChat = this.chats.find(c => c.advertId === this.advertId);
                 this.chatService.getMessages({ chatId: this.activeChat.id });
                 this.cdr.detectChanges();
             });
     }
 
     changeActiveChat(chat: Chat): void {
+        if (chat === this.activeChat) {
+            return;
+        }
         this.activeChat = chat;
         this.messages = [];
         this.chatService.getMessages({ chatId: this.activeChat.id });
@@ -70,8 +73,16 @@ export class ChatComponent implements OnInit, OnDestroy {
     sendMessage(content: string): void {
         const message = new CreateChatMessageDto();
         message.content = content;
-        message.chatId = this.chats[0].id;
 
+        // this.chatService.createChat({ advertId: this.advertId }).subscribe(chat => {
+        //     this.chats = [...this.chats, chat];
+        //     this.activeChat = chat;
+        //     message.chatId = chat.id;
+        //     this.chatService.sendMessage(message);
+        // });
+        // return;
+
+        message.chatId = this.activeChat.id;
         this.chatService.sendMessage(message);
     }
 }

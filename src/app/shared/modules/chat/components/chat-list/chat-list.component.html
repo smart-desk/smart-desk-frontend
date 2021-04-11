@@ -3,14 +3,14 @@
 </p>
 
 <nz-list>
-    <nz-list-item *ngFor="let chat of chats">
+    <nz-list-item *ngFor="let chat of chats" (click)="changeChat.emit(chat)">
         <!-- todo info about the user and advert-->
         <nz-list-item-meta
             nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
             nzDescription="Тут должно быть последнее сообщение из этого чата"
         >
             <nz-list-item-meta-title>
-                <a>Ссылка на объяву</a>
+                <a>{{ chat.user2 }}</a>
             </nz-list-item-meta-title>
         </nz-list-item-meta>
     </nz-list-item>

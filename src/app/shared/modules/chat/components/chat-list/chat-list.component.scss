@@ -1,0 +1,7 @@
+@import 'src/assets/styles/variables';
+
+:host {
+    .ant-list-item {
+        padding: $base-unit;
+    }
+}

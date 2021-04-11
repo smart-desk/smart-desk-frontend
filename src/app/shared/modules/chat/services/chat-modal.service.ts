@@ -14,6 +14,9 @@ export class ChatModalService {
             nzComponentParams: {
                 advertId,
             },
+            nzBodyStyle: {
+                padding: '0',
+            },
         });
     }
 }

@@ -1,9 +1,15 @@
 @import 'src/assets/styles/variables';
+.chat_messages {
+    position: relative;
+    min-height: $base-unit * 70;
+}
 
 .input-group {
     display: flex;
-    position: sticky;
+    position: absolute;
     bottom: 0;
+    width: 100%;
+    padding: $base-unit * 2;
 
     &__input {
         margin-right: $base-unit * 2;
