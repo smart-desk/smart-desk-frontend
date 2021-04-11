@@ -18,4 +18,10 @@ export class PhoneService {
             responseType: 'text',
         });
     }
+
+    getUserPhone(id: string): Observable<string> {
+        return this.http.get(`/users/${id}/phone`, {
+            responseType: 'text',
+        });
+    }
 }
