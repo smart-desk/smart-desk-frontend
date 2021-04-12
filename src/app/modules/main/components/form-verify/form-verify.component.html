@@ -1,12 +1,12 @@
 <form nz-form [formGroup]="formConfirm">
     <nz-button-group>
-        <button *ngIf="!confirmMode" nz-button nzType="primary" (click)="requestVerification()" nzSize="middle">
-            Send code
+        <button *ngIf="!confirmMode" nz-button nzGhost nzType="primary" (click)="requestVerification()" nzSize="middle">
+            Отправить код
         </button>
     </nz-button-group>
     <nz-form-item *ngIf="confirmMode">
         <nz-form-label for="code">
-            enter the code from sms
+            Введите код из смс
         </nz-form-label>
         <nz-form-control [nzSpan]="14">
             <input type="number" placeholder="Code" nz-input name="code" id="code" formControlName="code" />
