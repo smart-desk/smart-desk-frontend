@@ -9,8 +9,8 @@ import { ProfileFormEnum } from '../../pages/profile/profile-form.enum';
 })
 export class FormVerifyComponent implements OnInit {
     @Input() confirmMode = false;
-    @Output() submitFormEvent$ = new EventEmitter<{ formType: ProfileFormEnum; formValue: void }>();
-    @Output() requestVerificationEvent$ = new EventEmitter<void>();
+    @Output() submitFormEvent = new EventEmitter<{ formType: ProfileFormEnum; formValue: void }>();
+    @Output() requestVerificationEvent = new EventEmitter<void>();
     formConfirm: FormGroup;
 
     constructor(private fb: FormBuilder) {}
@@ -20,10 +20,10 @@ export class FormVerifyComponent implements OnInit {
     }
 
     submitForm(): void {
-        this.submitFormEvent$.emit({ formType: ProfileFormEnum.VERIFY, formValue: this.formConfirm.value });
+        this.submitFormEvent.emit({ formType: ProfileFormEnum.VERIFY, formValue: this.formConfirm.value });
     }
 
     requestVerification(): void {
-        this.requestVerificationEvent$.emit();
+        this.requestVerificationEvent.emit();
     }
 }
