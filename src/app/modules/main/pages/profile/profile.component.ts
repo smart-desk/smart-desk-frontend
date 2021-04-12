@@ -70,12 +70,12 @@ export class ProfileComponent implements OnInit {
             nzOnOk: () => modalRef.getContentComponent().submit(),
         });
 
-        modalRef.getContentComponent().submitEvent$.subscribe(data => this.submitForm(data));
+        modalRef.getContentComponent().submitEvent.subscribe(data => this.submitForm(data));
     }
 
     openFormConfirmPhone() {
         const modalRef = this.modalService.create<FormVerifyComponent>({
-            nzTitle: 'Confirm',
+            nzTitle: 'Подтверждение',
             nzContent: FormVerifyComponent,
             nzComponentParams: { confirmMode: false },
             nzOnOk: () => modalRef.getContentComponent().submitForm(),
@@ -88,10 +88,10 @@ export class ProfileComponent implements OnInit {
 
     openFormChangePhone() {
         const modalRef = this.modalService.create<FormPhoneComponent>({
-            nzTitle: 'Phone',
+            nzTitle: 'Телефон',
             nzContent: FormPhoneComponent,
             nzComponentParams: { profile: this.profile },
-            nzOnOk: () => modalRef.getContentComponent().submit(),
+            nzOnOk: () => modalRef.getContentComponent().submit(() => this.cd.detectChanges()),
         });
 
         modalRef.getContentComponent().submitFormEvent$.subscribe(data => this.submitForm(data));
