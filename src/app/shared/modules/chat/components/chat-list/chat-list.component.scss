@@ -3,5 +3,11 @@
 :host {
     .ant-list-item {
         padding: $base-unit;
+        background: $grey-light-bg;
+        cursor: pointer;
+
+        &.active {
+            background: none;
+        }
     }
 }
