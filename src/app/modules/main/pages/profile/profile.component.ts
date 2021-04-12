@@ -64,7 +64,7 @@ export class ProfileComponent implements OnInit {
     }
 
     openFormName() {
-        const modalRef = this.modalService.create({
+        const modalRef = this.modalService.create<FormNameComponent>({
             nzContent: FormNameComponent,
             nzComponentParams: { profile: this.profile },
             nzOnOk: () => modalRef.getContentComponent().submit(),
@@ -74,20 +74,20 @@ export class ProfileComponent implements OnInit {
     }
 
     openFormConfirmPhone() {
-        const modalRef = this.modalService.create({
+        const modalRef = this.modalService.create<FormVerifyComponent>({
             nzTitle: 'Confirm',
             nzContent: FormVerifyComponent,
             nzComponentParams: { confirmMode: false },
-            nzOnOk: () => modalRef.getContentComponent().submit(),
+            nzOnOk: () => modalRef.getContentComponent().submitForm(),
         });
 
-        modalRef.getContentComponent().requestVerificationEvent$.subscribe(() => this.requestVerification(modalRef));
+        modalRef.getContentComponent().requestVerificationEvent.subscribe(() => this.requestVerification(modalRef));
 
-        modalRef.getContentComponent().submitFormEvent$.subscribe(() => this.checkVerification(modalRef));
+        modalRef.getContentComponent().submitFormEvent.subscribe(() => this.checkVerification(modalRef));
     }
 
     openFormChangePhone() {
-        const modalRef = this.modalService.create({
+        const modalRef = this.modalService.create<FormPhoneComponent>({
             nzTitle: 'Phone',
             nzContent: FormPhoneComponent,
             nzComponentParams: { profile: this.profile },
@@ -106,8 +106,6 @@ export class ProfileComponent implements OnInit {
         const verificationDto = new PhoneVerifyCheckDto();
         verificationDto.requestId = this.verificationRequestId;
         verificationDto.code = modal.getContentComponent().formConfirm.get('code').value.toString();
-        this.phoneService.checkVerification(verificationDto).subscribe(() => {
-            modal.getContentComponent().confirmMode = false;
-        });
+        this.phoneService.checkVerification(verificationDto).subscribe();
     }
 }
