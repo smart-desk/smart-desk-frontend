@@ -4,15 +4,16 @@ import { Observable } from 'rxjs';
 import { v4 } from 'uuid';
 import { CreateChatMessageDto } from '../../../models/chat/create-chat-message.dto';
 import { ChatId } from '../../../models/chat/chat-id';
-import { HttpClient } from '@angular/common/http';
 import { CreateChatDto } from '../../../models/chat/create-chat.dto';
 import { Chat } from '../../../models/chat/chat.entity';
 import { ChatMessage } from '../../../models/chat/chat-message.entity';
 import { filter, map, take } from 'rxjs/operators';
 
-enum ChatEvent {
+export enum ChatEvent {
     GET_CHATS = 'getChats',
     CREATE_CHAT = 'createChat',
+    INIT_CHATS = 'initChats',
+    NEW_CHAT = 'newChat',
     GET_MESSAGES = 'getMessages',
     NEW_MESSAGE = 'newMessage',
     JOIN_CHAT = 'joinChat',
@@ -23,7 +24,15 @@ enum ChatEvent {
     providedIn: 'root',
 })
 export class ChatService {
-    constructor(private socket: Socket, private http: HttpClient) {}
+    constructor(private socket: Socket) {}
+
+    get connection$(): Observable<any> {
+        return this.socket.fromEvent('connect');
+    }
+
+    initChats(): void {
+        this.socket.emit(ChatEvent.INIT_CHATS, {});
+    }
 
     sendMessage(message: CreateChatMessageDto) {
         this.socket.emit(ChatEvent.NEW_MESSAGE, message);
@@ -44,6 +53,9 @@ export class ChatService {
     }
     get joinChat$(): Observable<ChatId> {
         return this.socket.fromEvent(ChatEvent.JOIN_CHAT);
+    }
+    get newChat$(): Observable<Chat> {
+        return this.socket.fromEvent(ChatEvent.NEW_CHAT);
     }
 
     leaveChat(data: ChatId): void {
