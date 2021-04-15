@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
+import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { Observable, of, Subject } from 'rxjs';
 import { ChatService } from '../../services/chat.service';
 import { Chat } from '../../../../models/chat/chat.entity';
-import { takeUntil, tap } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { ChatMessage } from '../../../../models/chat/chat-message.entity';
 import { CreateChatMessageDto } from '../../../../models/chat/create-chat-message.dto';
 
@@ -12,9 +12,9 @@ import { CreateChatMessageDto } from '../../../../models/chat/create-chat-messag
     styleUrls: ['./chat.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChatComponent implements OnInit, OnDestroy {
+export class ChatComponent implements OnDestroy {
     chats: Chat[];
-    messages: ChatMessage[];
+    messages: ChatMessage[] = [];
     activeChat: Chat;
 
     @Input()
@@ -23,6 +23,16 @@ export class ChatComponent implements OnInit, OnDestroy {
     private destroy$ = new Subject();
 
     constructor(private chatService: ChatService, private cdr: ChangeDetectorRef) {
+        this.chatService.connection$.pipe(takeUntil(this.destroy$)).subscribe(res => {
+            this.chatService.initChats();
+            this.getInitialChats();
+        });
+
+        this.chatService.newChat$.pipe(takeUntil(this.destroy$)).subscribe(chat => {
+            this.chats = [chat, ...this.chats];
+            this.cdr.detectChanges();
+        });
+
         this.chatService.joinChat$.pipe(takeUntil(this.destroy$)).subscribe(res => {
             console.log('Connected to chat', res);
         });
@@ -48,19 +58,10 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.destroy$.complete();
     }
 
-    ngOnInit(): void {
-        this.chatService
-            .getProfileChats()
-            .pipe(tap(chats => chats.forEach(chat => this.chatService.joinChat({ chatId: chat.id }))))
-            .subscribe(chats => {
-                this.chats = chats;
-                this.activeChat = this.chats.find(c => c.advertId === this.advertId) || this.chats[0];
-                this.chatService.getMessages({ chatId: this.activeChat.id });
-                this.cdr.detectChanges();
-            });
-    }
-
     changeActiveChat(chat: Chat): void {
+        if (chat === this.activeChat) {
+            return;
+        }
         this.activeChat = chat;
         this.messages = [];
         this.chatService.getMessages({ chatId: this.activeChat.id });
@@ -70,8 +71,57 @@ export class ChatComponent implements OnInit, OnDestroy {
     sendMessage(content: string): void {
         const message = new CreateChatMessageDto();
         message.content = content;
-        message.chatId = this.chats[0].id;
 
+        if (!this.activeChat.id) {
+            this.chatService.createChat({ advertId: this.advertId }).subscribe(chat => {
+                this.activeChat = chat;
+                message.chatId = chat.id;
+                this.chatService.sendMessage(message);
+            });
+            return;
+        }
+
+        message.chatId = this.activeChat.id;
         this.chatService.sendMessage(message);
+    }
+
+    private getInitialChats(): void {
+        this.chatService
+            .getProfileChats()
+            .pipe(
+                tap(chats => chats.forEach(chat => this.chatService.joinChat({ chatId: chat.id }))),
+                switchMap(chats => {
+                    if (!this.advertId) {
+                        this.activeChat = chats[0];
+                        return of(chats);
+                    }
+
+                    this.activeChat = chats.find(c => c.advertId === this.advertId);
+                    if (this.activeChat) {
+                        return of(chats);
+                    }
+
+                    return this.createEmptyChat(this.advertId).pipe(
+                        map(emptyChat => {
+                            this.activeChat = emptyChat;
+                            chats.unshift(emptyChat);
+                            return chats;
+                        })
+                    );
+                })
+            )
+            .subscribe(chats => {
+                this.chats = chats;
+                if (this.activeChat && this.activeChat.id) {
+                    this.chatService.getMessages({ chatId: this.activeChat.id });
+                }
+                this.cdr.detectChanges();
+            });
+    }
+
+    private createEmptyChat(advertId: string): Observable<Chat> {
+        const chat = new Chat();
+        chat.advertId = advertId;
+        return of(chat);
     }
 }
