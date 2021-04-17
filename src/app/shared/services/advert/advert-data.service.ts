@@ -94,11 +94,9 @@ export class AdvertDataService {
     }
 
     private directionToGlobalSearchPage() {
-        if (this.options.search) {
-            this.router.navigate(['app-search'], { queryParams: { search: this.options.search } });
-        } else {
-            this.router.navigate(['app-search']);
-        }
-        this.loadAdverts(null, { search: this.options.search } as GetAdvertsDto);
+        const navigateProm = this.options.search
+            ? this.router.navigate(['app-search'], { queryParams: { search: this.options.search } })
+            : this.router.navigate(['app-search']);
+        navigateProm.then(() => this.loadAdverts(null, { search: this.options.search } as GetAdvertsDto));
     }
 }
