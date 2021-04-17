@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
 import { Chat } from '../../../../models/chat/chat.entity';
 
 @Component({
@@ -7,11 +7,13 @@ import { Chat } from '../../../../models/chat/chat.entity';
     styleUrls: ['./chat-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChatListComponent implements OnInit {
+export class ChatListComponent {
     @Input()
     chats: Chat[];
 
-    constructor() {}
+    @Input()
+    activeChat: Chat;
 
-    ngOnInit(): void {}
+    @Output()
+    changeChat = new EventEmitter<Chat>();
 }

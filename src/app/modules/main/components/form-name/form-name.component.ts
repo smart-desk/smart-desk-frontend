@@ -21,7 +21,7 @@ import { User } from '../../../../shared/models/user/user.entity';
 })
 export class FormNameComponent implements OnInit {
     @Input() profile: User;
-    @Output() submitEvent$ = new EventEmitter<{ formType: ProfileFormEnum; value: User }>();
+    @Output() submitEvent = new EventEmitter<{ formType: ProfileFormEnum; value: User }>();
     file: NzUploadFile[] = [];
     formName: FormGroup;
 
@@ -50,7 +50,7 @@ export class FormNameComponent implements OnInit {
 
     submit(): void {
         this.setValue();
-        this.submitEvent$.emit({ formType: ProfileFormEnum.NAME, value: this.profile });
+        this.submitEvent.emit({ formType: ProfileFormEnum.NAME, value: this.profile });
     }
 
     setValue(): void {
