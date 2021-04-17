@@ -85,7 +85,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
             if (!event.globalSearch) {
                 return this.advertDataService.search(event.searchPhrase.trim());
             }
-            if (event.globalSearch || event.searchPhrase === '') {
+            if (event.globalSearch) {
                 return this.advertDataService.globalSearch(event.searchPhrase.trim());
             }
         }
