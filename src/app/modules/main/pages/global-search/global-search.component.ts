@@ -34,12 +34,6 @@ export class GlobalSearchComponent implements OnInit, OnDestroy {
             this.advertsResponse = this.updateAdvertsWithBookmarks(res, this.bookmarksStoreService.bookmarks$.getValue());
             this.cd.detectChanges();
         });
-
-        const options = this.advertDataService.parseQueryParams(this.route.snapshot.queryParamMap);
-        this.filters = options.filters;
-
-        this.advertDataService.loadAdverts(null, options);
-        this.cd.detectChanges();
     }
 
     ngOnDestroy() {
