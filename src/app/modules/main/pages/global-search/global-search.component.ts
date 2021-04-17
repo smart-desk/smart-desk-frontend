@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
-import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../shared/models/advert/advert.dto';
+import { GetAdvertsResponseDto } from '../../../../shared/models/advert/advert.dto';
 import { Filters } from '../../../../shared/modules/dynamic-fields/models/filter';
 import { AdvertDataService } from '../../../../shared/services';
 import { Bookmark } from '../../../../shared/models/bookmarks/bookmark.entity';
@@ -35,7 +35,7 @@ export class GlobalSearchComponent implements OnInit, OnDestroy {
             this.cd.detectChanges();
         });
 
-        const options = this.parseQueryParams(this.route.snapshot.queryParamMap);
+        const options = this.advertDataService.parseQueryParams(this.route.snapshot.queryParamMap);
         this.filters = options.filters;
 
         this.advertDataService.loadAdverts(null, options);
@@ -57,33 +57,6 @@ export class GlobalSearchComponent implements OnInit, OnDestroy {
 
     removeBookmarkEvent(advertId: string) {
         this.bookmarksStoreService.deleteBookmark(advertId);
-    }
-
-    private parseQueryParams(queryParams: ParamMap): GetAdvertsDto {
-        const resultParams = new GetAdvertsDto();
-
-        if (queryParams.has('page')) {
-            try {
-                resultParams.page = parseInt(queryParams.get('page'), 10);
-            } catch (e) {}
-        }
-
-        if (queryParams.has('limit')) {
-            try {
-                resultParams.limit = parseInt(queryParams.get('limit'), 10);
-            } catch (e) {}
-        }
-
-        if (queryParams.has('search')) {
-            resultParams.search = queryParams.get('search');
-        }
-
-        if (queryParams.has('filters')) {
-            try {
-                resultParams.filters = JSON.parse(queryParams.get('filters'));
-            } catch (e) {}
-        }
-        return resultParams;
     }
 
     private updateAdvertsWithBookmarks(advertsResponse: GetAdvertsResponseDto, bookmarks?: Bookmark[]): GetAdvertsResponseDto {

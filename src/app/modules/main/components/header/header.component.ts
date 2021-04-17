@@ -102,7 +102,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.user ? this.router.navigate(['/adverts/create']) : this.loginService.openLoginModal();
     }
 
-    navigateToMain() {
+    navigateToMain(): void {
         this.selectedCategoriesIds = [];
         this.router.navigate(['/']);
     }

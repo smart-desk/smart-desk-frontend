@@ -41,7 +41,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
                 takeUntil(this.destroy$),
                 switchMap(paramMap => {
                     const categoryId = paramMap.get('category_id');
-                    const options = this.parseQueryParams(this.route.snapshot.queryParamMap);
+                    const options = this.advertDataService.parseQueryParams(this.route.snapshot.queryParamMap);
                     this.filters = options.filters;
 
                     this.advertDataService.loadAdverts(categoryId, options);
@@ -96,32 +96,5 @@ export class CategoryComponent implements OnInit, OnDestroy {
             });
         }
         return cloneDeep(advertsResponse);
-    }
-
-    private parseQueryParams(queryParams: ParamMap): GetAdvertsDto {
-        const resultParams = new GetAdvertsDto();
-
-        if (queryParams.has('page')) {
-            try {
-                resultParams.page = parseInt(queryParams.get('page'), 10);
-            } catch (e) {}
-        }
-
-        if (queryParams.has('limit')) {
-            try {
-                resultParams.limit = parseInt(queryParams.get('limit'), 10);
-            } catch (e) {}
-        }
-
-        if (queryParams.has('search')) {
-            resultParams.search = queryParams.get('search');
-        }
-
-        if (queryParams.has('filters')) {
-            try {
-                resultParams.filters = JSON.parse(queryParams.get('filters'));
-            } catch (e) {}
-        }
-        return resultParams;
     }
 }
