@@ -44,7 +44,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
                     const options = this.parseQueryParams(this.route.snapshot.queryParamMap);
                     this.filters = options.filters;
 
-                    this.advertDataService.loadAdvertsForCategory(categoryId, options);
+                    this.advertDataService.loadAdverts(categoryId, options);
                     return this.categoryService.getCategory(categoryId);
                 }),
                 switchMap(category => {

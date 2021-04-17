@@ -80,9 +80,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.router.navigate([`/${selectedCat}`]);
     }
 
-    search(searchPhrase: string): void {
-        if (searchPhrase.trim()) {
-            this.advertDataService.search(searchPhrase.trim());
+    search(event: { searchPhrase: string; globalSearch: boolean }): void {
+        if (event.searchPhrase.trim() || event.searchPhrase === '') {
+            if (!event.globalSearch) {
+                return this.advertDataService.search(event.searchPhrase.trim());
+            }
+            if (event.globalSearch || event.searchPhrase === '') {
+                return this.advertDataService.globalSearch(event.searchPhrase.trim());
+            }
         }
     }
 
@@ -95,5 +100,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     navigateToAdvertCreate(): void {
         this.user ? this.router.navigate(['/adverts/create']) : this.loginService.openLoginModal();
+    }
+
+    navigateToMain() {
+        this.selectedCategoriesIds = [];
+        this.router.navigate(['/']);
     }
 }

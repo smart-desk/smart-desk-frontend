@@ -9,18 +9,19 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, Change
 export class SearchComponent {
     @Input() searchPhrase: string;
     @Input() placeholder: string;
-    @Output() searchChange = new EventEmitter<string>();
+    @Input() globalSearch: boolean;
+    @Output() searchChange = new EventEmitter<{ searchPhrase: string; globalSearch: boolean }>();
 
     constructor(private cd: ChangeDetectorRef) {}
 
-    search() {
-        this.searchChange.emit(this.searchPhrase);
+    search(): void {
+        this.searchChange.emit({ searchPhrase: this.searchPhrase, globalSearch: this.globalSearch });
         this.cd.detectChanges();
     }
 
-    reset() {
+    reset(): void {
         this.searchPhrase = '';
-        this.searchChange.emit(this.searchPhrase);
+        this.searchChange.emit({ searchPhrase: this.searchPhrase, globalSearch: this.globalSearch });
         this.cd.detectChanges();
     }
 }

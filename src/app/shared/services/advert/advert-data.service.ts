@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { AdvertService } from './advert.service';
 import { GetAdvertsDto, GetAdvertsResponseDto } from '../../models/advert/advert.dto';
 import { Filters } from '../../modules/dynamic-fields/models/filter';
@@ -13,9 +13,9 @@ export class AdvertDataService {
     private categoryId: string;
     private options: GetAdvertsDto = new GetAdvertsDto();
 
-    constructor(private router: Router, private advertService: AdvertService) {}
+    constructor(private route: ActivatedRoute, private router: Router, private advertService: AdvertService) {}
 
-    loadAdvertsForCategory(categoryId: string, options?: GetAdvertsDto): void {
+    loadAdverts(categoryId: string, options?: GetAdvertsDto): void {
         this.categoryId = categoryId;
         this.options = options ? options : this.options;
         this.requestAdverts();
@@ -28,10 +28,15 @@ export class AdvertDataService {
         this.updateQueryParams();
     }
 
-    search(phrase: string) {
+    search(phrase: string): void {
         this.options.search = phrase;
         this.requestAdverts();
         this.updateQueryParams();
+    }
+
+    globalSearch(phrase: string): void {
+        this.options.search = phrase;
+        this.directionToGlobalSearchPage();
     }
 
     applyFilters(filters: Filters): void {
@@ -41,9 +46,11 @@ export class AdvertDataService {
     }
 
     private requestAdverts(): void {
-        this.advertService.getAdvertsForCategory(this.categoryId, this.options).subscribe(res => {
-            this.adverts$.next(res);
-        });
+        const req = this.categoryId
+            ? this.advertService.getAdvertsForCategory(this.categoryId, this.options)
+            : this.advertService.getAdverts(this.options);
+
+        req.subscribe(res => this.adverts$.next(res));
     }
 
     private updateQueryParams(): void {
@@ -57,5 +64,14 @@ export class AdvertDataService {
         };
 
         this.router.navigate([], extras).then();
+    }
+
+    private directionToGlobalSearchPage() {
+        if (this.options.search) {
+            this.router.navigate(['app-search'], { queryParams: { search: this.options.search } });
+        } else {
+            this.router.navigate(['app-search']);
+        }
+        this.loadAdverts(null, { search: this.options.search } as GetAdvertsDto);
     }
 }

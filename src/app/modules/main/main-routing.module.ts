@@ -13,6 +13,7 @@ import { MyAdvertsComponent } from './pages/my-adverts/my-adverts.component';
 import { UserComponent } from './pages/user/user.component';
 import { ForbiddenComponent } from '../../shared/pages/forbidden/forbidden.component';
 import { UnauthorizedComponent } from '../../shared/pages/unauthorized/unauthorized.component';
+import { GlobalSearchComponent } from './pages/global-search/global-search.component';
 
 const routes: Routes = [
     {
@@ -48,6 +49,10 @@ const routes: Routes = [
                         component: MyAdvertsComponent,
                     },
                 ],
+            },
+            {
+                path: 'app-search',
+                component: GlobalSearchComponent,
             },
             {
                 path: 'user/:id',

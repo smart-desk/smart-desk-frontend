@@ -1,6 +1,6 @@
 <div class="container header">
     <div class="logo">
-        <a routerLink="/">Smart Desk</a>
+        <a (click)="navigateToMain()">Smart Desk</a>
     </div>
     <div class="category">
         <nz-cascader
@@ -18,7 +18,12 @@
         </nz-cascader>
     </div>
     <div class="search-box">
-        <app-search [searchPhrase]="searchPhrase" [placeholder]="getSearchPlaceholder()" (searchChange)="search($event)"></app-search>
+        <app-search
+            [globalSearch]="!selectedCategoriesIds[0]"
+            [searchPhrase]="searchPhrase"
+            [placeholder]="getSearchPlaceholder()"
+            (searchChange)="search($event)"
+        ></app-search>
     </div>
     <div>
         <button (click)="navigateToAdvertCreate()" nz-button nzType="primary" nzShape="round">
