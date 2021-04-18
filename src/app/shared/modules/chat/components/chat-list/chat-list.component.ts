@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
-import { Chat } from '../../../../models/chat/chat.entity';
+import { Chat } from '../../models/chat.entity';
+import { User } from '../../../../models/user/user.entity';
 
 @Component({
     selector: 'app-chat-list',
@@ -9,6 +10,9 @@ import { Chat } from '../../../../models/chat/chat.entity';
 })
 export class ChatListComponent {
     @Input()
+    currentUser: User;
+
+    @Input()
     chats: Chat[];
 
     @Input()
@@ -16,4 +20,16 @@ export class ChatListComponent {
 
     @Output()
     changeChat = new EventEmitter<Chat>();
+
+    // todo add pipe to avoid performance issues
+    getConversationalist(chat: Chat): User {
+        if (!this.currentUser) {
+            return;
+        }
+
+        if (chat.user1 === this.currentUser.id) {
+            return chat.user2Data;
+        }
+        return chat.user1Data;
+    }
 }

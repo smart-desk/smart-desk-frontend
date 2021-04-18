@@ -1,13 +1,19 @@
-<p *ngIf="!chats?.length">
-    Пока что у вас нет переписок
-</p>
-
-<nz-list>
-    <nz-list-item *ngFor="let chat of chats" (click)="changeChat.emit(chat)" [class]="{ active: chat === activeChat }">
-        <nz-list-item-meta nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" [nzDescription]="chat.advertId">
-            <nz-list-item-meta-title>
-                <a>{{ chat.user2 }}</a>
-            </nz-list-item-meta-title>
-        </nz-list-item-meta>
-    </nz-list-item>
-</nz-list>
+<div class="chat_list">
+    <nz-list>
+        <nz-list-item
+            class="chat_list__item"
+            *ngFor="let chat of chats"
+            (click)="changeChat.emit(chat)"
+            [class]="{ active: chat === activeChat }"
+        >
+            <nz-list-item-meta [nzAvatar]="avatar" [nzDescription]="chat.advertData?.title">
+                <ng-template #avatar>
+                    <nz-avatar [nzSrc]="getConversationalist(chat)?.avatar" nzIcon="user"></nz-avatar>
+                </ng-template>
+                <nz-list-item-meta-title>
+                    <a>{{ getConversationalist(chat)?.firstName }}</a>
+                </nz-list-item-meta-title>
+            </nz-list-item-meta>
+        </nz-list-item>
+    </nz-list>
+</div>

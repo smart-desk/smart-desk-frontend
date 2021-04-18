@@ -110,7 +110,7 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     openChat(): void {
-        this.chatModalService.open(this.advert.id);
+        this.chatModalService.open(this.advert, this.user);
     }
 
     showPhone(): void {

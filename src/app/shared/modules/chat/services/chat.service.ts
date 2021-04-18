@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { Observable } from 'rxjs';
 import { v4 } from 'uuid';
-import { CreateChatMessageDto } from '../../../models/chat/create-chat-message.dto';
-import { ChatId } from '../../../models/chat/chat-id';
-import { CreateChatDto } from '../../../models/chat/create-chat.dto';
-import { Chat } from '../../../models/chat/chat.entity';
-import { ChatMessage } from '../../../models/chat/chat-message.entity';
+import { CreateChatMessageDto } from '../models/create-chat-message.dto';
+import { ChatId } from '../models/chat-id';
+import { CreateChatDto } from '../models/create-chat.dto';
+import { Chat } from '../models/chat.entity';
+import { ChatMessage } from '../models/chat-message.entity';
 import { filter, map, take } from 'rxjs/operators';
 
 export enum ChatEvent {

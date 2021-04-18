@@ -1,13 +1,18 @@
 @import 'src/assets/styles/variables';
 
-:host {
-    .ant-list-item {
-        padding: $base-unit;
-        background: $grey-light-bg;
+.chat_list {
+    height: 100%;
+    background: $grey-light-bg;
+    overflow: auto;
+
+    &__item {
+        border-right: 1px solid $grey-light;
         cursor: pointer;
+        padding-left: $base-unit * 2;
 
         &.active {
-            background: none;
+            border-right: none;
+            background: white;
         }
     }
 }
