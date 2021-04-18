@@ -1,18 +1,27 @@
 <div class="chat_messages">
-    <p *ngFor="let message of messages">
-        {{ message?.content }}
-    </p>
-    <div class="input-group">
+    <div class="chat_messages__list">
+        <nz-list nzItemLayout="horizontal" [nzSplit]="false">
+            <nz-list-item *ngFor="let message of messages">
+                <nz-list-item-meta [nzAvatar]="avatar" [nzDescription]="getUserName(message.userId)">
+                    <ng-template #avatar>
+                        <nz-avatar [nzSrc]="getUserAvatar(message.userId)" nzIcon="user"></nz-avatar>
+                    </ng-template>
+                    <nz-list-item-meta-title>{{ message.content }}</nz-list-item-meta-title>
+                </nz-list-item-meta>
+            </nz-list-item>
+        </nz-list>
+    </div>
+    <form (ngSubmit)="sendMessage()" class="chat_messages__input-group">
         <input
-            class="input-group__input"
+            class="chat_messages__input"
             type="text"
             nz-input
             placeholder="Напишите сообщение..."
             [(ngModel)]="currentMessage"
-            ngModelOptions="{ standalone: true }"
+            [ngModelOptions]="{ standalone: true }"
         />
         <button nz-button nzType="primary" nzShape="round" (click)="sendMessage()">
             <i nz-icon nzType="send" nzTheme="outline"></i>
         </button>
-    </div>
+    </form>
 </div>

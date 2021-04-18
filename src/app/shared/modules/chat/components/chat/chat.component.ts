@@ -1,10 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
-import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { map, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import { Observable, of, Subject } from 'rxjs';
 import { ChatService } from '../../services/chat.service';
-import { Chat } from '../../../../models/chat/chat.entity';
-import { ChatMessage } from '../../../../models/chat/chat-message.entity';
-import { CreateChatMessageDto } from '../../../../models/chat/create-chat-message.dto';
+import { Chat } from '../../models/chat.entity';
+import { ChatMessage } from '../../models/chat-message.entity';
+import { CreateChatMessageDto } from '../../models/create-chat-message.dto';
+import { User } from '../../../../models/user/user.entity';
+import { Advert } from '../../../../models/advert/advert.entity';
+import { UserService } from '../../../../services';
 
 @Component({
     selector: 'app-chat',
@@ -12,17 +15,21 @@ import { CreateChatMessageDto } from '../../../../models/chat/create-chat-messag
     styleUrls: ['./chat.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChatComponent implements OnDestroy {
+export class ChatComponent implements OnDestroy, OnInit {
     chats: Chat[];
     messages: ChatMessage[] = [];
     activeChat: Chat;
+    currentUser: User;
 
     @Input()
-    advertId: string;
+    advert: Advert;
+
+    @Input()
+    user: User;
 
     private destroy$ = new Subject();
 
-    constructor(private chatService: ChatService, private cdr: ChangeDetectorRef) {
+    constructor(private chatService: ChatService, private cdr: ChangeDetectorRef, private userService: UserService) {
         this.chatService.connection$.pipe(takeUntil(this.destroy$)).subscribe(res => {
             this.chatService.initChats();
             this.getInitialChats();
@@ -52,8 +59,18 @@ export class ChatComponent implements OnDestroy {
         });
     }
 
+    ngOnInit() {
+        this.userService
+            .getCurrentUser()
+            .pipe(take(1))
+            .subscribe(user => {
+                this.currentUser = user;
+                this.cdr.detectChanges();
+            });
+    }
+
     ngOnDestroy(): void {
-        this.chats.forEach(chat => this.chatService.leaveChat({ chatId: chat.id }));
+        // todo this.chats.forEach(chat => this.chatService.leaveChat({ chatId: chat.id }));
         this.destroy$.next();
         this.destroy$.complete();
     }
@@ -73,7 +90,7 @@ export class ChatComponent implements OnDestroy {
         message.content = content;
 
         if (!this.activeChat.id) {
-            this.chatService.createChat({ advertId: this.advertId }).subscribe(chat => {
+            this.chatService.createChat({ advertId: this.advert.id }).subscribe(chat => {
                 this.activeChat = chat;
                 message.chatId = chat.id;
                 this.chatService.sendMessage(message);
@@ -91,17 +108,17 @@ export class ChatComponent implements OnDestroy {
             .pipe(
                 tap(chats => chats.forEach(chat => this.chatService.joinChat({ chatId: chat.id }))),
                 switchMap(chats => {
-                    if (!this.advertId) {
+                    if (!this.advert) {
                         this.activeChat = chats[0];
                         return of(chats);
                     }
 
-                    this.activeChat = chats.find(c => c.advertId === this.advertId);
+                    this.activeChat = chats.find(c => c.advertId === this.advert.id);
                     if (this.activeChat) {
                         return of(chats);
                     }
 
-                    return this.createEmptyChat(this.advertId).pipe(
+                    return this.createEmptyChat().pipe(
                         map(emptyChat => {
                             this.activeChat = emptyChat;
                             chats.unshift(emptyChat);
@@ -119,9 +136,11 @@ export class ChatComponent implements OnDestroy {
             });
     }
 
-    private createEmptyChat(advertId: string): Observable<Chat> {
+    private createEmptyChat(): Observable<Chat> {
         const chat = new Chat();
-        chat.advertId = advertId;
+        chat.advertId = this.advert.id;
+        chat.advertData = this.advert;
+        chat.user2Data = this.user;
         return of(chat);
     }
 }

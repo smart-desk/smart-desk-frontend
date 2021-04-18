@@ -9,3 +9,10 @@
     margin: 0 auto;
     padding: 0 $base-unit * 2;
 }
+
+.chat-body {
+    top: 32px;
+    bottom: 0;
+    height: calc(100vh - 64px);
+    padding-bottom: 0;
+}
