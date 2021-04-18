@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { map, switchMap, take, takeUntil, tap } from 'rxjs/operators';
-import { Observable, of, Subject } from 'rxjs';
+import { filter, map, take, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { ChatService } from '../../services/chat.service';
 import { Chat } from '../../models/chat.entity';
 import { ChatMessage } from '../../models/chat-message.entity';
@@ -30,22 +30,17 @@ export class ChatComponent implements OnDestroy, OnInit {
     private destroy$ = new Subject();
 
     constructor(private chatService: ChatService, private cdr: ChangeDetectorRef, private userService: UserService) {
-        this.chatService.connection$.pipe(takeUntil(this.destroy$)).subscribe(res => {
-            this.chatService.initChats();
-            this.getInitialChats();
-        });
+        this.chatService.connection$
+            .pipe(
+                takeUntil(this.destroy$),
+                filter(res => res)
+            )
+            .subscribe(res => this.getInitialChats());
 
         this.chatService.newChat$.pipe(takeUntil(this.destroy$)).subscribe(chat => {
+            this.chatService.joinChat({ chatId: chat.id });
             this.chats = [chat, ...this.chats];
             this.cdr.detectChanges();
-        });
-
-        this.chatService.joinChat$.pipe(takeUntil(this.destroy$)).subscribe(res => {
-            console.log('Connected to chat', res);
-        });
-
-        this.chatService.leaveChat$.pipe(takeUntil(this.destroy$)).subscribe(res => {
-            console.log('Left chat', res);
         });
 
         this.chatService.newMessage$.pipe(takeUntil(this.destroy$)).subscribe(message => {
@@ -70,7 +65,6 @@ export class ChatComponent implements OnDestroy, OnInit {
     }
 
     ngOnDestroy(): void {
-        // todo this.chats.forEach(chat => this.chatService.leaveChat({ chatId: chat.id }));
         this.destroy$.next();
         this.destroy$.complete();
     }
@@ -106,25 +100,21 @@ export class ChatComponent implements OnDestroy, OnInit {
         this.chatService
             .getProfileChats()
             .pipe(
-                tap(chats => chats.forEach(chat => this.chatService.joinChat({ chatId: chat.id }))),
-                switchMap(chats => {
+                map(chats => {
                     if (!this.advert) {
                         this.activeChat = chats[0];
-                        return of(chats);
+                        return chats;
                     }
 
                     this.activeChat = chats.find(c => c.advertId === this.advert.id);
                     if (this.activeChat) {
-                        return of(chats);
+                        return chats;
                     }
 
-                    return this.createEmptyChat().pipe(
-                        map(emptyChat => {
-                            this.activeChat = emptyChat;
-                            chats.unshift(emptyChat);
-                            return chats;
-                        })
-                    );
+                    const emptyChat = this.createEmptyChat();
+                    this.activeChat = emptyChat;
+                    chats.unshift(emptyChat);
+                    return chats;
                 })
             )
             .subscribe(chats => {
@@ -136,11 +126,14 @@ export class ChatComponent implements OnDestroy, OnInit {
             });
     }
 
-    private createEmptyChat(): Observable<Chat> {
+    private createEmptyChat(): Chat {
         const chat = new Chat();
         chat.advertId = this.advert.id;
         chat.advertData = this.advert;
+        chat.user1 = this.currentUser.id;
+        chat.user1Data = this.currentUser;
+        chat.user2 = this.user.id;
         chat.user2Data = this.user;
-        return of(chat);
+        return chat;
     }
 }

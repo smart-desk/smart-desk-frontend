@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { v4 } from 'uuid';
 import { CreateChatMessageDto } from '../models/create-chat-message.dto';
 import { ChatId } from '../models/chat-id';
@@ -20,18 +20,29 @@ export enum ChatEvent {
     LEAVE_CHAT = 'leaveChat',
 }
 
+interface ChatGatewayResponse {
+    id: string;
+    data: any;
+}
+
 @Injectable({
     providedIn: 'root',
 })
 export class ChatService {
-    constructor(private socket: Socket) {}
+    private connection = new BehaviorSubject<boolean>(false);
 
-    get connection$(): Observable<any> {
-        return this.socket.fromEvent('connect');
+    constructor(private socket: Socket) {
+        this.socket
+            .fromEvent('connect')
+            .pipe(take(1))
+            .subscribe(() => {
+                this.connection.next(true);
+                this.socket.emit(ChatEvent.INIT_CHATS, {});
+            });
     }
 
-    initChats(): void {
-        this.socket.emit(ChatEvent.INIT_CHATS, {});
+    get connection$(): Observable<any> {
+        return this.connection.asObservable();
     }
 
     sendMessage(message: CreateChatMessageDto) {
@@ -51,36 +62,25 @@ export class ChatService {
     joinChat(data: ChatId): void {
         this.socket.emit(ChatEvent.JOIN_CHAT, data);
     }
-    get joinChat$(): Observable<ChatId> {
-        return this.socket.fromEvent(ChatEvent.JOIN_CHAT);
-    }
+
     get newChat$(): Observable<Chat> {
         return this.socket.fromEvent(ChatEvent.NEW_CHAT);
     }
 
-    leaveChat(data: ChatId): void {
-        this.socket.emit(ChatEvent.LEAVE_CHAT, data);
-    }
-    get leaveChat$(): Observable<ChatId> {
-        return this.socket.fromEvent(ChatEvent.LEAVE_CHAT);
-    }
-
-    // todo any
     createChat(body: CreateChatDto): Observable<Chat> {
         const id = v4();
         this.socket.emit(ChatEvent.CREATE_CHAT, { id, ...body });
-        return this.socket.fromEvent<any>(ChatEvent.CREATE_CHAT).pipe(
+        return this.socket.fromEvent<ChatGatewayResponse>(ChatEvent.CREATE_CHAT).pipe(
             filter(res => res.id === id),
             map(res => res.data),
             take(1)
         );
     }
 
-    // todo any
     getProfileChats(): Observable<Chat[]> {
         const id = v4();
         this.socket.emit(ChatEvent.GET_CHATS, { id });
-        return this.socket.fromEvent<any>(ChatEvent.GET_CHATS).pipe(
+        return this.socket.fromEvent<ChatGatewayResponse>(ChatEvent.GET_CHATS).pipe(
             filter(res => res.id === id),
             map(res => res.data),
             take(1)
