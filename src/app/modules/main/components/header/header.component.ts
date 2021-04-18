@@ -105,7 +105,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
 
     private navigateToGlobalSearchPage(searchPhrase) {
-        this.router.navigate(['search'], { queryParams: { search: searchPhrase } });
-        // .then(() => this.advertDataService.loadAdverts(null, { search: searchPhrase } as GetAdvertsDto));
+        this.router.navigate(['/', 'search'], { queryParams: { search: searchPhrase } });
     }
 }

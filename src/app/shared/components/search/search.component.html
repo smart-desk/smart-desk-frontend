@@ -1,6 +1,13 @@
-<div class="search">
+<form class="search" (ngSubmit)="search()">
     <nz-input-group nzSearch [nzPrefix]="prefix" [nzSuffix]="suffix" [nzAddOnAfter]="suffixButton">
-        <input class="search__input" [(ngModel)]="searchPhrase" type="text" nz-input [placeholder]="placeholder" />
+        <input
+            class="search__input"
+            [(ngModel)]="searchPhrase"
+            type="text"
+            nz-input
+            [placeholder]="placeholder"
+            [ngModelOptions]="{ standalone: true }"
+        />
     </nz-input-group>
     <ng-template #suffixButton>
         <button class="search__button" nz-button nzSearch (click)="search()">Найти</button>
@@ -11,4 +18,4 @@
     <ng-template #suffix>
         <i nz-icon nzType="close" *ngIf="searchPhrase" (click)="reset()"></i>
     </ng-template>
-</div>
+</form>

@@ -1,7 +1,7 @@
 <app-content-layout [title]="'Поиск по объявлениям'" [main]="main" [right]="right"></app-content-layout>
 
 <ng-template #main>
-    <div *ngIf="!advertsResponse || !advertsResponse.totalCount">В этой категории еще нет объявлений</div>
+    <div *ngIf="!advertsResponse || !advertsResponse.totalCount">Ничего не найдено</div>
     <app-adverts
         [advertsResponse]="advertsResponse"
         (changePage)="changePage($event)"
@@ -12,5 +12,5 @@
 </ng-template>
 
 <ng-template #right>
-    <app-filters *ngIf="model" [model]="model" [filters]="filters"></app-filters>
+    <div></div>
 </ng-template>

@@ -72,7 +72,7 @@ export class AdvertEditComponent implements OnInit {
             advert.fields = this.components.map(component => component.instance.getFieldData()).filter(value => !!value);
             advert.title = this.form.controls.title.value;
             this.advertService.updateAdvert(this.advert.id, advert).subscribe(() => {
-                this.router.navigate([this.advert.category_id, this.advert.id]);
+                this.router.navigate(['adverts', this.advert.id]);
             });
         }
     }

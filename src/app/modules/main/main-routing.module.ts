@@ -70,12 +70,12 @@ const routes: Routes = [
                 canActivate: [AuthGuard],
             },
             {
-                path: 'category/:category_id',
-                component: CategoryComponent,
+                path: 'adverts/:advert_id',
+                component: AdvertComponent,
             },
             {
-                path: ':category_id/:advert_id',
-                component: AdvertComponent,
+                path: 'category/:category_id',
+                component: CategoryComponent,
             },
         ],
     },

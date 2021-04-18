@@ -1,25 +1,21 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { filter, pairwise, startWith, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { Subject } from 'rxjs';
 import { GetAdvertsResponseDto } from '../../../../shared/models/advert/advert.dto';
-import { Filters } from '../../../../shared/modules/dynamic-fields/models/filter';
 import { AdvertDataService } from '../../../../shared/services';
 import { Bookmark } from '../../../../shared/models/bookmarks/bookmark.entity';
 import { cloneDeep } from 'lodash';
 import { BookmarksStoreService } from '../../../../shared/services/bookmarks/bookmarks-store.service';
-import { Model } from '../../../../shared/models/model/model.entity';
 
 @Component({
     selector: 'app-app-search',
     templateUrl: './global-search.component.html',
     styleUrls: ['./global-search.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GlobalSearchComponent implements OnInit, OnDestroy {
-    filters: Filters;
     advertsResponse: GetAdvertsResponseDto;
-    // TODO: предусмотреть общую модель данных
-    model: Model;
     private destroy$ = new Subject();
 
     constructor(
@@ -36,18 +32,15 @@ export class GlobalSearchComponent implements OnInit, OnDestroy {
             this.cd.detectChanges();
         });
 
-        console.log('ngOnInit');
-
         this.router.events
             .pipe(
                 filter((event: RouterEvent) => event instanceof NavigationEnd),
                 pairwise(),
-                filter((events: RouterEvent[]) => events[0].url === events[1].url),
+                filter((events: RouterEvent[]) => events[0].url !== events[1].url),
                 startWith('Initial call'),
                 takeUntil(this.destroy$)
             )
             .subscribe(() => {
-                console.log('NavigationEnd');
                 const options = this.advertDataService.parseQueryParams(this.route.snapshot.queryParamMap);
                 this.advertDataService.loadAdverts(null, options);
                 this.cd.detectChanges();
