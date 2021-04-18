@@ -85,6 +85,6 @@ export class AdvertDataService {
             },
         };
 
-        this.router.navigate([], extras).then();
+        this.router.navigate([], extras);
     }
 }
