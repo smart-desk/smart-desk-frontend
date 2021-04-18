@@ -13,6 +13,7 @@ import { MyAdvertsComponent } from './pages/my-adverts/my-adverts.component';
 import { UserComponent } from './pages/user/user.component';
 import { ForbiddenComponent } from '../../shared/pages/forbidden/forbidden.component';
 import { UnauthorizedComponent } from '../../shared/pages/unauthorized/unauthorized.component';
+import { GlobalSearchComponent } from './pages/global-search/global-search.component';
 
 const routes: Routes = [
     {
@@ -50,6 +51,11 @@ const routes: Routes = [
                 ],
             },
             {
+                path: 'search',
+                component: GlobalSearchComponent,
+                runGuardsAndResolvers: 'always',
+            },
+            {
                 path: 'user/:id',
                 component: UserComponent,
             },
@@ -64,12 +70,12 @@ const routes: Routes = [
                 canActivate: [AuthGuard],
             },
             {
-                path: ':category_id',
-                component: CategoryComponent,
+                path: 'adverts/:advert_id',
+                component: AdvertComponent,
             },
             {
-                path: ':category_id/:advert_id',
-                component: AdvertComponent,
+                path: 'category/:category_id',
+                component: CategoryComponent,
             },
         ],
     },

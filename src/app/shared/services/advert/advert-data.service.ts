@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, ParamMap, Router } from '@angular/router';
 import { AdvertService } from './advert.service';
 import { GetAdvertsDto, GetAdvertsResponseDto } from '../../models/advert/advert.dto';
 import { Filters } from '../../modules/dynamic-fields/models/filter';
@@ -13,9 +13,9 @@ export class AdvertDataService {
     private categoryId: string;
     private options: GetAdvertsDto = new GetAdvertsDto();
 
-    constructor(private router: Router, private advertService: AdvertService) {}
+    constructor(private route: ActivatedRoute, private router: Router, private advertService: AdvertService) {}
 
-    loadAdvertsForCategory(categoryId: string, options?: GetAdvertsDto): void {
+    loadAdverts(categoryId: string, options?: GetAdvertsDto): void {
         this.categoryId = categoryId;
         this.options = options ? options : this.options;
         this.requestAdverts();
@@ -28,7 +28,7 @@ export class AdvertDataService {
         this.updateQueryParams();
     }
 
-    search(phrase: string) {
+    search(phrase: string): void {
         this.options.search = phrase;
         this.requestAdverts();
         this.updateQueryParams();
@@ -40,10 +40,39 @@ export class AdvertDataService {
         this.updateQueryParams();
     }
 
+    parseQueryParams(queryParams: ParamMap): GetAdvertsDto {
+        const resultParams = new GetAdvertsDto();
+
+        if (queryParams.has('page')) {
+            try {
+                resultParams.page = parseInt(queryParams.get('page'), 10);
+            } catch (e) {}
+        }
+
+        if (queryParams.has('limit')) {
+            try {
+                resultParams.limit = parseInt(queryParams.get('limit'), 10);
+            } catch (e) {}
+        }
+
+        if (queryParams.has('search')) {
+            resultParams.search = queryParams.get('search');
+        }
+
+        if (queryParams.has('filters')) {
+            try {
+                resultParams.filters = JSON.parse(queryParams.get('filters'));
+            } catch (e) {}
+        }
+        return resultParams;
+    }
+
     private requestAdverts(): void {
-        this.advertService.getAdvertsForCategory(this.categoryId, this.options).subscribe(res => {
-            this.adverts$.next(res);
-        });
+        const req = this.categoryId
+            ? this.advertService.getAdvertsForCategory(this.categoryId, this.options)
+            : this.advertService.getAdverts(this.options);
+
+        req.subscribe(res => this.adverts$.next(res));
     }
 
     private updateQueryParams(): void {
@@ -56,6 +85,6 @@ export class AdvertDataService {
             },
         };
 
-        this.router.navigate([], extras).then();
+        this.router.navigate([], extras);
     }
 }

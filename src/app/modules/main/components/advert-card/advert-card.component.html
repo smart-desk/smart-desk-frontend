@@ -2,7 +2,7 @@
     <nz-card-meta [nzTitle]="title" [nzDescription]="description"></nz-card-meta>
 </nz-card>
 <ng-template #coverTemplate>
-    <img [routerLink]="['/', advert.category_id, advert.id]" alt="example" [src]="thumb || 'assets/images/not-found.png'" />
+    <img [routerLink]="['/', 'adverts', advert.id]" alt="example" [src]="thumb || 'assets/images/not-found.png'" />
 </ng-template>
 
 <ng-template #bookmarkIcon>

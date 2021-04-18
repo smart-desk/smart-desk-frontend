@@ -13,12 +13,12 @@ export class SearchComponent {
 
     constructor(private cd: ChangeDetectorRef) {}
 
-    search() {
+    search(): void {
         this.searchChange.emit(this.searchPhrase);
         this.cd.detectChanges();
     }
 
-    reset() {
+    reset(): void {
         this.searchPhrase = '';
         this.searchChange.emit(this.searchPhrase);
         this.cd.detectChanges();

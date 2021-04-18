@@ -77,12 +77,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
 
         this.searchPhrase = '';
-        this.router.navigate([`/${selectedCat}`]);
+        this.router.navigate([`category/${selectedCat}`]);
     }
 
     search(searchPhrase: string): void {
-        if (searchPhrase.trim()) {
-            this.advertDataService.search(searchPhrase.trim());
+        if (searchPhrase.trim() || searchPhrase === '') {
+            if (this.currentCategory) {
+                return this.advertDataService.search(searchPhrase.trim());
+            }
+            return this.navigateToGlobalSearchPage(searchPhrase.trim());
         }
     }
 
@@ -95,5 +98,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     navigateToAdvertCreate(): void {
         this.user ? this.router.navigate(['/adverts/create']) : this.loginService.openLoginModal();
+    }
+
+    navigateToMain(): void {
+        this.router.navigate(['/']);
+    }
+
+    private navigateToGlobalSearchPage(searchPhrase) {
+        this.router.navigate(['/', 'search'], { queryParams: { search: searchPhrase } });
     }
 }

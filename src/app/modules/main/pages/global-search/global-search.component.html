@@ -1,0 +1,16 @@
+<app-content-layout [title]="'Поиск по объявлениям'" [main]="main" [right]="right"></app-content-layout>
+
+<ng-template #main>
+    <div *ngIf="!advertsResponse || !advertsResponse.totalCount">Ничего не найдено</div>
+    <app-adverts
+        [advertsResponse]="advertsResponse"
+        (changePage)="changePage($event)"
+        (createBookmark)="addBookmarkEvent($event)"
+        (deleteBookmark)="removeBookmarkEvent($event)"
+    >
+    </app-adverts>
+</ng-template>
+
+<ng-template #right>
+    <div></div>
+</ng-template>

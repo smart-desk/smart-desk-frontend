@@ -23,7 +23,7 @@
         <tr *ngFor="let advert of advertResponse?.adverts">
             <td [nzChecked]="selectedItems.has(advert.id)" (nzCheckedChange)="updateSelectedItems(advert.id, $event)"></td>
             <td>
-                <a [routerLink]="['/', advert.category_id, advert.id]">{{ advert.title }}</a>
+                <a [routerLink]="['/', 'adverts', advert.id]">{{ advert.title }}</a>
             </td>
             <td>{{ formatDate(advert.createdAt) }}</td>
             <td>

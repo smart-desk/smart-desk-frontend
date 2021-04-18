@@ -99,7 +99,7 @@ export class AdvertCreateComponent implements OnInit {
 
         this.advertService.createAdvert(advert).subscribe(
             res => {
-                this.router.navigate([res.category_id, res.id]);
+                this.router.navigate(['adverts', res.id]);
             },
             err => {
                 // todo server validation message
