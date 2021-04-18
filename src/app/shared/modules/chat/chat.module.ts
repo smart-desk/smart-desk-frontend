@@ -12,6 +12,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { FormsModule } from '@angular/forms';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzResultModule } from 'ng-zorro-antd/result';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     providers: [ChatModalService],
@@ -26,6 +28,8 @@ import { NzResultModule } from 'ng-zorro-antd/result';
         FormsModule,
         NzAvatarModule,
         NzResultModule,
+        NzBadgeModule,
+        RouterModule,
     ],
 })
 export class ChatModule {}

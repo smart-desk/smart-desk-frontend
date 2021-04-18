@@ -38,13 +38,20 @@ export class ChatComponent implements OnDestroy, OnInit {
             .subscribe(res => this.getInitialChats());
 
         this.chatService.newChat$.pipe(takeUntil(this.destroy$)).subscribe(chat => {
+            chat.unreadMessagesCount = 0;
             this.chatService.joinChat({ chatId: chat.id });
             this.chats = [chat, ...this.chats];
             this.cdr.detectChanges();
         });
 
         this.chatService.newMessage$.pipe(takeUntil(this.destroy$)).subscribe(message => {
-            this.messages = [...this.messages, message];
+            if (message.chatId === this.activeChat.id) {
+                this.messages = [...this.messages, message];
+            } else {
+                const targetChat = this.chats.find(chat => chat.id === message.chatId);
+                targetChat.unreadMessagesCount += 1;
+                this.chats = [...this.chats];
+            }
             this.cdr.detectChanges();
         });
 
@@ -69,13 +76,14 @@ export class ChatComponent implements OnDestroy, OnInit {
         this.destroy$.complete();
     }
 
-    changeActiveChat(chat: Chat): void {
-        if (chat === this.activeChat) {
-            return;
-        }
+    setActiveChat(chat: Chat): void {
         this.activeChat = chat;
+        this.activeChat.unreadMessagesCount = 0;
         this.messages = [];
-        this.chatService.getMessages({ chatId: this.activeChat.id });
+        if (this.activeChat.id) {
+            this.chatService.getMessages({ chatId: this.activeChat.id });
+            this.chatService.readChat({ chatId: this.activeChat.id });
+        }
         this.cdr.detectChanges();
     }
 
@@ -85,9 +93,13 @@ export class ChatComponent implements OnDestroy, OnInit {
 
         if (!this.activeChat.id) {
             this.chatService.createChat({ advertId: this.advert.id }).subscribe(chat => {
+                const indexOfActiveChat = this.chats.indexOf(this.activeChat);
+                this.chats[indexOfActiveChat] = chat;
                 this.activeChat = chat;
                 message.chatId = chat.id;
+                this.chats = [...this.chats];
                 this.chatService.sendMessage(message);
+                this.cdr.detectChanges();
             });
             return;
         }
@@ -99,29 +111,23 @@ export class ChatComponent implements OnDestroy, OnInit {
     private getInitialChats(): void {
         this.chatService
             .getProfileChats()
-            .pipe(
-                map(chats => {
-                    if (!this.advert) {
-                        this.activeChat = chats[0];
-                        return chats;
-                    }
-
-                    this.activeChat = chats.find(c => c.advertId === this.advert.id);
-                    if (this.activeChat) {
-                        return chats;
-                    }
-
-                    const emptyChat = this.createEmptyChat();
-                    this.activeChat = emptyChat;
-                    chats.unshift(emptyChat);
-                    return chats;
-                })
-            )
+            .pipe(take(1))
             .subscribe(chats => {
-                this.chats = chats;
-                if (this.activeChat && this.activeChat.id) {
-                    this.chatService.getMessages({ chatId: this.activeChat.id });
+                let activeChat: Chat;
+
+                if (this.advert) {
+                    activeChat = chats.find(c => c.advertId === this.advert.id);
+                    if (!activeChat) {
+                        const emptyChat = this.createEmptyChat();
+                        activeChat = emptyChat;
+                        chats.unshift(emptyChat);
+                    }
+                } else {
+                    activeChat = chats[0];
                 }
+
+                this.chats = chats;
+                this.setActiveChat(activeChat);
                 this.cdr.detectChanges();
             });
     }

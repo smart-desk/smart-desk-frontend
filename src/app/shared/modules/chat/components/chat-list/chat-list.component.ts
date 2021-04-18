@@ -21,6 +21,12 @@ export class ChatListComponent {
     @Output()
     changeChat = new EventEmitter<Chat>();
 
+    changeActiveChat(chat: Chat): void {
+        if (chat !== this.activeChat) {
+            this.changeChat.emit(chat);
+        }
+    }
+
     // todo add pipe to avoid performance issues
     getConversationalist(chat: Chat): User {
         if (!this.currentUser) {

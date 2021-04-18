@@ -14,10 +14,10 @@ export enum ChatEvent {
     CREATE_CHAT = 'createChat',
     INIT_CHATS = 'initChats',
     NEW_CHAT = 'newChat',
+    READ_CHAT = 'readChat',
     GET_MESSAGES = 'getMessages',
     NEW_MESSAGE = 'newMessage',
     JOIN_CHAT = 'joinChat',
-    LEAVE_CHAT = 'leaveChat',
 }
 
 interface ChatGatewayResponse {
@@ -61,6 +61,10 @@ export class ChatService {
 
     joinChat(data: ChatId): void {
         this.socket.emit(ChatEvent.JOIN_CHAT, data);
+    }
+
+    readChat(data: ChatId): void {
+        this.socket.emit(ChatEvent.READ_CHAT, data);
     }
 
     get newChat$(): Observable<Chat> {
