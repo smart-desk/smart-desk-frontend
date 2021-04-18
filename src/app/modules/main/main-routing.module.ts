@@ -51,8 +51,9 @@ const routes: Routes = [
                 ],
             },
             {
-                path: 'app-search',
+                path: 'search',
                 component: GlobalSearchComponent,
+                runGuardsAndResolvers: 'always',
             },
             {
                 path: 'user/:id',
@@ -69,7 +70,7 @@ const routes: Routes = [
                 canActivate: [AuthGuard],
             },
             {
-                path: ':category_id',
+                path: 'category/:category_id',
                 component: CategoryComponent,
             },
             {

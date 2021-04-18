@@ -34,11 +34,6 @@ export class AdvertDataService {
         this.updateQueryParams();
     }
 
-    globalSearch(phrase: string): void {
-        this.options.search = phrase;
-        this.directionToGlobalSearchPage();
-    }
-
     applyFilters(filters: Filters): void {
         this.options.filters = filters;
         this.requestAdverts();
@@ -91,12 +86,5 @@ export class AdvertDataService {
         };
 
         this.router.navigate([], extras).then();
-    }
-
-    private directionToGlobalSearchPage() {
-        const navigateProm = this.options.search
-            ? this.router.navigate(['app-search'], { queryParams: { search: this.options.search } })
-            : this.router.navigate(['app-search']);
-        navigateProm.then(() => this.loadAdverts(null, { search: this.options.search } as GetAdvertsDto));
     }
 }

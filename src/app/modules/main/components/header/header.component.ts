@@ -77,17 +77,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
 
         this.searchPhrase = '';
-        this.router.navigate([`/${selectedCat}`]);
+        this.router.navigate([`category/${selectedCat}`]);
     }
 
-    search(event: { searchPhrase: string; globalSearch: boolean }): void {
-        if (event.searchPhrase.trim() || event.searchPhrase === '') {
-            if (!event.globalSearch) {
-                return this.advertDataService.search(event.searchPhrase.trim());
+    search(searchPhrase: string): void {
+        if (searchPhrase.trim() || searchPhrase === '') {
+            if (this.currentCategory) {
+                return this.advertDataService.search(searchPhrase.trim());
             }
-            if (event.globalSearch) {
-                return this.advertDataService.globalSearch(event.searchPhrase.trim());
-            }
+            return this.navigateToGlobalSearchPage(searchPhrase.trim());
         }
     }
 
@@ -103,7 +101,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
 
     navigateToMain(): void {
-        this.selectedCategoriesIds = [];
         this.router.navigate(['/']);
+    }
+
+    private navigateToGlobalSearchPage(searchPhrase) {
+        this.router.navigate(['search'], { queryParams: { search: searchPhrase } });
+        // .then(() => this.advertDataService.loadAdverts(null, { search: searchPhrase } as GetAdvertsDto));
     }
 }

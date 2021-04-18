@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { takeUntil } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { filter, pairwise, startWith, takeUntil } from 'rxjs/operators';
+import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { Subject } from 'rxjs';
 import { GetAdvertsResponseDto } from '../../../../shared/models/advert/advert.dto';
 import { Filters } from '../../../../shared/modules/dynamic-fields/models/filter';
@@ -26,7 +26,8 @@ export class GlobalSearchComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private cd: ChangeDetectorRef,
         private advertDataService: AdvertDataService,
-        private bookmarksStoreService: BookmarksStoreService
+        private bookmarksStoreService: BookmarksStoreService,
+        private router: Router
     ) {}
 
     ngOnInit(): void {
@@ -34,6 +35,23 @@ export class GlobalSearchComponent implements OnInit, OnDestroy {
             this.advertsResponse = this.updateAdvertsWithBookmarks(res, this.bookmarksStoreService.bookmarks$.getValue());
             this.cd.detectChanges();
         });
+
+        console.log('ngOnInit');
+
+        this.router.events
+            .pipe(
+                filter((event: RouterEvent) => event instanceof NavigationEnd),
+                pairwise(),
+                filter((events: RouterEvent[]) => events[0].url === events[1].url),
+                startWith('Initial call'),
+                takeUntil(this.destroy$)
+            )
+            .subscribe(() => {
+                console.log('NavigationEnd');
+                const options = this.advertDataService.parseQueryParams(this.route.snapshot.queryParamMap);
+                this.advertDataService.loadAdverts(null, options);
+                this.cd.detectChanges();
+            });
     }
 
     ngOnDestroy() {
