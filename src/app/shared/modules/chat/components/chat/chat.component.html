@@ -9,7 +9,7 @@
             [currentUser]="currentUser"
             [chats]="chats"
             [activeChat]="activeChat"
-            (changeChat)="changeActiveChat($event)"
+            (changeChat)="setActiveChat($event)"
         ></app-chat-list>
         <app-chat-messages
             class="chat__messages"

@@ -9,4 +9,5 @@ export class Chat {
     advertData: Advert;
     user1Data: User;
     user2Data: User;
+    unreadMessagesCount: number;
 }

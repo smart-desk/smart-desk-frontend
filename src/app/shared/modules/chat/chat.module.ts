@@ -10,12 +10,26 @@ import { ChatMessagesComponent } from './components/chat-messages/chat-messages.
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { FormsModule } from '@angular/forms';
-import { NzAvatarModule } from "ng-zorro-antd/avatar";
-import { NzResultModule } from "ng-zorro-antd/result";
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzResultModule } from 'ng-zorro-antd/result';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     providers: [ChatModalService],
     declarations: [ChatComponent, ChatListComponent, ChatMessagesComponent],
-    imports: [CommonModule, NzButtonModule, NzGridModule, NzListModule, NzInputModule, NzIconModule, FormsModule, NzAvatarModule, NzResultModule],
+    imports: [
+        CommonModule,
+        NzButtonModule,
+        NzGridModule,
+        NzListModule,
+        NzInputModule,
+        NzIconModule,
+        FormsModule,
+        NzAvatarModule,
+        NzResultModule,
+        NzBadgeModule,
+        RouterModule,
+    ],
 })
 export class ChatModule {}
