@@ -9,7 +9,7 @@ import { cloneDeep } from 'lodash';
 import { BookmarksStoreService } from '../../../../shared/services/bookmarks/bookmarks-store.service';
 
 @Component({
-    selector: 'app-app-search',
+    selector: 'app-global-search',
     templateUrl: './global-search.component.html',
     styleUrls: ['./global-search.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
