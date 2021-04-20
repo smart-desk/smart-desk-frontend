@@ -47,6 +47,7 @@ export class ChatMessagesComponent {
         const message = new ChatMessage();
         message.content = this.currentMessage;
         message.userId = this.currentUser.id;
+        message.createdAt = new Date();
         this.messages.push(message);
         this.newMessage.emit(this.currentMessage);
         this.currentMessage = '';

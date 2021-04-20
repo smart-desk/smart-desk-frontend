@@ -8,6 +8,11 @@
                     </ng-template>
                     <nz-list-item-meta-title>{{ message.content }}</nz-list-item-meta-title>
                 </nz-list-item-meta>
+                <ul nz-list-item-actions>
+                    <nz-list-item-action>
+                        <span class="chat_messages__timestamp">{{ message.createdAt | date: 'dd.MM.yy HH:mm' }}</span>
+                    </nz-list-item-action>
+                </ul>
             </nz-list-item>
         </nz-list>
     </div>
