@@ -37,21 +37,6 @@ export class UserComponent implements OnInit {
 
         const options = new GetAdvertsDto();
         options.user = userId;
-        this.advertService.getAdverts(options).subscribe(res => {
-            this.advertResponse = this.updateAdvertsWithBookmarks(res, this.bookmarkStoreService.bookmarks$.getValue());
-            this.cdr.detectChanges();
-        });
-
-        this.advertService.getCompleted(options).subscribe(res => {
-            this.completedAdverts = this.updateAdvertsWithBookmarks(res, this.bookmarkStoreService.bookmarks$.getValue());
-            this.cdr.detectChanges();
-        });
-
-        // todo makes sense to reuse it in adverts.component
-        this.bookmarkStoreService.bookmarks$.subscribe(bookmarks => {
-            this.updateAdvertsWithBookmarks(this.advertResponse, bookmarks);
-            this.updateAdvertsWithBookmarks(this.completedAdverts, bookmarks);
-        });
     }
 
     createBookmark(advertId: string) {
@@ -60,18 +45,5 @@ export class UserComponent implements OnInit {
 
     deleteBookmark(advertId: string) {
         this.bookmarkStoreService.deleteBookmark(advertId);
-    }
-
-    private updateAdvertsWithBookmarks(advertsResponse: GetAdvertsResponseDto, bookmarks: Bookmark[]): GetAdvertsResponseDto {
-        if (!advertsResponse) {
-            return;
-        }
-        if (bookmarks) {
-            advertsResponse.adverts.forEach(advert => {
-                const bookmarkAdvert = bookmarks.find(bookmark => bookmark.advert.id === advert.id);
-                advert.isBookmark = !!bookmarkAdvert;
-            });
-        }
-        return cloneDeep(advertsResponse);
     }
 }

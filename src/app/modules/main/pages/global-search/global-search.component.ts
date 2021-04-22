@@ -27,11 +27,6 @@ export class GlobalSearchComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        this.advertDataService.adverts$.pipe(takeUntil(this.destroy$)).subscribe(res => {
-            this.advertsResponse = this.updateAdvertsWithBookmarks(res, this.bookmarksStoreService.bookmarks$.getValue());
-            this.cd.detectChanges();
-        });
-
         this.router.events
             .pipe(
                 filter((event: RouterEvent) => event instanceof NavigationEnd),
@@ -50,30 +45,5 @@ export class GlobalSearchComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.destroy$.next();
         this.destroy$.complete();
-    }
-
-    changePage(page: number) {
-        this.advertDataService.changePage(page);
-    }
-
-    addBookmarkEvent(advertId: string) {
-        this.bookmarksStoreService.createBookmark(advertId);
-    }
-
-    removeBookmarkEvent(advertId: string) {
-        this.bookmarksStoreService.deleteBookmark(advertId);
-    }
-
-    private updateAdvertsWithBookmarks(advertsResponse: GetAdvertsResponseDto, bookmarks?: Bookmark[]): GetAdvertsResponseDto {
-        if (!advertsResponse) {
-            return;
-        }
-        if (bookmarks) {
-            advertsResponse.adverts.forEach(advert => {
-                const bookmarkAdvert = bookmarks.find(bookmark => bookmark.advert.id === advert.id);
-                advert.isBookmark = !!bookmarkAdvert;
-            });
-        }
-        return cloneDeep(advertsResponse);
     }
 }

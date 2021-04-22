@@ -31,14 +31,6 @@ export class BookmarksComponent implements OnInit {
         });
     }
 
-    createBookmark(advertId: string) {
-        this.bookmarksStoreService.createBookmark(advertId);
-    }
-
-    deleteBookmark(advertId) {
-        this.bookmarksStoreService.deleteBookmark(advertId);
-    }
-
     private createGetAdvertResponse(bookmarks: Bookmark[]): GetAdvertsResponseDto {
         if (!bookmarks) {
             return;

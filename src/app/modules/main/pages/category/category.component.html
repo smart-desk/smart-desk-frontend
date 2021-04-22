@@ -1,14 +1,7 @@
 <app-content-layout [title]="category?.name" [main]="main" [right]="right"></app-content-layout>
 
 <ng-template #main>
-    <div *ngIf="!advertsResponse || !advertsResponse.totalCount">В этой категории еще нет объявлений</div>
-    <app-adverts
-        [advertsResponse]="advertsResponse"
-        (changePage)="changePage($event)"
-        (createBookmark)="addBookmarkEvent($event)"
-        (deleteBookmark)="removeBookmarkEvent($event)"
-    >
-    </app-adverts>
+    <app-adverts [advertsResponse]="advertsResponse"></app-adverts>
 </ng-template>
 
 <ng-template #right>

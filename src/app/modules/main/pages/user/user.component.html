@@ -3,18 +3,10 @@
 <ng-template #main>
     <nz-tabset [nzAnimated]="false">
         <nz-tab nzTitle="Активные">
-            <app-adverts
-                (createBookmark)="createBookmark($event)"
-                (deleteBookmark)="deleteBookmark($event)"
-                [advertsResponse]="advertResponse"
-            ></app-adverts>
+            <app-adverts [advertsResponse]="advertResponse"></app-adverts>
         </nz-tab>
         <nz-tab nzTitle="Завершенные">
-            <app-adverts
-                (createBookmark)="createBookmark($event)"
-                (deleteBookmark)="deleteBookmark($event)"
-                [advertsResponse]="completedAdverts"
-            ></app-adverts>
+            <app-adverts [advertsResponse]="completedAdverts"></app-adverts>
         </nz-tab>
     </nz-tabset>
 </ng-template>
