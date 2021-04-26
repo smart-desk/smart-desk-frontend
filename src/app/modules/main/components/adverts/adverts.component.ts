@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { GetAdvertsResponseDto } from '../../../../shared/models/advert/advert.dto';
 import { ExtraActions } from '../advert-card/advert-card.component';
 import { Bookmark } from '../../../../shared/models/bookmarks/bookmark.entity';
@@ -14,8 +14,7 @@ import { Subject } from 'rxjs';
     styleUrls: ['./adverts.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdvertsComponent implements OnInit, OnDestroy {
-    @Input() showSearch = false;
+export class AdvertsComponent implements OnChanges, OnInit, OnDestroy {
     @Input() cardActions: ExtraActions[];
     @Input() advertsResponse: GetAdvertsResponseDto;
     destroy$ = new Subject();
@@ -25,15 +24,14 @@ export class AdvertsComponent implements OnInit, OnDestroy {
         private bookmarksStoreService: BookmarksStoreService,
         private cd: ChangeDetectorRef
     ) {}
-
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.advertsResponse?.currentValue) {
+            this.updateAdvertsWithBookmarks(changes.advertResponse?.currentValue);
+        }
+    }
     ngOnInit(): void {
         this.bookmarksStoreService.bookmarks$.pipe(takeUntil(this.destroy$)).subscribe(bookmarks => {
             this.advertsResponse = this.updateAdvertsWithBookmarks(this.advertsResponse, bookmarks);
-            this.cd.detectChanges();
-        });
-
-        this.advertDataService.adverts$.pipe(takeUntil(this.destroy$)).subscribe(res => {
-            this.advertsResponse = this.updateAdvertsWithBookmarks(res, this.bookmarksStoreService.bookmarks$.getValue());
             this.cd.detectChanges();
         });
     }
@@ -42,8 +40,6 @@ export class AdvertsComponent implements OnInit, OnDestroy {
         this.destroy$.next();
         this.destroy$.complete();
     }
-
-    search($event: string) {}
 
     changePage(page: number) {
         this.advertDataService.changePage(page);

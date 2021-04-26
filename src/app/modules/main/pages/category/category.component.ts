@@ -1,14 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { AdvertDataService, CategoryService, ModelService } from '../../../../shared/services';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
-import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../shared/models/advert/advert.dto';
+import { GetAdvertsResponseDto } from '../../../../shared/models/advert/advert.dto';
 import { Category } from '../../../../shared/models/category/category.entity';
 import { Model } from '../../../../shared/models/model/model.entity';
 import { Filters } from '../../../../shared/modules/dynamic-fields/models/filter';
-import { Bookmark } from '../../../../shared/models/bookmarks/bookmark.entity';
-import { cloneDeep } from 'lodash';
 import { BookmarksStoreService } from '../../../../shared/services/bookmarks/bookmarks-store.service';
 
 @Component({
@@ -34,7 +32,10 @@ export class CategoryComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        this.bookmarksStoreService.loadBookmarks();
+        this.advertDataService.adverts$.pipe(takeUntil(this.destroy$)).subscribe(res => {
+            this.advertsResponse = res;
+            this.bookmarksStoreService.loadBookmarks();
+        });
         this.route.paramMap
             .pipe(
                 takeUntil(this.destroy$),
