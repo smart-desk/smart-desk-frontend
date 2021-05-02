@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { User } from '../../../shared/models/user/user.entity';
+import { User } from '../../../../models/user/user.entity';
 
 @Component({
     selector: 'app-user-info',

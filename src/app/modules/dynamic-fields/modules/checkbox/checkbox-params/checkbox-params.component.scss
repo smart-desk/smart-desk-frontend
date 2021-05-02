@@ -1,0 +1,15 @@
+@import '../../../../../../assets/styles/variables';
+
+.checkbox {
+    margin-bottom: $base-unit * 3;
+    max-width: $base-unit * 40;
+
+    &__item {
+        margin-bottom: $base-unit;
+    }
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}

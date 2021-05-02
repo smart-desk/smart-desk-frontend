@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { filter, pairwise, startWith, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { Subject } from 'rxjs';
-import { GetAdvertsResponseDto } from '../../../shared/models/advert/advert.dto';
-import { AdvertDataService } from '../../../shared/services';
-import { Bookmark } from '../../../shared/models/bookmarks/bookmark.entity';
+import { GetAdvertsResponseDto } from '../../../../models/advert/advert.dto';
+import { AdvertDataService } from '../../../../services';
+import { Bookmark } from '../../../../models/bookmarks/bookmark.entity';
 import { cloneDeep } from 'lodash';
-import { BookmarksStoreService } from '../../../shared/services/bookmarks/bookmarks-store.service';
+import { BookmarksStoreService } from '../../../../services/bookmarks/bookmarks-store.service';
 
 @Component({
     selector: 'app-global-search',

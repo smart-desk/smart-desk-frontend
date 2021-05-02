@@ -1,0 +1,7 @@
+@import '../../../../../../assets/styles/variables';
+
+.price {
+    &__input-group {
+        width: $base-unit * 30;
+    }
+}

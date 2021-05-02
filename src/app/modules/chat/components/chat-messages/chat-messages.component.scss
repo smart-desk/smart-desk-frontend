@@ -1,0 +1,32 @@
+@import '../../../../../assets/styles/variables';
+
+.chat_messages {
+    overflow: auto;
+    position: relative;
+    min-height: $base-unit * 70;
+    padding: $base-unit * 2;
+    padding-right: 0;
+
+    &__list {
+        padding-bottom: $base-unit * 6;
+        max-height: $base-unit * 100;
+        overflow: auto;
+    }
+
+    &__input-group {
+        display: flex;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: $base-unit * 2;
+    }
+
+    &__input {
+        margin-right: $base-unit * 2;
+    }
+
+    &__timestamp {
+        padding-right: $base-unit;
+    }
+}

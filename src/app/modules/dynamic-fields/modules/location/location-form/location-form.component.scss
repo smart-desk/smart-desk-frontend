@@ -1,0 +1,23 @@
+@import '../../../../../../assets/styles/variables';
+
+agm-map {
+    height: $base-unit * 50;
+    width: $base-unit * 100;
+}
+
+.google-search-wrap {
+    margin-bottom: $base-unit;
+}
+
+.google-search {
+    width: 100%;
+    max-width: $base-unit * 40;
+}
+
+.google-map {
+    margin-bottom: $base-unit * 2;
+}
+
+.title {
+    margin-bottom: $base-unit;
+}

@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { UserService } from '../../../shared/services';
-import { User } from '../../../shared/models/user/user.entity';
+import { UserService } from '../../../../services';
+import { User } from '../../../../models/user/user.entity';
 import { combineLatest } from 'rxjs';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { RolesFormComponent } from '../../components/roles-form/roles-form.component';
-import { UserStatus } from '../../../shared/models/user/user-status.enum';
+import { UserStatus } from '../../../../models/user/user-status.enum';
 
 @Component({
     selector: 'app-users',
