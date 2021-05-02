@@ -11,6 +11,7 @@ import { CreateModelComponent } from './pages/create-model/create-model.componen
 import { EditModelComponent } from './pages/edit-model/edit-model.component';
 import { ModelsComponent } from './pages/models/models.component';
 import { AdvertsListComponent } from './pages/adverts-list/adverts-list.component';
+import { SharedModule } from '../../shared.module';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -64,6 +65,7 @@ const pages = [
 
 @NgModule({
     imports: [
+        SharedModule,
         FormsModule,
         ReactiveFormsModule,
         AdminRoutingModule,

@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { AdvertDataService, CategoryService, ModelService } from '../../../../services';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
-import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../models/advert/advert.dto';
+import { GetAdvertsResponseDto } from '../../../../models/advert/advert.dto';
 import { Category } from '../../../../models/category/category.entity';
 import { Model } from '../../../../models/model/model.entity';
 import { Filters } from '../../../dynamic-fields/models/filter';

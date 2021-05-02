@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { NzDrawerService } from 'ng-zorro-antd/drawer';
 import { FieldEntity } from '../../../../models/field/field.entity';
-import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
+import { DynamicFieldsService } from 'src/app/modules/dynamic-fields/dynamic-fields.service';
 
 /**
  * todo this component may become a directive when this issue will be resolved

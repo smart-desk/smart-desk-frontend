@@ -9,10 +9,9 @@ import {
     ViewChild,
     ViewContainerRef,
 } from '@angular/core';
-import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
 import { FieldEntity } from '../../../../models/field/field.entity';
 import { OperationState } from '../../../../models/operation-state.enum';
-import { NzDrawerRef } from 'ng-zorro-antd/drawer';
+import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
 
 @Component({
     selector: 'app-field-settings',

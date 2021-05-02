@@ -34,6 +34,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { NavigationHeaderComponent } from './components/navigation-header/navigation-header.component';
 import { IndexComponent } from './pages/index/index.component';
 import { AdvertCardComponent } from './components/advert-card/advert-card.component';
+import { SharedModule } from '../../shared.module';
 import { ProfileMenuComponent } from './components/profile-menu/profile-menu.component';
 import { FiltersComponent } from './components/filters/filters.component';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
@@ -114,7 +115,7 @@ const components = [
         MainRoutingModule,
         FormsModule,
         ReactiveFormsModule,
-        ,
+        SharedModule,
         AgmCoreModule.forRoot({
             apiKey: environment.googleMapsApiKey,
             libraries: ['places'],

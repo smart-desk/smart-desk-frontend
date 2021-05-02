@@ -15,13 +15,13 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Advert } from '../../../../models/advert/advert.entity';
 import { SectionType } from '../../../../models/section/section.entity';
 import { FieldEntity } from '../../../../models/field/field.entity';
-import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
 import { User } from '../../../../models/user/user.entity';
 import { GetAdvertsResponseDto } from '../../../../models/advert/advert.dto';
 import { BookmarksStoreService } from '../../../../services/bookmarks/bookmarks-store.service';
-import { ChatModalService } from '../../../chat/services/chat-modal.service';
 import { LoginService } from '../../../../services/login/login.service';
 import { PhoneService } from '../../../../services/phone/phone.service';
+import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
+import { ChatModalService } from '../../../chat/services/chat-modal.service';
 
 @Component({
     selector: 'app-advert',

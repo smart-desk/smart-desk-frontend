@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FieldEntity, FieldType } from '../../../../models/field/field.entity';
 import { SectionType } from '../../../../models/section/section.entity';
-import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
 import { Model } from '../../../../models/model/model.entity';
 import { FieldService } from '../../../../services';
+import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
 
 @Component({
     selector: 'app-add-field',

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FieldType } from '../../models/field/field.entity';
 import { InputTextModule } from './modules/input-text/input-text.module';
 import { InputTextService } from './modules/input-text/input-text.service';
 import { RadioService } from './modules/radio/radio.service';
@@ -19,6 +18,7 @@ import { LocationService } from './modules/location/location.service';
 import { LocationModule } from './modules/location/location.module';
 import { CheckboxService } from './modules/checkbox/checkbox.service';
 import { CheckboxModule } from './modules/checkbox/checkbox.module';
+import { FieldType } from '../../models/field/field.entity';
 
 const providers = [
     createDynamicFieldProvider(FieldType.INPUT_TEXT, InputTextService),

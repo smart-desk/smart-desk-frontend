@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { environment } from 'src/environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { HttpClientModule } from '@angular/common/http';
 
 // todo move to service
 const token = localStorage.getItem('token');
@@ -44,7 +45,14 @@ const socialProviders = {
 @NgModule({
     providers: [{ provide: NZ_I18N, useValue: en_US }, socialProviders],
     declarations: [AppComponent],
-    imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, SocialLoginModule, SocketIoModule.forRoot(socketIoConfig)],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        SocialLoginModule,
+        HttpClientModule,
+        SocketIoModule.forRoot(socketIoConfig),
+    ],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

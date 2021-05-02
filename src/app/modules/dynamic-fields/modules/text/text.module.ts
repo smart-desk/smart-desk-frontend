@@ -5,13 +5,13 @@ import { TextParamsComponent } from './text-params/text-params.component';
 import { TextService } from './text.service';
 import { QuillModule } from 'ngx-quill';
 import { FormsModule } from '@angular/forms';
-import { editorSettings } from '../../../../app.config';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { editorSettings } from '../../../../app.config';
 
 @NgModule({
     imports: [

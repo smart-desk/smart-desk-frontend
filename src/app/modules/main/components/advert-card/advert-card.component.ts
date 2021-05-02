@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, In
 import { Advert } from '../../../../models/advert/advert.entity';
 import { SectionType } from '../../../../models/section/section.entity';
 import { FieldType } from '../../../../models/field/field.entity';
-import { PhotoEntity } from '../../../dynamic-fields/modules/photo/dto/photo.entity';
 import { PriceEntity } from '../../../dynamic-fields/modules/price/dto/price.entity';
-import { getCurrencySymbolByCode, roundPrice } from '../../../dynamic-fields/modules/price/helpers';
 import { PriceParamsDto } from '../../../dynamic-fields/modules/price/dto/price-params.dto';
+import { getCurrencySymbolByCode, roundPrice } from '../../../dynamic-fields/modules/price/helpers';
+import { PhotoEntity } from '../../../dynamic-fields/modules/photo/dto/photo.entity';
 
 export interface ExtraActions {
     title: string;
