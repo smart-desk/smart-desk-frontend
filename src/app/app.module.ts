@@ -6,7 +6,6 @@ import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SharedModule } from './modules/shared/shared.module';
 import { environment } from 'src/environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
@@ -45,14 +44,7 @@ const socialProviders = {
 @NgModule({
     providers: [{ provide: NZ_I18N, useValue: en_US }, socialProviders],
     declarations: [AppComponent],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        SharedModule,
-        BrowserAnimationsModule,
-        SocialLoginModule,
-        SocketIoModule.forRoot(socketIoConfig),
-    ],
+    imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, SocialLoginModule, SocketIoModule.forRoot(socketIoConfig)],
     bootstrap: [AppComponent],
 })
 export class AppModule {}
