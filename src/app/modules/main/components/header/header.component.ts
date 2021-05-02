@@ -3,10 +3,10 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, of, Subject } from 'rxjs';
 import { filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
-import { AdvertDataService, CategoryService } from '../../../../shared/services';
-import { Category } from '../../../../shared/models/category/category.entity';
-import { LoginService } from '../../../../shared/services/login/login.service';
-import { User } from '../../../../shared/models/user/user.entity';
+import { AdvertDataService, CategoryService } from '../../../shared/services';
+import { Category } from '../../../shared/models/category/category.entity';
+import { LoginService } from '../../../shared/services/login/login.service';
+import { User } from '../../../shared/models/user/user.entity';
 
 @Component({
     selector: 'app-header',

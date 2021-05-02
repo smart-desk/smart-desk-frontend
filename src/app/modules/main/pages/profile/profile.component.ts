@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { UserService } from '../../../../shared/services';
-import { User } from '../../../../shared/models/user/user.entity';
+import { UserService } from '../../../shared/services';
+import { User } from '../../../shared/models/user/user.entity';
 import { ProfileFormEnum } from './profile-form.enum';
-import { LoginService } from '../../../../shared/services/login/login.service';
-import { UpdateUserDto } from '../../../../shared/models/user/update-user.dto';
-import { PhoneService } from '../../../../shared/services/phone/phone.service';
-import { PhoneVerifyCheckDto } from '../../../../shared/models/phone/phone-verify-check.dto';
+import { LoginService } from '../../../shared/services/login/login.service';
+import { UpdateUserDto } from '../../../shared/models/user/update-user.dto';
+import { PhoneService } from '../../../shared/services/phone/phone.service';
+import { PhoneVerifyCheckDto } from '../../../shared/models/phone/phone-verify-check.dto';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { FormNameComponent } from '../../components/form-name/form-name.component';
 import { FormVerifyComponent } from '../../components/form-verify/form-verify.component';

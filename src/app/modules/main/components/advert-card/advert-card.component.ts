@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Advert } from '../../../../shared/models/advert/advert.entity';
-import { SectionType } from '../../../../shared/models/section/section.entity';
-import { FieldType } from '../../../../shared/models/field/field.entity';
-import { PhotoEntity } from '../../../dynamic-fields/photo/dto/photo.entity';
-import { PriceEntity } from '../../../dynamic-fields/price/dto/price.entity';
-import { getCurrencySymbolByCode, roundPrice } from '../../../dynamic-fields/price/helpers';
-import { PriceParamsDto } from '../../../dynamic-fields/price/dto/price-params.dto';
+import { Advert } from '../../../shared/models/advert/advert.entity';
+import { SectionType } from '../../../shared/models/section/section.entity';
+import { FieldType } from '../../../shared/models/field/field.entity';
+import { PhotoEntity } from '../../../shared/modules/dynamic-fields/modules/photo/dto/photo.entity';
+import { PriceEntity } from '../../../shared/modules/dynamic-fields/modules/price/dto/price.entity';
+import { getCurrencySymbolByCode, roundPrice } from '../../../shared/modules/dynamic-fields/modules/price/helpers';
+import { PriceParamsDto } from '../../../shared/modules/dynamic-fields/modules/price/dto/price-params.dto';
 
 export interface ExtraActions {
     title: string;
