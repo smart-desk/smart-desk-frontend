@@ -1,13 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { AdvertDataService, CategoryService, ModelService } from '../../../../shared/services';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
-import { GetAdvertsResponseDto } from '../../../../shared/models/advert/advert.dto';
-import { Category } from '../../../../shared/models/category/category.entity';
-import { Model } from '../../../../shared/models/model/model.entity';
-import { Filters } from '../../../../shared/modules/dynamic-fields/models/filter';
-import { BookmarksStoreService } from '../../../../shared/services/bookmarks/bookmarks-store.service';
+import { GetAdvertsResponseDto } from '../../../../models/advert/advert.dto';
+import { Filters } from '../../../dynamic-fields/models/filter';
+import { Category } from '../../../../models/category/category.entity';
+import { Model } from '../../../../models/model/model.entity';
+import { AdvertDataService, CategoryService, ModelService } from '../../../../services';
 
 @Component({
     selector: 'app-category',
@@ -27,8 +26,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
         private advertDataService: AdvertDataService,
         private modelService: ModelService,
         private cd: ChangeDetectorRef,
-        private route: ActivatedRoute,
-        private bookmarksStoreService: BookmarksStoreService
+        private route: ActivatedRoute
     ) {}
 
     ngOnInit(): void {

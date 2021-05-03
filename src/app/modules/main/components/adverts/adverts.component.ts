@@ -9,15 +9,15 @@ import {
     SimpleChanges,
     TrackByFunction,
 } from '@angular/core';
-import { GetAdvertsResponseDto } from '../../../../shared/models/advert/advert.dto';
 import { ExtraActions } from '../advert-card/advert-card.component';
-import { Bookmark } from '../../../../shared/models/bookmarks/bookmark.entity';
 import { cloneDeep } from 'lodash';
-import { AdvertDataService } from '../../../../shared/services';
-import { BookmarksStoreService } from '../../../../shared/services/bookmarks/bookmarks-store.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { Advert } from '../../../../shared/models/advert/advert.entity';
+import { GetAdvertsResponseDto } from '../../../../models/advert/advert.dto';
+import { BookmarksStoreService } from '../../../../services/bookmarks/bookmarks-store.service';
+import { Bookmark } from '../../../../models/bookmarks/bookmark.entity';
+import { Advert } from '../../../../models/advert/advert.entity';
+import { AdvertDataService } from '../../../../services';
 
 @Component({
     selector: 'app-adverts',

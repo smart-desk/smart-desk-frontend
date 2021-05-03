@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from './shared.module';
 
 // todo move to service
 const token = localStorage.getItem('token');
@@ -51,6 +52,7 @@ const socialProviders = {
         BrowserAnimationsModule,
         SocialLoginModule,
         HttpClientModule,
+        SharedModule,
         SocketIoModule.forRoot(socketIoConfig),
     ],
     bootstrap: [AppComponent],
