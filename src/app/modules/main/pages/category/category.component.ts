@@ -34,7 +34,6 @@ export class CategoryComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.advertDataService.adverts$.pipe(takeUntil(this.destroy$)).subscribe(res => {
             this.advertsResponse = res;
-            this.bookmarksStoreService.loadBookmarks();
         });
         this.route.paramMap
             .pipe(

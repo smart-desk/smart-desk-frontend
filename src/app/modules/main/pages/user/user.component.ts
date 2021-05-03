@@ -1,11 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { cloneDeep } from 'lodash';
 import { AdvertService, UserService } from '../../../../shared/services';
 import { User } from '../../../../shared/models/user/user.entity';
 import { GetAdvertsResponseDto, GetAdvertsDto } from '../../../../shared/models/advert/advert.dto';
 import { BookmarksStoreService } from '../../../../shared/services/bookmarks/bookmarks-store.service';
-import { Bookmark } from '../../../../shared/models/bookmarks/bookmark.entity';
 
 @Component({
     selector: 'app-user',
@@ -27,8 +25,6 @@ export class UserComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.bookmarkStoreService.loadBookmarks();
-
         const userId = this.route.snapshot.paramMap.get('id');
         this.userService.getUser(userId).subscribe(res => {
             this.user = res;

@@ -1,4 +1,14 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    SimpleChanges,
+    TrackByFunction,
+} from '@angular/core';
 import { GetAdvertsResponseDto } from '../../../../shared/models/advert/advert.dto';
 import { ExtraActions } from '../advert-card/advert-card.component';
 import { Bookmark } from '../../../../shared/models/bookmarks/bookmark.entity';
@@ -7,6 +17,7 @@ import { AdvertDataService } from '../../../../shared/services';
 import { BookmarksStoreService } from '../../../../shared/services/bookmarks/bookmarks-store.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { Advert } from '../../../../shared/models/advert/advert.entity';
 
 @Component({
     selector: 'app-adverts',
@@ -27,6 +38,7 @@ export class AdvertsComponent implements OnChanges, OnInit, OnDestroy {
     ngOnChanges(changes: SimpleChanges) {
         if (changes.advertsResponse?.currentValue) {
             this.updateAdvertsWithBookmarks(changes.advertResponse?.currentValue);
+            this.bookmarksStoreService.loadBookmarks();
         }
     }
     ngOnInit(): void {
@@ -40,6 +52,8 @@ export class AdvertsComponent implements OnChanges, OnInit, OnDestroy {
         this.destroy$.next();
         this.destroy$.complete();
     }
+
+    trackByFn: TrackByFunction<Advert> = (index: number, item: Advert) => item.id;
 
     changePage(page: number) {
         this.advertDataService.changePage(page);

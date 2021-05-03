@@ -18,8 +18,6 @@ export class BookmarksComponent implements OnInit {
     constructor(private bookmarksStoreService: BookmarksStoreService, private cd: ChangeDetectorRef, private userService: UserService) {}
 
     ngOnInit(): void {
-        this.bookmarksStoreService.loadBookmarks();
-
         this.userService.getCurrentUser().subscribe(res => {
             this.user = res;
             this.cd.detectChanges();
