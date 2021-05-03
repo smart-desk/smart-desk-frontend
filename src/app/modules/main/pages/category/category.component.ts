@@ -1,14 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { AdvertDataService, CategoryService, ModelService } from '../../../../shared/services';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
-import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../shared/models/advert/advert.dto';
+import { GetAdvertsResponseDto } from '../../../../shared/models/advert/advert.dto';
 import { Category } from '../../../../shared/models/category/category.entity';
 import { Model } from '../../../../shared/models/model/model.entity';
 import { Filters } from '../../../../shared/modules/dynamic-fields/models/filter';
-import { Bookmark } from '../../../../shared/models/bookmarks/bookmark.entity';
-import { cloneDeep } from 'lodash';
 import { BookmarksStoreService } from '../../../../shared/services/bookmarks/bookmarks-store.service';
 
 @Component({
@@ -34,8 +32,9 @@ export class CategoryComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        this.bookmarksStoreService.loadBookmarks();
-
+        this.advertDataService.adverts$.pipe(takeUntil(this.destroy$)).subscribe(res => {
+            this.advertsResponse = res;
+        });
         this.route.paramMap
             .pipe(
                 takeUntil(this.destroy$),
@@ -56,45 +55,10 @@ export class CategoryComponent implements OnInit, OnDestroy {
                 this.model = model;
                 this.cd.detectChanges();
             });
-
-        this.bookmarksStoreService.bookmarks$.pipe(takeUntil(this.destroy$)).subscribe(bookmarks => {
-            this.advertsResponse = this.updateAdvertsWithBookmarks(this.advertsResponse, bookmarks);
-            this.cd.detectChanges();
-        });
-
-        this.advertDataService.adverts$.pipe(takeUntil(this.destroy$)).subscribe(res => {
-            this.advertsResponse = this.updateAdvertsWithBookmarks(res, this.bookmarksStoreService.bookmarks$.getValue());
-            this.cd.detectChanges();
-        });
     }
 
     ngOnDestroy() {
         this.destroy$.next();
         this.destroy$.complete();
-    }
-
-    changePage(page: number) {
-        this.advertDataService.changePage(page);
-    }
-
-    addBookmarkEvent(advertId: string) {
-        this.bookmarksStoreService.createBookmark(advertId);
-    }
-
-    removeBookmarkEvent(advertId: string) {
-        this.bookmarksStoreService.deleteBookmark(advertId);
-    }
-
-    private updateAdvertsWithBookmarks(advertsResponse: GetAdvertsResponseDto, bookmarks?: Bookmark[]): GetAdvertsResponseDto {
-        if (!advertsResponse) {
-            return;
-        }
-        if (bookmarks) {
-            advertsResponse.adverts.forEach(advert => {
-                const bookmarkAdvert = bookmarks.find(bookmark => bookmark.advert.id === advert.id);
-                advert.isBookmark = !!bookmarkAdvert;
-            });
-        }
-        return cloneDeep(advertsResponse);
     }
 }
