@@ -1,11 +1,7 @@
 <app-content-layout title="Избранные" [main]="main" [left]="left"></app-content-layout>
 
 <ng-template #main>
-    <app-adverts
-        [advertsResponse]="advertDto"
-        (deleteBookmark)="deleteBookmark($event)"
-        (createBookmark)="createBookmark($event)"
-    ></app-adverts>
+    <app-adverts [advertsResponse]="advertDto"></app-adverts>
 </ng-template>
 
 <ng-template #left>

@@ -101,14 +101,6 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
         this.destroy$.complete();
     }
 
-    addBookmarkEvent(advertId: string) {
-        this.bookmarksStoreService.createBookmark(advertId);
-    }
-
-    removeBookmarkEvent(advertId: string) {
-        this.bookmarksStoreService.deleteBookmark(advertId);
-    }
-
     openChat(): void {
         this.chatModalService.open(this.advert, this.user);
     }
