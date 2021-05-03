@@ -1,18 +1,8 @@
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import { ProfileFormEnum } from '../../pages/profile/profile-form.enum';
-import { User } from '../../../../shared/models/user/user.entity';
+import { User } from '../../../../models/user/user.entity';
 
 @Component({
     selector: 'app-modal-name',

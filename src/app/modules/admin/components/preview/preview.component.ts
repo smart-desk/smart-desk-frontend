@@ -8,18 +8,18 @@ import {
     ViewChild,
     ViewContainerRef,
 } from '@angular/core';
-import { FieldService, ModelService } from '../../../../shared/services';
-import { Section } from '../../../../shared/models/section/section.entity';
-import { FieldEntity } from '../../../../shared/models/field/field.entity';
-import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
+import { FieldService, ModelService } from '../../../../services';
+import { Section } from '../../../../models/section/section.entity';
+import { FieldEntity } from '../../../../models/field/field.entity';
 import { NzDrawerService } from 'ng-zorro-antd/drawer';
 import { PreviewToolsComponent } from '../preview-tools/preview-tools.component';
 import { FieldSettingsComponent } from '../field-settings/field-settings.component';
 import { AddFieldComponent } from '../add-field/add-field.component';
-import { Model } from '../../../../shared/models/model/model.entity';
+import { Model } from '../../../../models/model/model.entity';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { DynamicFieldsService } from 'src/app/modules/dynamic-fields/dynamic-fields.service';
 
 const DRAWER_BASE_CONFIG = {
     nzWidth: 400,

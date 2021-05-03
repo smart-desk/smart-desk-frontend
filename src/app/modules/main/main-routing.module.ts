@@ -6,13 +6,13 @@ import { AdvertComponent } from './pages/advert/advert.component';
 import { AdvertEditComponent } from './pages/advert-edit/advert-edit.component';
 import { AdvertCreateComponent } from './pages/advert-create/advert-create.component';
 import { IndexComponent } from './pages/index/index.component';
-import { AuthGuard } from '../../shared/services/auth/auth.guard';
+import { AuthGuard } from '../../services/auth/auth.guard';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { BookmarksComponent } from './pages/bookmarks/bookmarks.component';
 import { MyAdvertsComponent } from './pages/my-adverts/my-adverts.component';
 import { UserComponent } from './pages/user/user.component';
-import { ForbiddenComponent } from '../../shared/pages/forbidden/forbidden.component';
-import { UnauthorizedComponent } from '../../shared/pages/unauthorized/unauthorized.component';
+import { ForbiddenComponent } from '../../pages/forbidden/forbidden.component';
+import { UnauthorizedComponent } from '../../pages/unauthorized/unauthorized.component';
 import { GlobalSearchComponent } from './pages/global-search/global-search.component';
 
 const routes: Routes = [

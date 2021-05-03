@@ -11,13 +11,13 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
-import { AbstractFieldFormComponent } from '../../../../shared/modules/dynamic-fields/models/abstract-field-form.component';
-import { AdvertService, CategoryService, ModelService } from '../../../../shared/services';
-import { Category } from '../../../../shared/models/category/category.entity';
-import { CreateAdvertDto } from '../../../../shared/models/advert/advert.dto';
-import { Section } from '../../../../shared/models/section/section.entity';
-import { FieldEntity } from '../../../../shared/models/field/field.entity';
-import { DynamicFieldsService } from '../../../../shared/modules/dynamic-fields/dynamic-fields.service';
+import { AbstractFieldFormComponent } from '../../../dynamic-fields/models/abstract-field-form.component';
+import { AdvertService, CategoryService, ModelService } from '../../../../services';
+import { Category } from '../../../../models/category/category.entity';
+import { CreateAdvertDto } from '../../../../models/advert/advert.dto';
+import { Section } from '../../../../models/section/section.entity';
+import { FieldEntity } from '../../../../models/field/field.entity';
+import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
 
 // todo check subscriptions
 @Component({
