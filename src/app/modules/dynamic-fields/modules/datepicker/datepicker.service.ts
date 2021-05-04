@@ -9,6 +9,7 @@ import { DatepickerFormComponent } from './datepicker-form/datepicker-form.compo
 import { DatepickerEntity } from './entities/datepicker.entity';
 import { DatepickerParamsDto } from './dto/datepicker-params.dto';
 import { DatepickerViewComponent } from './datepicker-view/datepicker-view.component';
+import { DatepickerFilterComponent } from './datepicker-filter/datepicker-filter.component';
 
 @Injectable()
 export class DatepickerService implements AbstractFieldService {
@@ -19,7 +20,7 @@ export class DatepickerService implements AbstractFieldService {
     }
 
     getFilterComponentResolver(): ComponentFactory<AbstractFieldFilterComponent<any, any>> {
-        return undefined;
+        return this.componentFactoryResolver.resolveComponentFactory(DatepickerFilterComponent);
     }
 
     getFormComponentResolver(): ComponentFactory<AbstractFieldFormComponent<DatepickerEntity, DatepickerParamsDto>> {
