@@ -1,5 +1,5 @@
 <div class="checkbox">
-    <form nz-form [nzLayout]="'vertical'" [formGroup]="form" (ngSubmit)="save()">
+    <form nz-form [nzLayout]="'vertical'" [formGroup]="formField" (ngSubmit)="save()">
         <nz-form-item>
             <nz-form-label nzFor="title">Заголовок</nz-form-label>
             <nz-form-control>
@@ -16,7 +16,8 @@
         </nz-form-item>
 
         <div class="buttons">
-            <label nz-checkbox formControlName="required">Обязательное поле</label>
+            <!-- todo wait for required field in table
+<label nz-checkbox formControlName="required">Обязательное поле</label>-->
             <button nz-button type="submit" nzType="primary">Save</button>
         </div>
     </form>

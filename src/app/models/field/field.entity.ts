@@ -7,7 +7,7 @@ export enum FieldType {
     PRICE = 'price',
     LOCATION = 'location',
     CHECKBOX = 'checkbox',
-    DATE_RANGE = 'date_range',
+    DATEPICKER = 'datepicker',
 }
 
 export class FieldEntity {

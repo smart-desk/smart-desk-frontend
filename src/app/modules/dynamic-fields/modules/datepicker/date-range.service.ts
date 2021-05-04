@@ -4,16 +4,14 @@ import { AbstractFieldFilterComponent } from '../../models/abstract-field-filter
 import { AbstractFieldViewComponent } from '../../models/abstract-field-view.component';
 import { AbstractFieldParamsComponent } from '../../models/abstract-field-params.component';
 import { AbstractFieldFormComponent } from '../../models/abstract-field-form.component';
-import { DateRangeParamsComponent } from './date-range-params/date-range-params.component';
+import { DatepickerParamsComponent } from './datepicker-params/datepicker-params.component';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Injectable()
 export class DateRangeService implements AbstractFieldService {
     constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
     getFieldName(): string {
-        return 'Date range';
+        return 'Datepicker';
     }
 
     getFilterComponentResolver(): ComponentFactory<AbstractFieldFilterComponent<any, any>> {
@@ -25,7 +23,7 @@ export class DateRangeService implements AbstractFieldService {
     }
 
     getParamsComponentResolver(): ComponentFactory<AbstractFieldParamsComponent> {
-        return this.componentFactoryResolver.resolveComponentFactory(DateRangeParamsComponent);
+        return this.componentFactoryResolver.resolveComponentFactory(DatepickerParamsComponent);
     }
 
     getViewComponentResolver(): ComponentFactory<AbstractFieldViewComponent<any, any>> {

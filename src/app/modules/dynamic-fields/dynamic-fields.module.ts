@@ -19,8 +19,7 @@ import { LocationModule } from './modules/location/location.module';
 import { CheckboxService } from './modules/checkbox/checkbox.service';
 import { CheckboxModule } from './modules/checkbox/checkbox.module';
 import { FieldType } from '../../models/field/field.entity';
-import { DateRangeParamsComponent } from './modules/date-range/date-range-params/date-range-params.component';
-import { DateRangeService } from './modules/date-range/date-range.service';
+import { DateRangeService } from './modules/datepicker/date-range.service';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
@@ -36,11 +35,11 @@ const providers = [
     createDynamicFieldProvider(FieldType.PRICE, PriceService),
     createDynamicFieldProvider(FieldType.LOCATION, LocationService),
     createDynamicFieldProvider(FieldType.CHECKBOX, CheckboxService),
-    createDynamicFieldProvider(FieldType.DATE_RANGE, DateRangeService),
+    createDynamicFieldProvider(FieldType.DATEPICKER, DateRangeService),
 ];
 
 @NgModule({
-    declarations: [DateRangeParamsComponent],
+    declarations: [],
     providers: [
         {
             provide: 'FIELDS_MAP',

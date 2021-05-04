@@ -29,7 +29,7 @@ export class AddFieldComponent {
             FieldType.CHECKBOX,
             FieldType.TEXTAREA,
             FieldType.TEXT,
-            FieldType.DATE_RANGE,
+            FieldType.DATEPICKER,
         ],
         [SectionType.LOCATION]: [FieldType.LOCATION],
         [SectionType.PRICE]: [FieldType.PRICE],
