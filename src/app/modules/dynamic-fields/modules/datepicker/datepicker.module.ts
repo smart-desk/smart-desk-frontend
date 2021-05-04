@@ -10,9 +10,11 @@ import { DatepickerParamsComponent } from './datepicker-params/datepicker-params
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { DatepickerService } from './datepicker.service';
+import { DatepickerViewComponent } from './datepicker-view/datepicker-view.component';
+import { DatepickerFilterComponent } from './datepicker-filter/datepicker-filter.component';
 
 @NgModule({
-    declarations: [DatepickerParamsComponent, DatepickerFormComponent],
+    declarations: [DatepickerParamsComponent, DatepickerFormComponent, DatepickerViewComponent, DatepickerFilterComponent],
     imports: [
         CommonModule,
         NzDatePickerModule,

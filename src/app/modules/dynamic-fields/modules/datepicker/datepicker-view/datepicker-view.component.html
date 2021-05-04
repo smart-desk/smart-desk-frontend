@@ -1,0 +1,6 @@
+<div>
+    <b>{{ field?.title }}</b>
+    <br />
+    {{ field?.data?.date1 | date: 'dd.MM.yyyy' }}
+    <span *ngIf="field?.data?.date2"> - {{ field?.data?.date2 | date: 'dd.MM.yyyy' }}</span>
+</div>
