@@ -2,7 +2,8 @@
     <nz-form-item>
         <nz-form-label>{{ field.title }}</nz-form-label>
         <nz-form-control>
-            <nz-date-picker *ngIf="true" formControlName="date1"></nz-date-picker>
+            <nz-date-picker *ngIf="!field.params.range" nzFormat="dd.MM.yyyy" formControlName="date1"></nz-date-picker>
+            <nz-range-picker *ngIf="field.params.range" nzFormat="dd.MM.yyyy" formControlName="daterange"></nz-range-picker>
         </nz-form-control>
     </nz-form-item>
 </form>

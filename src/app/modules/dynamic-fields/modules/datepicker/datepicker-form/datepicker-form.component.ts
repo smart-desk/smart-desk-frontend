@@ -21,23 +21,27 @@ export class DatepickerFormComponent extends AbstractFieldFormComponent<Datepick
     ngOnInit(): void {
         this.datepickerForm = new FormGroup({
             date1: new FormControl(this.field?.data?.date1),
-            date2: new FormControl(this.field?.data?.date2),
+            daterange: new FormControl([this.field?.data?.date1, this.field?.data?.date2]),
         });
     }
 
     getFieldData(): any {
         if (this.field.data) {
-            this.field.data.date1 = this.datepickerForm.get('date1').value;
             if (this.field.params.range) {
-                this.field.data.date2 = this.datepickerForm.get('date2').value;
+                this.field.data.date1 = this.datepickerForm.get('daterange').value[0];
+                this.field.data.date2 = this.datepickerForm.get('daterange').value[1];
+            } else {
+                this.field.data.date1 = this.datepickerForm.get('date1').value;
             }
             return this.field.data;
         }
 
         const advertField = new CreateDatepickerDto();
-        advertField.date1 = this.datepickerForm.get('date1').value;
         if (this.field.params.range) {
-            advertField.date2 = this.datepickerForm.get('date2').value;
+            advertField.date1 = this.datepickerForm.get('daterange').value[0];
+            advertField.date2 = this.datepickerForm.get('daterange').value[1];
+        } else {
+            advertField.date1 = this.datepickerForm.get('date1').value;
         }
         advertField.field_id = this.field.id;
 

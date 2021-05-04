@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { registerLocaleData } from '@angular/common';
-import en from '@angular/common/locales/en';
+import ru from '@angular/common/locales/ru';
 import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
-import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
+import { NZ_I18N, ru_RU } from 'ng-zorro-antd/i18n';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from 'src/environments/environment';
@@ -28,7 +28,7 @@ if (token) {
 }
 const socketIoConfig: SocketIoConfig = { url: environment.webSocketUrl, options };
 
-registerLocaleData(en);
+registerLocaleData(ru);
 
 const socialProviders = {
     provide: 'SocialAuthServiceConfig',
@@ -44,7 +44,7 @@ const socialProviders = {
 };
 
 @NgModule({
-    providers: [{ provide: NZ_I18N, useValue: en_US }, socialProviders],
+    providers: [{ provide: NZ_I18N, useValue: ru_RU }, socialProviders],
     declarations: [AppComponent],
     imports: [
         BrowserModule,
