@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AbstractFieldParamsComponent } from '../../../models/abstract-field-params.component';
 import { FieldEntity } from '../../../../../models/field/field.entity';
@@ -11,6 +11,7 @@ import { DatepickerParamsDto } from '../dto/datepicker-params.dto';
     selector: 'app-date-range-params',
     templateUrl: './datepicker-params.component.html',
     styleUrls: ['./datepicker-params.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DatepickerParamsComponent extends AbstractFieldParamsComponent implements OnInit {
     formField: FormGroup;

@@ -19,12 +19,9 @@ import { LocationModule } from './modules/location/location.module';
 import { CheckboxService } from './modules/checkbox/checkbox.service';
 import { CheckboxModule } from './modules/checkbox/checkbox.module';
 import { FieldType } from '../../models/field/field.entity';
-import { DateRangeService } from './modules/datepicker/date-range.service';
-import { NzFormModule } from 'ng-zorro-antd/form';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzButtonModule } from 'ng-zorro-antd/button';
+import { DatepickerModule } from './modules/datepicker/datepicker.module';
+import { DatepickerService } from './modules/datepicker/datepicker.service';
 
 const providers = [
     createDynamicFieldProvider(FieldType.INPUT_TEXT, InputTextService),
@@ -35,7 +32,7 @@ const providers = [
     createDynamicFieldProvider(FieldType.PRICE, PriceService),
     createDynamicFieldProvider(FieldType.LOCATION, LocationService),
     createDynamicFieldProvider(FieldType.CHECKBOX, CheckboxService),
-    createDynamicFieldProvider(FieldType.DATEPICKER, DateRangeService),
+    createDynamicFieldProvider(FieldType.DATEPICKER, DatepickerService),
 ];
 
 @NgModule({
@@ -57,11 +54,8 @@ const providers = [
         PriceModule,
         LocationModule,
         CheckboxModule,
-        NzFormModule,
         ReactiveFormsModule,
-        NzCheckboxModule,
-        NzInputModule,
-        NzButtonModule,
+        DatepickerModule,
     ],
 })
 export class DynamicFieldsModule {}

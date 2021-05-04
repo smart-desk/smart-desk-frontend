@@ -5,9 +5,12 @@ import { AbstractFieldViewComponent } from '../../models/abstract-field-view.com
 import { AbstractFieldParamsComponent } from '../../models/abstract-field-params.component';
 import { AbstractFieldFormComponent } from '../../models/abstract-field-form.component';
 import { DatepickerParamsComponent } from './datepicker-params/datepicker-params.component';
+import { DatepickerFormComponent } from './datepicker-form/datepicker-form.component';
+import { DatepickerEntity } from './entities/datepicker.entity';
+import { DatepickerParamsDto } from './dto/datepicker-params.dto';
 
 @Injectable()
-export class DateRangeService implements AbstractFieldService {
+export class DatepickerService implements AbstractFieldService {
     constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
     getFieldName(): string {
@@ -18,8 +21,8 @@ export class DateRangeService implements AbstractFieldService {
         return undefined;
     }
 
-    getFormComponentResolver(): ComponentFactory<AbstractFieldFormComponent<any, any>> {
-        return undefined;
+    getFormComponentResolver(): ComponentFactory<AbstractFieldFormComponent<DatepickerEntity, DatepickerParamsDto>> {
+        return this.componentFactoryResolver.resolveComponentFactory(DatepickerFormComponent);
     }
 
     getParamsComponentResolver(): ComponentFactory<AbstractFieldParamsComponent> {
