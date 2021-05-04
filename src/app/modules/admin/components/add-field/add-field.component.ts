@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { FieldEntity, FieldType } from '../../../../models/field/field.entity';
 import { SectionType } from '../../../../models/section/section.entity';
 import { Model } from '../../../../models/model/model.entity';
-import { FieldService } from '../../../../services';
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
 
 @Component({
@@ -30,13 +29,14 @@ export class AddFieldComponent {
             FieldType.CHECKBOX,
             FieldType.TEXTAREA,
             FieldType.TEXT,
+            FieldType.DATE_RANGE,
         ],
         [SectionType.LOCATION]: [FieldType.LOCATION],
         [SectionType.PRICE]: [FieldType.PRICE],
         [SectionType.CONTACTS]: [],
     };
 
-    constructor(private dynamicFieldsService: DynamicFieldsService, private fieldService: FieldService) {}
+    constructor(private dynamicFieldsService: DynamicFieldsService) {}
 
     sectionChange(value: string): void {
         this.selectedField = this.fieldData[value] && this.fieldData[value].length && this.fieldData[value][0];
