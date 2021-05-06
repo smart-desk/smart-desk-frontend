@@ -14,6 +14,7 @@ export class CreateAdvertDto {
 export class UpdateAdvertDto {
     title: string;
     fields: DynamicFieldsBaseUpdateDto[];
+    preferContact: string;
 }
 
 export class GetAdvertsDto {

@@ -6,7 +6,7 @@ import { Section } from '../../../models/section/section.entity';
 import { FieldEntity } from '../../../models/field/field.entity';
 
 @Injectable()
-export abstract class AdvertBaseClass {
+export abstract class AdvertFormBaseClass {
     formDefaultFields: FormGroup;
     @ViewChild('fields', { read: ViewContainerRef })
     protected fieldsFormContainerRef: ViewContainerRef;

@@ -35,7 +35,7 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
     user: User;
     currentUser: User;
     similarAdverts: GetAdvertsResponseDto;
-    isShowPhone = false;
+    isPhoneVisible = false;
     userPhone: string;
     preferContact = PreferContact;
     private destroy$ = new Subject();
@@ -114,20 +114,18 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
 
         showPhoneReq.pipe(takeUntil(this.destroy$)).subscribe((phone: string) => {
             this.userPhone = phone;
-            this.isShowPhone = true;
+            this.isPhoneVisible = true;
             this.cd.detectChanges();
         });
     }
 
-    isShowContact(contact: string): boolean {
+    isContactAvailable(contact: string): boolean {
         const advertPreferContact = this.advert?.preferContact;
-        switch (contact) {
-            case this.preferContact.PHONE:
-                // todo: add check isPhoneConfirmed author's
-                return !this.isShowPhone && (this.preferContact.PHONE === advertPreferContact || null === advertPreferContact);
-            case this.preferContact.CHAT:
-                return this.preferContact.CHAT === advertPreferContact || null === advertPreferContact;
+        if (!advertPreferContact) {
+            return true;
         }
+
+        return advertPreferContact === contact;
     }
 
     private addParamsFields(): void {

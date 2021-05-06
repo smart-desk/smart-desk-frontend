@@ -19,7 +19,7 @@ import { Model } from '../../../../models/model/model.entity';
 import { UpdateAdvertDto } from '../../../../models/advert/advert.dto';
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
 import { PreferContact } from '../../enums/contact-values.enum';
-import { AdvertBaseClass } from '../../classes/advert-base.class';
+import { AdvertFormBaseClass } from '../../classes/advert-form-base.class';
 
 @Component({
     selector: 'app-advert-edit',
@@ -27,7 +27,7 @@ import { AdvertBaseClass } from '../../classes/advert-base.class';
     styleUrls: ['./advert-edit.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdvertEditComponent extends AdvertBaseClass implements OnInit {
+export class AdvertEditComponent extends AdvertFormBaseClass implements OnInit {
     form: FormGroup;
     preferContact = PreferContact;
     advert: Advert;

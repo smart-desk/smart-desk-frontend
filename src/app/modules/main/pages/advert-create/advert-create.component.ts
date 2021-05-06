@@ -18,7 +18,7 @@ import { CreateAdvertDto } from '../../../../models/advert/advert.dto';
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PreferContact } from '../../enums/contact-values.enum';
-import { AdvertBaseClass } from '../../classes/advert-base.class';
+import { AdvertFormBaseClass } from '../../classes/advert-form-base.class';
 
 // todo check subscriptions
 @Component({
@@ -27,7 +27,7 @@ import { AdvertBaseClass } from '../../classes/advert-base.class';
     styleUrls: ['./advert-create.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdvertCreateComponent extends AdvertBaseClass implements OnInit {
+export class AdvertCreateComponent extends AdvertFormBaseClass implements OnInit {
     preferContact = PreferContact;
     formDefaultFields: FormGroup;
     selectedCategoriesIds: string[] = [];
