@@ -8,6 +8,7 @@ export class Advert {
     model_id: string;
     title: string;
     userId: string;
+    preferContact: string;
     createdAt: Date;
     updatedAt: Date;
     sections: Section[];

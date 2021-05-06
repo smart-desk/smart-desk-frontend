@@ -7,6 +7,7 @@ export class CreateAdvertDto {
     category_id: string;
     model_id: string;
     title: string;
+    preferContact: string;
     fields: DynamicFieldsBaseCreateDto[];
 }
 

@@ -22,6 +22,7 @@ import { LoginService } from '../../../../services/login/login.service';
 import { PhoneService } from '../../../../services/phone/phone.service';
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
 import { ChatModalService } from '../../../chat/services/chat-modal.service';
+import { PreferContact } from '../../enums/contact-values.enum';
 
 @Component({
     selector: 'app-advert',
@@ -36,6 +37,7 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
     similarAdverts: GetAdvertsResponseDto;
     isShowPhone = false;
     userPhone: string;
+    preferContact = PreferContact;
     private destroy$ = new Subject();
 
     @ViewChild('params', { read: ViewContainerRef })
@@ -106,13 +108,26 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     showPhone(): void {
-        const showPhoneReq: Observable<string> = !this.currentUser ? this.openModalLogin() : this.phoneService.getUserPhone(this.user.id);
+        const showPhoneReq: Observable<string> = !this.currentUser
+            ? this.openModalLogin()
+            : this.phoneService.getUserPhone(this.user.id, this.advert.id);
 
         showPhoneReq.pipe(takeUntil(this.destroy$)).subscribe((phone: string) => {
             this.userPhone = phone;
             this.isShowPhone = true;
             this.cd.detectChanges();
         });
+    }
+
+    isShowContact(contact: string): boolean {
+        const advertPreferContact = this.advert?.preferContact;
+        switch (contact) {
+            case this.preferContact.PHONE:
+                // todo: add check isPhoneConfirmed author's
+                return !this.isShowPhone && (this.preferContact.PHONE === advertPreferContact || null === advertPreferContact);
+            case this.preferContact.CHAT:
+                return this.preferContact.CHAT === advertPreferContact || null === advertPreferContact;
+        }
     }
 
     private addParamsFields(): void {
@@ -125,7 +140,7 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
     private openModalLogin(): Observable<string> {
         return this.loginService.openModal().pipe(
             tap((currentUser: User) => (this.currentUser = currentUser)),
-            switchMap(() => this.phoneService.getUserPhone(this.user.id))
+            switchMap(() => this.phoneService.getUserPhone(this.user.id, this.advert.id))
         );
     }
 

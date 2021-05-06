@@ -21,15 +21,15 @@
         <h2>Местоположение</h2>
         <ng-container #location></ng-container>
     </div>
-    <div class="contacts" *ngIf="currentUser?.id !== user?.id">
+    <div class="contacts">
         <div class="contacts__phone">
-            <button *ngIf="!isShowPhone" nzBlock class="contacts" nz-button (click)="showPhone()">
+            <button *ngIf="isShowContact(preferContact.PHONE)" nzBlock class="contacts" nz-button (click)="showPhone()">
                 <i nz-icon nzType="phone" nzTheme="outline"></i>
                 Показать телефон
             </button>
             <h3 *ngIf="isShowPhone">{{ userPhone }}</h3>
         </div>
-        <div class="contacts__chat">
+        <div class="contacts__chat" *ngIf="isShowContact(preferContact.CHAT)">
             <button nz-button nzBlock nzType="primary" (click)="openChat()">
                 <i nz-icon nzType="message" nzTheme="outline"></i>
                 Написать сообщение

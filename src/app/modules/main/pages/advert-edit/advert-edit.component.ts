@@ -17,9 +17,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Advert } from '../../../../models/advert/advert.entity';
 import { Model } from '../../../../models/model/model.entity';
 import { UpdateAdvertDto } from '../../../../models/advert/advert.dto';
-import { Section } from '../../../../models/section/section.entity';
-import { FieldEntity } from '../../../../models/field/field.entity';
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
+import { PreferContact } from '../../enums/contact-values.enum';
+import { AdvertBaseClass } from '../../classes/advert-base.class';
 
 @Component({
     selector: 'app-advert-edit',
@@ -27,12 +27,13 @@ import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.ser
     styleUrls: ['./advert-edit.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdvertEditComponent implements OnInit {
+export class AdvertEditComponent extends AdvertBaseClass implements OnInit {
     form: FormGroup;
+    preferContact = PreferContact;
+    advert: Advert;
     @ViewChild('fields', { read: ViewContainerRef })
-    private fieldsFormContainerRef: ViewContainerRef;
-    private components: ComponentRef<AbstractFieldFormComponent<any, any>>[] = [];
-    private advert: Advert;
+    protected fieldsFormContainerRef: ViewContainerRef;
+    protected components: ComponentRef<AbstractFieldFormComponent<any, any>>[] = [];
 
     constructor(
         private advertService: AdvertService,
@@ -42,12 +43,15 @@ export class AdvertEditComponent implements OnInit {
         private route: ActivatedRoute,
         private cd: ChangeDetectorRef,
         private fb: FormBuilder,
-        private dynamicFieldService: DynamicFieldsService
-    ) {}
+        protected dynamicFieldService: DynamicFieldsService
+    ) {
+        super(dynamicFieldService);
+    }
 
     ngOnInit(): void {
         this.form = this.fb.group({
             title: ['', [Validators.required]],
+            preferredContact: [null],
         });
         this.route.paramMap
             .pipe(
@@ -59,8 +63,9 @@ export class AdvertEditComponent implements OnInit {
                     }
                 )
             )
-            .subscribe((model: Model) => {
+            .subscribe(() => {
                 this.form.controls.title.setValue(this.advert.title);
+                this.form.controls.preferredContact.setValue(this.advert.preferContact);
                 this.populateFormWithInputs(this.advert.sections);
                 this.cd.detectChanges();
             });
@@ -75,47 +80,5 @@ export class AdvertEditComponent implements OnInit {
                 this.router.navigate(['adverts', this.advert.id]);
             });
         }
-    }
-
-    private populateFormWithInputs(sections: Section[]): void {
-        sections.forEach(section => {
-            if (section.fields) {
-                section.fields.forEach(field => {
-                    const component = this.resolveFieldComponent(field);
-                    this.components.push(component);
-                });
-            }
-        });
-    }
-
-    private resolveFieldComponent(field: FieldEntity): ComponentRef<AbstractFieldFormComponent<any, any>> {
-        const service = this.dynamicFieldService.getService(field.type);
-        if (!service) {
-            return;
-        }
-        const resolver = service.getFormComponentResolver();
-        const component = this.fieldsFormContainerRef.createComponent(resolver);
-
-        component.instance.field = field;
-
-        // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < this.advert.sections.length; i++) {
-            if (this.advert.sections[i].fields) {
-                const advertField = this.advert.sections[i].fields.find(f => f.id === field.id);
-                if (advertField) {
-                    break;
-                }
-            }
-        }
-
-        component.changeDetectorRef.detectChanges();
-        return component;
-    }
-
-    private isValid(): boolean {
-        if (!this.form.valid) {
-            return false;
-        }
-        return this.components.every(component => component.instance.isFieldDataValid());
     }
 }
