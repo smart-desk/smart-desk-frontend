@@ -31,7 +31,7 @@ export class BookmarksComponent implements OnInit {
 
     private createGetAdvertResponse(bookmarks: Bookmark[]): GetAdvertsResponseDto {
         if (!bookmarks) {
-            return;
+            return new GetAdvertsResponseDto();
         }
         const getAdvertsResponseDto = new GetAdvertsResponseDto();
         getAdvertsResponseDto.adverts = bookmarks.map(bookmark => {

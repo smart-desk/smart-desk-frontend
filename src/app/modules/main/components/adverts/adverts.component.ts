@@ -69,7 +69,7 @@ export class AdvertsComponent implements OnChanges, OnInit, OnDestroy {
 
     private updateAdvertsWithBookmarks(advertsResponse: GetAdvertsResponseDto, bookmarks?: Bookmark[]): GetAdvertsResponseDto {
         if (!advertsResponse) {
-            return;
+            return {} as GetAdvertsResponseDto;
         }
         if (bookmarks) {
             advertsResponse.adverts.forEach(advert => {

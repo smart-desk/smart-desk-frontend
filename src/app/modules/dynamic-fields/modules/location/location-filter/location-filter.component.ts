@@ -52,7 +52,7 @@ export class LocationFilterComponent extends AbstractFieldFilterComponent<Locati
 
     getFilterValue(): Filter<LocationFilterDto> {
         if (!this.area) {
-            return null;
+            return {} as Filter<LocationFilterDto>;
         }
 
         const filterParams: LocationFilterDto = {
@@ -64,7 +64,7 @@ export class LocationFilterComponent extends AbstractFieldFilterComponent<Locati
     }
 
     dropFilters() {
-        this.area = null;
+        this.area = {} as Area;
         this.cd.detectChanges();
     }
 

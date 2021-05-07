@@ -10,7 +10,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
     providedIn: 'root',
 })
 export class LoginService {
-    private login = new BehaviorSubject<User>(undefined);
+    private login = new BehaviorSubject<User>({} as User);
     constructor(private userService: UserService, private modalService: NzModalService) {
         this.userService.getCurrentUser().subscribe(user => this.login.next(user));
     }
@@ -30,7 +30,7 @@ export class LoginService {
     logout(): void {
         localStorage.removeItem('token');
         this.userService.clearCurrentUser();
-        this.login.next(undefined);
+        this.login.next({} as User);
     }
 
     openModal(): Observable<User> {

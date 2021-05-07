@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { omitBy, isNull } from 'lodash';
 import { AbstractFieldFilterComponent } from '../../../models/abstract-field-filter.component';
 import { PriceParamsDto } from '../dto/price-params.dto';
@@ -31,11 +31,11 @@ export class PriceFilterComponent extends AbstractFieldFilterComponent<PricePara
             const form = this.excludeEmptyValues();
             return new Filter(this.field.id, form);
         }
-        return;
+        return {} as Filter<PriceFilterDto>;
     }
 
     dropFilters(): void {
-        this.filter = undefined;
+        this.filter = {} as Filter<PriceFilterDto>;
         this.updateFormValues();
     }
 
@@ -50,7 +50,7 @@ export class PriceFilterComponent extends AbstractFieldFilterComponent<PricePara
     }
 
     private emptyValues(): boolean {
-        return isNull(this.form.get('from').value) && isNull(this.form.get('to').value);
+        return isNull((this.form.get('from') as FormControl).value) && isNull((this.form.get('to') as FormControl).value);
     }
 
     private excludeEmptyValues(): PriceFilterDto {

@@ -126,7 +126,7 @@ export class LocationModalComponent implements AfterViewInit, OnDestroy, OnInit 
         if (isNil(place.geometry)) {
             return;
         }
-        this.area.title = place.formatted_address;
+        this.area.title = place.formatted_address as string;
         this.area.lat = place.geometry.location.lat();
         this.area.lng = place.geometry.location.lng();
         this.mapCircle.setCenter({ lng: this.area.lng, lat: this.area.lat });

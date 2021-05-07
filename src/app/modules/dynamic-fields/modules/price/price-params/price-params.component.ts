@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FieldService } from '../../../../../services';
 import { AbstractFieldParamsComponent } from '../../../models/abstract-field-params.component';
 import { OperationState } from '../../../../../models/operation-state.enum';
@@ -33,7 +33,7 @@ export class PriceParamsComponent extends AbstractFieldParamsComponent implement
     save(): void {
         this.state = OperationState.LOADING;
         this.save$.next(this.state);
-        this.field.filterable = this.form.get('filterable').value;
+        this.field.filterable = (this.form.get('filterable') as FormControl).value;
 
         this.field.params = {
             ...((this.field.params as object) || {}),

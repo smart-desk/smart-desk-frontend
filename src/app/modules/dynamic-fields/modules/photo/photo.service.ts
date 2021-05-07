@@ -5,7 +5,7 @@ import { PhotoParamsComponent } from './photo-params/photo-params.component';
 import { PhotoViewComponent } from './photo-view/photo-view.component';
 
 @Injectable()
-export class PhotoService implements AbstractFieldService {
+export class PhotoService implements Partial<AbstractFieldService> {
     constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
     getFormComponentResolver(): ComponentFactory<PhotoFormComponent> {
@@ -18,11 +18,6 @@ export class PhotoService implements AbstractFieldService {
 
     getViewComponentResolver(): ComponentFactory<PhotoViewComponent> {
         return this.componentFactoryResolver.resolveComponentFactory(PhotoViewComponent);
-    }
-
-    getFilterComponentResolver(): ComponentFactory<any> {
-        // todo set generic
-        return null;
     }
 
     getFieldName(): string {

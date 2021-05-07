@@ -74,8 +74,8 @@ export class PreviewComponent implements OnInit, OnDestroy {
         });
 
         drawer.afterOpen.subscribe(() => {
-            const instance = drawer.getContentComponent();
-            instance.create.subscribe(f => {
+            const instance = drawer.getContentComponent() as AddFieldComponent;
+            instance.create.subscribe((f: FieldEntity) => {
                 drawer.close();
                 this.onEdit(f);
             });
@@ -83,7 +83,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
     }
 
     drop(event: CdkDragDrop<string[]>) {
-        const paramSection = this.model.sections.find(section => section.type === 'params');
+        const paramSection = this.model.sections.find(section => section.type === 'params') as Section;
         moveItemInArray(paramSection.fields, event.previousIndex, event.currentIndex);
         paramSection.fields.forEach((field: FieldEntity, index: number) => (field.order = index + 1));
         const responseObservables = paramSection.fields.map(field => this.fieldService.updateField(field.id, field));
@@ -109,8 +109,8 @@ export class PreviewComponent implements OnInit, OnDestroy {
         const resolver = this.componentFactoryResolver.resolveComponentFactory(PreviewToolsComponent);
         const component = this.fieldsFormContainerRef.createComponent(resolver);
         component.instance.field = field;
-        component.instance.edit.subscribe(f => this.onEdit(f));
-        component.instance.delete.subscribe(f => this.onDelete(f));
+        component.instance.edit.subscribe((f: FieldEntity) => this.onEdit(f));
+        component.instance.delete.subscribe((f: FieldEntity) => this.onDelete(f));
         component.changeDetectorRef.detectChanges();
     }
 
@@ -128,7 +128,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
         });
 
         drawer.afterOpen.subscribe(() => {
-            const instance = drawer.getContentComponent();
+            const instance = drawer.getContentComponent() as FieldSettingsComponent;
             instance.fieldChange.subscribe(() => {
                 drawer.close();
                 this.update();

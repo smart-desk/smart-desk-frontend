@@ -31,16 +31,16 @@ export class RadioFilterComponent extends AbstractFieldFilterComponent<RadioPara
     getFilterValue(): Filter<RadioFilterDto> {
         if (this.form.touched || !this.emptyValues()) {
             const selectedRadios = this.form.value.radios
-                .map((checked, i) => (checked ? this.field.params.radios[i].value : null))
-                .filter(v => !!v);
+                .map((checked: boolean, i: number) => (checked ? this.field.params.radios[i].value : null))
+                .filter((v: any) => !!v);
 
             return new Filter(this.field.id, selectedRadios);
         }
-        return;
+        return {} as Filter<RadioFilterDto>;
     }
 
     dropFilters(): void {
-        this.filter = undefined;
+        this.filter = {} as Filter<RadioFilterDto>;
         this.form.patchValue(
             {
                 radios: this.field.params.radios.map(() => false),
@@ -50,10 +50,10 @@ export class RadioFilterComponent extends AbstractFieldFilterComponent<RadioPara
     }
 
     private emptyValues(): boolean {
-        return this.form.value.radios.every(checked => !checked);
+        return this.form.value.radios.every((checked: boolean) => !checked);
     }
 
     private getCheckboxState(radio: RadioItem): boolean {
-        return !!this.filter && !!this.filter.getFilterParams() && this.filter.getFilterParams().includes(radio.value);
+        return !!this.filter && !!this.filter?.getFilterParams() && this.filter.getFilterParams().includes(radio.value);
     }
 }

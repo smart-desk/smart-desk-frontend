@@ -77,7 +77,7 @@ export class AdvertService {
         return this.http.delete<Advert>(`/adverts/${id}`);
     }
 
-    private buildQueryParams(options: GetAdvertsDto): string {
+    private buildQueryParams(options: GetAdvertsDto | undefined): string {
         const optionsList: string[] = [];
         if (!options) {
             return '';

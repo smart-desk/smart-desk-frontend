@@ -25,14 +25,16 @@ export class UserComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        const userId = this.route.snapshot.paramMap.get('id');
-        this.userService.getUser(userId).subscribe(res => {
-            this.user = res;
-            this.cdr.detectChanges();
-        });
+        if (this.route.snapshot.paramMap.has('id')) {
+            const userId = this.route.snapshot.paramMap.get('id') as string;
+            this.userService.getUser(userId).subscribe(res => {
+                this.user = res;
+                this.cdr.detectChanges();
+            });
 
-        const options = new GetAdvertsDto();
-        options.user = userId;
+            const options = new GetAdvertsDto();
+            options.user = userId;
+        }
     }
 
     createBookmark(advertId: string) {

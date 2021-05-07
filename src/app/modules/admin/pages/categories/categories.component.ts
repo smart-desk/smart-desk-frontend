@@ -37,10 +37,10 @@ export class CategoriesComponent implements OnInit {
     }
 
     getModelName(node: NzTreeNode): string {
-        return this.models.find(model => model.id === node.origin.category.modelId).name;
+        return (this.models.find(model => model.id === node.origin.category.modelId) as Model).name;
     }
 
-    add(parentNode: NzTreeNode, newCategory: Category): void {
+    add(parentNode: NzTreeNode | null, newCategory: Category): void {
         if (parentNode) {
             const parentCategory = parentNode.origin.category as Category;
             newCategory.parentId = parentCategory.id;

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { FieldService } from '../../../../../services';
 import { FieldEntity } from '../../../../../models/field/field.entity';
@@ -37,7 +37,7 @@ export class InputTextParamsComponent extends AbstractFieldParamsComponent imple
     save(): void {
         this.state = OperationState.LOADING;
         this.save$.next(this.state);
-        this.field.filterable = this.form.get('filterable').value;
+        this.field.filterable = (this.form.get('filterable') as FormControl).value;
 
         this.field.params = {
             ...((this.field.params as object) || {}),

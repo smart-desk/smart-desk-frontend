@@ -4,7 +4,7 @@ import { TextFormComponent } from './text-form/text-form.component';
 import { TextParamsComponent } from './text-params/text-params.component';
 
 @Injectable()
-export class TextService implements AbstractFieldService {
+export class TextService implements Partial<AbstractFieldService> {
     constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
     getFormComponentResolver(): ComponentFactory<TextFormComponent> {
@@ -13,14 +13,6 @@ export class TextService implements AbstractFieldService {
 
     getParamsComponentResolver(): ComponentFactory<TextParamsComponent> {
         return this.componentFactoryResolver.resolveComponentFactory(TextParamsComponent);
-    }
-
-    getViewComponentResolver(): ComponentFactory<any> {
-        return undefined;
-    }
-
-    getFilterComponentResolver(): ComponentFactory<null> {
-        return null;
     }
 
     getFieldName(): string {

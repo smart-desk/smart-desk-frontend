@@ -30,7 +30,7 @@ export class ChatListComponent {
     // todo add pipe to avoid performance issues
     getConversationalist(chat: Chat): User {
         if (!this.currentUser) {
-            return;
+            return {} as User;
         }
 
         if (chat.user1 === this.currentUser.id) {

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AbstractFieldParamsComponent } from '../../../models/abstract-field-params.component';
 import { OperationState } from '../../../../../models/operation-state.enum';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { FieldService } from '../../../../../services';
 
 @Component({
@@ -30,8 +30,8 @@ export class LocationParamsComponent extends AbstractFieldParamsComponent implem
         this.state = OperationState.LOADING;
         this.save$.next(this.state);
 
-        this.field.title = this.form.get('title').value;
-        this.field.filterable = this.form.get('filterable').value;
+        this.field.title = (this.form.get('title') as FormControl).value;
+        this.field.filterable = (this.form.get('filterable') as FormControl).value;
 
         this.field.params = {
             ...this.form.getRawValue(),

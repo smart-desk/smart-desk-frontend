@@ -8,6 +8,6 @@ export class User {
     isPhoneVerified: boolean;
     email: string;
     status: UserStatus;
+    roles: string[];
     avatar?: string;
-    roles?: string[];
 }

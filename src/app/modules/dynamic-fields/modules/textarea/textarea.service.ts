@@ -5,7 +5,7 @@ import { TextareaParamsComponent } from './textarea-params/textarea-params.compo
 import { TextareaViewComponent } from './textarea-view/textarea-view.component';
 
 @Injectable()
-export class TextareaService implements AbstractFieldService {
+export class TextareaService implements Partial<AbstractFieldService> {
     constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
     getFormComponentResolver(): ComponentFactory<TextareaFormComponent> {
@@ -18,11 +18,6 @@ export class TextareaService implements AbstractFieldService {
 
     getViewComponentResolver(): ComponentFactory<TextareaViewComponent> {
         return this.componentFactoryResolver.resolveComponentFactory(TextareaViewComponent);
-    }
-
-    getFilterComponentResolver(): ComponentFactory<any> {
-        // todo set generic
-        return null;
     }
 
     getFieldName(): string {

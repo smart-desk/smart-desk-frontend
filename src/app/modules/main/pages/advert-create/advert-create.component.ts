@@ -28,7 +28,7 @@ import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.ser
 })
 export class AdvertCreateComponent implements OnInit {
     selectedCategoriesIds: string[] = [];
-    selectedCategory: Category = null;
+    selectedCategory: Category;
     categories: Category[] = [];
     categoryTree$ = new BehaviorSubject<NzCascaderOption[]>([]);
     loadingForm$ = new BehaviorSubject<boolean>(false);
@@ -71,7 +71,7 @@ export class AdvertCreateComponent implements OnInit {
         this.loadingForm$.next(true);
 
         const lastCategoryId = selectedCategoriesIds[selectedCategoriesIds.length - 1];
-        this.selectedCategory = this.categories.find(cat => cat.id === lastCategoryId);
+        this.selectedCategory = this.categories.find(cat => cat.id === lastCategoryId) as Category;
         const modelId = this.selectedCategory.modelId;
 
         if (this.fieldsFormContainerRef) {
@@ -121,7 +121,7 @@ export class AdvertCreateComponent implements OnInit {
     private resolveFieldComponent(field: FieldEntity): ComponentRef<AbstractFieldFormComponent<any, any>> {
         const service = this.dynamicFieldService.getService(field.type);
         if (!service) {
-            return;
+            return {} as ComponentRef<AbstractFieldFormComponent<any, any>>;
         }
         const resolver = service.getFormComponentResolver();
         const component = this.fieldsFormContainerRef.createComponent(resolver);

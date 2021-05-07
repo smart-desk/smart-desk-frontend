@@ -16,29 +16,29 @@ export class UpdateAdvertDto {
 }
 
 export class GetAdvertsDto {
-    page?: number = GetAdvertsDto.DEFAULT_PAGE;
-    limit?: number = GetAdvertsDto.DEFAULT_LIMIT;
-    search?: string = GetAdvertsDto.DEFAULT_SEARCH;
-    filters?: Filters = {};
-    user?: string;
+    page: number = GetAdvertsDto.DEFAULT_PAGE;
+    limit: number = GetAdvertsDto.DEFAULT_LIMIT;
+    search: string = GetAdvertsDto.DEFAULT_SEARCH;
+    filters: Filters = {};
+    user: string;
 
     static DEFAULT_PAGE = 1;
     static DEFAULT_LIMIT = 20;
     static DEFAULT_SEARCH = '';
 
-    get queryParamPage(): number {
+    get queryParamPage(): number | null {
         return this.page === GetAdvertsDto.DEFAULT_PAGE ? null : this.page;
     }
 
-    get queryParamLimit(): number {
+    get queryParamLimit(): number | null {
         return this.limit === GetAdvertsDto.DEFAULT_LIMIT ? null : this.limit;
     }
 
-    get queryParamSearch(): string {
+    get queryParamSearch(): string | null {
         return this.search === GetAdvertsDto.DEFAULT_SEARCH ? null : this.search;
     }
 
-    get queryParamFilters(): string {
+    get queryParamFilters(): string | null {
         return Object.keys(this.filters).length === 0 ? null : JSON.stringify(this.filters);
     }
 }

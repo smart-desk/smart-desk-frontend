@@ -13,5 +13,6 @@ export class DynamicFieldsService {
         if (this.fieldsMap.get(type)) {
             return this.injector.get(this.fieldsMap.get(type));
         }
+        return {} as AbstractFieldService;
     }
 }

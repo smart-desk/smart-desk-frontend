@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { FieldService } from '../../../../../services';
 import { FieldEntity } from '../../../../../models/field/field.entity';
@@ -44,7 +44,7 @@ export class TextareaParamsComponent extends AbstractFieldParamsComponent implem
             ...this.form.getRawValue(),
         };
         this.field.title = (this.field.params as TextareaParamsDto).label;
-        this.field.filterable = this.form.get('filterable').value;
+        this.field.filterable = (this.form.get('filterable') as FormControl).value;
 
         let request: Observable<FieldEntity>;
         if (this.field.id) {

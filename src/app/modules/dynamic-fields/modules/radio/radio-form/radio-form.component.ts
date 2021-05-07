@@ -21,12 +21,12 @@ export class RadioFormComponent extends AbstractFieldFormComponent<RadioEntity, 
 
     getFieldData(): any {
         if (this.field.data) {
-            this.field.data.value = this.form.get('value').value;
+            this.field.data.value = (this.form.get('value') as FormControl).value;
             return this.field.data;
         }
 
         const advertField = new RadioEntity();
-        advertField.value = this.form.get('value').value;
+        advertField.value = (this.form.get('value') as FormControl).value;
         advertField.field_id = this.field.id;
 
         return advertField;

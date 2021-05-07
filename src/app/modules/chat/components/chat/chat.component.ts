@@ -48,7 +48,7 @@ export class ChatComponent implements OnDestroy, OnInit {
             if (message.chatId === this.activeChat.id) {
                 this.messages = [...this.messages, message];
             } else {
-                const targetChat = this.chats.find(chat => chat.id === message.chatId);
+                const targetChat = this.chats.find(chat => chat.id === message.chatId) as Chat;
                 targetChat.unreadMessagesCount += 1;
                 this.chats = [...this.chats];
             }
@@ -116,7 +116,7 @@ export class ChatComponent implements OnDestroy, OnInit {
                 let activeChat: Chat;
 
                 if (this.advert) {
-                    activeChat = chats.find(c => c.advertId === this.advert.id);
+                    activeChat = chats.find(c => c.advertId === this.advert.id) as Chat;
                     if (!activeChat) {
                         const emptyChat = this.createEmptyChat();
                         activeChat = emptyChat;

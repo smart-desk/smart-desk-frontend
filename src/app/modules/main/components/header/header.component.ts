@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         if (this.route.snapshot.queryParamMap.has('search')) {
-            this.searchPhrase = this.route.snapshot.queryParamMap.get('search');
+            this.searchPhrase = this.route.snapshot.queryParamMap.get('search') as string;
             this.cd.detectChanges();
         }
 
@@ -50,7 +50,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
                     return of(null);
                 })
             )
-            .subscribe(category => {
+            .subscribe((category: Category) => {
                 this.currentCategory = category;
                 this.cd.detectChanges();
             });
@@ -70,7 +70,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.destroy$.complete();
     }
 
-    onCategorySelect($event): void {
+    onCategorySelect($event: string[]): void {
         const selectedCat = $event[$event.length - 1];
         if (this.currentCategory && this.currentCategory.id === selectedCat) {
             return;
@@ -104,7 +104,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.router.navigate(['/']);
     }
 
-    private navigateToGlobalSearchPage(searchPhrase) {
+    private navigateToGlobalSearchPage(searchPhrase: string) {
         this.router.navigate(['/', 'search'], { queryParams: { search: searchPhrase } });
     }
 }

@@ -51,7 +51,7 @@ export class AdvertEditComponent implements OnInit {
         });
         this.route.paramMap
             .pipe(
-                switchMap(paramMap => this.advertService.getAdvert(paramMap.get('advert_id'))),
+                switchMap(paramMap => this.advertService.getAdvert(paramMap.get('advert_id') as string)),
                 switchMap(
                     (advert: Advert): Observable<Model> => {
                         this.advert = advert;
@@ -91,7 +91,7 @@ export class AdvertEditComponent implements OnInit {
     private resolveFieldComponent(field: FieldEntity): ComponentRef<AbstractFieldFormComponent<any, any>> {
         const service = this.dynamicFieldService.getService(field.type);
         if (!service) {
-            return;
+            return {} as ComponentRef<AbstractFieldFormComponent<any, any>>;
         }
         const resolver = service.getFormComponentResolver();
         const component = this.fieldsFormContainerRef.createComponent(resolver);

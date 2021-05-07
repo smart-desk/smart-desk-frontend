@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FieldService } from '../../../../../services';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { FieldEntity } from '../../../../../models/field/field.entity';
 import { AbstractFieldParamsComponent } from '../../../models/abstract-field-params.component';
 import { OperationState } from '../../../../../models/operation-state.enum';
@@ -46,8 +46,8 @@ export class CheckboxParamsComponent extends AbstractFieldParamsComponent implem
         this.updateState(OperationState.LOADING);
 
         const checkboxes = this.convertControlsToCheckboxes(this.checkboxes.getRawValue());
-        const title = this.form.get('title').value;
-        const filterable = this.form.get('filterable').value;
+        const title = (this.form.get('title') as FormControl).value;
+        const filterable = (this.form.get('filterable') as FormControl).value;
 
         this.field = {
             ...(this.field || {}),

@@ -18,5 +18,5 @@ export class FieldEntity {
     filterable: boolean;
     params: unknown;
     data: unknown;
-    order?: number;
+    order: number;
 }

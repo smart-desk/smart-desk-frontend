@@ -49,13 +49,14 @@ export class AdvertCardComponent implements OnInit {
     private getThumbSrc(): string {
         const section = this.advert.sections.find(s => s.type === SectionType.PARAMS);
         if (!section || !section.fields.length) {
-            return;
+            return '';
         }
 
         const photoField = section.fields.find(f => f.type === FieldType.PHOTO);
         if (photoField && photoField.data && (photoField.data as PhotoEntity).value) {
             return (photoField.data as PhotoEntity).value[0];
         }
+        return '';
     }
 
     private getTitle(): string {
@@ -69,21 +70,21 @@ export class AdvertCardComponent implements OnInit {
     private getPrice(): string {
         const priceSection = this.advert.sections.find(s => s.type === SectionType.PRICE);
         if (!priceSection) {
-            return;
+            return '';
         }
         const priceField = priceSection.fields.find(f => f.type === FieldType.PRICE);
         if (!priceField) {
-            return;
+            return '';
         }
 
         if (!priceField.data || !priceField.params) {
-            return;
+            return '';
         }
 
         const price = priceField.data && (priceField.data as PriceEntity).value;
         const currency = priceField.params && (priceField.params as PriceParamsDto).currency;
         if (!price || !currency) {
-            return;
+            return '';
         }
 
         return roundPrice(price) + getCurrencySymbolByCode(currency);
