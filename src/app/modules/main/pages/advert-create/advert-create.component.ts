@@ -98,8 +98,8 @@ export class AdvertCreateComponent extends AdvertFormBaseClass implements OnInit
         }
 
         const advert = new CreateAdvertDto();
-        advert.title = this.formDefaultFields.get('title').value;
-        advert.preferContact = this.formDefaultFields.get('preferredContact').value;
+        advert.title = (this.formDefaultFields.get('title') as FormControl).value;
+        advert.preferContact = (this.formDefaultFields.get('preferredContact') as FormControl).value;
         advert.category_id = this.selectedCategory.id;
         advert.model_id = this.selectedCategory.modelId;
         advert.fields = this.components.map(component => component.instance.getFieldData()).filter(value => !!value);

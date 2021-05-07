@@ -28,7 +28,7 @@ export abstract class AdvertFormBaseClass {
     protected resolveFieldComponent(field: FieldEntity): ComponentRef<AbstractFieldFormComponent<any, any>> {
         const service = this.dynamicFieldService.getService(field.type);
         if (!service) {
-            return;
+            return {} as ComponentRef<AbstractFieldFormComponent<any, any>>;
         }
         const resolver = service.getFormComponentResolver();
         const component = this.fieldsFormContainerRef.createComponent(resolver);
