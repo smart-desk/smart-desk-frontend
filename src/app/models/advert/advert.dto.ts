@@ -7,12 +7,14 @@ export class CreateAdvertDto {
     category_id: string;
     model_id: string;
     title: string;
+    preferContact: string;
     fields: DynamicFieldsBaseCreateDto[];
 }
 
 export class UpdateAdvertDto {
     title: string;
     fields: DynamicFieldsBaseUpdateDto[];
+    preferContact: string;
 }
 
 export class GetAdvertsDto {

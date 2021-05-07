@@ -15,9 +15,10 @@ import { AbstractFieldFormComponent } from '../../../dynamic-fields/models/abstr
 import { AdvertService, CategoryService, ModelService } from '../../../../services';
 import { Category } from '../../../../models/category/category.entity';
 import { CreateAdvertDto } from '../../../../models/advert/advert.dto';
-import { Section } from '../../../../models/section/section.entity';
-import { FieldEntity } from '../../../../models/field/field.entity';
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { PreferContact } from '../../enums/contact-values.enum';
+import { AdvertFormBaseClass } from '../../classes/advert-form-base.class';
 
 // todo check subscriptions
 @Component({
@@ -26,20 +27,18 @@ import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.ser
     styleUrls: ['./advert-create.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdvertCreateComponent implements OnInit {
+export class AdvertCreateComponent extends AdvertFormBaseClass implements OnInit {
+    preferContact = PreferContact;
+    formDefaultFields: FormGroup;
     selectedCategoriesIds: string[] = [];
     selectedCategory: Category = null;
     categories: Category[] = [];
     categoryTree$ = new BehaviorSubject<NzCascaderOption[]>([]);
     loadingForm$ = new BehaviorSubject<boolean>(false);
     loadingCategories$ = new BehaviorSubject<boolean>(true);
-
-    title = '';
-
-    private components: ComponentRef<AbstractFieldFormComponent<any, any>>[] = [];
-
     @ViewChild('fields', { read: ViewContainerRef })
-    private fieldsFormContainerRef: ViewContainerRef;
+    protected fieldsFormContainerRef: ViewContainerRef;
+    protected components: ComponentRef<AbstractFieldFormComponent<any, any>>[] = [];
 
     constructor(
         private modelService: ModelService,
@@ -47,10 +46,17 @@ export class AdvertCreateComponent implements OnInit {
         private categoryService: CategoryService,
         private advertService: AdvertService,
         private router: Router,
-        private dynamicFieldService: DynamicFieldsService
-    ) {}
+        protected dynamicFieldService: DynamicFieldsService
+    ) {
+        super(dynamicFieldService);
+    }
 
     ngOnInit(): void {
+        this.formDefaultFields = new FormGroup({
+            title: new FormControl(undefined, [Validators.required]),
+            preferredContact: new FormControl(null),
+        });
+
         this.categoryService
             .getCategories()
             .pipe(
@@ -92,7 +98,8 @@ export class AdvertCreateComponent implements OnInit {
         }
 
         const advert = new CreateAdvertDto();
-        advert.title = this.title;
+        advert.title = this.formDefaultFields.get('title').value;
+        advert.preferContact = this.formDefaultFields.get('preferredContact').value;
         advert.category_id = this.selectedCategory.id;
         advert.model_id = this.selectedCategory.modelId;
         advert.fields = this.components.map(component => component.instance.getFieldData()).filter(value => !!value);
@@ -105,40 +112,5 @@ export class AdvertCreateComponent implements OnInit {
                 // todo server validation message
             }
         );
-    }
-
-    private populateFormWithInputs(sections: Section[]): void {
-        sections.forEach(section => {
-            if (section.fields) {
-                section.fields.forEach(field => {
-                    const component = this.resolveFieldComponent(field);
-                    this.components.push(component);
-                });
-            }
-        });
-    }
-
-    private resolveFieldComponent(field: FieldEntity): ComponentRef<AbstractFieldFormComponent<any, any>> {
-        const service = this.dynamicFieldService.getService(field.type);
-        if (!service) {
-            return;
-        }
-        const resolver = service.getFormComponentResolver();
-        const component = this.fieldsFormContainerRef.createComponent(resolver);
-
-        // add inputs
-        component.instance.field = field;
-
-        // run onInit
-        component.changeDetectorRef.detectChanges();
-
-        return component;
-    }
-
-    private isValid(): boolean {
-        if (!this.title) {
-            return false;
-        }
-        return this.components.every(component => component.instance.isFieldDataValid());
     }
 }
