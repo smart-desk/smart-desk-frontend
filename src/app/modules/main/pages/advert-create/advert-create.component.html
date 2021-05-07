@@ -22,17 +22,21 @@
 </ng-template>
 
 <ng-container *ngIf="(loadingForm$ | async) === false && selectedCategoriesIds && selectedCategoriesIds.length">
-    <form nz-form nzLayout="vertical" class="title-input">
+    <form [formGroup]="formDefaultFields" nz-form nzLayout="vertical" class="title-input">
         <nz-form-item>
             <nz-form-label [nzRequired]="true">Заголовок</nz-form-label>
             <nz-form-control nzErrorTip="Обязательное поле">
-                <input
-                    nz-input
-                    [(ngModel)]="title"
-                    [required]="true"
-                    [placeholder]="'Введите заголовок'"
-                    [ngModelOptions]="{ standalone: true }"
-                />
+                <input nz-input formControlName="title" [required]="true" [placeholder]="'Введите заголовок'" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>Предпочитаемый способ связи</nz-form-label>
+            <nz-form-control>
+                <nz-radio-group formControlName="preferredContact">
+                    <label nz-radio [nzValue]="preferContact.PHONE">Телефон</label>
+                    <label nz-radio [nzValue]="preferContact.CHAT">Чат</label>
+                    <label nz-radio [nzValue]="null">Любой</label>
+                </nz-radio-group>
             </nz-form-control>
         </nz-form-item>
     </form>
