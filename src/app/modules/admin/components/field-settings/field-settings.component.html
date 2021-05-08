@@ -1,5 +1,4 @@
 <ng-container #paramsForm></ng-container>
 <div class="buttons">
-    <button nz-button nzType="primary" (click)="onSave()">Сохранить</button>
+    <button nz-button nzType="primary" (click)="onSave()" [nzLoading]="state === operationState.LOADING">Сохранить</button>
 </div>
-

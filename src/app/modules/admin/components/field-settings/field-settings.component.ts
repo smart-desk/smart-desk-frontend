@@ -26,10 +26,11 @@ export class FieldSettingsComponent implements AfterViewInit {
     @Input()
     field: FieldEntity;
 
-    // todo operation state
-
     @Output()
-    fieldChange = new EventEmitter();
+    fieldChange = new EventEmitter<OperationState>();
+
+    operationState = OperationState;
+    state: OperationState;
 
     @ViewChild('paramsForm', { read: ViewContainerRef })
     private paramsFormContainer: ViewContainerRef;
@@ -53,16 +54,23 @@ export class FieldSettingsComponent implements AfterViewInit {
     }
 
     onSave(): void {
+        this.updateState(OperationState.LOADING);
         const field = this.component.instance.getField();
         const request = field.id ? this.fieldService.updateField(field.id, field) : this.fieldService.createField(field);
 
         request.subscribe(
             () => {
-                this.fieldChange.emit(OperationState.SUCCESS);
+                this.updateState(OperationState.SUCCESS);
             },
             () => {
-                this.fieldChange.emit(OperationState.ERROR);
+                this.updateState(OperationState.ERROR);
             }
         );
+    }
+
+    private updateState(state: OperationState): void {
+        this.state = state;
+        this.fieldChange.emit(this.state);
+        this.cdr.detectChanges();
     }
 }
