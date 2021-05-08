@@ -1,5 +1,5 @@
 <div class="checkbox">
-    <form nz-form [nzLayout]="'vertical'" [formGroup]="form" (ngSubmit)="save()">
+    <form nz-form [nzLayout]="'vertical'" [formGroup]="form">
         <nz-form-item>
             <nz-form-label nzFor="title">Заголовок</nz-form-label>
             <nz-form-control>
@@ -19,6 +19,7 @@
                 </nz-form-control>
             </nz-form-item>
         </ng-container>
+        <button nz-button type="submit" nzType="link" (click)="addCheckbox()">Добавить чекбокс</button>
 
         <nz-form-item>
             <label nz-checkbox formControlName="filterable">Фильтровать по полю</label>
@@ -26,10 +27,5 @@
         <nz-form-item>
             <label nz-checkbox formControlName="required">Обязательное поле</label>
         </nz-form-item>
-
-        <div class="buttons">
-            <button nz-button type="submit" nzType="link" (click)="addCheckbox()">Добавить</button>
-            <button nz-button type="submit" nzType="primary">Save</button>
-        </div>
     </form>
 </div>

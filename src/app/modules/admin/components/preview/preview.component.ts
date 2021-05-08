@@ -69,7 +69,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
         const drawer = this.drawerService.create({
             nzContent: AddFieldComponent,
             nzContentParams: { model: this.model },
-            nzTitle: 'New Field',
+            nzTitle: 'Новое поле',
             ...DRAWER_BASE_CONFIG,
         });
 

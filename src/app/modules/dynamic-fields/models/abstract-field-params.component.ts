@@ -1,22 +1,18 @@
-import { Directive, Input, OnDestroy } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { OperationState } from '../../../models/operation-state.enum';
-import { Field } from "../../../models/field/field";
+import { Directive, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Subject } from 'rxjs';
+import { Field } from '../../../models/field/field';
 
 @Directive()
 // tslint:disable-next-line:directive-class-suffix
 export abstract class AbstractFieldParamsComponent<TParams> implements OnDestroy {
     @Input() field: Field<any, TParams>;
+    @Output() save = new EventEmitter<Field<any, TParams>>();
 
-    protected save$ = new Subject<OperationState>();
     protected delete$ = new Subject<AbstractFieldParamsComponent<TParams>>();
 
-    get onSave$(): Observable<OperationState> {
-        return this.save$.asObservable();
-    }
+    abstract getField(): Field<any, TParams>;
 
     ngOnDestroy() {
         this.delete$.complete();
-        this.save$.complete();
     }
 }

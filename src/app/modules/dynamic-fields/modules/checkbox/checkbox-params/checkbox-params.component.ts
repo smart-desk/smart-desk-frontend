@@ -1,10 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { FieldService } from '../../../../../services';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FieldEntity } from '../../../../../models/field/field.entity';
 import { AbstractFieldParamsComponent } from '../../../models/abstract-field-params.component';
-import { OperationState } from '../../../../../models/operation-state.enum';
 import { CheckboxItem, CheckboxParamsDto } from '../dto/checkbox-params.dto';
 import { Field } from '../../../../../models/field/field';
 
@@ -16,8 +13,6 @@ import { Field } from '../../../../../models/field/field';
 })
 export class CheckboxParamsComponent extends AbstractFieldParamsComponent<CheckboxParamsDto> implements OnInit {
     form: FormGroup;
-
-    state: OperationState;
 
     constructor(private fieldService: FieldService, private cd: ChangeDetectorRef, private fb: FormBuilder) {
         super();
@@ -45,50 +40,19 @@ export class CheckboxParamsComponent extends AbstractFieldParamsComponent<Checkb
         this.checkboxes.push(this.createCheckboxControl());
     }
 
-    save(): void {
-        this.updateState(OperationState.LOADING);
-
+    getField(): Field<unknown, CheckboxParamsDto> {
         const checkboxes = this.convertControlsToCheckboxes(this.checkboxes.getRawValue());
-        const title = this.form.get('title').value;
-        const filterable = this.form.get('filterable').value;
-        const required = this.form.get('required').value;
 
-        this.field = {
-            ...(this.field || {}),
-            title,
-            required,
-            filterable,
-            params: {
-                ...((this.field.params as object) || {}),
-                ...this.form.getRawValue(),
-                checkboxes,
-            },
-        } as Field<any, CheckboxParamsDto>;
+        this.field.title = this.form.get('title').value;
+        this.field.required = this.form.get('filterable').value;
+        this.field.filterable = this.form.get('required').value;
+        this.field.params = { checkboxes };
 
-        let request: Observable<FieldEntity>;
-        if (this.field.id) {
-            request = this.fieldService.updateField(this.field.id, this.field);
-        } else {
-            request = this.fieldService.createField(this.field);
-        }
-        request.subscribe(
-            () => {
-                this.updateState(OperationState.SUCCESS);
-                this.cd.detectChanges();
-            },
-            () => {
-                this.updateState(OperationState.ERROR);
-            }
-        );
+        return this.field;
     }
 
     deleteCheckbox(i: number): void {
         this.checkboxes.removeAt(i);
-    }
-
-    private updateState(state: OperationState): void {
-        this.state = state;
-        this.save$.next(this.state);
     }
 
     private createCheckboxControl(checkbox?: CheckboxItem): FormGroup {
