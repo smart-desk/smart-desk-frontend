@@ -125,7 +125,7 @@ export class LocationFormComponent extends AbstractFieldFormComponent<LocationEn
         if (place.geometry === undefined || place.geometry === null) {
             return;
         }
-        this.location.title = place.formatted_address as string;
+        this.location.title = place.formatted_address || '';
         this.location.lat = place.geometry.location.lat();
         this.location.lng = place.geometry.location.lng();
         this.cdr.detectChanges();

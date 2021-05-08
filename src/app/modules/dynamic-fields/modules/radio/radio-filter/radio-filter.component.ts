@@ -28,7 +28,7 @@ export class RadioFilterComponent extends AbstractFieldFilterComponent<RadioPara
         return this.form.get('radios') as FormArray;
     }
 
-    getFilterValue(): Filter<RadioFilterDto> {
+    getFilterValue(): Filter<RadioFilterDto> | null {
         if (this.form.touched || !this.emptyValues()) {
             const selectedRadios = this.form.value.radios
                 .map((checked: boolean, i: number) => (checked ? this.field.params.radios[i].value : null))
@@ -36,11 +36,11 @@ export class RadioFilterComponent extends AbstractFieldFilterComponent<RadioPara
 
             return new Filter(this.field.id, selectedRadios);
         }
-        return {} as Filter<RadioFilterDto>;
+        return null;
     }
 
     dropFilters(): void {
-        this.filter = {} as Filter<RadioFilterDto>;
+        this.filter = null;
         this.form.patchValue(
             {
                 radios: this.field.params.radios.map(() => false),

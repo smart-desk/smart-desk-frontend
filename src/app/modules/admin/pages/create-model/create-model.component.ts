@@ -23,8 +23,7 @@ export class CreateModelComponent {
     createModel(): void {
         this.modelsService
             .createModel({
-                // @ts-ignore
-                name: this.modelForm.get('name').value,
+                name: this.modelForm.get('name')?.value,
             })
             .subscribe(model => {
                 this.router.navigate(['admin', 'models', 'edit', model.id]);

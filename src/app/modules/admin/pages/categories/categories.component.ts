@@ -37,12 +37,12 @@ export class CategoriesComponent implements OnInit {
     }
 
     getModelName(node: NzTreeNode): string {
-        return (this.models.find(model => model.id === node.origin.category.modelId) as Model).name;
+        return this.models.find(model => model.id === node.origin.category.modelId)?.name || '';
     }
 
     add(parentNode: NzTreeNode | null, newCategory: Category): void {
         if (parentNode) {
-            const parentCategory = parentNode.origin.category as Category;
+            const parentCategory = parentNode.origin.category;
             newCategory.parentId = parentCategory.id;
         }
         this.categoryService.createCategory(newCategory).subscribe(res => {
@@ -65,7 +65,7 @@ export class CategoriesComponent implements OnInit {
     }
 
     delete(node: NzTreeNode): void {
-        const category = node.origin.category as Category;
+        const category = node.origin.category;
         this.categoryService.deleteCategory(category.id).subscribe(() => {
             if (node.getParentNode()) {
                 node.remove();

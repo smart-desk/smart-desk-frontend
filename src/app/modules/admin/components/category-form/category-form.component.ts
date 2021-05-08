@@ -29,13 +29,13 @@ export class CategoryFormComponent implements OnInit {
 
     submit(): void {
         if (this.category) {
-            this.category.name = (this.form.get('name') as FormControl).value;
-            this.category.modelId = (this.form.get('model') as FormControl).value.id;
+            this.category.name = this.form.get('name')?.value;
+            // todo: что лежит в modelId
+            this.category.modelId = this.form.get('model')?.value?.id;
         } else {
-            this.category = {
-                name: (this.form.get('name') as FormControl).value as string,
-                modelId: (this.form.get('model') as FormControl).value.id,
-            } as Category;
+            this.category = new Category();
+            this.category.name = this.form.get('name')?.value;
+            this.category.modelId = this.form.get('model')?.value.id;
         }
 
         this.save.emit(this.category);

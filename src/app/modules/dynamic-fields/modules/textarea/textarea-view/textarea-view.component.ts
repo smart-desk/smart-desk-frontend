@@ -19,7 +19,7 @@ export class TextareaViewComponent extends AbstractFieldViewComponent<TextareaEn
 
     ngOnInit() {
         const value = this.field?.data?.value;
-        this.text = this.sanitizer.sanitize(SecurityContext.HTML, value || '') as string;
+        this.text = this.sanitizer.sanitize(SecurityContext.HTML, value || '') || '';
         this.cdr.detectChanges();
     }
 }

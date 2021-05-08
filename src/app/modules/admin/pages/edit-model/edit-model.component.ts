@@ -25,11 +25,9 @@ export class EditModelComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.route.paramMap
-            .pipe(switchMap((params: ParamMap) => this.modelsService.getModel(params.get('id') as string)))
-            .subscribe(model => {
-                this.model = model;
-                this.cd.detectChanges();
-            });
+        this.route.paramMap.pipe(switchMap((params: ParamMap) => this.modelsService.getModel(params.get('id') || ''))).subscribe(model => {
+            this.model = model;
+            this.cd.detectChanges();
+        });
     }
 }

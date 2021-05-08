@@ -43,8 +43,10 @@ export class AdvertsComponent implements OnChanges, OnInit, OnDestroy {
     }
     ngOnInit(): void {
         this.bookmarksStoreService.bookmarks$.pipe(takeUntil(this.destroy$)).subscribe(bookmarks => {
-            this.advertsResponse = this.updateAdvertsWithBookmarks(this.advertsResponse, bookmarks);
-            this.cd.detectChanges();
+            if (this.advertsResponse) {
+                this.advertsResponse = this.updateAdvertsWithBookmarks(this.advertsResponse, bookmarks);
+                this.cd.detectChanges();
+            }
         });
     }
 
@@ -68,9 +70,6 @@ export class AdvertsComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private updateAdvertsWithBookmarks(advertsResponse: GetAdvertsResponseDto, bookmarks?: Bookmark[]): GetAdvertsResponseDto {
-        if (!advertsResponse) {
-            return {} as GetAdvertsResponseDto;
-        }
         if (bookmarks) {
             advertsResponse.adverts.forEach(advert => {
                 const bookmarkAdvert = bookmarks.find(bookmark => bookmark.advert.id === advert.id);

@@ -2,9 +2,10 @@ import { ComponentFactory, ComponentFactoryResolver, Injectable } from '@angular
 import { AbstractFieldService } from '../../models/abstract-field.service';
 import { TextFormComponent } from './text-form/text-form.component';
 import { TextParamsComponent } from './text-params/text-params.component';
+import { AbstractFieldFilterComponent } from '../../models/abstract-field-filter.component';
 
 @Injectable()
-export class TextService implements Partial<AbstractFieldService> {
+export class TextService implements AbstractFieldService {
     constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
     getFormComponentResolver(): ComponentFactory<TextFormComponent> {
@@ -17,5 +18,13 @@ export class TextService implements Partial<AbstractFieldService> {
 
     getFieldName(): string {
         return 'Text';
+    }
+
+    getFilterComponentResolver(): null {
+        return null;
+    }
+
+    getViewComponentResolver(): null {
+        return null;
     }
 }

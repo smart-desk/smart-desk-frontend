@@ -28,7 +28,7 @@ export class CheckboxFilterComponent extends AbstractFieldFilterComponent<Checkb
         return this.form.get('checkboxes') as FormArray;
     }
 
-    getFilterValue(): Filter<CheckboxFilterDto> {
+    getFilterValue(): Filter<CheckboxFilterDto> | null {
         if (this.form.touched || !this.emptyValues()) {
             const selectedCbs = this.form.value.checkboxes
                 .map((checked: boolean, i: number) => (checked ? this.field.params.checkboxes[i].value : null))
@@ -36,11 +36,11 @@ export class CheckboxFilterComponent extends AbstractFieldFilterComponent<Checkb
 
             return new Filter(this.field.id, selectedCbs);
         }
-        return {} as Filter<CheckboxFilterDto>;
+        return null;
     }
 
     dropFilters(): void {
-        this.filter = {} as Filter<CheckboxFilterDto>;
+        this.filter = null;
         this.form.patchValue(
             {
                 checkboxes: this.field.params.checkboxes.map(() => false),

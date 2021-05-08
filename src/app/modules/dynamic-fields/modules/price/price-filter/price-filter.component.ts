@@ -26,16 +26,16 @@ export class PriceFilterComponent extends AbstractFieldFilterComponent<PricePara
         });
     }
 
-    getFilterValue(): Filter<PriceFilterDto> {
+    getFilterValue(): Filter<PriceFilterDto> | null {
         if (this.form.touched || !this.emptyValues()) {
             const form = this.excludeEmptyValues();
             return new Filter(this.field.id, form);
         }
-        return {} as Filter<PriceFilterDto>;
+        return null;
     }
 
     dropFilters(): void {
-        this.filter = {} as Filter<PriceFilterDto>;
+        this.filter = null;
         this.updateFormValues();
     }
 

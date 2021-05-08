@@ -13,7 +13,7 @@ import { Bookmark } from '../../../../models/bookmarks/bookmark.entity';
 })
 export class BookmarksComponent implements OnInit {
     user: User;
-    advertDto: GetAdvertsResponseDto;
+    advertDto: GetAdvertsResponseDto | null;
 
     constructor(private bookmarksStoreService: BookmarksStoreService, private cd: ChangeDetectorRef, private userService: UserService) {}
 
@@ -29,9 +29,9 @@ export class BookmarksComponent implements OnInit {
         });
     }
 
-    private createGetAdvertResponse(bookmarks: Bookmark[]): GetAdvertsResponseDto {
+    private createGetAdvertResponse(bookmarks: Bookmark[]): GetAdvertsResponseDto | null {
         if (!bookmarks) {
-            return new GetAdvertsResponseDto();
+            return null;
         }
         const getAdvertsResponseDto = new GetAdvertsResponseDto();
         getAdvertsResponseDto.adverts = bookmarks.map(bookmark => {

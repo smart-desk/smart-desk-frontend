@@ -26,9 +26,9 @@ export class ChatMessagesComponent {
 
     getUserAvatar(userId: string): string {
         if (this.chat.user1 === userId) {
-            return this.chat.user1Data?.avatar as string;
+            return this.chat.user1Data?.avatar || '';
         }
-        return this.chat.user2Data?.avatar as string;
+        return this.chat.user2Data?.avatar || '';
     }
 
     getUserName(userId: string): string {

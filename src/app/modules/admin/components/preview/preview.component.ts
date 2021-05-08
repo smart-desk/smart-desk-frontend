@@ -66,7 +66,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
     }
 
     addField(): void {
-        const drawer = this.drawerService.create({
+        const drawer = this.drawerService.create<AddFieldComponent>({
             nzContent: AddFieldComponent,
             nzContentParams: { model: this.model },
             nzTitle: 'New Field',
@@ -74,21 +74,23 @@ export class PreviewComponent implements OnInit, OnDestroy {
         });
 
         drawer.afterOpen.subscribe(() => {
-            const instance = drawer.getContentComponent() as AddFieldComponent;
-            instance.create.subscribe((f: FieldEntity) => {
+            const instance = drawer.getContentComponent();
+            instance?.create.subscribe((f: FieldEntity) => {
                 drawer.close();
                 this.onEdit(f);
             });
         });
     }
 
-    drop(event: CdkDragDrop<string[]>) {
-        const paramSection = this.model.sections.find(section => section.type === 'params') as Section;
-        moveItemInArray(paramSection.fields, event.previousIndex, event.currentIndex);
-        paramSection.fields.forEach((field: FieldEntity, index: number) => (field.order = index + 1));
-        const responseObservables = paramSection.fields.map(field => this.fieldService.updateField(field.id, field));
-        this.populateFormWithInputs(this.model.sections);
-        forkJoin(responseObservables).pipe(takeUntil(this.destroy$)).subscribe();
+    drop(event: CdkDragDrop<string[]>): void {
+        const paramSection = this.model.sections.find(section => section.type === 'params');
+        if (paramSection) {
+            moveItemInArray(paramSection.fields, event.previousIndex, event.currentIndex);
+            paramSection.fields.forEach((field: FieldEntity, index: number) => (field.order = index + 1));
+            const responseObservables = paramSection.fields.map(field => this.fieldService.updateField(field.id, field));
+            this.populateFormWithInputs(this.model.sections);
+            forkJoin(responseObservables).pipe(takeUntil(this.destroy$)).subscribe();
+        }
     }
 
     private populateFormWithInputs(sections: Section[]): void {
@@ -107,7 +109,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
 
     private resolveFieldComponent(field: FieldEntity): void {
         const resolver = this.componentFactoryResolver.resolveComponentFactory(PreviewToolsComponent);
-        const component = this.fieldsFormContainerRef.createComponent(resolver);
+        const component = this.fieldsFormContainerRef.createComponent<PreviewToolsComponent>(resolver);
         component.instance.field = field;
         component.instance.edit.subscribe((f: FieldEntity) => this.onEdit(f));
         component.instance.delete.subscribe((f: FieldEntity) => this.onDelete(f));
@@ -120,7 +122,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
             return;
         }
 
-        const drawer = this.drawerService.create({
+        const drawer = this.drawerService.create<FieldSettingsComponent>({
             nzContent: FieldSettingsComponent,
             nzTitle: service.getFieldName(),
             nzContentParams: { field },
@@ -128,8 +130,8 @@ export class PreviewComponent implements OnInit, OnDestroy {
         });
 
         drawer.afterOpen.subscribe(() => {
-            const instance = drawer.getContentComponent() as FieldSettingsComponent;
-            instance.fieldChange.subscribe(() => {
+            const instance = drawer.getContentComponent();
+            instance?.fieldChange.subscribe(() => {
                 drawer.close();
                 this.update();
             });

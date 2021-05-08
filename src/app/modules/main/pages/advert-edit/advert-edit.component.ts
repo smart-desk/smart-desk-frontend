@@ -55,7 +55,7 @@ export class AdvertEditComponent extends AdvertFormBaseClass implements OnInit {
         });
         this.route.paramMap
             .pipe(
-                switchMap(paramMap => this.advertService.getAdvert(paramMap.get('advert_id') as string)),
+                switchMap(paramMap => this.advertService.getAdvert(paramMap.get('advert_id') || '')),
                 switchMap(
                     (advert: Advert): Observable<Model> => {
                         this.advert = advert;

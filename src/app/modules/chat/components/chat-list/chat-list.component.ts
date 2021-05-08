@@ -28,9 +28,9 @@ export class ChatListComponent {
     }
 
     // todo add pipe to avoid performance issues
-    getConversationalist(chat: Chat): User {
+    getConversationalist(chat: Chat): User | undefined {
         if (!this.currentUser) {
-            return {} as User;
+            return;
         }
 
         if (chat.user1 === this.currentUser.id) {

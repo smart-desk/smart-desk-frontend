@@ -5,7 +5,7 @@ import { PhotoParamsComponent } from './photo-params/photo-params.component';
 import { PhotoViewComponent } from './photo-view/photo-view.component';
 
 @Injectable()
-export class PhotoService implements Partial<AbstractFieldService> {
+export class PhotoService implements AbstractFieldService {
     constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
     getFormComponentResolver(): ComponentFactory<PhotoFormComponent> {
@@ -22,5 +22,9 @@ export class PhotoService implements Partial<AbstractFieldService> {
 
     getFieldName(): string {
         return 'Photo';
+    }
+
+    getFilterComponentResolver(): null {
+        return null;
     }
 }

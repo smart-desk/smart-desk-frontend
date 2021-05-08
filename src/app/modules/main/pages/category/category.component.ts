@@ -18,7 +18,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
     advertsResponse: GetAdvertsResponseDto;
     model: Model;
     category: Category;
-    filters: Filters;
+    filters: Filters | undefined;
     private destroy$ = new Subject();
 
     constructor(
@@ -37,9 +37,11 @@ export class CategoryComponent implements OnInit, OnDestroy {
             .pipe(
                 takeUntil(this.destroy$),
                 switchMap(paramMap => {
-                    const categoryId = paramMap.get('category_id') as string;
+                    const categoryId = paramMap.get('category_id') || '';
                     const options = this.advertDataService.parseQueryParams(this.route.snapshot.queryParamMap);
-                    this.filters = options.filters;
+                    if (options) {
+                        this.filters = options.filters;
+                    }
 
                     this.advertDataService.loadAdverts(categoryId, options);
                     return this.categoryService.getCategory(categoryId);

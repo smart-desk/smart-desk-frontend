@@ -58,7 +58,7 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
         const filters = this.filterComponents
             .map(c => c.instance.getFilterValue())
             .filter(f => !!f)
-            .reduce((prev, cur) => ({ ...prev, ...cur.getFilterObject() }), {});
+            .reduce((prev, cur) => ({ ...prev, ...cur?.getFilterObject() }), {});
 
         this.advertDataService.applyFilters(filters);
     }
@@ -138,13 +138,15 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
         this.locationContainerRef.clear();
     }
 
-    private getFilterForField(fieldId: string): Filter<any> {
-        if (this.filters) {
-            return {} as Filter<any>;
+    private getFilterForField(fieldId: string): Filter<any> | null {
+        if (!this.filters) {
+            return null;
         }
 
-        return Object.entries(this.filters)
-            .map(([key, params]) => new Filter(key, params))
-            .find(filter => filter.getFieldId() === fieldId) as Filter<any>;
+        return (
+            Object.entries(this.filters)
+                .map(([key, params]) => new Filter(key, params))
+                .find(filter => filter?.getFieldId() === fieldId) || null
+        );
     }
 }

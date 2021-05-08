@@ -77,19 +77,25 @@ export class AdvertCreateComponent extends AdvertFormBaseClass implements OnInit
         this.loadingForm$.next(true);
 
         const lastCategoryId = selectedCategoriesIds[selectedCategoriesIds.length - 1];
-        this.selectedCategory = this.categories.find(cat => cat.id === lastCategoryId) as Category;
-        const modelId = this.selectedCategory.modelId;
-
-        if (this.fieldsFormContainerRef) {
-            this.fieldsFormContainerRef.clear();
+        const foundCategory = this.categories.find(cat => cat.id === lastCategoryId);
+        if (foundCategory) {
+            this.selectedCategory = foundCategory;
         }
-        this.modelService
-            .getModel(modelId)
-            .pipe(take(1))
-            .subscribe(model => {
-                this.populateFormWithInputs(model.sections);
-                this.loadingForm$.next(false);
-            });
+
+        if (this.selectedCategory) {
+            const modelId = this.selectedCategory.modelId;
+
+            if (this.fieldsFormContainerRef) {
+                this.fieldsFormContainerRef.clear();
+            }
+            this.modelService
+                .getModel(modelId)
+                .pipe(take(1))
+                .subscribe(model => {
+                    this.populateFormWithInputs(model.sections);
+                    this.loadingForm$.next(false);
+                });
+        }
     }
 
     save(): void {

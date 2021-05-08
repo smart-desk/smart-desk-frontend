@@ -11,6 +11,7 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { FormNameComponent } from '../../components/form-name/form-name.component';
 import { FormVerifyComponent } from '../../components/form-verify/form-verify.component';
 import { FormPhoneComponent } from '../../components/form-phone/form-phone.component';
+import { ContentComponent } from '../../interfaces/content-component.interface';
 
 @Component({
     selector: 'app-user-settings',
@@ -38,7 +39,7 @@ export class ProfileComponent implements OnInit {
         });
     }
 
-    submitForm(data: { formType: ProfileFormEnum; value: UpdateUserDto }): void {
+    submitForm(data: ContentComponent): void {
         switch (data.formType) {
             case ProfileFormEnum.NAME:
                 this.updateName(data.value);
@@ -70,9 +71,7 @@ export class ProfileComponent implements OnInit {
             nzOnOk: () => modalRef.getContentComponent().submit(),
         });
 
-        modalRef
-            .getContentComponent()
-            .submitEvent.subscribe((data: { formType: ProfileFormEnum; value: UpdateUserDto }) => this.submitForm(data));
+        modalRef.getContentComponent().submitEvent.subscribe((data: ContentComponent) => this.submitForm(data));
     }
 
     openFormConfirmPhone() {
@@ -96,9 +95,7 @@ export class ProfileComponent implements OnInit {
             nzOnOk: () => modalRef.getContentComponent().submit(() => this.cd.detectChanges()),
         });
 
-        modalRef
-            .getContentComponent()
-            .submitFormEvent$.subscribe((data: { formType: ProfileFormEnum; value: UpdateUserDto }) => this.submitForm(data));
+        modalRef.getContentComponent().submitFormEvent$.subscribe((data: ContentComponent) => this.submitForm(data));
     }
 
     requestVerification(modal: NzModalRef<FormVerifyComponent, any>): void {

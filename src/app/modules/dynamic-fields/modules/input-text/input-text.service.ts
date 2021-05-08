@@ -5,7 +5,7 @@ import { InputTextParamsComponent } from './input-text-params/input-text-params.
 import { InputTextViewComponent } from './input-text-view/input-text-view.component';
 
 @Injectable()
-export class InputTextService implements Partial<AbstractFieldService> {
+export class InputTextService implements AbstractFieldService {
     constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
     getFormComponentResolver(): ComponentFactory<InputTextFormComponent> {
@@ -18,6 +18,9 @@ export class InputTextService implements Partial<AbstractFieldService> {
 
     getViewComponentResolver(): ComponentFactory<InputTextViewComponent> {
         return this.componentFactoryResolver.resolveComponentFactory(InputTextViewComponent);
+    }
+    getFilterComponentResolver(): null {
+        return null;
     }
 
     getFieldName(): string {

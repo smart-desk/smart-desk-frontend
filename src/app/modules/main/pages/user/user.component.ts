@@ -26,7 +26,7 @@ export class UserComponent implements OnInit {
 
     ngOnInit(): void {
         if (this.route.snapshot.paramMap.has('id')) {
-            const userId = this.route.snapshot.paramMap.get('id') as string;
+            const userId = this.route.snapshot.paramMap.get('id') || '';
             this.userService.getUser(userId).subscribe(res => {
                 this.user = res;
                 this.cdr.detectChanges();

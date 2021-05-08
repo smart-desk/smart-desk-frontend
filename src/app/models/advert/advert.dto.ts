@@ -18,30 +18,33 @@ export class UpdateAdvertDto {
 }
 
 export class GetAdvertsDto {
-    page: number = GetAdvertsDto.DEFAULT_PAGE;
-    limit: number = GetAdvertsDto.DEFAULT_LIMIT;
-    search: string = GetAdvertsDto.DEFAULT_SEARCH;
-    filters: Filters = {};
-    user: string;
+    page?: number = GetAdvertsDto.DEFAULT_PAGE;
+    limit?: number = GetAdvertsDto.DEFAULT_LIMIT;
+    search?: string = GetAdvertsDto.DEFAULT_SEARCH;
+    filters?: Filters = {};
+    user?: string;
 
     static DEFAULT_PAGE = 1;
     static DEFAULT_LIMIT = 20;
     static DEFAULT_SEARCH = '';
 
-    get queryParamPage(): number | null {
-        return this.page === GetAdvertsDto.DEFAULT_PAGE ? null : this.page;
+    get queryParamPage(): number | undefined {
+        return this.page === GetAdvertsDto.DEFAULT_PAGE ? undefined : this.page;
     }
 
-    get queryParamLimit(): number | null {
-        return this.limit === GetAdvertsDto.DEFAULT_LIMIT ? null : this.limit;
+    get queryParamLimit(): number | undefined {
+        return this.limit === GetAdvertsDto.DEFAULT_LIMIT ? undefined : this.limit;
     }
 
-    get queryParamSearch(): string | null {
-        return this.search === GetAdvertsDto.DEFAULT_SEARCH ? null : this.search;
+    get queryParamSearch(): string | undefined {
+        return this.search === GetAdvertsDto.DEFAULT_SEARCH ? undefined : this.search;
     }
 
-    get queryParamFilters(): string | null {
-        return Object.keys(this.filters).length === 0 ? null : JSON.stringify(this.filters);
+    get queryParamFilters(): string | undefined {
+        if (!this.filters) {
+            return;
+        }
+        return Object.keys(this.filters).length === 0 ? undefined : JSON.stringify(this.filters);
     }
 }
 

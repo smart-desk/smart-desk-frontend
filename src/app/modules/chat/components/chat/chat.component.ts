@@ -48,9 +48,11 @@ export class ChatComponent implements OnDestroy, OnInit {
             if (message.chatId === this.activeChat.id) {
                 this.messages = [...this.messages, message];
             } else {
-                const targetChat = this.chats.find(chat => chat.id === message.chatId) as Chat;
-                targetChat.unreadMessagesCount += 1;
-                this.chats = [...this.chats];
+                const targetChat = this.chats.find(chat => chat.id === message.chatId);
+                if (targetChat) {
+                    targetChat.unreadMessagesCount += 1;
+                    this.chats = [...this.chats];
+                }
             }
             this.cdr.detectChanges();
         });
@@ -113,10 +115,10 @@ export class ChatComponent implements OnDestroy, OnInit {
             .getProfileChats()
             .pipe(take(1))
             .subscribe(chats => {
-                let activeChat: Chat;
+                let activeChat: Chat | undefined;
 
                 if (this.advert) {
-                    activeChat = chats.find(c => c.advertId === this.advert.id) as Chat;
+                    activeChat = chats.find(c => c.advertId === this.advert.id);
                     if (!activeChat) {
                         const emptyChat = this.createEmptyChat();
                         activeChat = emptyChat;

@@ -7,7 +7,7 @@ import { Bookmark } from '../../models/bookmarks/bookmark.entity';
     providedIn: 'root',
 })
 export class BookmarksStoreService {
-    bookmarks$ = new BehaviorSubject<Bookmark[]>([{} as Bookmark]);
+    bookmarks$ = new BehaviorSubject<Bookmark[]>([]);
 
     constructor(private bookmarksService: BookmarksService) {}
 

@@ -45,23 +45,23 @@ export class AdvertDataService {
 
         if (queryParams.has('page')) {
             try {
-                resultParams.page = parseInt(queryParams.get('page') as string, 10);
+                resultParams.page = parseInt(queryParams.get('page') || '', 10);
             } catch (e) {}
         }
 
         if (queryParams.has('limit')) {
             try {
-                resultParams.limit = parseInt(queryParams.get('limit') as string, 10);
+                resultParams.limit = parseInt(queryParams.get('limit') || '', 10);
             } catch (e) {}
         }
 
         if (queryParams.has('search')) {
-            resultParams.search = queryParams.get('search') as string;
+            resultParams.search = queryParams.get('search') || '';
         }
 
         if (queryParams.has('filters')) {
             try {
-                resultParams.filters = JSON.parse(queryParams.get('filters') as string);
+                resultParams.filters = JSON.parse(queryParams.get('filters') || '');
             } catch (e) {}
         }
         return resultParams;
