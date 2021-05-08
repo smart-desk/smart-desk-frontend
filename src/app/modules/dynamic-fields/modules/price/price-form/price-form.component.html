@@ -1,7 +1,7 @@
 <ng-container *ngIf="field?.params">
     <form nz-form nzLayout="vertical" [formGroup]="form">
         <nz-form-item>
-            <nz-form-label>Цена</nz-form-label>
+            <nz-form-label [nzRequired]="field.required">Цена</nz-form-label>
             <nz-form-control class="price__input-group">
                 <nz-input-group [nzAddOnAfter]="currencySymbolTemp">
                     <input nz-input formControlName="value" name="currency" placeholder="Введите цену" type="number" min="0" step="any" />
