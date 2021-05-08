@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FieldService } from '../../../../../services';
 import { AbstractFieldParamsComponent } from '../../../models/abstract-field-params.component';
 import { InputTextParamsDto } from '../dto/input-text-params.dto';
 import { Field } from '../../../../../models/field/field';
@@ -14,7 +13,7 @@ import { Field } from '../../../../../models/field/field';
 export class InputTextParamsComponent extends AbstractFieldParamsComponent<InputTextParamsDto> implements OnInit {
     form: FormGroup;
 
-    constructor(private fieldService: FieldService, private fb: FormBuilder, private cd: ChangeDetectorRef) {
+    constructor(private fb: FormBuilder) {
         super();
     }
 
@@ -34,11 +33,5 @@ export class InputTextParamsComponent extends AbstractFieldParamsComponent<Input
         };
 
         return this.field;
-    }
-
-    delete(): void {
-        this.fieldService.deleteField(this.field.id).subscribe(() => {
-            this.delete$.next(this);
-        });
     }
 }

@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FieldService } from '../../../../../services';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { AbstractFieldParamsComponent } from '../../../models/abstract-field-params.component';
 import { RadioItem, RadioParamsDto } from '../dto/radio-params.dto';
@@ -14,7 +13,7 @@ import { Field } from '../../../../../models/field/field';
 export class RadioParamsComponent extends AbstractFieldParamsComponent<RadioParamsDto> implements OnInit {
     form: FormGroup;
 
-    constructor(private fieldService: FieldService, private cd: ChangeDetectorRef, private fb: FormBuilder) {
+    constructor(private fb: FormBuilder) {
         super();
     }
 

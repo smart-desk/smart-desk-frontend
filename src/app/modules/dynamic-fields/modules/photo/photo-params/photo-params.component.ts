@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FieldService } from '../../../../../services';
 import { AbstractFieldParamsComponent } from '../../../models/abstract-field-params.component';
 import { PhotoParamsDto } from '../dto/photo-params.dto';
 import { Field } from '../../../../../models/field/field';
@@ -14,7 +13,7 @@ import { Field } from '../../../../../models/field/field';
 export class PhotoParamsComponent extends AbstractFieldParamsComponent<PhotoParamsDto> implements OnInit {
     form: FormGroup;
 
-    constructor(private fb: FormBuilder, private cd: ChangeDetectorRef, private fieldService: FieldService) {
+    constructor(private fb: FormBuilder) {
         super();
     }
 
@@ -29,14 +28,8 @@ export class PhotoParamsComponent extends AbstractFieldParamsComponent<PhotoPara
     getField(): Field<unknown, PhotoParamsDto> {
         this.field.params = {
             max: this.form.get('max').value,
-            min: this.form.get('min').value
+            min: this.form.get('min').value,
         };
         return this.field;
-    }
-
-    delete(): void {
-        this.fieldService.deleteField(this.field.id).subscribe(() => {
-            this.delete$.next(this);
-        });
     }
 }
