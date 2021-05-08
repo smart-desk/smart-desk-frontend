@@ -10,7 +10,7 @@ import { TextParamsDto } from '../dto/text-params.dto';
     styleUrls: ['./text-params.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TextParamsComponent extends AbstractFieldParamsComponent implements OnInit {
+export class TextParamsComponent extends AbstractFieldParamsComponent<TextParamsDto> implements OnInit {
     state: OperationState;
     content = '';
 
@@ -19,7 +19,7 @@ export class TextParamsComponent extends AbstractFieldParamsComponent implements
     }
 
     ngOnInit(): void {
-        this.content = (this.field.params && (this.field.params as TextParamsDto).value) || '';
+        this.content = this.field?.params?.value || '';
     }
 
     save(): void {
@@ -34,7 +34,6 @@ export class TextParamsComponent extends AbstractFieldParamsComponent implements
 
         request.subscribe(
             res => {
-                this.field = res;
                 this.state = OperationState.SUCCESS;
                 this.save$.next(this.state);
                 this.cd.detectChanges();

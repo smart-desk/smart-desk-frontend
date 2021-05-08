@@ -10,7 +10,6 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { CheckboxViewComponent } from './checkbox-view/checkbox-view.component';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { CheckboxFilterComponent } from './checkbox-filter/checkbox-filter.component';
@@ -26,7 +25,6 @@ import { CheckboxFilterComponent } from './checkbox-filter/checkbox-filter.compo
         NzPopconfirmModule,
         NzInputModule,
         ReactiveFormsModule,
-        NzDividerModule,
         NzCheckboxModule,
     ],
     providers: [CheckboxService],

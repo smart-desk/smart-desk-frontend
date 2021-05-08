@@ -13,7 +13,7 @@ import { InputTextParamsDto } from '../dto/input-text-params.dto';
     styleUrls: ['./input-text-params.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputTextParamsComponent extends AbstractFieldParamsComponent implements OnInit {
+export class InputTextParamsComponent extends AbstractFieldParamsComponent<InputTextParamsDto> implements OnInit {
     operationState = OperationState;
     state: OperationState;
 
@@ -24,20 +24,18 @@ export class InputTextParamsComponent extends AbstractFieldParamsComponent imple
     }
 
     ngOnInit(): void {
-        const params = this.field.params as InputTextParamsDto;
-
         this.form = this.fb.group({
-            filterable: [this.field.filterable, false],
-            label: [(params && params.label) || '', Validators.required],
-            placeholder: [(params && params.placeholder) || ''],
-            required: [(params && params.required) || false],
+            title: [this.field?.title || '', [Validators.required]],
+            required: [this.field?.required || false],
+            placeholder: [this.field?.params?.placeholder || ''],
         });
     }
 
     save(): void {
         this.state = OperationState.LOADING;
         this.save$.next(this.state);
-        this.field.filterable = this.form.get('filterable').value;
+        this.field.title = this.form.get('title').value;
+        this.field.required = this.form.get('required').value;
 
         this.field.params = {
             ...((this.field.params as object) || {}),
@@ -51,8 +49,7 @@ export class InputTextParamsComponent extends AbstractFieldParamsComponent imple
             request = this.fieldService.createField(this.field);
         }
 
-        request.subscribe(res => {
-            this.field = res;
+        request.subscribe(() => {
             this.state = OperationState.SUCCESS;
             this.save$.next(this.state);
 
