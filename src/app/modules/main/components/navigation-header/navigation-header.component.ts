@@ -13,7 +13,7 @@ import { ChatModalService } from '../../../chat/services/chat-modal.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavigationHeaderComponent implements OnInit, OnDestroy {
-    user: User;
+    user: User | undefined;
     destroy$ = new Subject();
     isAdmin: boolean;
 
