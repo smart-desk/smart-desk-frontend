@@ -1,7 +1,7 @@
 <form nz-form nzLayout="vertical" [formGroup]="form">
     <nz-form-item>
         <nz-form-control nzErrorTip="Обязательное поле">
-            <input nz-input formControlName="label" name="label" required placeholder="Заголовок" />
+            <input nz-input formControlName="title" name="title" required placeholder="Заголовок" />
         </nz-form-control>
     </nz-form-item>
     <nz-form-item>
@@ -10,10 +10,9 @@
         </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-        <label nz-checkbox formControlName="filterable">Фильтровать по полю</label>
+        <label nz-checkbox formControlName="required">Обязательное поле</label>
     </nz-form-item>
     <div class="buttons">
-        <label nz-checkbox formControlName="required">Обязательное поле</label>
         <button nz-button nzType="primary" (click)="save()" [nzLoading]="state === operationState.LOADING">OK</button>
     </div>
 </form>

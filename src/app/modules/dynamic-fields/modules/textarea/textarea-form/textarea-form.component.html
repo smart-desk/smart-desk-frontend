@@ -1,22 +1,17 @@
 <ng-container *ngIf="field?.params">
-    <button nz-button *ngIf="preview" (click)="onEdit()">Edit</button>
     <form nz-form nzLayout="vertical" class="textarea" [formGroup]="form">
         <nz-form-item>
-            <nz-form-label [nzRequired]="field?.params?.required">{{ field?.params?.label }}</nz-form-label>
+            <nz-form-label [nzRequired]="field?.required">{{ field?.title }}</nz-form-label>
             <nz-form-control>
                 <textarea
                     *ngIf="!field?.params?.richTextEditor"
                     rows="4"
                     nz-input
                     formControlName="value"
-                    [required]="field?.params?.required"
+                    [required]="field?.required"
                     [placeholder]="field?.params?.placeholder"
                 ></textarea>
-                <quill-editor
-                    *ngIf="field?.params?.richTextEditor"
-                    formControlName="value"
-                    [required]="field?.params?.required"
-                ></quill-editor>
+                <quill-editor *ngIf="field?.params?.richTextEditor" formControlName="value" [required]="field?.required"></quill-editor>
             </nz-form-control>
         </nz-form-item>
     </form>

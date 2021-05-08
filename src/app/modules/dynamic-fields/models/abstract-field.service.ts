@@ -15,7 +15,7 @@ export abstract class AbstractFieldService {
      * Returns component resolver for admin part form
      * This component must be displayed when admin edit model of adverts
      */
-    abstract getParamsComponentResolver(): ComponentFactory<AbstractFieldParamsComponent>;
+    abstract getParamsComponentResolver(): ComponentFactory<AbstractFieldParamsComponent<any>>;
 
     /**
      * Returns component resolver for the final representation of the component

@@ -12,7 +12,7 @@ import { CURRENCIES } from '../constants';
     styleUrls: ['./price-params.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PriceParamsComponent extends AbstractFieldParamsComponent implements OnInit {
+export class PriceParamsComponent extends AbstractFieldParamsComponent<PriceParamsDto> implements OnInit {
     operationState = OperationState;
     state: OperationState;
     form: FormGroup;
@@ -23,9 +23,10 @@ export class PriceParamsComponent extends AbstractFieldParamsComponent implement
     }
 
     ngOnInit(): void {
-        const params = this.field.params as PriceParamsDto;
+        const params = this.field.params;
         this.form = this.fb.group({
             filterable: [this.field.filterable || false],
+            required: [this.field.required || false],
             currency: [(params && params.currency) || '', Validators.required],
         });
     }
@@ -34,6 +35,7 @@ export class PriceParamsComponent extends AbstractFieldParamsComponent implement
         this.state = OperationState.LOADING;
         this.save$.next(this.state);
         this.field.filterable = this.form.get('filterable').value;
+        this.field.required = this.form.get('required').value;
 
         this.field.params = {
             ...((this.field.params as object) || {}),
@@ -46,7 +48,6 @@ export class PriceParamsComponent extends AbstractFieldParamsComponent implement
 
         request.subscribe(res => {
             this.state = OperationState.SUCCESS;
-            this.field = res;
             this.save$.next(this.state);
 
             this.cd.detectChanges();

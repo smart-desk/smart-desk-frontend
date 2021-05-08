@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { FieldService } from '../../../../../services';
 import { FieldEntity } from '../../../../../models/field/field.entity';
@@ -13,7 +13,7 @@ import { TextareaParamsDto } from '../dto/textarea-params.dto';
     styleUrls: ['./textarea-params.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TextareaParamsComponent extends AbstractFieldParamsComponent implements OnInit {
+export class TextareaParamsComponent extends AbstractFieldParamsComponent<TextareaParamsDto> implements OnInit {
     operationState = OperationState;
     state: OperationState;
 
@@ -24,14 +24,13 @@ export class TextareaParamsComponent extends AbstractFieldParamsComponent implem
     }
 
     ngOnInit(): void {
-        const params = this.field.params as TextareaParamsDto;
+        const params = this.field.params;
 
         this.form = this.fb.group({
-            filterable: [this.field.filterable, false],
-            label: [(params && params.label) || '', Validators.required],
-            placeholder: [(params && params.placeholder) || ''],
-            required: [(params && params.required) || false],
-            richTextEditor: [(params && params.richTextEditor) || false],
+            title: [this.field.title, false],
+            required: [this.field.required || false],
+            placeholder: [params?.placeholder || ''],
+            richTextEditor: [params?.richTextEditor || false],
         });
     }
 
@@ -43,9 +42,10 @@ export class TextareaParamsComponent extends AbstractFieldParamsComponent implem
             ...((this.field.params as object) || {}),
             ...this.form.getRawValue(),
         };
-        this.field.title = (this.field.params as TextareaParamsDto).label;
-        this.field.filterable = this.form.get('filterable').value;
+        this.field.title = this.form.get('title').value;
+        this.field.required = this.form.get('required').value;
 
+        // todo move to parent
         let request: Observable<FieldEntity>;
         if (this.field.id) {
             request = this.fieldService.updateField(this.field.id, this.field);
@@ -55,7 +55,6 @@ export class TextareaParamsComponent extends AbstractFieldParamsComponent implem
 
         request.subscribe(res => {
             this.state = OperationState.SUCCESS;
-            this.field = res;
             this.save$.next(this.state);
 
             this.cd.detectChanges();

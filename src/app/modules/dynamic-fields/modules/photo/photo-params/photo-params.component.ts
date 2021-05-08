@@ -13,7 +13,7 @@ import { PhotoParamsDto } from '../dto/photo-params.dto';
     styleUrls: ['./photo-params.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PhotoParamsComponent extends AbstractFieldParamsComponent implements OnInit {
+export class PhotoParamsComponent extends AbstractFieldParamsComponent<PhotoParamsDto> implements OnInit {
     operationState = OperationState;
     state: OperationState;
 
@@ -24,11 +24,11 @@ export class PhotoParamsComponent extends AbstractFieldParamsComponent implement
     }
 
     ngOnInit(): void {
-        const params = this.field.params as PhotoParamsDto;
+        const params = this.field.params;
 
         this.form = this.fb.group({
-            max: [(params && params.max) || 10, Validators.required],
-            min: [(params && params.min) || 1],
+            max: [params?.max || 10, Validators.required],
+            min: [params?.min || 1],
         });
     }
 
@@ -50,7 +50,6 @@ export class PhotoParamsComponent extends AbstractFieldParamsComponent implement
 
         request.subscribe(res => {
             this.state = OperationState.SUCCESS;
-            this.field = res;
             this.save$.next(this.state);
 
             this.cd.detectChanges();

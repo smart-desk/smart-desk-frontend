@@ -3,6 +3,7 @@ import { AbstractFieldParamsComponent } from '../../../models/abstract-field-par
 import { OperationState } from '../../../../../models/operation-state.enum';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FieldService } from '../../../../../services';
+import { LocationParamsDto } from '../dto/location-params.dto';
 
 @Component({
     selector: 'app-location-params',
@@ -10,7 +11,7 @@ import { FieldService } from '../../../../../services';
     styleUrls: ['./location-params.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LocationParamsComponent extends AbstractFieldParamsComponent implements OnInit {
+export class LocationParamsComponent extends AbstractFieldParamsComponent<LocationParamsDto> implements OnInit {
     operationState = OperationState;
     state: OperationState;
     form: FormGroup;
@@ -22,6 +23,7 @@ export class LocationParamsComponent extends AbstractFieldParamsComponent implem
     ngOnInit() {
         this.form = this.fb.group({
             title: [this.field.title || ''],
+            required: [this.field.required || false],
             filterable: [this.field.filterable || false],
         });
     }
@@ -31,6 +33,7 @@ export class LocationParamsComponent extends AbstractFieldParamsComponent implem
         this.save$.next(this.state);
 
         this.field.title = this.form.get('title').value;
+        this.field.required = this.form.get('required').value;
         this.field.filterable = this.form.get('filterable').value;
 
         this.field.params = {
@@ -43,7 +46,6 @@ export class LocationParamsComponent extends AbstractFieldParamsComponent implem
 
         request.subscribe(res => {
             this.state = OperationState.SUCCESS;
-            this.field = res;
             this.save$.next(this.state);
 
             this.cd.detectChanges();

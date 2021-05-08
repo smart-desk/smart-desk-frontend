@@ -15,13 +15,12 @@ export class InputTextFormComponent extends AbstractFieldFormComponent<InputText
 
     ngOnInit(): void {
         const valueValidators = [];
-        const params = this.field.params;
-        if (params && params.required) {
+        if (this.field?.required) {
             valueValidators.push(Validators.required);
         }
 
         this.form = new FormGroup({
-            value: new FormControl(this.field.data && this.field.data.value, valueValidators),
+            value: new FormControl(this.field?.data?.value, valueValidators),
         });
     }
 

@@ -6,6 +6,7 @@ import { FieldEntity } from '../../../../../models/field/field.entity';
 import { AbstractFieldParamsComponent } from '../../../models/abstract-field-params.component';
 import { OperationState } from '../../../../../models/operation-state.enum';
 import { RadioItem, RadioParamsDto } from '../dto/radio-params.dto';
+import { Field } from '../../../../../models/field/field';
 
 @Component({
     selector: 'app-radio',
@@ -13,7 +14,7 @@ import { RadioItem, RadioParamsDto } from '../dto/radio-params.dto';
     styleUrls: ['./radio-params.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RadioParamsComponent extends AbstractFieldParamsComponent implements OnInit {
+export class RadioParamsComponent extends AbstractFieldParamsComponent<RadioParamsDto> implements OnInit {
     form: FormGroup;
 
     state: OperationState;
@@ -23,11 +24,12 @@ export class RadioParamsComponent extends AbstractFieldParamsComponent implement
     }
 
     ngOnInit() {
-        const params = this.field.params as RadioParamsDto;
+        const params = this.field.params;
         const radios = params && params.radios ? params.radios.map(data => this.createRadioControl(data)) : [this.createRadioControl()];
 
         this.form = this.fb.group({
             title: [this.field.title || ''],
+            required: [this.field.required || false],
             filterable: [this.field.filterable || false],
             radios: this.fb.array(radios),
         });
@@ -47,17 +49,19 @@ export class RadioParamsComponent extends AbstractFieldParamsComponent implement
         const radios = this.convertControlsToRadios(this.radios.getRawValue());
         const title = this.form.get('title').value;
         const filterable = this.form.get('filterable').value;
+        const required = this.form.get('required').value;
 
         this.field = {
             ...(this.field || {}),
             title,
             filterable,
+            required,
             params: {
                 ...((this.field.params as object) || {}),
                 ...this.form.getRawValue(),
                 radios,
             },
-        } as FieldEntity;
+        } as Field<any, RadioParamsDto>;
 
         let request: Observable<FieldEntity>;
         if (this.field.id) {
@@ -66,8 +70,7 @@ export class RadioParamsComponent extends AbstractFieldParamsComponent implement
             request = this.fieldService.createField(this.field);
         }
         request.subscribe(
-            res => {
-                this.field = res as FieldEntity; // todo create Field class
+            () => {
                 this.updateState(OperationState.SUCCESS);
                 this.cd.detectChanges();
             },

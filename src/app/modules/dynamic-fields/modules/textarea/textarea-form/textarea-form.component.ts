@@ -13,17 +13,9 @@ import { TextareaParamsDto } from '../dto/textarea-params.dto';
 export class TextareaFormComponent extends AbstractFieldFormComponent<TextareaEntity, TextareaParamsDto> implements OnInit {
     form: FormGroup;
 
-    // todo add to every component for preview
-    edit$ = new EventEmitter();
-
-    onEdit() {
-        this.edit$.next(this.field);
-    }
-
     ngOnInit(): void {
-        const params = this.field.params;
         const valueValidators = [];
-        if (params && params.required) {
+        if (this.field?.required) {
             valueValidators.push(Validators.required);
         }
 
