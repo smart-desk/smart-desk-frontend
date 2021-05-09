@@ -1,10 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { FieldService } from '../../../../../services';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { FieldEntity } from '../../../../../models/field/field.entity';
 import { AbstractFieldParamsComponent } from '../../../models/abstract-field-params.component';
-import { OperationState } from '../../../../../models/operation-state.enum';
 import { RadioItem, RadioParamsDto } from '../dto/radio-params.dto';
 import { Field } from '../../../../../models/field/field';
 
@@ -17,9 +13,7 @@ import { Field } from '../../../../../models/field/field';
 export class RadioParamsComponent extends AbstractFieldParamsComponent<RadioParamsDto> implements OnInit {
     form: FormGroup;
 
-    state: OperationState;
-
-    constructor(private fieldService: FieldService, private cd: ChangeDetectorRef, private fb: FormBuilder) {
+    constructor(private fb: FormBuilder) {
         super();
     }
 
@@ -43,50 +37,19 @@ export class RadioParamsComponent extends AbstractFieldParamsComponent<RadioPara
         this.radios.push(this.createRadioControl());
     }
 
-    save(): void {
-        this.updateState(OperationState.LOADING);
-
+    getField(): Field<unknown, RadioParamsDto> {
         const radios = this.convertControlsToRadios(this.radios.getRawValue());
-        const title = this.form.get('title').value;
-        const filterable = this.form.get('filterable').value;
-        const required = this.form.get('required').value;
 
-        this.field = {
-            ...(this.field || {}),
-            title,
-            filterable,
-            required,
-            params: {
-                ...((this.field.params as object) || {}),
-                ...this.form.getRawValue(),
-                radios,
-            },
-        } as Field<any, RadioParamsDto>;
+        this.field.title = this.form.get('title').value;
+        this.field.filterable = this.form.get('filterable').value;
+        this.field.required = this.form.get('required').value;
+        this.field.params = { radios };
 
-        let request: Observable<FieldEntity>;
-        if (this.field.id) {
-            request = this.fieldService.updateField(this.field.id, this.field);
-        } else {
-            request = this.fieldService.createField(this.field);
-        }
-        request.subscribe(
-            () => {
-                this.updateState(OperationState.SUCCESS);
-                this.cd.detectChanges();
-            },
-            () => {
-                this.updateState(OperationState.ERROR);
-            }
-        );
+        return this.field;
     }
 
     deleteRadio(i: number): void {
         this.radios.removeAt(i);
-    }
-
-    private updateState(state: OperationState): void {
-        this.state = state;
-        this.save$.next(this.state);
     }
 
     private createRadioControl(radio?: RadioItem): FormGroup {

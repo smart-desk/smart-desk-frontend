@@ -3,6 +3,7 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    ComponentRef,
     EventEmitter,
     Input,
     Output,
@@ -12,6 +13,8 @@ import {
 import { FieldEntity } from '../../../../models/field/field.entity';
 import { OperationState } from '../../../../models/operation-state.enum';
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
+import { FieldService } from '../../../../services';
+import { AbstractFieldParamsComponent } from '../../../dynamic-fields/models/abstract-field-params.component';
 
 @Component({
     selector: 'app-field-settings',
@@ -24,12 +27,16 @@ export class FieldSettingsComponent implements AfterViewInit {
     field: FieldEntity;
 
     @Output()
-    fieldChange = new EventEmitter();
+    fieldChange = new EventEmitter<OperationState>();
+
+    operationState = OperationState;
+    state: OperationState;
 
     @ViewChild('paramsForm', { read: ViewContainerRef })
     private paramsFormContainer: ViewContainerRef;
+    private component: ComponentRef<AbstractFieldParamsComponent<any>>;
 
-    constructor(private dynamicFieldsService: DynamicFieldsService, private cdr: ChangeDetectorRef) {}
+    constructor(private dynamicFieldsService: DynamicFieldsService, private cdr: ChangeDetectorRef, private fieldService: FieldService) {}
 
     ngAfterViewInit() {
         const service = this.dynamicFieldsService.getService(this.field.type);
@@ -41,13 +48,29 @@ export class FieldSettingsComponent implements AfterViewInit {
             return;
         }
 
-        const component = this.paramsFormContainer.createComponent(resolver);
-        component.instance.field = this.field;
-        component.instance.onSave$.subscribe(status => {
-            if (status === OperationState.SUCCESS) {
-                this.fieldChange.emit(status);
+        this.component = this.paramsFormContainer.createComponent(resolver);
+        this.component.instance.field = this.field;
+        this.cdr.detectChanges();
+    }
+
+    onSave(): void {
+        this.updateState(OperationState.LOADING);
+        const field = this.component.instance.getField();
+        const request = field.id ? this.fieldService.updateField(field.id, field) : this.fieldService.createField(field);
+
+        request.subscribe(
+            () => {
+                this.updateState(OperationState.SUCCESS);
+            },
+            () => {
+                this.updateState(OperationState.ERROR);
             }
-        });
+        );
+    }
+
+    private updateState(state: OperationState): void {
+        this.state = state;
+        this.fieldChange.emit(this.state);
         this.cdr.detectChanges();
     }
 }

@@ -20,6 +20,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DynamicFieldsService } from 'src/app/modules/dynamic-fields/dynamic-fields.service';
+import { OperationState } from '../../../../models/operation-state.enum';
 
 const DRAWER_BASE_CONFIG = {
     nzWidth: 400,
@@ -69,7 +70,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
         const drawer = this.drawerService.create({
             nzContent: AddFieldComponent,
             nzContentParams: { model: this.model },
-            nzTitle: 'New Field',
+            nzTitle: 'Новое поле',
             ...DRAWER_BASE_CONFIG,
         });
 
@@ -120,7 +121,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
             return;
         }
 
-        const drawer = this.drawerService.create({
+        const drawer = this.drawerService.create<FieldSettingsComponent>({
             nzContent: FieldSettingsComponent,
             nzTitle: service.getFieldName(),
             nzContentParams: { field },
@@ -129,9 +130,11 @@ export class PreviewComponent implements OnInit, OnDestroy {
 
         drawer.afterOpen.subscribe(() => {
             const instance = drawer.getContentComponent();
-            instance.fieldChange.subscribe(() => {
-                drawer.close();
-                this.update();
+            instance.fieldChange.subscribe(state => {
+                if (state === OperationState.SUCCESS) {
+                    drawer.close();
+                    this.update();
+                }
             });
         });
     }
