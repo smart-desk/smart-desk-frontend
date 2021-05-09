@@ -1,4 +1,4 @@
-import { Directive, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Directive, Input, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Field } from '../../../models/field/field';
 
