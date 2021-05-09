@@ -25,7 +25,7 @@ export class LocationParamsComponent extends AbstractFieldParamsComponent<Locati
         });
     }
 
-    getField(): Field<any, LocationParamsDto> {
+    getField(): Field<unknown, LocationParamsDto> {
         this.field.title = this.form.get('title').value;
         this.field.required = this.form.get('required').value;
         this.field.filterable = this.form.get('filterable').value;
