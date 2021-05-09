@@ -5,12 +5,11 @@ import { Field } from '../../../models/field/field';
 @Directive()
 // tslint:disable-next-line:directive-class-suffix
 export abstract class AbstractFieldParamsComponent<TParams> implements OnDestroy {
-    @Input() field: Field<any, TParams>;
-    @Output() save = new EventEmitter<Field<any, TParams>>();
+    @Input() field: Field<unknown, TParams>;
 
     protected delete$ = new Subject<AbstractFieldParamsComponent<TParams>>();
 
-    abstract getField(): Field<any, TParams>;
+    abstract getField(): Field<unknown, TParams>;
 
     ngOnDestroy() {
         this.delete$.complete();
