@@ -29,7 +29,7 @@ export class PriceFormComponent extends AbstractFieldFormComponent<PriceEntity, 
     }
 
     getFieldData(): PriceEntity {
-        const value = parseInt(this.form.get('value').value, 10);
+        const value = parseInt(this.form.get('value')?.value, 10);
 
         if (this.field.data) {
             this.field.data.value = value;
@@ -37,7 +37,7 @@ export class PriceFormComponent extends AbstractFieldFormComponent<PriceEntity, 
         }
 
         const advertField = new PriceEntity();
-        advertField.value = this.form.get('value').value;
+        advertField.value = this.form.get('value')?.value;
         advertField.field_id = this.field.id;
 
         return advertField;

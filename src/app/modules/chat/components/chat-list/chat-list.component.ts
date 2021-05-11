@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
 import { Chat } from '../../models/chat.entity';
 import { User } from '../../../../models/user/user.entity';
-import { RolesEnum } from "../../../../models/user/user-roles.enum";
+import { RolesEnum } from '../../../../models/user/user-roles.enum';
 
 @Component({
     selector: 'app-chat-list',
@@ -29,7 +29,7 @@ export class ChatListComponent {
     }
 
     // todo add pipe to avoid performance issues
-    getConversationalist(chat: Chat): User {
+    getConversationalist(chat: Chat): User | undefined {
         if (!this.currentUser) {
             return;
         }

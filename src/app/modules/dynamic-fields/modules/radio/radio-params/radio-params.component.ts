@@ -40,9 +40,9 @@ export class RadioParamsComponent extends AbstractFieldParamsComponent<RadioPara
     getField(): Field<unknown, RadioParamsDto> {
         const radios = this.convertControlsToRadios(this.radios.getRawValue());
 
-        this.field.title = this.form.get('title').value;
-        this.field.filterable = this.form.get('filterable').value;
-        this.field.required = this.form.get('required').value;
+        this.field.title = this.form.get('title')?.value;
+        this.field.filterable = this.form.get('filterable')?.value;
+        this.field.required = this.form.get('required')?.value;
         this.field.params = { radios };
 
         return this.field;

@@ -30,12 +30,12 @@ export class InputTextFormComponent extends AbstractFieldFormComponent<InputText
 
     getFieldData(): InputTextEntity {
         if (this.field.data) {
-            this.field.data.value = this.form.get('value').value;
+            this.field.data.value = this.form.get('value')?.value;
             return this.field.data;
         }
 
         const advertField = new InputTextEntity();
-        advertField.value = this.form.get('value').value;
+        advertField.value = this.form.get('value')?.value;
         advertField.field_id = this.field.id;
 
         return advertField;

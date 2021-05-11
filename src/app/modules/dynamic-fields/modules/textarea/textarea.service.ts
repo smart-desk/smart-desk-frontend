@@ -20,12 +20,11 @@ export class TextareaService implements AbstractFieldService {
         return this.componentFactoryResolver.resolveComponentFactory(TextareaViewComponent);
     }
 
-    getFilterComponentResolver(): ComponentFactory<any> {
-        // todo set generic
-        return null;
-    }
-
     getFieldName(): string {
         return 'Textarea';
+    }
+
+    getFilterComponentResolver(): null {
+        return null;
     }
 }

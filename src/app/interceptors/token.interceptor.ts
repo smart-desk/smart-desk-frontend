@@ -20,7 +20,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
     private getBearerToken(): string {
         try {
-            return localStorage.getItem('token');
+            return localStorage.getItem('token') || '';
         } catch (e) {
             return '';
         }

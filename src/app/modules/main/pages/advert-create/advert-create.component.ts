@@ -31,7 +31,7 @@ export class AdvertCreateComponent extends AdvertFormBaseClass implements OnInit
     preferContact = PreferContact;
     formDefaultFields: FormGroup;
     selectedCategoriesIds: string[] = [];
-    selectedCategory: Category = null;
+    selectedCategory: Category;
     categories: Category[] = [];
     categoryTree$ = new BehaviorSubject<NzCascaderOption[]>([]);
     loadingForm$ = new BehaviorSubject<boolean>(false);
@@ -77,19 +77,25 @@ export class AdvertCreateComponent extends AdvertFormBaseClass implements OnInit
         this.loadingForm$.next(true);
 
         const lastCategoryId = selectedCategoriesIds[selectedCategoriesIds.length - 1];
-        this.selectedCategory = this.categories.find(cat => cat.id === lastCategoryId);
-        const modelId = this.selectedCategory.modelId;
-
-        if (this.fieldsFormContainerRef) {
-            this.fieldsFormContainerRef.clear();
+        const foundCategory = this.categories.find(cat => cat.id === lastCategoryId);
+        if (foundCategory) {
+            this.selectedCategory = foundCategory;
         }
-        this.modelService
-            .getModel(modelId)
-            .pipe(take(1))
-            .subscribe(model => {
-                this.populateFormWithInputs(model.sections);
-                this.loadingForm$.next(false);
-            });
+
+        if (this.selectedCategory) {
+            const modelId = this.selectedCategory.modelId;
+
+            if (this.fieldsFormContainerRef) {
+                this.fieldsFormContainerRef.clear();
+            }
+            this.modelService
+                .getModel(modelId)
+                .pipe(take(1))
+                .subscribe(model => {
+                    this.populateFormWithInputs(model.sections);
+                    this.loadingForm$.next(false);
+                });
+        }
     }
 
     save(): void {
@@ -98,8 +104,8 @@ export class AdvertCreateComponent extends AdvertFormBaseClass implements OnInit
         }
 
         const advert = new CreateAdvertDto();
-        advert.title = this.formDefaultFields.get('title').value;
-        advert.preferContact = this.formDefaultFields.get('preferredContact').value;
+        advert.title = this.formDefaultFields.get('title')?.value;
+        advert.preferContact = this.formDefaultFields.get('preferredContact')?.value;
         advert.category_id = this.selectedCategory.id;
         advert.model_id = this.selectedCategory.modelId;
         advert.fields = this.components.map(component => component.instance.getFieldData()).filter(value => !!value);

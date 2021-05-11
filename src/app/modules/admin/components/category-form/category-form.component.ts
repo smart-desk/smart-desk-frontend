@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Category } from '../../../../models/category/category.entity';
 import { Model } from '../../../../models/model/model.entity';
 
@@ -29,13 +29,13 @@ export class CategoryFormComponent implements OnInit {
 
     submit(): void {
         if (this.category) {
-            this.category.name = this.form.get('name').value as string;
-            this.category.modelId = (this.form.get('model').value as Model).id;
+            this.category.name = this.form.get('name')?.value;
+            // todo: что лежит в modelId
+            this.category.modelId = this.form.get('model')?.value?.id;
         } else {
-            this.category = {
-                name: this.form.get('name').value as string,
-                modelId: (this.form.get('model').value as Model).id,
-            } as Category;
+            this.category = new Category();
+            this.category.name = this.form.get('name')?.value;
+            this.category.modelId = this.form.get('model')?.value.id;
         }
 
         this.save.emit(this.category);
@@ -46,6 +46,6 @@ export class CategoryFormComponent implements OnInit {
     }
 
     private getModelByCategory(category: Category): Model {
-        return !this.category ? this.models[0] : this.models.find(model => model.id === category.modelId);
+        return !this.category ? this.models[0] : (this.models.find(model => model.id === category.modelId) as Model);
     }
 }

@@ -33,7 +33,7 @@ import { PreferContact } from '../../enums/contact-values.enum';
 export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
     advert: Advert;
     user: User;
-    currentUser: User;
+    currentUser: User | undefined;
     similarAdverts: GetAdvertsResponseDto;
     isPhoneVisible = false;
     userPhone: string;
@@ -66,7 +66,7 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
         this.route.paramMap
             .pipe(
                 takeUntil(this.destroy$),
-                switchMap((param: ParamMap) => this.advertService.getRecommendedByAdvertId(param.get('advert_id')))
+                switchMap((param: ParamMap) => this.advertService.getRecommendedByAdvertId(param.get('advert_id') || ''))
             )
             .subscribe(res => {
                 this.similarAdverts = res;
@@ -80,13 +80,13 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
     ngAfterViewInit(): void {
         this.route.paramMap
             .pipe(
-                switchMap(params => this.advertService.getAdvert(params.get('advert_id'))),
+                switchMap(params => this.advertService.getAdvert(params.get('advert_id') || '')),
                 tap(advert => {
                     this.advert = advert;
                     this.countView();
                 }),
                 switchMap(advert => {
-                    return advert.userId ? this.userService.getUser(advert.userId) : of(null);
+                    return advert.userId ? this.userService.getUser(advert.userId) : EMPTY;
                 })
             )
             .subscribe(user => {

@@ -19,27 +19,34 @@ export abstract class AdvertFormBaseClass {
             if (section.fields) {
                 section.fields.forEach(field => {
                     const component = this.resolveFieldComponent(field);
-                    this.components.push(component);
+                    if (component) {
+                        this.components.push(component);
+                    }
                 });
             }
         });
     }
 
-    protected resolveFieldComponent(field: FieldEntity): ComponentRef<AbstractFieldFormComponent<any, any>> {
+    protected resolveFieldComponent(field: FieldEntity): ComponentRef<AbstractFieldFormComponent<any, any>> | null {
         const service = this.dynamicFieldService.getService(field.type);
         if (!service) {
-            return;
+            return null;
         }
         const resolver = service.getFormComponentResolver();
-        const component = this.fieldsFormContainerRef.createComponent(resolver);
 
-        // add inputs
-        component.instance.field = field;
+        if (resolver) {
+            const component = this.fieldsFormContainerRef.createComponent(resolver);
 
-        // run onInit
-        component.changeDetectorRef.detectChanges();
+            // add inputs
+            component.instance.field = field;
 
-        return component;
+            // run onInit
+            component.changeDetectorRef.detectChanges();
+
+            return component;
+        } else {
+            return null;
+        }
     }
 
     protected isValid(): boolean {

@@ -20,12 +20,11 @@ export class PhotoService implements AbstractFieldService {
         return this.componentFactoryResolver.resolveComponentFactory(PhotoViewComponent);
     }
 
-    getFilterComponentResolver(): ComponentFactory<any> {
-        // todo set generic
-        return null;
-    }
-
     getFieldName(): string {
         return 'Photo';
+    }
+
+    getFilterComponentResolver(): null {
+        return null;
     }
 }

@@ -26,10 +26,11 @@ export class InputTextParamsComponent extends AbstractFieldParamsComponent<Input
     }
 
     getField(): Field<unknown, InputTextParamsDto> {
-        this.field.title = this.form.get('title').value;
-        this.field.required = this.form.get('required').value;
+        this.field.title = this.form.get('title')?.value;
+        this.field.required = this.form.get('required')?.value;
         this.field.params = {
-            placeholder: this.form.get('placeholder').value,
+            ...((this.field.params as object) || {}),
+            ...this.form.getRawValue(),
         };
 
         return this.field;

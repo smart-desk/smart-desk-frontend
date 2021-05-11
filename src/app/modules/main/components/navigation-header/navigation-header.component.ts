@@ -13,7 +13,7 @@ import { ChatModalService } from '../../../chat/services/chat-modal.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavigationHeaderComponent implements OnInit, OnDestroy {
-    user: User;
+    user: User | undefined;
     destroy$ = new Subject();
     isAdmin: boolean;
 
@@ -27,8 +27,10 @@ export class NavigationHeaderComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.loginService.login$.pipe(takeUntil(this.destroy$)).subscribe(user => {
             this.user = user;
-            this.isAdmin = user?.roles.includes('admin');
-            this.cd.detectChanges();
+            if (user?.roles) {
+                this.isAdmin = user?.roles.includes('admin');
+                this.cd.detectChanges();
+            }
         });
     }
 

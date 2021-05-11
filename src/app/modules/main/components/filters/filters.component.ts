@@ -58,7 +58,7 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
         const filters = this.filterComponents
             .map(c => c.instance.getFilterValue())
             .filter(f => !!f)
-            .reduce((prev, cur) => ({ ...prev, ...cur.getFilterObject() }), {});
+            .reduce((prev, cur) => ({ ...prev, ...cur?.getFilterObject() }), {});
 
         this.advertDataService.applyFilters(filters);
     }
@@ -92,7 +92,10 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
         containerTypeMap.forEach((container, type) => this.populateContainerWithFields(container, type));
     }
 
-    private populateContainerWithFields(container: ViewContainerRef, sectionType: SectionType): AbstractFieldFilterComponent<any, any>[] {
+    private populateContainerWithFields(
+        container: ViewContainerRef,
+        sectionType: SectionType
+    ): AbstractFieldFilterComponent<any, any>[] | undefined {
         const section = this.model.sections.find(s => s.type === sectionType);
         if (!section) {
             return;
@@ -123,7 +126,9 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
             })
             .filter(f => !!f);
 
-        this.filterComponents = this.filterComponents.concat(components);
+        this.filterComponents = this.filterComponents.concat(
+            components as ConcatArray<ComponentRef<AbstractFieldFilterComponent<any, any>>>
+        );
     }
 
     private clearContainers(): void {
@@ -133,13 +138,15 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
         this.locationContainerRef.clear();
     }
 
-    private getFilterForField(fieldId: string): Filter<any> {
+    private getFilterForField(fieldId: string): Filter<any> | null {
         if (!this.filters) {
-            return;
+            return null;
         }
 
-        return Object.entries(this.filters)
-            .map(([key, params]) => new Filter(key, params))
-            .find(filter => filter.getFieldId() === fieldId);
+        return (
+            Object.entries(this.filters)
+                .map(([key, params]) => new Filter(key, params))
+                .find(filter => filter?.getFieldId() === fieldId) || null
+        );
     }
 }

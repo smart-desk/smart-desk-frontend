@@ -9,9 +9,10 @@ import { FieldType } from '../../models/field/field.entity';
 export class DynamicFieldsService {
     constructor(@Inject('FIELDS_MAP') private fieldsMap: DynamicFieldsMapType, private injector: Injector) {}
 
-    getService(type: FieldType): AbstractFieldService {
+    getService(type: FieldType): AbstractFieldService | undefined {
         if (this.fieldsMap.get(type)) {
             return this.injector.get(this.fieldsMap.get(type));
         }
+        return;
     }
 }
