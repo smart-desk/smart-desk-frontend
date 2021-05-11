@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { FieldService } from '../../../../../services';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AbstractFieldParamsComponent } from '../../../models/abstract-field-params.component';
-import { OperationState } from '../../../../../models/operation-state.enum';
 import { PriceParamsDto } from '../dto/price-params.dto';
 import { CURRENCIES } from '../constants';
+import { Field } from '../../../../../models/field/field';
 
 @Component({
     selector: 'app-price',
@@ -12,44 +11,30 @@ import { CURRENCIES } from '../constants';
     styleUrls: ['./price-params.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PriceParamsComponent extends AbstractFieldParamsComponent implements OnInit {
-    operationState = OperationState;
-    state: OperationState;
+export class PriceParamsComponent extends AbstractFieldParamsComponent<PriceParamsDto> implements OnInit {
     form: FormGroup;
     currencies = CURRENCIES;
 
-    constructor(private fb: FormBuilder, private cd: ChangeDetectorRef, private fieldService: FieldService) {
+    constructor(private fb: FormBuilder) {
         super();
     }
 
     ngOnInit(): void {
-        const params = this.field.params as PriceParamsDto;
+        const params = this.field.params;
         this.form = this.fb.group({
             filterable: [this.field.filterable || false],
-            currency: [(params && params.currency) || '', Validators.required],
+            required: [this.field.required || false],
+            currency: [params?.currency || '', Validators.required],
         });
     }
 
-    save(): void {
-        this.state = OperationState.LOADING;
-        this.save$.next(this.state);
-        this.field.filterable = this.form.get('filterable')?.value;
-
+    getField(): Field<unknown, PriceParamsDto> {
+        this.field.filterable = this.form.get('filterable').value;
+        this.field.required = this.form.get('required').value;
         this.field.params = {
-            ...((this.field.params as object) || {}),
-            ...this.form.getRawValue(),
+            currency: this.form.get('currency').value,
         };
 
-        const request = this.field.id
-            ? this.fieldService.updateField(this.field.id, this.field)
-            : this.fieldService.createField(this.field);
-
-        request.subscribe(res => {
-            this.state = OperationState.SUCCESS;
-            this.field = res;
-            this.save$.next(this.state);
-
-            this.cd.detectChanges();
-        });
+        return this.field;
     }
 }

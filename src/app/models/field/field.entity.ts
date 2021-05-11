@@ -12,6 +12,7 @@ export enum FieldType {
 export class FieldEntity {
     id: string;
     title: string;
+    required: boolean;
     type: FieldType;
     // tslint:disable-next-line:variable-name
     section_id: string;

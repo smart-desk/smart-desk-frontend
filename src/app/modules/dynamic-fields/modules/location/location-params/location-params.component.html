@@ -10,7 +10,7 @@
         <label nz-checkbox formControlName="filterable">Фильтровать по полю</label>
     </nz-form-item>
 
-    <div class="buttons">
-        <button nz-button nzType="primary" (click)="save()" [nzLoading]="state === operationState.LOADING">Save</button>
-    </div>
+    <nz-form-item>
+        <label nz-checkbox formControlName="required">Обязательное поле</label>
+    </nz-form-item>
 </form>

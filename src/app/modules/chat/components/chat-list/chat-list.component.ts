@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
 import { Chat } from '../../models/chat.entity';
 import { User } from '../../../../models/user/user.entity';
+import { RolesEnum } from '../../../../models/user/user-roles.enum';
 
 @Component({
     selector: 'app-chat-list',
@@ -37,5 +38,9 @@ export class ChatListComponent {
             return chat.user2Data;
         }
         return chat.user1Data;
+    }
+
+    isAdmin(user: User): boolean {
+        return user.roles.includes(RolesEnum.ADMIN);
     }
 }

@@ -11,7 +11,6 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
-import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { RadioViewComponent } from './radio-view/radio-view.component';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { RadioFilterComponent } from './radio-filter/radio-filter.component';
@@ -28,7 +27,6 @@ import { RadioFilterComponent } from './radio-filter/radio-filter.component';
         NzInputModule,
         ReactiveFormsModule,
         NzRadioModule,
-        NzDividerModule,
         NzCheckboxModule,
     ],
     providers: [RadioService],
