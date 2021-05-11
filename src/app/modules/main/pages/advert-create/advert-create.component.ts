@@ -22,7 +22,6 @@ export class AdvertCreateComponent implements OnInit {
     selectedCategoriesIds: string[] = [];
     selectedCategory: Category;
     categories: Category[] = [];
-    model: Model;
     advert: Advert;
     categoryTree$ = new BehaviorSubject<NzCascaderOption[]>([]);
     loadingForm$ = new BehaviorSubject<boolean>(false);
@@ -78,9 +77,6 @@ export class AdvertCreateComponent implements OnInit {
     }
 
     save(advert: CreateAdvertDto): void {
-        // todo: refactoring
-        // advert: Advert
-        // const myObj = new CreateAdvertDto();
         advert.category_id = this.selectedCategory.id;
         advert.model_id = this.selectedCategory.modelId;
 

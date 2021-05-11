@@ -1,4 +1,15 @@
-import { AfterViewInit, Component, ComponentRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    Component,
+    ComponentRef,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    ViewChild,
+    ViewContainerRef,
+} from '@angular/core';
 import { PreferContact } from '../../enums/contact-values.enum';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AbstractFieldFormComponent } from '../../../dynamic-fields/models/abstract-field-form.component';
@@ -11,13 +22,13 @@ import { Advert } from '../../../../models/advert/advert.entity';
     selector: 'app-advert-form',
     templateUrl: './advert-form.component.html',
     styleUrls: ['./advert-form.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdvertFormComponent implements OnInit, AfterViewInit {
-    @Output() saveEvent = new EventEmitter<UpdateAdvertDto | CreateAdvertDto>();
+    @Output() submitForm = new EventEmitter<UpdateAdvertDto | CreateAdvertDto>();
     @Input() advert: Advert;
     preferContact = PreferContact;
     formDefaultFields: FormGroup;
-    saveTittle = 'Добавить объявление';
     @ViewChild('fields', { read: ViewContainerRef })
     private fieldsFormContainerRef: ViewContainerRef;
     private components: ComponentRef<AbstractFieldFormComponent<any, any>>[] = [];
@@ -26,14 +37,13 @@ export class AdvertFormComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
         this.formDefaultFields = new FormGroup({
-            title: new FormControl(undefined, [Validators.required]),
-            preferredContact: new FormControl(undefined),
+            title: new FormControl(this.advert.title || undefined, [Validators.required]),
+            preferredContact: new FormControl(this.advert.preferContact || undefined),
         });
     }
 
     ngAfterViewInit(): void {
         if (this.advert.id) {
-            this.saveTittle = 'Сохранить объявление';
             this.formDefaultFields.get('title')?.setValue(this.advert.title);
             this.formDefaultFields.get('preferredContact')?.setValue(this.advert.preferContact);
             this.populateFormWithInputs(this.advert.fields);
@@ -46,7 +56,7 @@ export class AdvertFormComponent implements OnInit, AfterViewInit {
             advert.fields = this.components.map(component => component.instance.getFieldData()).filter(value => !!value);
             advert.title = this.formDefaultFields.get('title')?.value;
             advert.preferContact = this.formDefaultFields.get('preferredContact')?.value;
-            this.saveEvent.next(advert);
+            this.submitForm.next(advert);
         }
     }
 

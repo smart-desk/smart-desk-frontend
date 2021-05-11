@@ -33,8 +33,7 @@ const DRAWER_BASE_CONFIG = {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PreviewComponent implements OnInit, OnDestroy {
-    @Input()
-    modelId: string;
+    @Input() modelId: string;
     @ViewChild('fields', { read: ViewContainerRef })
     private fieldsFormContainerRef: ViewContainerRef;
 

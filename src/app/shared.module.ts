@@ -4,16 +4,7 @@
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { ApiHostInterceptor, ErrorsInterceptor, TokenInterceptor } from './interceptors';
 import { RouterModule } from '@angular/router';
-import {
-    AdvertDataService,
-    AdvertService,
-    AuthService,
-    CategoryService,
-    FieldService,
-    ModelService,
-    SectionService,
-    UserService,
-} from './services';
+import { AdvertDataService, AdvertService, AuthService, CategoryService, FieldService, ModelService, UserService } from './services';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './components/login/login.component';
 import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.component';
@@ -57,7 +48,6 @@ const NZModules = [
  */
 const services = [
     ModelService,
-    SectionService,
     FieldService,
     CategoryService,
     AdvertService,

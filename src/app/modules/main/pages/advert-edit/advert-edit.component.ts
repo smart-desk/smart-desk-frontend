@@ -54,9 +54,6 @@ export class AdvertEditComponent implements OnInit {
     }
 
     save(advert: UpdateAdvertDto): void {
-        // todo: refactoring
-        // advert: Advert
-        // const myObj = new UpdateAdvertDto();
         this.advertService.updateAdvert(this.advert.id, advert).subscribe(() => this.router.navigate(['adverts', this.advert.id]));
     }
 }

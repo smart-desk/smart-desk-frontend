@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FieldEntity, FieldType, SectionType } from '../../../../models/field/field.entity';
 import { Model } from '../../../../models/model/model.entity';
-import { FieldService } from '../../../../services';
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
 
 @Component({
@@ -64,14 +63,10 @@ export class AddFieldComponent {
     }
 
     createField(): void {
-        const section = this.model.fields.find(s => s.section === this.selectedSection);
-        if (!section) {
-            // todo create a section
-            return;
-        }
         const newField = new FieldEntity();
         newField.type = this.selectedField;
-        newField.section_id = section.id;
+        newField.section = this.selectedSection;
+        newField.modelId = this.model.id;
         newField.params = {};
 
         this.create.emit(newField);

@@ -24,15 +24,6 @@
 <app-advert-form
     *ngIf="(loadingForm$ | async) === false && selectedCategoriesIds && selectedCategoriesIds.length"
     [advert]="advert"
-    (saveEvent)="save($event)"
+    (submitForm)="save($event)"
 >
 </app-advert-form>
-
-<!--<ng-container #fields></ng-container>-->
-<!--<nz-skeleton *ngIf="loadingForm$ | async; else advertButton" [nzActive]="true"></nz-skeleton>-->
-
-<!--<ng-template #advertButton>-->
-<!--    <ng-container *ngIf="selectedCategoriesIds && selectedCategoriesIds.length">-->
-<!--        <button nz-button nzType="primary" (click)="save()">Добавить объявление</button>-->
-<!--    </ng-container>-->
-<!--</ng-template>-->
