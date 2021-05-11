@@ -19,9 +19,7 @@ export class InputTextService implements AbstractFieldService {
     getViewComponentResolver(): ComponentFactory<InputTextViewComponent> {
         return this.componentFactoryResolver.resolveComponentFactory(InputTextViewComponent);
     }
-
-    getFilterComponentResolver(): ComponentFactory<any> {
-        // todo set generic
+    getFilterComponentResolver(): null {
         return null;
     }
 

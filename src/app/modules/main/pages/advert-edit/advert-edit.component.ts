@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, OnInit } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
 import { AdvertService, ModelService } from '../../../../services';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AbstractFieldFormComponent } from '../../../dynamic-fields/models/abstract-field-form.component';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { Advert } from '../../../../models/advert/advert.entity';
 import { Model } from '../../../../models/model/model.entity';
@@ -34,13 +34,23 @@ export class AdvertEditComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.route.paramMap.pipe(switchMap(paramMap => this.advertService.getAdvert(paramMap.get('advert_id')))).subscribe(
-            (advert: Advert): Observable<Model> => {
-                this.advert = advert;
-                this.cd.detectChanges();
-                return this.modelService.getModel(advert.model_id);
-            }
-        );
+        this.route.paramMap
+            .pipe(
+                switchMap((paramMap: ParamMap) => {
+                    const advertId = paramMap.get('advert_id');
+                    if (advertId) {
+                        return this.advertService.getAdvert(advertId);
+                    }
+                    return EMPTY;
+                })
+            )
+            .subscribe(
+                (advert: Advert): Observable<Model> => {
+                    this.advert = advert;
+                    this.cd.detectChanges();
+                    return this.modelService.getModel(advert.model_id);
+                }
+            );
     }
 
     save(advert: UpdateAdvertDto): void {

@@ -29,10 +29,10 @@ export class PriceParamsComponent extends AbstractFieldParamsComponent<PricePara
     }
 
     getField(): Field<unknown, PriceParamsDto> {
-        this.field.filterable = this.form.get('filterable').value;
-        this.field.required = this.form.get('required').value;
+        this.field.filterable = this.form.get('filterable')?.value;
+        this.field.required = this.form.get('required')?.value;
         this.field.params = {
-            currency: this.form.get('currency').value,
+            currency: this.form.get('currency')?.value,
         };
 
         return this.field;

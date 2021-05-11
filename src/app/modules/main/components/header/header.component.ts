@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { BehaviorSubject, of, Subject } from 'rxjs';
+import { BehaviorSubject, EMPTY, NEVER, of, Subject } from 'rxjs';
 import { filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
 import { AdvertDataService, CategoryService } from '../../../../services';
@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     selectedCategoriesIds: string[] = [];
     searchPhrase = '';
     private destroy$ = new Subject();
-    private user: User;
+    private user: User | undefined;
 
     constructor(
         private cd: ChangeDetectorRef,
@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         if (this.route.snapshot.queryParamMap.has('search')) {
-            this.searchPhrase = this.route.snapshot.queryParamMap.get('search');
+            this.searchPhrase = this.route.snapshot.queryParamMap.get('search') || '';
             this.cd.detectChanges();
         }
 
@@ -47,7 +47,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
                     if (paramMap.has('category_id')) {
                         return this.categoryService.getCategory(paramMap.get('category_id'));
                     }
-                    return of(null);
+                    return EMPTY;
                 })
             )
             .subscribe(category => {
@@ -70,7 +70,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.destroy$.complete();
     }
 
-    onCategorySelect($event): void {
+    onCategorySelect($event: string[]): void {
         const selectedCat = $event[$event.length - 1];
         if (this.currentCategory && this.currentCategory.id === selectedCat) {
             return;
@@ -104,7 +104,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.router.navigate(['/']);
     }
 
-    private navigateToGlobalSearchPage(searchPhrase) {
+    private navigateToGlobalSearchPage(searchPhrase: string) {
         this.router.navigate(['/', 'search'], { queryParams: { search: searchPhrase } });
     }
 }

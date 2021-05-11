@@ -3,12 +3,10 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
-import { AbstractFieldFormComponent } from '../../../dynamic-fields/models/abstract-field-form.component';
 import { AdvertService, CategoryService, ModelService } from '../../../../services';
 import { Category } from '../../../../models/category/category.entity';
 import { CreateAdvertDto } from '../../../../models/advert/advert.dto';
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
-import { PreferContact } from '../../enums/contact-values.enum';
 import { Model } from '../../../../models/model/model.entity';
 import { Advert } from '../../../../models/advert/advert.entity';
 import { cloneDeep } from 'lodash';
@@ -22,7 +20,7 @@ import { cloneDeep } from 'lodash';
 })
 export class AdvertCreateComponent implements OnInit {
     selectedCategoriesIds: string[] = [];
-    selectedCategory: Category = null;
+    selectedCategory: Category;
     categories: Category[] = [];
     model: Model;
     advert: Advert;
@@ -60,17 +58,23 @@ export class AdvertCreateComponent implements OnInit {
         this.loadingForm$.next(true);
 
         const lastCategoryId = selectedCategoriesIds[selectedCategoriesIds.length - 1];
-        this.selectedCategory = this.categories.find(cat => cat.id === lastCategoryId);
-        const modelId = this.selectedCategory.modelId;
+        const foundCategory = this.categories.find(cat => cat.id === lastCategoryId);
+        if (foundCategory) {
+            this.selectedCategory = foundCategory;
+        }
 
-        this.modelService
-            .getModel(modelId)
-            .pipe(take(1))
-            .subscribe(model => {
-                this.advert = new Advert();
-                this.advert.fields = cloneDeep(model.fields);
-                this.loadingForm$.next(false);
-            });
+        if (this.selectedCategory) {
+            const modelId = this.selectedCategory.modelId;
+
+            this.modelService
+                .getModel(modelId)
+                .pipe(take(1))
+                .subscribe(model => {
+                    this.advert = new Advert();
+                    this.advert.fields = cloneDeep(model.fields);
+                    this.loadingForm$.next(false);
+                });
+        }
     }
 
     save(advert: CreateAdvertDto): void {

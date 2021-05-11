@@ -1,5 +1,5 @@
-export const objectToQueryString = initialObj => {
-    const reducer = (obj, parentPrefix = null) => (prev, key) => {
+export const objectToQueryString = (initialObj: any) => {
+    const reducer = (obj: any, parentPrefix = null) => (prev: string[], key: any) => {
         const val = obj[key];
         key = encodeURIComponent(key);
         const prefix = parentPrefix ? `${parentPrefix}[${key}]` : key;

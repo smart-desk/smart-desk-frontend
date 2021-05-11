@@ -13,7 +13,7 @@ import { Subject } from 'rxjs';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileMenuComponent implements OnInit, OnDestroy {
-    user: User;
+    user: User | undefined;
     destroy$ = new Subject();
 
     constructor(

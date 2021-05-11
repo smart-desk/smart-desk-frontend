@@ -66,7 +66,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
     }
 
     addField(): void {
-        const drawer = this.drawerService.create({
+        const drawer = this.drawerService.create<AddFieldComponent>({
             nzContent: AddFieldComponent,
             nzContentParams: { model: this.model },
             nzTitle: 'Новое поле',
@@ -75,7 +75,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
 
         drawer.afterOpen.subscribe(() => {
             const instance = drawer.getContentComponent();
-            instance.create.subscribe(f => {
+            instance?.create.subscribe((f: FieldEntity) => {
                 drawer.close();
                 this.onEdit(f);
             });
@@ -101,10 +101,10 @@ export class PreviewComponent implements OnInit, OnDestroy {
 
     private resolveFieldComponent(field: FieldEntity): void {
         const resolver = this.componentFactoryResolver.resolveComponentFactory(PreviewToolsComponent);
-        const component = this.fieldsFormContainerRef.createComponent(resolver);
+        const component = this.fieldsFormContainerRef.createComponent<PreviewToolsComponent>(resolver);
         component.instance.field = field;
-        component.instance.edit.subscribe(f => this.onEdit(f));
-        component.instance.delete.subscribe(f => this.onDelete(f));
+        component.instance.edit.subscribe((f: FieldEntity) => this.onEdit(f));
+        component.instance.delete.subscribe((f: FieldEntity) => this.onDelete(f));
         component.changeDetectorRef.detectChanges();
     }
 
@@ -123,7 +123,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
 
         drawer.afterOpen.subscribe(() => {
             const instance = drawer.getContentComponent();
-            instance.fieldChange.subscribe(state => {
+            instance?.fieldChange.subscribe((state: OperationState) => {
                 if (state === OperationState.SUCCESS) {
                     drawer.close();
                     this.update();

@@ -33,7 +33,7 @@ export class PhotoFormComponent extends AbstractFieldFormComponent<PhotoEntity, 
 
     getFieldData(): PhotoEntity {
         const value = this.fileList.map(file => {
-            return file.response ? (file.response as UploadImageResponse).url : file.url;
+            return file.response ? (file.response as UploadImageResponse).url : file.url || '';
         });
 
         if (this.field.data) {

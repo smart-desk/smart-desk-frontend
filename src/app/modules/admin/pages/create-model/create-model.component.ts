@@ -15,7 +15,7 @@ export class CreateModelComponent {
 
     // todo вывести ошибки сервера
     modelForm = new FormGroup({
-        name: new FormControl((this.model && this.model.name) || '', Validators.required),
+        name: new FormControl(this.model?.name || '', Validators.required),
     });
 
     constructor(private modelsService: ModelService, private sectionService: SectionService, private router: Router) {}
@@ -23,7 +23,7 @@ export class CreateModelComponent {
     createModel(): void {
         this.modelsService
             .createModel({
-                name: this.modelForm.get('name').value,
+                name: this.modelForm.get('name')?.value,
             })
             .subscribe(model => {
                 this.router.navigate(['admin', 'models', 'edit', model.id]);

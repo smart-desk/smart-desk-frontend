@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import { ProfileFormEnum } from '../../pages/profile/profile-form.enum';
 import { User } from '../../../../models/user/user.entity';
@@ -34,7 +34,7 @@ export class FormNameComponent implements OnInit {
             this.file = [event.file];
             const fileUrl = this.file[0].response.url;
             this.profile.avatar = fileUrl;
-            this.formName.get('avatar').setValue(fileUrl);
+            (this.formName.get('avatar') as AbstractControl).setValue(fileUrl);
         }
     }
 
@@ -44,8 +44,8 @@ export class FormNameComponent implements OnInit {
     }
 
     setValue(): void {
-        this.profile.lastName = this.formName.get('lastName').value;
-        this.profile.firstName = this.formName.get('firstName').value;
-        this.profile.avatar = this.formName.get('avatar').value;
+        this.profile.lastName = (this.formName.get('lastName') as AbstractControl).value;
+        this.profile.firstName = (this.formName.get('firstName') as AbstractControl).value;
+        this.profile.avatar = (this.formName.get('avatar') as AbstractControl).value;
     }
 }

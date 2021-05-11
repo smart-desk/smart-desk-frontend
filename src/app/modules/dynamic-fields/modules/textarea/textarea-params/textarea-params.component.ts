@@ -29,11 +29,11 @@ export class TextareaParamsComponent extends AbstractFieldParamsComponent<Textar
     }
 
     getField(): Field<unknown, TextareaParamsDto> {
-        this.field.title = this.form.get('title').value;
-        this.field.required = this.form.get('required').value;
+        this.field.title = this.form.get('title')?.value;
+        this.field.required = this.form.get('required')?.value;
         this.field.params = {
-            placeholder: this.form.get('placeholder').value,
-            richTextEditor: this.form.get('richTextEditor').value,
+            placeholder: this.form.get('placeholder')?.value,
+            richTextEditor: this.form.get('richTextEditor')?.value,
         };
         return this.field;
     }

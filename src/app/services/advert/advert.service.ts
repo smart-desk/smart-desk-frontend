@@ -11,17 +11,18 @@ export class AdvertService {
     constructor(private http: HttpClient) {}
 
     getAdvertsForCategory(category: string, options?: GetAdvertsDto): Observable<GetAdvertsResponseDto> {
-        const path = `/adverts/category/${category}${this.buildQueryParams(options)}`;
+        const categoryPath = `/adverts/category/${category}`;
+        const path = options ? `${categoryPath}${this.buildQueryParams(options)}` : `${categoryPath}`;
         return this.http.get<GetAdvertsResponseDto>(path);
     }
 
     getMyAdverts(options?: GetAdvertsDto): Observable<GetAdvertsResponseDto> {
-        const path = `/adverts/my${this.buildQueryParams(options)}`;
+        const path = options ? `/adverts/my${this.buildQueryParams(options)}` : '/adverts/my';
         return this.http.get<GetAdvertsResponseDto>(path);
     }
 
     getAdverts(options?: GetAdvertsDto): Observable<GetAdvertsResponseDto> {
-        const path = `/adverts${this.buildQueryParams(options)}`;
+        const path = options ? `/adverts${this.buildQueryParams(options)}` : '/adverts';
         return this.http.get<GetAdvertsResponseDto>(path);
     }
 
@@ -31,17 +32,17 @@ export class AdvertService {
     }
 
     getBlocked(options?: GetAdvertsDto): Observable<GetAdvertsResponseDto> {
-        const path = `/adverts/blocked${this.buildQueryParams(options)}`;
+        const path = options ? `/adverts/blocked${this.buildQueryParams(options)}` : '/adverts/blocked';
         return this.http.get<GetAdvertsResponseDto>(path);
     }
 
     getPending(options?: GetAdvertsDto): Observable<GetAdvertsResponseDto> {
-        const path = `/adverts/pending${this.buildQueryParams(options)}`;
+        const path = options ? `/adverts/pending${this.buildQueryParams(options)}` : '/adverts/pending';
         return this.http.get<GetAdvertsResponseDto>(path);
     }
 
     getCompleted(options?: GetAdvertsDto): Observable<GetAdvertsResponseDto> {
-        const path = `/adverts/completed${this.buildQueryParams(options)}`;
+        const path = options ? `/adverts/completed${this.buildQueryParams(options)}` : '/adverts/completed';
         return this.http.get<GetAdvertsResponseDto>(path);
     }
 

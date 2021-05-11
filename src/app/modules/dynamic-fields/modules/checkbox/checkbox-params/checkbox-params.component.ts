@@ -42,9 +42,9 @@ export class CheckboxParamsComponent extends AbstractFieldParamsComponent<Checkb
     getField(): Field<unknown, CheckboxParamsDto> {
         const checkboxes = this.convertControlsToCheckboxes(this.checkboxes.getRawValue());
 
-        this.field.title = this.form.get('title').value;
-        this.field.required = this.form.get('filterable').value;
-        this.field.filterable = this.form.get('required').value;
+        this.field.title = this.form.get('title')?.value;
+        this.field.required = this.form.get('filterable')?.value;
+        this.field.filterable = this.form.get('required')?.value;
         this.field.params = { checkboxes };
 
         return this.field;

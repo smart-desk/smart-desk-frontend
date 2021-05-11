@@ -34,8 +34,8 @@ export class AdvertFormComponent implements OnInit, AfterViewInit {
     ngAfterViewInit(): void {
         if (this.advert.id) {
             this.saveTittle = 'Сохранить объявление';
-            this.formDefaultFields.get('title').setValue(this.advert.title);
-            this.formDefaultFields.get('preferredContact').setValue(this.advert.preferContact);
+            this.formDefaultFields.get('title')?.setValue(this.advert.title);
+            this.formDefaultFields.get('preferredContact')?.setValue(this.advert.preferContact);
             this.populateFormWithInputs(this.advert.fields);
         }
     }
