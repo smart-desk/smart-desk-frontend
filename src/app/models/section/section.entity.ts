@@ -1,6 +1,8 @@
-import { FieldEntity } from '../field/field.entity';
+import { SectionType } from '../field/field.entity';
 
 export class Field {
     id: string;
-    fields: FieldEntity[];
+    section: SectionType;
+    // tslint:disable-next-line:variable-name
+    model_id: string;
 }
