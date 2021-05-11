@@ -10,11 +10,11 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import { Model } from '../../../../models/model/model.entity';
-import { SectionType } from '../../../../models/section/section.entity';
 import { AdvertDataService } from '../../../../services';
 import { Filter, Filters } from '../../../dynamic-fields/models/filter';
 import { AbstractFieldFilterComponent } from '../../../dynamic-fields/models/abstract-field-filter.component';
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
+import { SectionType } from '../../../../models/field/field.entity';
 
 @Component({
     selector: 'app-filters',
@@ -74,7 +74,7 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
     }
 
     private updateFilters(): void {
-        if (!this.model || !this.model.sections) {
+        if (!this.model || !this.model.fields) {
             return;
         }
 
@@ -96,12 +96,12 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
         container: ViewContainerRef,
         sectionType: SectionType
     ): AbstractFieldFilterComponent<any, any>[] | undefined {
-        const section = this.model.sections.find(s => s.type === sectionType);
-        if (!section) {
+        const fields = this.model.fields.filter(s => s.section === sectionType);
+        if (!fields.length) {
             return;
         }
 
-        const components = section.fields
+        const components = fields
             .map(field => {
                 if (!field.filterable) {
                     return;

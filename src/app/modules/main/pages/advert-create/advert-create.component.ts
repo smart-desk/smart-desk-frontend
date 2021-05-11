@@ -1,24 +1,15 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    ComponentFactoryResolver,
-    ComponentRef,
-    OnInit,
-    ViewChild,
-    ViewContainerRef,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, ComponentRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
-import { AbstractFieldFormComponent } from '../../../dynamic-fields/models/abstract-field-form.component';
 import { AdvertService, CategoryService, ModelService } from '../../../../services';
 import { Category } from '../../../../models/category/category.entity';
 import { CreateAdvertDto } from '../../../../models/advert/advert.dto';
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { PreferContact } from '../../enums/contact-values.enum';
-import { AdvertFormBaseClass } from '../../classes/advert-form-base.class';
+import { Model } from '../../../../models/model/model.entity';
+import { Advert } from '../../../../models/advert/advert.entity';
+import { cloneDeep } from 'lodash';
 
 // todo check subscriptions
 @Component({
@@ -27,18 +18,14 @@ import { AdvertFormBaseClass } from '../../classes/advert-form-base.class';
     styleUrls: ['./advert-create.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdvertCreateComponent extends AdvertFormBaseClass implements OnInit {
-    preferContact = PreferContact;
-    formDefaultFields: FormGroup;
+export class AdvertCreateComponent implements OnInit {
     selectedCategoriesIds: string[] = [];
     selectedCategory: Category;
     categories: Category[] = [];
+    advert: Advert;
     categoryTree$ = new BehaviorSubject<NzCascaderOption[]>([]);
     loadingForm$ = new BehaviorSubject<boolean>(false);
     loadingCategories$ = new BehaviorSubject<boolean>(true);
-    @ViewChild('fields', { read: ViewContainerRef })
-    protected fieldsFormContainerRef: ViewContainerRef;
-    protected components: ComponentRef<AbstractFieldFormComponent<any, any>>[] = [];
 
     constructor(
         private modelService: ModelService,
@@ -47,16 +34,9 @@ export class AdvertCreateComponent extends AdvertFormBaseClass implements OnInit
         private advertService: AdvertService,
         private router: Router,
         protected dynamicFieldService: DynamicFieldsService
-    ) {
-        super(dynamicFieldService);
-    }
+    ) {}
 
     ngOnInit(): void {
-        this.formDefaultFields = new FormGroup({
-            title: new FormControl(undefined, [Validators.required]),
-            preferredContact: new FormControl(null),
-        });
-
         this.categoryService
             .getCategories()
             .pipe(
@@ -85,30 +65,20 @@ export class AdvertCreateComponent extends AdvertFormBaseClass implements OnInit
         if (this.selectedCategory) {
             const modelId = this.selectedCategory.modelId;
 
-            if (this.fieldsFormContainerRef) {
-                this.fieldsFormContainerRef.clear();
-            }
             this.modelService
                 .getModel(modelId)
                 .pipe(take(1))
                 .subscribe(model => {
-                    this.populateFormWithInputs(model.sections);
+                    this.advert = new Advert();
+                    this.advert.fields = cloneDeep(model.fields);
                     this.loadingForm$.next(false);
                 });
         }
     }
 
-    save(): void {
-        if (!this.isValid()) {
-            return;
-        }
-
-        const advert = new CreateAdvertDto();
-        advert.title = this.formDefaultFields.get('title')?.value;
-        advert.preferContact = this.formDefaultFields.get('preferredContact')?.value;
+    save(advert: CreateAdvertDto): void {
         advert.category_id = this.selectedCategory.id;
         advert.model_id = this.selectedCategory.modelId;
-        advert.fields = this.components.map(component => component.instance.getFieldData()).filter(value => !!value);
 
         this.advertService.createAdvert(advert).subscribe(
             res => {

@@ -16,7 +16,9 @@
                     <a [routerLink]="['/', 'adverts', chat.advertId]">{{ chat.advertData?.title }}</a>
                 </nz-list-item-meta-description>
                 <nz-list-item-meta-title>
-                    <a [routerLink]="['/', 'user', getConversationalist(chat)?.id]">{{ getConversationalist(chat)?.firstName }}</a>
+                    <a *ngIf="currentUser" [routerLink]="['/', 'user', getConversationalist(chat)?.id]">
+                        {{ getConversationalist(chat)?.firstName }}
+                    </a>
                     <span *ngIf="isAdmin(getConversationalist(chat))" nz-typography nzType="success">&nbsp;Администратор</span>
                 </nz-list-item-meta-title>
             </nz-list-item-meta>

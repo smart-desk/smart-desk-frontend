@@ -9,7 +9,6 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import { FieldService, ModelService } from '../../../../services';
-import { Section } from '../../../../models/section/section.entity';
 import { FieldEntity } from '../../../../models/field/field.entity';
 import { NzDrawerService } from 'ng-zorro-antd/drawer';
 import { PreviewToolsComponent } from '../preview-tools/preview-tools.component';
@@ -34,8 +33,7 @@ const DRAWER_BASE_CONFIG = {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PreviewComponent implements OnInit, OnDestroy {
-    @Input()
-    modelId: string;
+    @Input() modelId: string;
     @ViewChild('fields', { read: ViewContainerRef })
     private fieldsFormContainerRef: ViewContainerRef;
 
@@ -62,7 +60,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
     update(): void {
         this.modelService.getModel(this.modelId).subscribe(model => {
             this.model = model;
-            this.populateFormWithInputs(this.model.sections);
+            this.populateFormWithInputs(this.model.fields);
         });
     }
 
@@ -83,29 +81,21 @@ export class PreviewComponent implements OnInit, OnDestroy {
         });
     }
 
-    drop(event: CdkDragDrop<string[]>): void {
-        const paramSection = this.model.sections.find(section => section.type === 'params');
-        if (paramSection) {
-            moveItemInArray(paramSection.fields, event.previousIndex, event.currentIndex);
-            paramSection.fields.forEach((field: FieldEntity, index: number) => (field.order = index + 1));
-            const responseObservables = paramSection.fields.map(field => this.fieldService.updateField(field.id, field));
-            this.populateFormWithInputs(this.model.sections);
-            forkJoin(responseObservables).pipe(takeUntil(this.destroy$)).subscribe();
-        }
+    drop(event: CdkDragDrop<string[]>) {
+        const paramFields = this.model.fields.filter(field => field.section === 'params');
+        moveItemInArray(paramFields, event.previousIndex, event.currentIndex);
+        paramFields.forEach((field: FieldEntity, index: number) => (field.order = index + 1));
+        const responseObservables = paramFields.map(field => this.fieldService.updateField(field.id, field));
+        this.populateFormWithInputs(this.model.fields);
+        forkJoin(responseObservables).pipe(takeUntil(this.destroy$)).subscribe();
     }
 
-    private populateFormWithInputs(sections: Section[]): void {
+    private populateFormWithInputs(fields: FieldEntity[]): void {
         if (this.fieldsFormContainerRef) {
             this.fieldsFormContainerRef.clear();
         }
-        sections.forEach(section => {
-            if (section.fields) {
-                section.fields.sort((a: FieldEntity, b: FieldEntity) => a.order - b.order);
-                section.fields.forEach(field => {
-                    this.resolveFieldComponent(field);
-                });
-            }
-        });
+        fields.sort((a: FieldEntity, b: FieldEntity) => a.order - b.order);
+        fields.forEach(field => this.resolveFieldComponent(field));
     }
 
     private resolveFieldComponent(field: FieldEntity): void {

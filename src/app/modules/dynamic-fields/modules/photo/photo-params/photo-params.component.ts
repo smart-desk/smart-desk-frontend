@@ -27,8 +27,8 @@ export class PhotoParamsComponent extends AbstractFieldParamsComponent<PhotoPara
 
     getField(): Field<unknown, PhotoParamsDto> {
         this.field.params = {
-            max: this.form.get('max').value,
-            min: this.form.get('min').value,
+            max: this.form.get('max')?.value,
+            min: this.form.get('min')?.value,
         };
         return this.field;
     }

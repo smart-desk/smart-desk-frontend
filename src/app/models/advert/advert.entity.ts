@@ -1,4 +1,4 @@
-import { Section } from '../section/section.entity';
+import { FieldEntity } from '../field/field.entity';
 
 export class Advert {
     id: string;
@@ -11,7 +11,7 @@ export class Advert {
     preferContact: string;
     createdAt: Date;
     updatedAt: Date;
-    sections: Section[];
+    fields: FieldEntity[];
     isBookmark: boolean;
     views: number;
 }

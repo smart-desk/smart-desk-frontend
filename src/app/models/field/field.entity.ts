@@ -9,13 +9,21 @@ export enum FieldType {
     CHECKBOX = 'checkbox',
 }
 
+export enum SectionType {
+    PARAMS = 'params',
+    CONTACTS = 'contacts',
+    LOCATION = 'location',
+    PRICE = 'price',
+}
+
 export class FieldEntity {
     id: string;
+    modelId: string;
     title: string;
     required: boolean;
+    section: SectionType;
     type: FieldType;
     // tslint:disable-next-line:variable-name
-    section_id: string;
     filterable: boolean;
     params: unknown;
     data: unknown;

@@ -1,25 +1,15 @@
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ComponentRef,
-    OnInit,
-    ViewChild,
-    ViewContainerRef,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, OnInit } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
 import { AdvertService, ModelService } from '../../../../services';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AbstractFieldFormComponent } from '../../../dynamic-fields/models/abstract-field-form.component';
-import { Observable } from 'rxjs';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { EMPTY, Observable } from 'rxjs';
+import { FormGroup } from '@angular/forms';
 import { Advert } from '../../../../models/advert/advert.entity';
 import { Model } from '../../../../models/model/model.entity';
-import { UpdateAdvertDto } from '../../../../models/advert/advert.dto';
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
 import { PreferContact } from '../../enums/contact-values.enum';
-import { AdvertFormBaseClass } from '../../classes/advert-form-base.class';
+import { UpdateAdvertDto } from '../../../../models/advert/advert.dto';
 
 @Component({
     selector: 'app-advert-edit',
@@ -27,12 +17,10 @@ import { AdvertFormBaseClass } from '../../classes/advert-form-base.class';
     styleUrls: ['./advert-edit.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdvertEditComponent extends AdvertFormBaseClass implements OnInit {
+export class AdvertEditComponent implements OnInit {
     form: FormGroup;
     preferContact = PreferContact;
     advert: Advert;
-    @ViewChild('fields', { read: ViewContainerRef })
-    protected fieldsFormContainerRef: ViewContainerRef;
     protected components: ComponentRef<AbstractFieldFormComponent<any, any>>[] = [];
 
     constructor(
@@ -42,43 +30,30 @@ export class AdvertEditComponent extends AdvertFormBaseClass implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private cd: ChangeDetectorRef,
-        private fb: FormBuilder,
         protected dynamicFieldService: DynamicFieldsService
-    ) {
-        super(dynamicFieldService);
-    }
+    ) {}
 
     ngOnInit(): void {
-        this.form = this.fb.group({
-            title: ['', [Validators.required]],
-            preferredContact: [null],
-        });
         this.route.paramMap
             .pipe(
-                switchMap(paramMap => this.advertService.getAdvert(paramMap.get('advert_id') || '')),
-                switchMap(
-                    (advert: Advert): Observable<Model> => {
-                        this.advert = advert;
-                        return this.modelService.getModel(advert.model_id);
+                switchMap((paramMap: ParamMap) => {
+                    const advertId = paramMap.get('advert_id');
+                    if (advertId) {
+                        return this.advertService.getAdvert(advertId);
                     }
-                )
+                    return EMPTY;
+                })
             )
-            .subscribe(() => {
-                this.form.controls.title.setValue(this.advert.title);
-                this.form.controls.preferredContact.setValue(this.advert.preferContact);
-                this.populateFormWithInputs(this.advert.sections);
-                this.cd.detectChanges();
-            });
+            .subscribe(
+                (advert: Advert): Observable<Model> => {
+                    this.advert = advert;
+                    this.cd.detectChanges();
+                    return this.modelService.getModel(advert.model_id);
+                }
+            );
     }
 
-    save(): void {
-        if (this.isValid()) {
-            const advert = new UpdateAdvertDto();
-            advert.fields = this.components.map(component => component.instance.getFieldData()).filter(value => !!value);
-            advert.title = this.form.controls.title.value;
-            this.advertService.updateAdvert(this.advert.id, advert).subscribe(() => {
-                this.router.navigate(['adverts', this.advert.id]);
-            });
-        }
+    save(advert: UpdateAdvertDto): void {
+        this.advertService.updateAdvert(this.advert.id, advert).subscribe(() => this.router.navigate(['adverts', this.advert.id]));
     }
 }
