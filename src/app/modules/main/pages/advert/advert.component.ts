@@ -13,8 +13,7 @@ import { switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import { AdvertDataService, AdvertService, UserService } from '../../../../services';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Advert } from '../../../../models/advert/advert.entity';
-import { SectionType } from '../../../../models/section/section.entity';
-import { FieldEntity } from '../../../../models/field/field.entity';
+import { FieldEntity, SectionType } from '../../../../models/field/field.entity';
 import { User } from '../../../../models/user/user.entity';
 import { GetAdvertsResponseDto } from '../../../../models/advert/advert.dto';
 import { BookmarksStoreService } from '../../../../services/bookmarks/bookmarks-store.service';
@@ -129,9 +128,9 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private addParamsFields(): void {
-        const section = this.advert.sections.find(s => s.type === SectionType.PARAMS);
-        if (section) {
-            this.populateContainerWithFields(this.paramsContainerRef, section.fields);
+        const fields = this.advert.fields.filter(s => s.section === SectionType.PARAMS);
+        if (fields.length) {
+            this.populateContainerWithFields(this.paramsContainerRef, fields);
         }
     }
 
@@ -143,16 +142,16 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private addPriceFields(): void {
-        const section = this.advert.sections.find(s => s.type === SectionType.PRICE);
-        if (section) {
-            this.populateContainerWithFields(this.priceContainerRef, section.fields);
+        const fieldsPrice = this.advert.fields.filter(s => s.section === SectionType.PRICE);
+        if (fieldsPrice.length) {
+            this.populateContainerWithFields(this.priceContainerRef, fieldsPrice);
         }
     }
 
     private addLocationFields(): void {
-        const section = this.advert.sections.find(s => s.type === SectionType.LOCATION);
-        if (section) {
-            this.populateContainerWithFields(this.locationContainerRef, section.fields);
+        const fieldsLocations = this.advert.fields.filter(s => s.section === SectionType.LOCATION);
+        if (fieldsLocations.length) {
+            this.populateContainerWithFields(this.locationContainerRef, fieldsLocations);
         }
     }
 

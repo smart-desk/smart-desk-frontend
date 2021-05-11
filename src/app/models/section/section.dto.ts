@@ -1,4 +1,4 @@
-import { SectionType } from './section.entity';
+import { SectionType } from '../field/field.entity';
 
 export class SectionCreateDto {
     type: SectionType;
