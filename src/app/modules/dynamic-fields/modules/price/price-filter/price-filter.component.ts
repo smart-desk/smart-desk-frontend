@@ -50,7 +50,7 @@ export class PriceFilterComponent extends AbstractFieldFilterComponent<PricePara
     }
 
     private emptyValues(): boolean {
-        return isNull((this.form.get('from') as FormControl).value) && isNull((this.form.get('to') as FormControl).value);
+        return isNull(this.form.get('from')?.value) && isNull(this.form.get('to')?.value);
     }
 
     private excludeEmptyValues(): PriceFilterDto {

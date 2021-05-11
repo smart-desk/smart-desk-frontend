@@ -30,8 +30,8 @@ export class LocationParamsComponent extends AbstractFieldParamsComponent implem
         this.state = OperationState.LOADING;
         this.save$.next(this.state);
 
-        this.field.title = (this.form.get('title') as FormControl).value;
-        this.field.filterable = (this.form.get('filterable') as FormControl).value;
+        this.field.title = this.form.get('title')?.value;
+        this.field.filterable = this.form.get('filterable')?.value;
 
         this.field.params = {
             ...this.form.getRawValue(),

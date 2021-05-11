@@ -44,7 +44,7 @@ export class TextareaParamsComponent extends AbstractFieldParamsComponent implem
             ...this.form.getRawValue(),
         };
         this.field.title = (this.field.params as TextareaParamsDto).label;
-        this.field.filterable = (this.form.get('filterable') as FormControl).value;
+        this.field.filterable = this.form.get('filterable')?.value;
 
         let request: Observable<FieldEntity>;
         if (this.field.id) {

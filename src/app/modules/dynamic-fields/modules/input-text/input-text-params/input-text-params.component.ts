@@ -37,7 +37,7 @@ export class InputTextParamsComponent extends AbstractFieldParamsComponent imple
     save(): void {
         this.state = OperationState.LOADING;
         this.save$.next(this.state);
-        this.field.filterable = (this.form.get('filterable') as FormControl).value;
+        this.field.filterable = this.form.get('filterable')?.value;
 
         this.field.params = {
             ...((this.field.params as object) || {}),

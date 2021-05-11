@@ -4,6 +4,7 @@ import { switchMap } from 'rxjs/operators';
 import { ModelService } from '../../../../services';
 import { PreviewComponent } from '../../components/preview/preview.component';
 import { Model } from '../../../../models/model/model.entity';
+import { EMPTY } from 'rxjs';
 
 @Component({
     selector: 'app-edit-model',
@@ -25,9 +26,19 @@ export class EditModelComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.route.paramMap.pipe(switchMap((params: ParamMap) => this.modelsService.getModel(params.get('id') || ''))).subscribe(model => {
-            this.model = model;
-            this.cd.detectChanges();
-        });
+        this.route.paramMap
+            .pipe(
+                switchMap((params: ParamMap) => {
+                    const modelId = params.get('id');
+                    if (modelId) {
+                        return this.modelsService.getModel(params.get('id') || '');
+                    }
+                    return EMPTY;
+                })
+            )
+            .subscribe(model => {
+                this.model = model;
+                this.cd.detectChanges();
+            });
     }
 }

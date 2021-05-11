@@ -33,7 +33,7 @@ export class PriceParamsComponent extends AbstractFieldParamsComponent implement
     save(): void {
         this.state = OperationState.LOADING;
         this.save$.next(this.state);
-        this.field.filterable = (this.form.get('filterable') as FormControl).value;
+        this.field.filterable = this.form.get('filterable')?.value;
 
         this.field.params = {
             ...((this.field.params as object) || {}),

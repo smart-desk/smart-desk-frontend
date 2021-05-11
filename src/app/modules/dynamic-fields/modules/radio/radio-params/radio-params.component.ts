@@ -45,8 +45,8 @@ export class RadioParamsComponent extends AbstractFieldParamsComponent implement
         this.updateState(OperationState.LOADING);
 
         const radios = this.convertControlsToRadios(this.radios.getRawValue());
-        const title = (this.form.get('title') as FormControl).value;
-        const filterable = (this.form.get('filterable') as FormControl).value;
+        const title = this.form.get('title')?.value;
+        const filterable = this.form.get('filterable')?.value;
 
         this.field = {
             ...(this.field || {}),
