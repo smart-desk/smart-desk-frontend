@@ -14,7 +14,6 @@ import { AdvertDataService, AdvertService, UserService } from '../../../../servi
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Advert } from '../../../../models/advert/advert.entity';
 import { SectionType } from '../../../../models/section/section.entity';
-import { FieldEntity } from '../../../../models/field/field.entity';
 import { User } from '../../../../models/user/user.entity';
 import { GetAdvertsResponseDto } from '../../../../models/advert/advert.dto';
 import { BookmarksStoreService } from '../../../../services/bookmarks/bookmarks-store.service';
@@ -22,6 +21,7 @@ import { LoginService } from '../../../../services/login/login.service';
 import { PhoneService } from '../../../../services/phone/phone.service';
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
 import { ChatModalService } from '../../../chat/services/chat-modal.service';
+import { FieldEntity } from '../../../../models/field/field.entity';
 
 @Component({
     selector: 'app-advert',
@@ -64,7 +64,13 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
         this.route.paramMap
             .pipe(
                 takeUntil(this.destroy$),
-                switchMap((param: ParamMap) => this.advertService.getRecommendedByAdvertId(param.get('advert_id')))
+                switchMap((param: ParamMap) => {
+                    const advertId = param.get('advert_id');
+                    if (advertId) {
+                        return this.advertService.getRecommendedByAdvertId(advertId);
+                    }
+                    return EMPTY;
+                })
             )
             .subscribe(res => {
                 this.similarAdverts = res;
@@ -78,13 +84,19 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
     ngAfterViewInit(): void {
         this.route.paramMap
             .pipe(
-                switchMap(params => this.advertService.getAdvert(params.get('advert_id'))),
+                switchMap((param: ParamMap) => {
+                    const advertId = param.get('advert_id');
+                    if (advertId) {
+                        return this.advertService.getAdvert(advertId);
+                    }
+                    return EMPTY;
+                }),
                 tap(advert => {
                     this.advert = advert;
                     this.countView();
                 }),
                 switchMap(advert => {
-                    return advert.userId ? this.userService.getUser(advert.userId) : of(null);
+                    return advert.userId ? this.userService.getUser(advert.userId) : EMPTY;
                 })
             )
             .subscribe(user => {

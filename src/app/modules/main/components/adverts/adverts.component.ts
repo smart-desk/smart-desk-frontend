@@ -27,7 +27,7 @@ import { AdvertDataService } from '../../../../services';
 })
 export class AdvertsComponent implements OnChanges, OnInit, OnDestroy {
     @Input() cardActions: ExtraActions[];
-    @Input() advertsResponse: GetAdvertsResponseDto;
+    @Input() advertsResponse: GetAdvertsResponseDto | null;
     destroy$ = new Subject();
 
     constructor(
@@ -46,8 +46,10 @@ export class AdvertsComponent implements OnChanges, OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.bookmarksStoreService.bookmarks$.pipe(takeUntil(this.destroy$)).subscribe(bookmarks => {
-            this.advertsResponse = this.updateAdvertsWithBookmarks(this.advertsResponse, bookmarks);
-            this.cd.detectChanges();
+            if (this.advertsResponse) {
+                this.advertsResponse = this.updateAdvertsWithBookmarks(this.advertsResponse, bookmarks);
+                this.cd.detectChanges();
+            }
         });
     }
 
@@ -70,9 +72,9 @@ export class AdvertsComponent implements OnChanges, OnInit, OnDestroy {
         this.bookmarksStoreService.deleteBookmark(advertId);
     }
 
-    private updateAdvertsWithBookmarks(advertsResponse: GetAdvertsResponseDto, bookmarks?: Bookmark[]): GetAdvertsResponseDto {
+    private updateAdvertsWithBookmarks(advertsResponse: GetAdvertsResponseDto, bookmarks?: Bookmark[]): GetAdvertsResponseDto | null {
         if (!advertsResponse) {
-            return;
+            return null;
         }
         if (bookmarks) {
             advertsResponse.adverts.forEach(advert => {
