@@ -19,16 +19,12 @@ export class AdvertFormComponent implements OnInit, AfterViewInit {
     formDefaultFields: FormGroup;
     saveTittle = 'Добавить объявление';
     @ViewChild('fields', { read: ViewContainerRef })
-    protected fieldsFormContainerRef: ViewContainerRef;
-    protected components: ComponentRef<AbstractFieldFormComponent<any, any>>[] = [];
+    private fieldsFormContainerRef: ViewContainerRef;
+    private components: ComponentRef<AbstractFieldFormComponent<any, any>>[] = [];
 
     constructor(protected dynamicFieldService: DynamicFieldsService) {}
 
     ngOnInit(): void {
-        if (this.fieldsFormContainerRef) {
-            this.fieldsFormContainerRef.clear();
-        }
-
         this.formDefaultFields = new FormGroup({
             title: new FormControl(undefined, [Validators.required]),
             preferredContact: new FormControl(undefined),
@@ -36,9 +32,11 @@ export class AdvertFormComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        this.populateFormWithInputs(this.advert.fields);
         if (this.advert.id) {
             this.saveTittle = 'Сохранить объявление';
+            this.formDefaultFields.get('title').setValue(this.advert.title);
+            this.formDefaultFields.get('preferredContact').setValue(this.advert.preferContact);
+            this.populateFormWithInputs(this.advert.fields);
         }
     }
 
@@ -46,7 +44,8 @@ export class AdvertFormComponent implements OnInit, AfterViewInit {
         if (this.isValid()) {
             const advert = new UpdateAdvertDto();
             advert.fields = this.components.map(component => component.instance.getFieldData()).filter(value => !!value);
-            advert.title = this.formDefaultFields.controls.title.value;
+            advert.title = this.formDefaultFields.get('title')?.value;
+            advert.preferContact = this.formDefaultFields.get('preferredContact')?.value;
             this.saveEvent.next(advert);
         }
     }

@@ -34,21 +34,13 @@ export class AdvertEditComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.route.paramMap
-            .pipe(
-                switchMap(paramMap => this.advertService.getAdvert(paramMap.get('advert_id'))),
-                switchMap(
-                    (advert: Advert): Observable<Model> => {
-                        this.advert = advert;
-                        this.cd.detectChanges();
-                        return this.modelService.getModel(advert.model_id);
-                    }
-                )
-            )
-            .subscribe(() => {
-                this.form.controls.title.setValue(this.advert.title);
-                this.form.controls.preferredContact.setValue(this.advert.preferContact);
-            });
+        this.route.paramMap.pipe(switchMap(paramMap => this.advertService.getAdvert(paramMap.get('advert_id')))).subscribe(
+            (advert: Advert): Observable<Model> => {
+                this.advert = advert;
+                this.cd.detectChanges();
+                return this.modelService.getModel(advert.model_id);
+            }
+        );
     }
 
     save(advert: UpdateAdvertDto): void {

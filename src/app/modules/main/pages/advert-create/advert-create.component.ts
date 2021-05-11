@@ -21,7 +21,6 @@ import { cloneDeep } from 'lodash';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdvertCreateComponent implements OnInit {
-    preferContact = PreferContact;
     selectedCategoriesIds: string[] = [];
     selectedCategory: Category = null;
     categories: Category[] = [];
@@ -30,7 +29,6 @@ export class AdvertCreateComponent implements OnInit {
     categoryTree$ = new BehaviorSubject<NzCascaderOption[]>([]);
     loadingForm$ = new BehaviorSubject<boolean>(false);
     loadingCategories$ = new BehaviorSubject<boolean>(true);
-    protected components: ComponentRef<AbstractFieldFormComponent<any, any>>[] = [];
 
     constructor(
         private modelService: ModelService,
@@ -71,7 +69,6 @@ export class AdvertCreateComponent implements OnInit {
             .subscribe(model => {
                 this.advert = new Advert();
                 this.advert.fields = cloneDeep(model.fields);
-                // this.populateFormWithInputs(model.sections);
                 this.loadingForm$.next(false);
             });
     }
@@ -82,7 +79,6 @@ export class AdvertCreateComponent implements OnInit {
         // const myObj = new CreateAdvertDto();
         advert.category_id = this.selectedCategory.id;
         advert.model_id = this.selectedCategory.modelId;
-        advert.fields = this.components.map(component => component.instance.getFieldData()).filter(value => !!value);
 
         this.advertService.createAdvert(advert).subscribe(
             res => {
