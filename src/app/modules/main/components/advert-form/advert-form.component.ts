@@ -46,8 +46,8 @@ export class AdvertFormComponent implements OnInit, AfterViewInit {
         if (this.advert.id) {
             this.formDefaultFields.get('title')?.setValue(this.advert.title);
             this.formDefaultFields.get('preferredContact')?.setValue(this.advert.preferContact);
-            this.populateFormWithInputs(this.advert.fields);
         }
+        this.populateFormWithInputs(this.advert.fields);
     }
 
     save(): void {
