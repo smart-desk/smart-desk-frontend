@@ -131,6 +131,9 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     isContactAvailable(contact: string): boolean {
+        if (this.currentUser?.id === this.user?.id) {
+            return false;
+        }
         const advertPreferContact = this.advert?.preferContact;
         if (!advertPreferContact) {
             return true;
