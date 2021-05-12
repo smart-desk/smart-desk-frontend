@@ -27,7 +27,7 @@ import { AdvertDataService } from '../../../../services';
 })
 export class AdvertsComponent implements OnChanges, OnInit, OnDestroy {
     @Input() cardActions: ExtraActions[];
-    @Input() advertsResponse: GetAdvertsResponseDto;
+    @Input() advertsResponse: GetAdvertsResponseDto | null;
     destroy$ = new Subject();
 
     constructor(
@@ -35,12 +35,15 @@ export class AdvertsComponent implements OnChanges, OnInit, OnDestroy {
         private bookmarksStoreService: BookmarksStoreService,
         private cd: ChangeDetectorRef
     ) {}
+
     ngOnChanges(changes: SimpleChanges) {
         if (changes.advertsResponse?.currentValue) {
-            this.updateAdvertsWithBookmarks(changes.advertResponse?.currentValue);
+            this.advertsResponse = this.updateAdvertsWithBookmarks(changes.advertsResponse?.currentValue);
+            this.cd.detectChanges();
             this.bookmarksStoreService.loadBookmarks();
         }
     }
+
     ngOnInit(): void {
         this.bookmarksStoreService.bookmarks$.pipe(takeUntil(this.destroy$)).subscribe(bookmarks => {
             if (this.advertsResponse) {

@@ -19,6 +19,9 @@ import { LocationModule } from './modules/location/location.module';
 import { CheckboxService } from './modules/checkbox/checkbox.service';
 import { CheckboxModule } from './modules/checkbox/checkbox.module';
 import { FieldType } from '../../models/field/field.entity';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DatepickerModule } from './modules/datepicker/datepicker.module';
+import { DatepickerService } from './modules/datepicker/datepicker.service';
 
 const providers = [
     createDynamicFieldProvider(FieldType.INPUT_TEXT, InputTextService),
@@ -29,6 +32,7 @@ const providers = [
     createDynamicFieldProvider(FieldType.PRICE, PriceService),
     createDynamicFieldProvider(FieldType.LOCATION, LocationService),
     createDynamicFieldProvider(FieldType.CHECKBOX, CheckboxService),
+    createDynamicFieldProvider(FieldType.DATEPICKER, DatepickerService),
 ];
 
 @NgModule({
@@ -50,6 +54,8 @@ const providers = [
         PriceModule,
         LocationModule,
         CheckboxModule,
+        ReactiveFormsModule,
+        DatepickerModule,
     ],
 })
 export class DynamicFieldsModule {}

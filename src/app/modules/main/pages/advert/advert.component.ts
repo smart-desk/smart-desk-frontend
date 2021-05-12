@@ -65,7 +65,13 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
         this.route.paramMap
             .pipe(
                 takeUntil(this.destroy$),
-                switchMap((param: ParamMap) => this.advertService.getRecommendedByAdvertId(param.get('advert_id') || ''))
+                switchMap((param: ParamMap) => {
+                    const advertId = param.get('advert_id');
+                    if (advertId) {
+                        return this.advertService.getRecommendedByAdvertId(advertId);
+                    }
+                    return EMPTY;
+                })
             )
             .subscribe(res => {
                 this.similarAdverts = res;
@@ -79,7 +85,13 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
     ngAfterViewInit(): void {
         this.route.paramMap
             .pipe(
-                switchMap(params => this.advertService.getAdvert(params.get('advert_id') || '')),
+                switchMap((param: ParamMap) => {
+                    const advertId = param.get('advert_id');
+                    if (advertId) {
+                        return this.advertService.getAdvert(advertId);
+                    }
+                    return EMPTY;
+                }),
                 tap(advert => {
                     this.advert = advert;
                     this.countView();

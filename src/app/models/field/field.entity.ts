@@ -7,6 +7,7 @@ export enum FieldType {
     PRICE = 'price',
     LOCATION = 'location',
     CHECKBOX = 'checkbox',
+    DATEPICKER = 'datepicker',
 }
 
 export enum SectionType {

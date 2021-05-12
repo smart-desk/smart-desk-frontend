@@ -28,6 +28,7 @@ export class AddFieldComponent {
             FieldType.CHECKBOX,
             FieldType.TEXTAREA,
             FieldType.TEXT,
+            FieldType.DATEPICKER,
         ],
         [SectionType.LOCATION]: [FieldType.LOCATION],
         [SectionType.PRICE]: [FieldType.PRICE],
