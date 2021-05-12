@@ -27,7 +27,7 @@ export class DatepickerService implements AbstractFieldService {
         return this.componentFactoryResolver.resolveComponentFactory(DatepickerFormComponent);
     }
 
-    getParamsComponentResolver(): ComponentFactory<AbstractFieldParamsComponent> {
+    getParamsComponentResolver(): ComponentFactory<AbstractFieldParamsComponent<DatepickerParamsDto>> {
         return this.componentFactoryResolver.resolveComponentFactory(DatepickerParamsComponent);
     }
 
