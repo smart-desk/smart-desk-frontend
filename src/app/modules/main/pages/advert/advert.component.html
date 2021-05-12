@@ -22,7 +22,7 @@
         <ng-container #location></ng-container>
     </div>
     <div class="contacts">
-        <div class="contacts__phone" *ngIf="isContactAvailable(preferContact.PHONE)">
+        <div class="contacts__phone" *ngIf="isContactAvailable(preferContact.PHONE) && this.user?.isPhoneVerified">
             <button *ngIf="!isPhoneVisible" nzBlock class="contacts" nz-button (click)="showPhone()">
                 <i nz-icon nzType="phone" nzTheme="outline"></i>
                 Показать телефон
