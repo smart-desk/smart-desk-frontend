@@ -5,6 +5,7 @@ import { isNull } from 'lodash';
 import { AbstractFieldFilterComponent } from '../../../models/abstract-field-filter.component';
 import { DatepickerParamsDto } from '../dto/datepicker-params.dto';
 import { DatepickerFilterDto } from '../dto/datepicker-filter.dto';
+import * as dayjs from 'dayjs';
 
 @Component({
     selector: 'app-datepicker-filter',
@@ -28,7 +29,13 @@ export class DatepickerFilterComponent extends AbstractFieldFilterComponent<Date
     getFilterValue(): Filter<DatepickerFilterDto> | null {
         if (this.form.touched || !this.emptyValues()) {
             const form = this.form.get('dateRange')?.value;
-            return new Filter(this.field.id, { from: form[0], to: form[1] });
+            const from: Date = form[0];
+            const to: Date = form[1];
+            return new Filter(this.field.id, {
+                from: dayjs(from).toISOString(),
+                to: dayjs(to).toISOString(),
+                range: this.field?.params?.range,
+            });
         }
         return null;
     }

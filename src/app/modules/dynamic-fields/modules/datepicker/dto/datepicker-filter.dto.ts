@@ -1,4 +1,5 @@
 export class DatepickerFilterDto {
-    from: Date;
-    to: Date;
+    from: string;
+    to: string;
+    range: boolean;
 }
