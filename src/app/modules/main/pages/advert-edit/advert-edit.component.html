@@ -1,12 +1,1 @@
-<div>
-    <form nz-form nzLayout="vertical" class="input-title" [formGroup]="form">
-        <nz-form-item>
-            <nz-form-label [nzRequired]="true">Заголовок</nz-form-label>
-            <nz-form-control nzErrorTip="Обязательное поле">
-                <input nz-input [required]="true" formControlName="title" [placeholder]="'Введите заголовок'" />
-            </nz-form-control>
-        </nz-form-item>
-    </form>
-    <ng-container #fields></ng-container>
-    <button nz-button nzType="primary" (click)="save()">Сохранить</button>
-</div>
+<app-advert-form *ngIf="advert" (submitForm)="save($event)" [advert]="advert"></app-advert-form>

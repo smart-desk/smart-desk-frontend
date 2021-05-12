@@ -10,11 +10,11 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import { Model } from '../../../../models/model/model.entity';
-import { SectionType } from '../../../../models/section/section.entity';
 import { AdvertDataService } from '../../../../services';
 import { Filter, Filters } from '../../../dynamic-fields/models/filter';
 import { AbstractFieldFilterComponent } from '../../../dynamic-fields/models/abstract-field-filter.component';
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
+import { SectionType } from '../../../../models/field/field.entity';
 
 @Component({
     selector: 'app-filters',
@@ -58,7 +58,7 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
         const filters = this.filterComponents
             .map(c => c.instance.getFilterValue())
             .filter(f => !!f)
-            .reduce((prev, cur) => ({ ...prev, ...cur.getFilterObject() }), {});
+            .reduce((prev, cur) => ({ ...prev, ...cur?.getFilterObject() }), {});
 
         this.advertDataService.applyFilters(filters);
     }
@@ -74,7 +74,7 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
     }
 
     private updateFilters(): void {
-        if (!this.model || !this.model.sections) {
+        if (!this.model || !this.model.fields) {
             return;
         }
 
@@ -92,13 +92,16 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
         containerTypeMap.forEach((container, type) => this.populateContainerWithFields(container, type));
     }
 
-    private populateContainerWithFields(container: ViewContainerRef, sectionType: SectionType): AbstractFieldFilterComponent<any, any>[] {
-        const section = this.model.sections.find(s => s.type === sectionType);
-        if (!section) {
+    private populateContainerWithFields(
+        container: ViewContainerRef,
+        sectionType: SectionType
+    ): AbstractFieldFilterComponent<any, any>[] | undefined {
+        const fields = this.model.fields.filter(s => s.section === sectionType);
+        if (!fields.length) {
             return;
         }
 
-        const components = section.fields
+        const components = fields
             .map(field => {
                 if (!field.filterable) {
                     return;
@@ -123,7 +126,9 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
             })
             .filter(f => !!f);
 
-        this.filterComponents = this.filterComponents.concat(components);
+        this.filterComponents = this.filterComponents.concat(
+            components as ConcatArray<ComponentRef<AbstractFieldFilterComponent<any, any>>>
+        );
     }
 
     private clearContainers(): void {
@@ -133,13 +138,15 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
         this.locationContainerRef.clear();
     }
 
-    private getFilterForField(fieldId: string): Filter<any> {
+    private getFilterForField(fieldId: string): Filter<any> | null {
         if (!this.filters) {
-            return;
+            return null;
         }
 
-        return Object.entries(this.filters)
-            .map(([key, params]) => new Filter(key, params))
-            .find(filter => filter.getFieldId() === fieldId);
+        return (
+            Object.entries(this.filters)
+                .map(([key, params]) => new Filter(key, params))
+                .find(filter => filter?.getFieldId() === fieldId) || null
+        );
     }
 }

@@ -9,7 +9,6 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import { FieldService, ModelService } from '../../../../services';
-import { Section } from '../../../../models/section/section.entity';
 import { FieldEntity } from '../../../../models/field/field.entity';
 import { NzDrawerService } from 'ng-zorro-antd/drawer';
 import { PreviewToolsComponent } from '../preview-tools/preview-tools.component';
@@ -20,6 +19,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DynamicFieldsService } from 'src/app/modules/dynamic-fields/dynamic-fields.service';
+import { OperationState } from '../../../../models/operation-state.enum';
 
 const DRAWER_BASE_CONFIG = {
     nzWidth: 400,
@@ -33,8 +33,7 @@ const DRAWER_BASE_CONFIG = {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PreviewComponent implements OnInit, OnDestroy {
-    @Input()
-    modelId: string;
+    @Input() modelId: string;
     @ViewChild('fields', { read: ViewContainerRef })
     private fieldsFormContainerRef: ViewContainerRef;
 
@@ -61,21 +60,21 @@ export class PreviewComponent implements OnInit, OnDestroy {
     update(): void {
         this.modelService.getModel(this.modelId).subscribe(model => {
             this.model = model;
-            this.populateFormWithInputs(this.model.sections);
+            this.populateFormWithInputs(this.model.fields);
         });
     }
 
     addField(): void {
-        const drawer = this.drawerService.create({
+        const drawer = this.drawerService.create<AddFieldComponent>({
             nzContent: AddFieldComponent,
             nzContentParams: { model: this.model },
-            nzTitle: 'New Field',
+            nzTitle: 'Новое поле',
             ...DRAWER_BASE_CONFIG,
         });
 
         drawer.afterOpen.subscribe(() => {
             const instance = drawer.getContentComponent();
-            instance.create.subscribe(f => {
+            instance?.create.subscribe((f: FieldEntity) => {
                 drawer.close();
                 this.onEdit(f);
             });
@@ -83,34 +82,28 @@ export class PreviewComponent implements OnInit, OnDestroy {
     }
 
     drop(event: CdkDragDrop<string[]>) {
-        const paramSection = this.model.sections.find(section => section.type === 'params');
-        moveItemInArray(paramSection.fields, event.previousIndex, event.currentIndex);
-        paramSection.fields.forEach((field: FieldEntity, index: number) => (field.order = index + 1));
-        const responseObservables = paramSection.fields.map(field => this.fieldService.updateField(field.id, field));
-        this.populateFormWithInputs(this.model.sections);
+        const paramFields = this.model.fields.filter(field => field.section === 'params');
+        moveItemInArray(paramFields, event.previousIndex, event.currentIndex);
+        paramFields.forEach((field: FieldEntity, index: number) => (field.order = index + 1));
+        const responseObservables = paramFields.map(field => this.fieldService.updateField(field.id, field));
+        this.populateFormWithInputs(this.model.fields);
         forkJoin(responseObservables).pipe(takeUntil(this.destroy$)).subscribe();
     }
 
-    private populateFormWithInputs(sections: Section[]): void {
+    private populateFormWithInputs(fields: FieldEntity[]): void {
         if (this.fieldsFormContainerRef) {
             this.fieldsFormContainerRef.clear();
         }
-        sections.forEach(section => {
-            if (section.fields) {
-                section.fields.sort((a: FieldEntity, b: FieldEntity) => a.order - b.order);
-                section.fields.forEach(field => {
-                    this.resolveFieldComponent(field);
-                });
-            }
-        });
+        fields.sort((a: FieldEntity, b: FieldEntity) => a.order - b.order);
+        fields.forEach(field => this.resolveFieldComponent(field));
     }
 
     private resolveFieldComponent(field: FieldEntity): void {
         const resolver = this.componentFactoryResolver.resolveComponentFactory(PreviewToolsComponent);
-        const component = this.fieldsFormContainerRef.createComponent(resolver);
+        const component = this.fieldsFormContainerRef.createComponent<PreviewToolsComponent>(resolver);
         component.instance.field = field;
-        component.instance.edit.subscribe(f => this.onEdit(f));
-        component.instance.delete.subscribe(f => this.onDelete(f));
+        component.instance.edit.subscribe((f: FieldEntity) => this.onEdit(f));
+        component.instance.delete.subscribe((f: FieldEntity) => this.onDelete(f));
         component.changeDetectorRef.detectChanges();
     }
 
@@ -120,7 +113,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
             return;
         }
 
-        const drawer = this.drawerService.create({
+        const drawer = this.drawerService.create<FieldSettingsComponent>({
             nzContent: FieldSettingsComponent,
             nzTitle: service.getFieldName(),
             nzContentParams: { field },
@@ -129,9 +122,11 @@ export class PreviewComponent implements OnInit, OnDestroy {
 
         drawer.afterOpen.subscribe(() => {
             const instance = drawer.getContentComponent();
-            instance.fieldChange.subscribe(() => {
-                drawer.close();
-                this.update();
+            instance?.fieldChange.subscribe((state: OperationState) => {
+                if (state === OperationState.SUCCESS) {
+                    drawer.close();
+                    this.update();
+                }
             });
         });
     }

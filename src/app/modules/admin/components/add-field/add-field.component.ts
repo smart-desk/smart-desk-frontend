@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { FieldEntity, FieldType } from '../../../../models/field/field.entity';
-import { SectionType } from '../../../../models/section/section.entity';
+import { FieldEntity, FieldType, SectionType } from '../../../../models/field/field.entity';
 import { Model } from '../../../../models/model/model.entity';
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
 
@@ -38,13 +37,13 @@ export class AddFieldComponent {
 
     constructor(private dynamicFieldsService: DynamicFieldsService) {}
 
-    sectionChange(value: string): void {
-        this.selectedField = this.fieldData[value] && this.fieldData[value].length && this.fieldData[value][0];
+    sectionChange(value: SectionType): void {
+        this.selectedField = (this.fieldData[value] && this.fieldData[value].length && this.fieldData[value][0]) as FieldType;
     }
 
-    getSectionName(sectionType): string {
+    getSectionName(sectionType: SectionType): string {
         // todo some const should be used
-        switch (sectionType as SectionType) {
+        switch (sectionType) {
             case SectionType.CONTACTS:
                 return 'Contacts';
             case SectionType.LOCATION:
@@ -56,22 +55,19 @@ export class AddFieldComponent {
         }
     }
 
-    getFieldName(fieldType): string {
-        const resolver = this.dynamicFieldsService.getService(fieldType as FieldType);
+    getFieldName(fieldType: FieldType): string {
+        const resolver = this.dynamicFieldsService.getService(fieldType);
         if (resolver) {
             return resolver.getFieldName();
         }
+        return '';
     }
 
     createField(): void {
-        const section = this.model.sections.find(s => s.type === this.selectedSection);
-        if (!section) {
-            // todo create a section
-            return;
-        }
         const newField = new FieldEntity();
         newField.type = this.selectedField;
-        newField.section_id = section.id;
+        newField.section = this.selectedSection;
+        newField.modelId = this.model.id;
         newField.params = {};
 
         this.create.emit(newField);

@@ -10,12 +10,12 @@ import { Filters } from '../../modules/dynamic-fields/models/filter';
 })
 export class AdvertDataService {
     adverts$ = new Subject<GetAdvertsResponseDto>();
-    private categoryId: string;
+    private categoryId: string | null;
     private options: GetAdvertsDto = new GetAdvertsDto();
 
     constructor(private route: ActivatedRoute, private router: Router, private advertService: AdvertService) {}
 
-    loadAdverts(categoryId: string, options?: GetAdvertsDto): void {
+    loadAdverts(categoryId: string | null, options?: GetAdvertsDto): void {
         this.categoryId = categoryId;
         this.options = options ? options : this.options;
         this.requestAdverts();
@@ -45,23 +45,23 @@ export class AdvertDataService {
 
         if (queryParams.has('page')) {
             try {
-                resultParams.page = parseInt(queryParams.get('page'), 10);
+                resultParams.page = parseInt(queryParams.get('page') || '', 10);
             } catch (e) {}
         }
 
         if (queryParams.has('limit')) {
             try {
-                resultParams.limit = parseInt(queryParams.get('limit'), 10);
+                resultParams.limit = parseInt(queryParams.get('limit') || '', 10);
             } catch (e) {}
         }
 
         if (queryParams.has('search')) {
-            resultParams.search = queryParams.get('search');
+            resultParams.search = queryParams.get('search') || '';
         }
 
         if (queryParams.has('filters')) {
             try {
-                resultParams.filters = JSON.parse(queryParams.get('filters'));
+                resultParams.filters = JSON.parse(queryParams.get('filters') || '');
             } catch (e) {}
         }
         return resultParams;

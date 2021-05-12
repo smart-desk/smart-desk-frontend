@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Advert } from '../../../../models/advert/advert.entity';
-import { SectionType } from '../../../../models/section/section.entity';
-import { FieldType } from '../../../../models/field/field.entity';
+import { FieldType, SectionType } from '../../../../models/field/field.entity';
 import { PriceEntity } from '../../../dynamic-fields/modules/price/dto/price.entity';
 import { PriceParamsDto } from '../../../dynamic-fields/modules/price/dto/price-params.dto';
 import { getCurrencySymbolByCode, roundPrice } from '../../../dynamic-fields/modules/price/helpers';
@@ -47,15 +46,14 @@ export class AdvertCardComponent implements OnInit {
     }
 
     private getThumbSrc(): string {
-        const section = this.advert.sections.find(s => s.type === SectionType.PARAMS);
-        if (!section || !section.fields.length) {
-            return;
+        const photoField = this.advert.fields.find(s => s.section === SectionType.PARAMS && s.type === FieldType.PHOTO);
+        if (!photoField) {
+            return '';
         }
-
-        const photoField = section.fields.find(f => f.type === FieldType.PHOTO);
         if (photoField && photoField.data && (photoField.data as PhotoEntity).value) {
             return (photoField.data as PhotoEntity).value[0];
         }
+        return '';
     }
 
     private getTitle(): string {
@@ -67,23 +65,19 @@ export class AdvertCardComponent implements OnInit {
     }
 
     private getPrice(): string {
-        const priceSection = this.advert.sections.find(s => s.type === SectionType.PRICE);
-        if (!priceSection) {
-            return;
-        }
-        const priceField = priceSection.fields.find(f => f.type === FieldType.PRICE);
+        const priceField = this.advert.fields.find(s => s.section === SectionType.PRICE && s.type === FieldType.PRICE);
         if (!priceField) {
-            return;
+            return '';
         }
 
         if (!priceField.data || !priceField.params) {
-            return;
+            return '';
         }
 
         const price = priceField.data && (priceField.data as PriceEntity).value;
         const currency = priceField.params && (priceField.params as PriceParamsDto).currency;
         if (!price || !currency) {
-            return;
+            return '';
         }
 
         return roundPrice(price) + getCurrencySymbolByCode(currency);

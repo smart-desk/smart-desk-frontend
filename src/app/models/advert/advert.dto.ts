@@ -7,12 +7,14 @@ export class CreateAdvertDto {
     category_id: string;
     model_id: string;
     title: string;
+    preferContact: string;
     fields: DynamicFieldsBaseCreateDto[];
 }
 
 export class UpdateAdvertDto {
     title: string;
     fields: DynamicFieldsBaseUpdateDto[];
+    preferContact: string;
 }
 
 export class GetAdvertsDto {
@@ -26,20 +28,23 @@ export class GetAdvertsDto {
     static DEFAULT_LIMIT = 20;
     static DEFAULT_SEARCH = '';
 
-    get queryParamPage(): number {
-        return this.page === GetAdvertsDto.DEFAULT_PAGE ? null : this.page;
+    get queryParamPage(): number | undefined {
+        return this.page === GetAdvertsDto.DEFAULT_PAGE ? undefined : this.page;
     }
 
-    get queryParamLimit(): number {
-        return this.limit === GetAdvertsDto.DEFAULT_LIMIT ? null : this.limit;
+    get queryParamLimit(): number | undefined {
+        return this.limit === GetAdvertsDto.DEFAULT_LIMIT ? undefined : this.limit;
     }
 
-    get queryParamSearch(): string {
-        return this.search === GetAdvertsDto.DEFAULT_SEARCH ? null : this.search;
+    get queryParamSearch(): string | undefined {
+        return this.search === GetAdvertsDto.DEFAULT_SEARCH ? undefined : this.search;
     }
 
-    get queryParamFilters(): string {
-        return Object.keys(this.filters).length === 0 ? null : JSON.stringify(this.filters);
+    get queryParamFilters(): string | undefined {
+        if (!this.filters) {
+            return;
+        }
+        return Object.keys(this.filters).length === 0 ? undefined : JSON.stringify(this.filters);
     }
 }
 

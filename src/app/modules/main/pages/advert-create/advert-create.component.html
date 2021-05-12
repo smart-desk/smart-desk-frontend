@@ -21,28 +21,9 @@
     </nz-cascader>
 </ng-template>
 
-<ng-container *ngIf="(loadingForm$ | async) === false && selectedCategoriesIds && selectedCategoriesIds.length">
-    <form nz-form nzLayout="vertical" class="title-input">
-        <nz-form-item>
-            <nz-form-label [nzRequired]="true">Заголовок</nz-form-label>
-            <nz-form-control nzErrorTip="Обязательное поле">
-                <input
-                    nz-input
-                    [(ngModel)]="title"
-                    [required]="true"
-                    [placeholder]="'Введите заголовок'"
-                    [ngModelOptions]="{ standalone: true }"
-                />
-            </nz-form-control>
-        </nz-form-item>
-    </form>
-</ng-container>
-
-<ng-container #fields></ng-container>
-<nz-skeleton *ngIf="loadingForm$ | async; else advertButton" [nzActive]="true"></nz-skeleton>
-
-<ng-template #advertButton>
-    <ng-container *ngIf="selectedCategoriesIds && selectedCategoriesIds.length">
-        <button nz-button nzType="primary" (click)="save()">Добавить объявление</button>
-    </ng-container>
-</ng-template>
+<app-advert-form
+    *ngIf="(loadingForm$ | async) === false && selectedCategoriesIds && selectedCategoriesIds.length"
+    [advert]="advert"
+    (submitForm)="save($event)"
+>
+</app-advert-form>

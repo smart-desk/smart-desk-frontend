@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ModelService, SectionService } from '../../../../services';
+import { ModelService } from '../../../../services';
 import { Model } from '../../../../models/model/model.entity';
 
 @Component({
@@ -15,15 +15,15 @@ export class CreateModelComponent {
 
     // todo вывести ошибки сервера
     modelForm = new FormGroup({
-        name: new FormControl((this.model && this.model.name) || '', Validators.required),
+        name: new FormControl(this.model?.name || '', Validators.required),
     });
 
-    constructor(private modelsService: ModelService, private sectionService: SectionService, private router: Router) {}
+    constructor(private modelsService: ModelService, private router: Router) {}
 
     createModel(): void {
         this.modelsService
             .createModel({
-                name: this.modelForm.get('name').value,
+                name: this.modelForm.get('name')?.value,
             })
             .subscribe(model => {
                 this.router.navigate(['admin', 'models', 'edit', model.id]);

@@ -72,10 +72,7 @@ export class AdvertsComponent implements OnChanges, OnInit, OnDestroy {
         this.bookmarksStoreService.deleteBookmark(advertId);
     }
 
-    private updateAdvertsWithBookmarks(advertsResponse: GetAdvertsResponseDto, bookmarks?: Bookmark[]): GetAdvertsResponseDto | null {
-        if (!advertsResponse) {
-            return null;
-        }
+    private updateAdvertsWithBookmarks(advertsResponse: GetAdvertsResponseDto, bookmarks?: Bookmark[]): GetAdvertsResponseDto {
         if (bookmarks) {
             advertsResponse.adverts.forEach(advert => {
                 const bookmarkAdvert = bookmarks.find(bookmark => bookmark.advert.id === advert.id);

@@ -10,5 +10,5 @@
             <nz-option *ngFor="let f of fieldData[selectedSection]" [nzValue]="f" [nzLabel]="getFieldName(f)"></nz-option>
         </nz-select>
     </nz-form-item>
-    <button nz-button nzType="primary" [disabled]="!selectedField" (click)="createField()">Create field</button>
+    <button nz-button nzType="primary" [disabled]="!selectedField" (click)="createField()">Создать поле</button>
 </form>

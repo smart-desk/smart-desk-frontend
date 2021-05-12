@@ -51,6 +51,7 @@ import { FormPhoneComponent } from './components/form-phone/form-phone.component
 import { FormVerifyComponent } from './components/form-verify/form-verify.component';
 import { GlobalSearchComponent } from './pages/global-search/global-search.component';
 import { SharedModule } from '../../shared.module';
+import { AdvertFormComponent } from './components/advert-form/advert-form.component';
 
 const NZModules = [
     NzModalModule,
@@ -106,6 +107,7 @@ const components = [
     FormPhoneComponent,
     FormVerifyComponent,
     GlobalSearchComponent,
+    AdvertFormComponent,
 ];
 
 @NgModule({

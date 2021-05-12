@@ -11,7 +11,7 @@ import { BlockUserDto } from '../../models/user/block-user.dto';
     providedIn: 'root',
 })
 export class UserService {
-    private user: User;
+    private user: User | null;
 
     constructor(private http: HttpClient) {}
 

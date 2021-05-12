@@ -1,23 +1,15 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    ComponentFactoryResolver,
-    ComponentRef,
-    OnInit,
-    ViewChild,
-    ViewContainerRef,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, ComponentRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
-import { AbstractFieldFormComponent } from '../../../dynamic-fields/models/abstract-field-form.component';
 import { AdvertService, CategoryService, ModelService } from '../../../../services';
 import { Category } from '../../../../models/category/category.entity';
 import { CreateAdvertDto } from '../../../../models/advert/advert.dto';
-import { Section } from '../../../../models/section/section.entity';
-import { FieldEntity } from '../../../../models/field/field.entity';
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
+import { Model } from '../../../../models/model/model.entity';
+import { Advert } from '../../../../models/advert/advert.entity';
+import { cloneDeep } from 'lodash';
 
 // todo check subscriptions
 @Component({
@@ -28,18 +20,12 @@ import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.ser
 })
 export class AdvertCreateComponent implements OnInit {
     selectedCategoriesIds: string[] = [];
-    selectedCategory: Category = null;
+    selectedCategory: Category;
     categories: Category[] = [];
+    advert: Advert;
     categoryTree$ = new BehaviorSubject<NzCascaderOption[]>([]);
     loadingForm$ = new BehaviorSubject<boolean>(false);
     loadingCategories$ = new BehaviorSubject<boolean>(true);
-
-    title = '';
-
-    private components: ComponentRef<AbstractFieldFormComponent<any, any>>[] = [];
-
-    @ViewChild('fields', { read: ViewContainerRef })
-    private fieldsFormContainerRef: ViewContainerRef;
 
     constructor(
         private modelService: ModelService,
@@ -47,7 +33,7 @@ export class AdvertCreateComponent implements OnInit {
         private categoryService: CategoryService,
         private advertService: AdvertService,
         private router: Router,
-        private dynamicFieldService: DynamicFieldsService
+        protected dynamicFieldService: DynamicFieldsService
     ) {}
 
     ngOnInit(): void {
@@ -71,31 +57,28 @@ export class AdvertCreateComponent implements OnInit {
         this.loadingForm$.next(true);
 
         const lastCategoryId = selectedCategoriesIds[selectedCategoriesIds.length - 1];
-        this.selectedCategory = this.categories.find(cat => cat.id === lastCategoryId);
-        const modelId = this.selectedCategory.modelId;
-
-        if (this.fieldsFormContainerRef) {
-            this.fieldsFormContainerRef.clear();
+        const foundCategory = this.categories.find(cat => cat.id === lastCategoryId);
+        if (foundCategory) {
+            this.selectedCategory = foundCategory;
         }
-        this.modelService
-            .getModel(modelId)
-            .pipe(take(1))
-            .subscribe(model => {
-                this.populateFormWithInputs(model.sections);
-                this.loadingForm$.next(false);
-            });
+
+        if (this.selectedCategory) {
+            const modelId = this.selectedCategory.modelId;
+
+            this.modelService
+                .getModel(modelId)
+                .pipe(take(1))
+                .subscribe(model => {
+                    this.advert = new Advert();
+                    this.advert.fields = cloneDeep(model.fields);
+                    this.loadingForm$.next(false);
+                });
+        }
     }
 
-    save(): void {
-        if (!this.isValid()) {
-            return;
-        }
-
-        const advert = new CreateAdvertDto();
-        advert.title = this.title;
+    save(advert: CreateAdvertDto): void {
         advert.category_id = this.selectedCategory.id;
         advert.model_id = this.selectedCategory.modelId;
-        advert.fields = this.components.map(component => component.instance.getFieldData()).filter(value => !!value);
 
         this.advertService.createAdvert(advert).subscribe(
             res => {
@@ -105,40 +88,5 @@ export class AdvertCreateComponent implements OnInit {
                 // todo server validation message
             }
         );
-    }
-
-    private populateFormWithInputs(sections: Section[]): void {
-        sections.forEach(section => {
-            if (section.fields) {
-                section.fields.forEach(field => {
-                    const component = this.resolveFieldComponent(field);
-                    this.components.push(component);
-                });
-            }
-        });
-    }
-
-    private resolveFieldComponent(field: FieldEntity): ComponentRef<AbstractFieldFormComponent<any, any>> {
-        const service = this.dynamicFieldService.getService(field.type);
-        if (!service) {
-            return;
-        }
-        const resolver = service.getFormComponentResolver();
-        const component = this.fieldsFormContainerRef.createComponent(resolver);
-
-        // add inputs
-        component.instance.field = field;
-
-        // run onInit
-        component.changeDetectorRef.detectChanges();
-
-        return component;
-    }
-
-    private isValid(): boolean {
-        if (!this.title) {
-            return false;
-        }
-        return this.components.every(component => component.instance.isFieldDataValid());
     }
 }

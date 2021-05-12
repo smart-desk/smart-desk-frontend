@@ -18,7 +18,7 @@ export class TextFormComponent extends AbstractFieldFormComponent<null, TextPara
 
     ngOnInit(): void {
         const params = this.field.params;
-        this.content = this.sanitizer.sanitize(SecurityContext.HTML, params.value || '');
+        this.content = this.sanitizer.sanitize(SecurityContext.HTML, params.value || '') || '';
         this.cdr.detectChanges();
     }
 

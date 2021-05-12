@@ -13,7 +13,7 @@ import { switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import { AdvertDataService, AdvertService, UserService } from '../../../../services';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Advert } from '../../../../models/advert/advert.entity';
-import { SectionType } from '../../../../models/section/section.entity';
+import { FieldEntity, SectionType } from '../../../../models/field/field.entity';
 import { User } from '../../../../models/user/user.entity';
 import { GetAdvertsResponseDto } from '../../../../models/advert/advert.dto';
 import { BookmarksStoreService } from '../../../../services/bookmarks/bookmarks-store.service';
@@ -21,7 +21,7 @@ import { LoginService } from '../../../../services/login/login.service';
 import { PhoneService } from '../../../../services/phone/phone.service';
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
 import { ChatModalService } from '../../../chat/services/chat-modal.service';
-import { FieldEntity } from '../../../../models/field/field.entity';
+import { PreferContact } from '../../enums/contact-values.enum';
 
 @Component({
     selector: 'app-advert',
@@ -32,10 +32,11 @@ import { FieldEntity } from '../../../../models/field/field.entity';
 export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
     advert: Advert;
     user: User;
-    currentUser: User;
+    currentUser: User | undefined;
     similarAdverts: GetAdvertsResponseDto;
-    isShowPhone = false;
+    isPhoneVisible = false;
     userPhone: string;
+    preferContact = PreferContact;
     private destroy$ = new Subject();
 
     @ViewChild('params', { read: ViewContainerRef })
@@ -118,40 +119,51 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     showPhone(): void {
-        const showPhoneReq: Observable<string> = !this.currentUser ? this.openModalLogin() : this.phoneService.getUserPhone(this.user.id);
+        const showPhoneReq: Observable<string> = !this.currentUser
+            ? this.openModalLogin()
+            : this.phoneService.getUserPhone(this.user.id, this.advert.id);
 
         showPhoneReq.pipe(takeUntil(this.destroy$)).subscribe((phone: string) => {
             this.userPhone = phone;
-            this.isShowPhone = true;
+            this.isPhoneVisible = true;
             this.cd.detectChanges();
         });
     }
 
+    isContactAvailable(contact: string): boolean {
+        const advertPreferContact = this.advert?.preferContact;
+        if (!advertPreferContact) {
+            return true;
+        }
+
+        return advertPreferContact === contact;
+    }
+
     private addParamsFields(): void {
-        const section = this.advert.sections.find(s => s.type === SectionType.PARAMS);
-        if (section) {
-            this.populateContainerWithFields(this.paramsContainerRef, section.fields);
+        const fields = this.advert.fields.filter(s => s.section === SectionType.PARAMS);
+        if (fields.length) {
+            this.populateContainerWithFields(this.paramsContainerRef, fields);
         }
     }
 
     private openModalLogin(): Observable<string> {
         return this.loginService.openModal().pipe(
             tap((currentUser: User) => (this.currentUser = currentUser)),
-            switchMap(() => this.phoneService.getUserPhone(this.user.id))
+            switchMap(() => this.phoneService.getUserPhone(this.user.id, this.advert.id))
         );
     }
 
     private addPriceFields(): void {
-        const section = this.advert.sections.find(s => s.type === SectionType.PRICE);
-        if (section) {
-            this.populateContainerWithFields(this.priceContainerRef, section.fields);
+        const fieldsPrice = this.advert.fields.filter(s => s.section === SectionType.PRICE);
+        if (fieldsPrice.length) {
+            this.populateContainerWithFields(this.priceContainerRef, fieldsPrice);
         }
     }
 
     private addLocationFields(): void {
-        const section = this.advert.sections.find(s => s.type === SectionType.LOCATION);
-        if (section) {
-            this.populateContainerWithFields(this.locationContainerRef, section.fields);
+        const fieldsLocations = this.advert.fields.filter(s => s.section === SectionType.LOCATION);
+        if (fieldsLocations.length) {
+            this.populateContainerWithFields(this.locationContainerRef, fieldsLocations);
         }
     }
 

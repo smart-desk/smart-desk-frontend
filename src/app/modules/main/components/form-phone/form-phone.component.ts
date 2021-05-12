@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ProfileFormEnum } from '../../pages/profile/profile-form.enum';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { User } from '../../../../models/user/user.entity';
 
 @Component({
@@ -25,6 +25,6 @@ export class FormPhoneComponent implements OnInit {
     }
 
     setValue(): void {
-        this.profile.phone = this.formPhone.get('phone').value;
+        this.profile.phone = (this.formPhone.get('phone') as AbstractControl).value;
     }
 }

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { AbstractControl, FormBuilder } from '@angular/forms';
 import { UserService } from '../../../../services';
 import { User } from '../../../../models/user/user.entity';
 import { ProfileFormEnum } from './profile-form.enum';
@@ -11,6 +11,7 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { FormNameComponent } from '../../components/form-name/form-name.component';
 import { FormVerifyComponent } from '../../components/form-verify/form-verify.component';
 import { FormPhoneComponent } from '../../components/form-phone/form-phone.component';
+import { ContentComponent } from '../../interfaces/content-component.interface';
 
 @Component({
     selector: 'app-user-settings',
@@ -38,7 +39,7 @@ export class ProfileComponent implements OnInit {
         });
     }
 
-    submitForm(data: { formType: ProfileFormEnum; value: UpdateUserDto }): void {
+    submitForm(data: ContentComponent): void {
         switch (data.formType) {
             case ProfileFormEnum.NAME:
                 this.updateName(data.value);
@@ -64,17 +65,17 @@ export class ProfileComponent implements OnInit {
     }
 
     openFormName() {
-        const modalRef = this.modalService.create<FormNameComponent>({
+        const modalRef: NzModalRef = this.modalService.create<FormNameComponent>({
             nzContent: FormNameComponent,
             nzComponentParams: { profile: this.profile },
             nzOnOk: () => modalRef.getContentComponent().submit(),
         });
 
-        modalRef.getContentComponent().submitEvent.subscribe(data => this.submitForm(data));
+        modalRef.getContentComponent().submitEvent.subscribe((data: ContentComponent) => this.submitForm(data));
     }
 
     openFormConfirmPhone() {
-        const modalRef = this.modalService.create<FormVerifyComponent>({
+        const modalRef: NzModalRef = this.modalService.create<FormVerifyComponent>({
             nzTitle: 'Подтверждение',
             nzContent: FormVerifyComponent,
             nzComponentParams: { confirmMode: false },
@@ -87,14 +88,14 @@ export class ProfileComponent implements OnInit {
     }
 
     openFormChangePhone() {
-        const modalRef = this.modalService.create<FormPhoneComponent>({
+        const modalRef: NzModalRef = this.modalService.create<FormPhoneComponent>({
             nzTitle: 'Телефон',
             nzContent: FormPhoneComponent,
             nzComponentParams: { profile: this.profile },
             nzOnOk: () => modalRef.getContentComponent().submit(() => this.cd.detectChanges()),
         });
 
-        modalRef.getContentComponent().submitFormEvent$.subscribe(data => this.submitForm(data));
+        modalRef.getContentComponent().submitFormEvent$.subscribe((data: ContentComponent) => this.submitForm(data));
     }
 
     requestVerification(modal: NzModalRef<FormVerifyComponent, any>): void {
@@ -105,7 +106,7 @@ export class ProfileComponent implements OnInit {
     checkVerification(modal: NzModalRef<FormVerifyComponent, any>): void {
         const verificationDto = new PhoneVerifyCheckDto();
         verificationDto.requestId = this.verificationRequestId;
-        verificationDto.code = modal.getContentComponent().formConfirm.get('code').value.toString();
+        verificationDto.code = (modal.getContentComponent().formConfirm.get('code') as AbstractControl).value.toString();
         this.phoneService.checkVerification(verificationDto).subscribe();
     }
 }

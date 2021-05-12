@@ -1,6 +1,6 @@
 <form nz-form nzLayout="vertical">
     <nz-form-item>
-        <nz-form-label>{{ field.title }}</nz-form-label>
+        <nz-form-label [nzRequired]="field.required">{{ field.title }}</nz-form-label>
         <nz-checkbox-wrapper (nzOnChange)="checkboxChecked($event)">
             <label
                 *ngFor="let checkbox of field.params.checkboxes"

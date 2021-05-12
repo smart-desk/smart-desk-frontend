@@ -1,12 +1,13 @@
-<p class="title">{{ field.title }}</p>
-<p class="title">{{ location.title || 'Не выбрано' }}</p>
 <form nz-form>
+    <nz-form-label [nzRequired]="field.required">{{ field.title }}</nz-form-label>
     <nz-form-item class="google-search-wrap">
         <nz-form-control>
             <input class="google-search" #search nz-input name="title" placeholder="Введите адрес" />
         </nz-form-control>
     </nz-form-item>
 </form>
+
+<p>{{ location.title || 'Не выбрано' }}</p>
 
 <p><a (click)="toggleMap()">Указать на карте</a></p>
 

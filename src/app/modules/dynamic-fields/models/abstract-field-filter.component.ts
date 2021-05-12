@@ -6,7 +6,7 @@ import { Field } from '../../../models/field/field';
 // tslint:disable-next-line:directive-class-suffix
 export abstract class AbstractFieldFilterComponent<TParams, TFilter> {
     @Input() field: Field<any, TParams>;
-    @Input() filter: Filter<TFilter>;
-    abstract getFilterValue(): Filter<TFilter>;
+    @Input() filter: Filter<TFilter> | null;
+    abstract getFilterValue(): Filter<TFilter> | null;
     abstract dropFilters(): void;
 }
