@@ -76,6 +76,7 @@ const routes: Routes = [
             {
                 path: 'category/:category_id',
                 component: CategoryComponent,
+                runGuardsAndResolvers: 'always',
             },
         ],
     },

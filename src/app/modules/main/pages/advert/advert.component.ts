@@ -8,10 +8,10 @@ import {
     ViewChild,
     ViewContainerRef,
 } from '@angular/core';
-import { EMPTY, Observable, of, Subject } from 'rxjs';
+import { EMPTY, Observable, Subject } from 'rxjs';
 import { switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import { AdvertDataService, AdvertService, UserService } from '../../../../services';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Advert } from '../../../../models/advert/advert.entity';
 import { FieldEntity, SectionType } from '../../../../models/field/field.entity';
 import { User } from '../../../../models/user/user.entity';
@@ -51,6 +51,7 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
     constructor(
         private advertService: AdvertService,
         private route: ActivatedRoute,
+        private router: Router,
         private cd: ChangeDetectorRef,
         private dynamicFieldsService: DynamicFieldsService,
         private userService: UserService,
@@ -143,6 +144,7 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private addParamsFields(): void {
+        this.paramsContainerRef?.clear();
         const fields = this.advert.fields.filter(s => s.section === SectionType.PARAMS);
         if (fields.length) {
             this.populateContainerWithFields(this.paramsContainerRef, fields);
@@ -157,6 +159,7 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private addPriceFields(): void {
+        this.priceContainerRef?.clear();
         const fieldsPrice = this.advert.fields.filter(s => s.section === SectionType.PRICE);
         if (fieldsPrice.length) {
             this.populateContainerWithFields(this.priceContainerRef, fieldsPrice);
@@ -164,6 +167,7 @@ export class AdvertComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private addLocationFields(): void {
+        this.locationContainerRef?.clear();
         const fieldsLocations = this.advert.fields.filter(s => s.section === SectionType.LOCATION);
         if (fieldsLocations.length) {
             this.populateContainerWithFields(this.locationContainerRef, fieldsLocations);

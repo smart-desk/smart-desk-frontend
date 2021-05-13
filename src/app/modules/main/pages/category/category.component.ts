@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, NavigationStart, ParamMap, Router, RouterEvent } from '@angular/router';
 import { Subject } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { filter, pairwise, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { GetAdvertsResponseDto } from '../../../../models/advert/advert.dto';
 import { Filters } from '../../../dynamic-fields/models/filter';
 import { Category } from '../../../../models/category/category.entity';
@@ -26,17 +26,20 @@ export class CategoryComponent implements OnInit, OnDestroy {
         private advertDataService: AdvertDataService,
         private modelService: ModelService,
         private cd: ChangeDetectorRef,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private router: Router
     ) {}
 
     ngOnInit(): void {
-        this.advertDataService.adverts$.pipe(takeUntil(this.destroy$)).subscribe(res => {
-            this.advertsResponse = res;
-        });
-        this.route.paramMap
+        this.router.events
             .pipe(
+                filter((event: RouterEvent) => event instanceof NavigationEnd),
+                pairwise(),
+                filter((events: RouterEvent[]) => events[0].url !== events[1].url),
+                startWith('Initial call'),
                 takeUntil(this.destroy$),
-                switchMap(paramMap => {
+                switchMap(() => this.route.paramMap),
+                switchMap((paramMap: ParamMap) => {
                     const categoryId = paramMap.get('category_id') || '';
                     const options = this.advertDataService.parseQueryParams(this.route.snapshot.queryParamMap);
                     if (options) {
@@ -55,6 +58,11 @@ export class CategoryComponent implements OnInit, OnDestroy {
                 this.model = model;
                 this.cd.detectChanges();
             });
+
+        this.advertDataService.adverts$.pipe(takeUntil(this.destroy$)).subscribe(res => {
+            this.advertsResponse = res;
+            this.cd.detectChanges();
+        });
     }
 
     ngOnDestroy() {
