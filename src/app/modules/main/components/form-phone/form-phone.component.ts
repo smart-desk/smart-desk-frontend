@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { ProfileFormEnum } from '../../pages/profile/profile-form.enum';
+import { ProfileFormEnum } from '../../modules/profile/components/profile/profile-form.enum';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { User } from '../../../../models/user/user.entity';
 

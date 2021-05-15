@@ -1,19 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './main.component';
-import { CategoryComponent } from './pages/category/category.component';
-import { AdvertComponent } from './pages/advert/advert.component';
-import { AdvertEditComponent } from './pages/advert-edit/advert-edit.component';
-import { AdvertCreateComponent } from './pages/advert-create/advert-create.component';
-import { IndexComponent } from './pages/index/index.component';
 import { AuthGuard } from '../../services/auth/auth.guard';
-import { ProfileComponent } from './pages/profile/profile.component';
-import { BookmarksComponent } from './pages/bookmarks/bookmarks.component';
-import { MyAdvertsComponent } from './pages/my-adverts/my-adverts.component';
-import { UserComponent } from './pages/user/user.component';
 import { ForbiddenComponent } from '../../pages/forbidden/forbidden.component';
 import { UnauthorizedComponent } from '../../pages/unauthorized/unauthorized.component';
-import { GlobalSearchComponent } from './pages/global-search/global-search.component';
 
 const routes: Routes = [
     {
@@ -30,53 +20,39 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                component: IndexComponent,
+                loadChildren: () => import('./modules/index/index.module').then(m => m.IndexModule),
             },
             {
                 path: 'profile',
                 canActivate: [AuthGuard],
-                children: [
-                    {
-                        path: '',
-                        component: ProfileComponent,
-                    },
-                    {
-                        path: 'bookmarks',
-                        component: BookmarksComponent,
-                    },
-                    {
-                        path: 'my-adverts',
-                        component: MyAdvertsComponent,
-                    },
-                ],
+                loadChildren: () => import('./modules/profile/profile.module').then(m => m.ProfileModule),
             },
             {
                 path: 'search',
-                component: GlobalSearchComponent,
+                loadChildren: () => import('./modules/global-search/global-search.module').then(m => m.GlobalSearchModule),
                 runGuardsAndResolvers: 'always',
             },
             {
                 path: 'user/:id',
-                component: UserComponent,
+                loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule),
             },
             {
                 path: 'adverts/create',
-                component: AdvertCreateComponent,
+                loadChildren: () => import('./modules/advert-create/advert-create.module').then(m => m.AdvertCreateModule),
                 canActivate: [AuthGuard],
             },
             {
                 path: 'adverts/:advert_id/edit',
-                component: AdvertEditComponent,
+                loadChildren: () => import('./modules/advert-edit/advert-edit.module').then(m => m.AdvertEditModule),
                 canActivate: [AuthGuard],
             },
             {
                 path: 'adverts/:advert_id',
-                component: AdvertComponent,
+                loadChildren: () => import('./modules/advert/advert.module').then(m => m.AdvertModule),
             },
             {
                 path: 'category/:category_id',
-                component: CategoryComponent,
-                runGuardsAndResolvers: 'always',
+                loadChildren: () => import('./modules/category/category.module').then(m => m.CategoryModule),
             },
         ],
     },
