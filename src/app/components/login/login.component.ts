@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
-import { of } from 'rxjs';
+import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
+import { EMPTY, of } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { switchMap } from 'rxjs/operators';
 import { NzModalRef } from 'ng-zorro-antd/modal';
@@ -38,6 +38,27 @@ export class LoginComponent implements OnInit {
         fromPromise(this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID))
             .pipe(
                 switchMap(socialUser => this.authService.login('google', socialUser.idToken)),
+                switchMap(res => {
+                    if (res && res.access_token) {
+                        // todo create a service for localstorage
+                        localStorage.setItem('token', res.access_token);
+                        return this.userService.getCurrentUser();
+                    }
+
+                    this.notificationService.error('Authorization failed', 'Try on more time later');
+                    return of(null);
+                })
+            )
+            .subscribe(res => this.modal.close());
+    }
+
+    facebookLogin(): void {
+        fromPromise(this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID))
+            .pipe(
+                switchMap(socialUser => {
+                    debugger;
+                    return this.authService.login('facebook', socialUser.authToken)
+                }),
                 switchMap(res => {
                     if (res && res.access_token) {
                         // todo create a service for localstorage

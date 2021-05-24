@@ -6,3 +6,8 @@
     <i nz-icon nzType="google" nzTheme="outline"></i>
     <span>Войти с Google</span>
 </button>
+
+<button *ngIf="!loading" (click)="facebookLogin()" nz-button nzType="primary" [nzSize]="'large'" nzShape="round">
+    <i nz-icon nzType="facebook" nzTheme="outline"></i>
+    <span>Войти с Facebook</span>
+</button>

@@ -11,9 +11,9 @@ export interface LoginResponse {
 export class AuthService {
     constructor(private http: HttpClient, private userService: UserService) {}
 
-    login(type: 'google' | 'facebook', googleIdToken: string): Observable<LoginResponse> {
+    login(type: 'google' | 'facebook', token: string): Observable<LoginResponse> {
         return this.http.post<any>(`/auth/${type}/login`, {
-            token: googleIdToken,
+            token: token,
         });
     }
 }
