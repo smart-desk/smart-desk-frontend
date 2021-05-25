@@ -42,7 +42,7 @@ import { FormNameComponent } from './components/form-name/form-name.component';
 import { FormPhoneComponent } from './components/form-phone/form-phone.component';
 import { FormVerifyComponent } from './components/form-verify/form-verify.component';
 import { AdvertFormComponent } from './components/advert-form/advert-form.component';
-import { AdvertCreateComponent } from './modules/advert-create/components/advert-create/advert-create.component';
+import { AdvertComponent } from './modules/advert/components/advert/advert.component';
 
 const NZModules = [
     NzModalModule,
@@ -72,7 +72,7 @@ const NZModules = [
 ];
 
 const components = [
-    AdvertCreateComponent,
+    AdvertComponent,
     MainComponent,
     ContentLayoutComponent,
     HeaderComponent,
