@@ -4,6 +4,7 @@ import { MainComponent } from './main.component';
 import { AuthGuard } from '../../services/auth/auth.guard';
 import { ForbiddenComponent } from '../../pages/forbidden/forbidden.component';
 import { UnauthorizedComponent } from '../../pages/unauthorized/unauthorized.component';
+import { AdvertCreateComponent } from './modules/advert-create/components/advert-create/advert-create.component';
 
 const routes: Routes = [
     {
@@ -38,7 +39,7 @@ const routes: Routes = [
             },
             {
                 path: 'adverts/create',
-                loadChildren: () => import('./modules/advert-create/advert-create.module').then(m => m.AdvertCreateModule),
+                component: AdvertCreateComponent,
                 canActivate: [AuthGuard],
             },
             {
