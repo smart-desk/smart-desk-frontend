@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
-import { ProfileFormEnum } from '../../pages/profile/profile-form.enum';
+import { ProfileFormEnum } from '../../modules/profile/components/profile/profile-form.enum';
 import { User } from '../../../../models/user/user.entity';
 
 @Component({

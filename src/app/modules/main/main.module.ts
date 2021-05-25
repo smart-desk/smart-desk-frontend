@@ -26,32 +26,23 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { environment } from '../../../environments/environment';
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
-import { CategoryComponent } from './pages/category/category.component';
-import { AdvertComponent } from './pages/advert/advert.component';
-import { AdvertEditComponent } from './pages/advert-edit/advert-edit.component';
-import { AdvertCreateComponent } from './pages/advert-create/advert-create.component';
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { SharedModule } from '../../shared.module';
+import { ContentLayoutComponent } from './components/content-layout/content-layout.component';
 import { HeaderComponent } from './components/header/header.component';
 import { NavigationHeaderComponent } from './components/navigation-header/navigation-header.component';
-import { IndexComponent } from './pages/index/index.component';
 import { AdvertCardComponent } from './components/advert-card/advert-card.component';
 import { ProfileMenuComponent } from './components/profile-menu/profile-menu.component';
 import { FiltersComponent } from './components/filters/filters.component';
-import { NzCollapseModule } from 'ng-zorro-antd/collapse';
-import { ProfileComponent } from './pages/profile/profile.component';
-import { BookmarksComponent } from './pages/bookmarks/bookmarks.component';
-import { MyAdvertsComponent } from './pages/my-adverts/my-adverts.component';
 import { ProfileSideBarComponent } from './components/profile-side-bar/profile-side-bar.component';
-import { UserComponent } from './pages/user/user.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
 import { AdvertsComponent } from './components/adverts/adverts.component';
-import { ContentLayoutComponent } from './components/content-layout/content-layout.component';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { FormNameComponent } from './components/form-name/form-name.component';
 import { FormPhoneComponent } from './components/form-phone/form-phone.component';
 import { FormVerifyComponent } from './components/form-verify/form-verify.component';
-import { GlobalSearchComponent } from './pages/global-search/global-search.component';
-import { SharedModule } from '../../shared.module';
 import { AdvertFormComponent } from './components/advert-form/advert-form.component';
+import { AdvertComponent } from './modules/advert/components/advert/advert.component';
 
 const NZModules = [
     NzModalModule,
@@ -80,38 +71,27 @@ const NZModules = [
     SharedModule,
 ];
 
-const pages = [
-    MainComponent,
-    CategoryComponent,
-    AdvertComponent,
-    AdvertEditComponent,
-    AdvertCreateComponent,
-    IndexComponent,
-    UserComponent,
-];
-
 const components = [
+    AdvertComponent,
+    MainComponent,
     ContentLayoutComponent,
     HeaderComponent,
     NavigationHeaderComponent,
     AdvertCardComponent,
-    ProfileComponent,
     ProfileMenuComponent,
     FiltersComponent,
-    BookmarksComponent,
-    MyAdvertsComponent,
     ProfileSideBarComponent,
     UserInfoComponent,
     AdvertsComponent,
     FormNameComponent,
     FormPhoneComponent,
     FormVerifyComponent,
-    GlobalSearchComponent,
     AdvertFormComponent,
 ];
 
 @NgModule({
-    declarations: [...pages, ...components],
+    declarations: [...components],
+    exports: [...components],
     imports: [
         ...NZModules,
         CommonModule,

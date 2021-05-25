@@ -1,0 +1,24 @@
+@import '~src/assets/styles/variables';
+
+.user {
+    display: inline-grid;
+    align-items: start;
+    justify-items: start;
+    gap: $base-unit;
+    grid-auto-flow: column;
+    cursor: pointer;
+}
+
+.similar {
+    padding-top: 20px;
+}
+
+.meta {
+    margin-bottom: $base-unit * 2;
+}
+
+.contacts {
+    &__phone {
+        margin-bottom: $base-unit * 2;
+    }
+}
