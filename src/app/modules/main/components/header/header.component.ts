@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { BehaviorSubject, EMPTY, NEVER, of, Subject } from 'rxjs';
+import { BehaviorSubject, EMPTY, of, Subject } from 'rxjs';
 import { filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
 import { AdvertDataService, CategoryService } from '../../../../services';
 import { Category } from '../../../../models/category/category.entity';
 import { LoginService } from '../../../../services/login/login.service';
 import { User } from '../../../../models/user/user.entity';
+import { TransformMode } from '../../../../models/category/transform-mode.enum';
 
 @Component({
     selector: 'app-header',
@@ -57,7 +58,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
         this.categoryService
             .getCategories()
-            .pipe(map(categories => this.categoryService.transformArrayToTree(categories)))
+            .pipe(map(categories => this.categoryService.transformArrayToTree(categories, TransformMode.CASCADE)))
             .subscribe(tree => {
                 this.categoryTree$.next(tree);
             });

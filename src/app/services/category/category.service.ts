@@ -7,6 +7,8 @@ import { Category } from '../../models/category/category.entity';
 import { CreateCategoryDto } from '../../models/category/create-category.dto';
 import { UpdateCategoryDto } from '../../models/category/update-category.dto';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
+import { NzTreeNode } from 'ng-zorro-antd/tree';
+import { TransformMode } from '../../models/category/transform-mode.enum';
 
 @Injectable()
 export class CategoryService {
@@ -47,19 +49,45 @@ export class CategoryService {
         return this.http.delete<Category>(`/categories/${id}`);
     }
 
-    transformArrayToTree(categories: Category[]): NzCascaderOption[] {
-        const createNodesTree = (cats: any[]): NzCascaderOption[] => {
-            return cats.map(cat => {
-                if (cat.children) {
-                    cat.children = createNodesTree(cat.children);
-                    cat.isLeaf = false;
-                    return this.createCascaderOptionFromCategory(cat);
+    transformArrayToTree(categories: Category[], transformMode: TransformMode): NzCascaderOption[] | NzTreeNode[] {
+        const createCascadesTree = (rootCats: any[], childCats: any[]): NzCascaderOption[] => {
+            return rootCats.map(cat => {
+                cat.children = childCats.filter(category => category.parentId === cat.id);
+                if (cat.children.length) {
+                    cat.isLeaf = true;
+                    cat.children = createCascadesTree(cat.children, childCats);
                 }
-                cat.isLeaf = true;
+                cat.isLeaf = false;
                 return this.createCascaderOptionFromCategory(cat);
             });
         };
-        return createNodesTree(arrayToTree(categories));
+        const createNodesTree = (rootCats: any[], childCats: any[]): NzTreeNode[] => {
+            return rootCats.map(cat => {
+                cat.children = childCats.filter(category => category.parentId === cat.id);
+                const node = this.createNodeFromCategory(cat);
+
+                if (cat.children.length) {
+                    node.addChildren(createNodesTree(cat.children, childCats));
+                }
+                return node;
+            });
+        };
+        const rootCategories = categories.filter(cat => cat.parentId === null);
+        const childCategories = categories.filter(cat => cat.parentId !== null);
+        if (transformMode === TransformMode.NODE) {
+            return createNodesTree(arrayToTree(rootCategories), arrayToTree(childCategories));
+        }
+        return createCascadesTree(arrayToTree(rootCategories), arrayToTree(childCategories));
+    }
+
+    createNodeFromCategory(category: Category): NzTreeNode {
+        return new NzTreeNode({
+            title: category.name,
+            key: category.id,
+            selectable: false,
+            expanded: true,
+            category,
+        });
     }
 
     private createCascaderOptionFromCategory(category: any): NzCascaderOption {

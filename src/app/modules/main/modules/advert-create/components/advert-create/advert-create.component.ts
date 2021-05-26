@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, ComponentRef, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
@@ -9,6 +9,7 @@ import { CreateAdvertDto } from '../../../../../../models/advert/advert.dto';
 import { DynamicFieldsService } from '../../../../../dynamic-fields/dynamic-fields.service';
 import { Advert } from '../../../../../../models/advert/advert.entity';
 import { cloneDeep } from 'lodash';
+import { TransformMode } from '../../../../../../models/category/transform-mode.enum';
 
 // todo check subscriptions
 @Component({
@@ -40,7 +41,7 @@ export class AdvertCreateComponent implements OnInit {
             .getCategories()
             .pipe(
                 tap(categories => (this.categories = [...categories])),
-                map(categories => this.categoryService.transformArrayToTree(categories))
+                map(categories => this.categoryService.transformArrayToTree(categories, TransformMode.CASCADE))
             )
             .subscribe(tree => {
                 this.categoryTree$.next(tree);

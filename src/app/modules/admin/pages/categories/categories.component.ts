@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChildren } from '@angular/core';
 import { map, switchMap, tap } from 'rxjs/operators';
-import arrayToTree from 'array-to-tree';
 import { BehaviorSubject } from 'rxjs';
 import { CategoryService, ModelService } from '../../../../services/';
 import { Model } from '../../../../models/model/model.entity';
 import { Category } from '../../../../models/category/category.entity';
 import { NzTreeNode } from 'ng-zorro-antd/tree';
 import { NzPopoverDirective } from 'ng-zorro-antd/popover';
+import { TransformMode } from '../../../../models/category/transform-mode.enum';
 
 @Component({
     selector: 'app-models',
@@ -29,9 +29,9 @@ export class CategoriesComponent implements OnInit {
             .pipe(
                 tap(models => (this.models = models)),
                 switchMap(() => this.categoryService.getCategories()),
-                map(categories => this.transformArrayToTree(categories))
+                map(categories => this.categoryService.transformArrayToTree(categories, TransformMode.NODE))
             )
-            .subscribe(tree => {
+            .subscribe((tree: NzTreeNode[]) => {
                 this.categoryTree$.next(tree);
             });
     }
@@ -46,7 +46,7 @@ export class CategoriesComponent implements OnInit {
             newCategory.parentId = parentCategory.id;
         }
         this.categoryService.createCategory(newCategory).subscribe(res => {
-            const node = this.createNodeFromCategory(res);
+            const node = this.categoryService.createNodeFromCategory(res);
             if (parentNode) {
                 parentNode.addChildren([node]);
             } else {
@@ -79,33 +79,6 @@ export class CategoriesComponent implements OnInit {
 
     cancel(): void {
         this.closeForms();
-    }
-
-    private transformArrayToTree(categories: Category[]): NzTreeNode[] {
-        const createNodesTree = (rootCats: any[], childCats: any[]): NzTreeNode[] => {
-            return rootCats.map(cat => {
-                cat.children = childCats.filter(category => category.parentId === cat.id);
-                const node = this.createNodeFromCategory(cat);
-
-                if (cat.children.length) {
-                    node.addChildren(createNodesTree(cat.children, childCats));
-                }
-                return node;
-            });
-        };
-        const rootCategories = categories.filter(cat => cat.parentId === null);
-        const childCategories = categories.filter(cat => cat.parentId !== null);
-        return createNodesTree(arrayToTree(rootCategories), arrayToTree(childCategories));
-    }
-
-    private createNodeFromCategory(category: Category): NzTreeNode {
-        return new NzTreeNode({
-            title: category.name,
-            key: category.id,
-            selectable: false,
-            expanded: true,
-            category,
-        });
     }
 
     private closeForms(): void {
