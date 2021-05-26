@@ -1,4 +1,4 @@
-import { ProfileFormEnum } from '../pages/profile/profile-form.enum';
+import { ProfileFormEnum } from '../modules/profile/components/profile/profile-form.enum';
 import { UpdateUserDto } from '../../../models/user/update-user.dto';
 
 export interface ContentComponent {

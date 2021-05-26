@@ -82,19 +82,20 @@ export class CategoriesComponent implements OnInit {
     }
 
     private transformArrayToTree(categories: Category[]): NzTreeNode[] {
-        const createNodesTree = (cats: any[]): NzTreeNode[] => {
-            return cats.map(cat => {
+        const createNodesTree = (rootCats: any[], childCats: any[]): NzTreeNode[] => {
+            return rootCats.map(cat => {
+                cat.children = childCats.filter(category => category.parentId === cat.id);
                 const node = this.createNodeFromCategory(cat);
 
-                if (cat.children) {
-                    node.addChildren(createNodesTree(cat.children));
+                if (cat.children.length) {
+                    node.addChildren(createNodesTree(cat.children, childCats));
                 }
-
                 return node;
             });
         };
-
-        return createNodesTree(arrayToTree(categories));
+        const rootCategories = categories.filter(cat => cat.parentId === null);
+        const childCategories = categories.filter(cat => cat.parentId !== null);
+        return createNodesTree(arrayToTree(rootCategories), arrayToTree(childCategories));
     }
 
     private createNodeFromCategory(category: Category): NzTreeNode {
