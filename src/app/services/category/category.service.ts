@@ -2,11 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 // todo we can do it on backend
-import arrayToTree from 'array-to-tree';
 import { Category } from '../../models/category/category.entity';
 import { CreateCategoryDto } from '../../models/category/create-category.dto';
 import { UpdateCategoryDto } from '../../models/category/update-category.dto';
-import { NzCascaderOption } from 'ng-zorro-antd/cascader';
 
 @Injectable()
 export class CategoryService {
@@ -45,29 +43,5 @@ export class CategoryService {
      */
     deleteCategory(id: string): Observable<unknown> {
         return this.http.delete<Category>(`/categories/${id}`);
-    }
-
-    transformArrayToTree(categories: Category[]): NzCascaderOption[] {
-        const createNodesTree = (cats: any[]): NzCascaderOption[] => {
-            return cats.map(cat => {
-                if (cat.children) {
-                    cat.children = createNodesTree(cat.children);
-                    cat.isLeaf = false;
-                    return this.createCascaderOptionFromCategory(cat);
-                }
-                cat.isLeaf = true;
-                return this.createCascaderOptionFromCategory(cat);
-            });
-        };
-        return createNodesTree(arrayToTree(categories));
-    }
-
-    private createCascaderOptionFromCategory(category: any): NzCascaderOption {
-        return {
-            label: category.name,
-            value: category.id,
-            children: category.children,
-            isLeaf: category.isLeaf,
-        };
     }
 }
