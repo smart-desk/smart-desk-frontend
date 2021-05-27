@@ -8,7 +8,7 @@ import { TextareaService } from './modules/textarea/textarea.service';
 import { TextareaModule } from './modules/textarea/textarea.module';
 import { RadioModule } from './modules/radio/radio.module';
 import { TextModule } from './modules/text/text.module';
-import { createDynamicFieldProvider } from './utils';
+import { createDynamicFieldProvider } from '../../utils';
 import { DynamicFieldsMap } from './dynamic-fields.map';
 import { PhotoService } from './modules/photo/photo.service';
 import { PhotoModule } from './modules/photo/photo.module';

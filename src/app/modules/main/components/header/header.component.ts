@@ -7,7 +7,7 @@ import { AdvertDataService, CategoryService } from '../../../../services';
 import { Category } from '../../../../models/category/category.entity';
 import { LoginService } from '../../../../services/login/login.service';
 import { User } from '../../../../models/user/user.entity';
-import { TransformMode } from '../../../../models/category/transform-mode.enum';
+import { transformCategoryArrayToNZCascade } from '../../../../utils';
 
 @Component({
     selector: 'app-header',
@@ -58,7 +58,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
         this.categoryService
             .getCategories()
-            .pipe(map(categories => this.categoryService.transformArrayToTree(categories, TransformMode.CASCADE)))
+            .pipe(map(categories => transformCategoryArrayToNZCascade(categories)))
             .subscribe(tree => {
                 this.categoryTree$.next(tree);
             });

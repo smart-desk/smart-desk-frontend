@@ -9,7 +9,7 @@ import { CreateAdvertDto } from '../../../../../../models/advert/advert.dto';
 import { DynamicFieldsService } from '../../../../../dynamic-fields/dynamic-fields.service';
 import { Advert } from '../../../../../../models/advert/advert.entity';
 import { cloneDeep } from 'lodash';
-import { TransformMode } from '../../../../../../models/category/transform-mode.enum';
+import { transformCategoryArrayToNZCascade } from '../../../../../../utils';
 
 // todo check subscriptions
 @Component({
@@ -41,7 +41,7 @@ export class AdvertCreateComponent implements OnInit {
             .getCategories()
             .pipe(
                 tap(categories => (this.categories = [...categories])),
-                map(categories => this.categoryService.transformArrayToTree(categories, TransformMode.CASCADE))
+                map(categories => transformCategoryArrayToNZCascade(categories))
             )
             .subscribe(tree => {
                 this.categoryTree$.next(tree);

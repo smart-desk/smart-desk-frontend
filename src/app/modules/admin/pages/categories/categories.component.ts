@@ -6,7 +6,7 @@ import { Model } from '../../../../models/model/model.entity';
 import { Category } from '../../../../models/category/category.entity';
 import { NzTreeNode } from 'ng-zorro-antd/tree';
 import { NzPopoverDirective } from 'ng-zorro-antd/popover';
-import { TransformMode } from '../../../../models/category/transform-mode.enum';
+import { createNode, transformCategoryArrayToNZTree } from '../../../../utils';
 
 @Component({
     selector: 'app-models',
@@ -29,9 +29,9 @@ export class CategoriesComponent implements OnInit {
             .pipe(
                 tap(models => (this.models = models)),
                 switchMap(() => this.categoryService.getCategories()),
-                map(categories => this.categoryService.transformArrayToTree(categories, TransformMode.NODE))
+                map(categories => transformCategoryArrayToNZTree(categories))
             )
-            .subscribe((tree: NzTreeNode[]) => {
+            .subscribe(tree => {
                 this.categoryTree$.next(tree);
             });
     }
@@ -46,7 +46,7 @@ export class CategoriesComponent implements OnInit {
             newCategory.parentId = parentCategory.id;
         }
         this.categoryService.createCategory(newCategory).subscribe(res => {
-            const node = this.categoryService.createNodeFromCategory(res);
+            const node = createNode(res);
             if (parentNode) {
                 parentNode.addChildren([node]);
             } else {
