@@ -2,12 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { registerLocaleData } from '@angular/common';
 import ru from '@angular/common/locales/ru';
-import {
-    FacebookLoginProvider,
-    GoogleLoginProvider,
-    SocialAuthServiceConfig,
-    SocialLoginModule
-} from 'angularx-social-login';
+import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
 import { NZ_I18N, ru_RU } from 'ng-zorro-antd/i18n';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -46,7 +41,7 @@ const socialProviders = {
             },
             {
                 id: FacebookLoginProvider.PROVIDER_ID,
-                provider: new FacebookLoginProvider(environment.facebookClientId),
+                provider: new FacebookLoginProvider(environment.facebookClientId, { version: 'v10.0' }),
             },
         ],
     } as SocialAuthServiceConfig,

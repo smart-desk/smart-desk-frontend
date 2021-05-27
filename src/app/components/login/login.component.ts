@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
-import { EMPTY, of } from 'rxjs';
+import { of } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { switchMap } from 'rxjs/operators';
 import { NzModalRef } from 'ng-zorro-antd/modal';
@@ -56,8 +56,7 @@ export class LoginComponent implements OnInit {
         fromPromise(this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID))
             .pipe(
                 switchMap(socialUser => {
-                    debugger;
-                    return this.authService.login('facebook', socialUser.authToken)
+                    return this.authService.login('facebook', socialUser.authToken);
                 }),
                 switchMap(res => {
                     if (res && res.access_token) {
