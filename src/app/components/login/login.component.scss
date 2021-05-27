@@ -1,3 +1,13 @@
+@import '~src/assets/styles/variables';
+
 .spinner {
     text-align: center;
+}
+
+.button {
+    margin-bottom: $base-unit * 2;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
 }

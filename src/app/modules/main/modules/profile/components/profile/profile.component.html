@@ -16,7 +16,7 @@
                 <td>Телефон</td>
                 <td>{{ profile?.phone }}</td>
                 <td class="cell-action">
-                    <div *ngIf="profile.phone && !profile.isPhoneVerified">
+                    <div *ngIf="profile?.phone && !profile?.isPhoneVerified">
                         <a (click)="openFormConfirmPhone()">Подтвердить</a>
                         <span class="cell-action__separate">/</span>
                     </div>

@@ -9,6 +9,7 @@ export const environment = {
     googleClientId: '725037573536-orc0fpben8knki7kfqrl3d734t173t3c.apps.googleusercontent.com',
     googleMapsApiKey: 'AIzaSyAdJwILlE4YP3369mGiGjqbpwRRnKxRDYI',
     webSocketUrl: 'http://localhost:3001',
+    vkAppId: '7865563',
 };
 
 /*
