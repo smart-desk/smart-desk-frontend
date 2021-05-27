@@ -24,7 +24,7 @@
     "@angular/platform-browser-dynamic": "~10.2.0",
     "@angular/router": "~10.0.2",
     "@ant-design/icons-angular": "^9.0.1",
-    "angularx-social-login": "^3.2.2",
+    "angularx-social-login": "^3.5.7",
     "array-to-tree": "^3.3.2",
     "dayjs": "^1.9.1",
     "lodash": "^4.17.20",

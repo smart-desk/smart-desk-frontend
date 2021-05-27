@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { UserService } from '../user/user.service';
 
 export interface LoginResponse {
     access_token: string;
@@ -9,11 +8,11 @@ export interface LoginResponse {
 
 @Injectable()
 export class AuthService {
-    constructor(private http: HttpClient, private userService: UserService) {}
+    constructor(private http: HttpClient) {}
 
-    login(type: 'google' | 'facebook', googleIdToken: string): Observable<LoginResponse> {
+    login(type: 'google' | 'facebook' | 'vk', token: string): Observable<LoginResponse> {
         return this.http.post<any>(`/auth/${type}/login`, {
-            token: googleIdToken,
+            token,
         });
     }
 }

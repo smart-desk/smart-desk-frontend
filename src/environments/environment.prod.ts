@@ -5,4 +5,5 @@ export const environment = {
     retry: 0,
     googleMapsApiKey: 'AIzaSyAdJwILlE4YP3369mGiGjqbpwRRnKxRDYI',
     webSocketUrl: 'http://smart-desk.me',
+    vkAppId: '7865563',
 };
