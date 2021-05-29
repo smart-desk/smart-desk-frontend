@@ -4,8 +4,9 @@ import { fromPromise } from 'rxjs/internal-compatibility';
 import { finalize, switchMap } from 'rxjs/operators';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { AuthService, LoginResponse, UserService } from '../../services';
+import { AuthService, UserService } from '../../services';
 import { LoginService } from '../../services/login/login.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
     selector: 'app-login',
@@ -38,27 +39,42 @@ export class LoginComponent implements OnInit {
     googleLogin(): void {
         fromPromise(this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID))
             .pipe(
-                switchMap(socialUser => this.authService.login('google', socialUser.idToken)),
+                switchMap(socialUser => this.authService.googleLogin(socialUser.idToken)),
                 finalize(() => this.modal.close())
             )
-            .subscribe(res => this.handleLoginResponse(res));
+            .subscribe(res => {
+                if (res) {
+                    this.loginService.updateLoginInfo();
+                } else {
+                    this.notificationService.error('Authorization failed', 'Try later');
+                }
+            });
     }
 
     vkLogin(): void {
-        fromPromise(this.socialAuthService.signIn(VKLoginProvider.PROVIDER_ID))
-            .pipe(
-                switchMap(socialUser => this.authService.login('vk', socialUser.authToken)),
-                finalize(() => this.modal.close())
-            )
-            .subscribe(res => this.handleLoginResponse(res));
-    }
+        // todo update url
+        const windowOpened = window.open(
+            `https://oauth.vk.com/authorize?client_id=${environment.vkAppId}&redirect_uri=${environment.host}/vk/redirect&response_type=code&v=5.131`
+        );
 
-    private handleLoginResponse(res: LoginResponse) {
-        if (res?.access_token) {
-            localStorage.setItem('token', res.access_token);
-            this.loginService.updateLoginInfo();
-        } else {
-            this.notificationService.error('Authorization failed', 'Try later');
-        }
+        const authResult = (event: MessageEvent) => {
+            if (typeof event.data === 'string' && event.data.startsWith('vkAuthRes')) {
+                const result = event.data.split(':')[1];
+
+                if (windowOpened) {
+                    windowOpened.close();
+                }
+
+                if (result === 'true') {
+                    this.loginService.updateLoginInfo();
+                } else {
+                    this.notificationService.error('Authorization failed', 'Try later');
+                }
+
+                this.modal.close();
+            }
+        };
+
+        window.addEventListener('message', authResult, false);
     }
 }

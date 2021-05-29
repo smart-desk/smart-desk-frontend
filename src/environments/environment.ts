@@ -10,6 +10,7 @@ export const environment = {
     googleMapsApiKey: 'AIzaSyAdJwILlE4YP3369mGiGjqbpwRRnKxRDYI',
     webSocketUrl: 'http://localhost:3001',
     vkAppId: '7865563',
+    host: 'http://localhost:4200',
 };
 
 /*

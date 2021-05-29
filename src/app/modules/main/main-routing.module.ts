@@ -5,6 +5,7 @@ import { AuthGuard } from '../../services/auth/auth.guard';
 import { ForbiddenComponent } from '../../pages/forbidden/forbidden.component';
 import { UnauthorizedComponent } from '../../pages/unauthorized/unauthorized.component';
 import { AdvertComponent } from './modules/advert/components/advert/advert.component';
+import { VkRedirectComponent } from './components/vk-redirect/vk-redirect.component';
 
 const routes: Routes = [
     {
@@ -54,6 +55,10 @@ const routes: Routes = [
             {
                 path: 'category/:category_id',
                 loadChildren: () => import('./modules/category/category.module').then(m => m.CategoryModule),
+            },
+            {
+                path: 'vk/redirect',
+                component: VkRedirectComponent,
             },
         ],
     },
