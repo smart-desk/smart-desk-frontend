@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../../services';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
     selector: 'app-vk-redirect',
@@ -18,7 +19,7 @@ export class VkRedirectComponent {
 
         this.authService.vkLogin(code).subscribe(res => {
             setTimeout(() => {
-                window.opener.postMessage('vkAuthRes:' + String(res), 'http://localhost:4200');
+                window.opener.postMessage('vkAuthRes:' + String(res), environment.host);
             }, 1000);
         });
     }

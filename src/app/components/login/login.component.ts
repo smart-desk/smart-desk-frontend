@@ -52,7 +52,6 @@ export class LoginComponent implements OnInit {
     }
 
     vkLogin(): void {
-        // todo update url
         const windowOpened = window.open(
             `https://oauth.vk.com/authorize?client_id=${environment.vkAppId}&redirect_uri=${environment.host}/vk/redirect&response_type=code&v=5.131`
         );
