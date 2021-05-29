@@ -43,6 +43,8 @@ import { FormPhoneComponent } from './components/form-phone/form-phone.component
 import { FormVerifyComponent } from './components/form-verify/form-verify.component';
 import { AdvertFormComponent } from './components/advert-form/advert-form.component';
 import { AdvertComponent } from './modules/advert/components/advert/advert.component';
+import { VkRedirectComponent } from './components/vk-redirect/vk-redirect.component';
+import { NzResultModule } from 'ng-zorro-antd/result';
 
 const NZModules = [
     NzModalModule,
@@ -69,6 +71,7 @@ const NZModules = [
     NzTabsModule,
     NzRadioModule,
     SharedModule,
+    NzResultModule,
 ];
 
 const components = [
@@ -87,6 +90,7 @@ const components = [
     FormPhoneComponent,
     FormVerifyComponent,
     AdvertFormComponent,
+    VkRedirectComponent,
 ];
 
 @NgModule({
