@@ -104,6 +104,10 @@ export class AdvertService {
             optionsList.push(this.buildFiltersQuery(options.filters));
         }
 
+        if (options.sortingField) {
+            optionsList.push(`sorting[${options.sortingField}]=${options.sortingMode}`);
+        }
+
         return optionsList.length ? `?${optionsList.join('&')}` : '';
     }
 

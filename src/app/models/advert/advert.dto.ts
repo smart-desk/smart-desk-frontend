@@ -2,6 +2,8 @@ import { Advert } from './advert.entity';
 import { DynamicFieldsBaseCreateDto } from '../field/dynamic-fields-base-create.dto';
 import { DynamicFieldsBaseUpdateDto } from '../field/dynamic-fields-base-update.dto';
 import { Filters } from '../../modules/dynamic-fields/models/filter';
+import { FieldType } from '../field/field.entity';
+import { SortingMode } from '../../modules/main/interfaces/sorting-field.interface';
 
 export class CreateAdvertDto {
     category_id: string;
@@ -22,6 +24,8 @@ export class GetAdvertsDto {
     limit?: number = GetAdvertsDto.DEFAULT_LIMIT;
     search?: string = GetAdvertsDto.DEFAULT_SEARCH;
     filters?: Filters = {};
+    sortingField?: FieldType;
+    sortingMode?: SortingMode;
     user?: string;
 
     static DEFAULT_PAGE = 1;

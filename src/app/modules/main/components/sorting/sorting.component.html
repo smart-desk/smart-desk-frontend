@@ -1,0 +1,6 @@
+<div class="sort-box">
+    <div>Сортировать</div>
+    <nz-select class="sort-box__select" (ngModelChange)="changeSelect($event)" [(ngModel)]="selectedField">
+        <nz-option *ngFor="let f of sortingFields" [nzValue]="f" [nzLabel]="f.label"></nz-option>
+    </nz-select>
+</div>
