@@ -54,10 +54,9 @@ export function transformCategoryArrayToNZCascade(categories: Category[]): NzCas
         return rootCats.map(cat => {
             cat.children = childCats.filter(category => category.parentId === cat.id);
             if (cat.children.length) {
-                cat.isLeaf = true;
                 cat.children = createCascadesTree(cat.children, childCats);
             }
-            cat.isLeaf = false;
+            cat.isLeaf = !cat.children.length;
             return createCascadeOption(cat);
         });
     };
