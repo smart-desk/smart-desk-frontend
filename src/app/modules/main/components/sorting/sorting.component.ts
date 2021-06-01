@@ -1,12 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { switchMap, takeUntil } from 'rxjs/operators';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AdvertDataService, CategoryService, ModelService } from '../../../../services';
 import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../models/advert/advert.dto';
 import { Model } from '../../../../models/model/model.entity';
-import { SortingMode, SortingField } from '../../interfaces/sorting-field.interface';
-import { FieldType } from '../../../../models/field/field.entity';
+import { FieldEntity, FieldType } from '../../../../models/field/field.entity';
+import { Direction } from '../../enums/direction.enum';
+import { Category } from '../../../../models/category/category.entity';
 
 @Component({
     selector: 'app-sorting',
@@ -15,15 +14,11 @@ import { FieldType } from '../../../../models/field/field.entity';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SortingComponent implements OnInit {
-    selectedField = null;
+    @Input() model: Model;
+    @Input() category: Category;
+    @Input() options: GetAdvertsDto;
+    selectedField = '';
     advertsResponse: GetAdvertsResponseDto;
-    sortingFields: SortingField[] = [
-        { label: 'Подешевле', mode: SortingMode.ASC, field: FieldType.PRICE },
-        { label: 'Подороже', mode: SortingMode.DESC, field: FieldType.PRICE },
-    ];
-    private model: Model;
-    private destroy$ = new Subject();
-    private categoryId: string;
 
     constructor(
         private router: Router,
@@ -34,34 +29,30 @@ export class SortingComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.route.paramMap
-            .pipe(
-                takeUntil(this.destroy$),
-                switchMap((paramMap: ParamMap) => {
-                    this.categoryId = paramMap.get('category_id') || '';
-                    return this.categoryService.getCategory(this.categoryId);
-                }),
-                switchMap(category => {
-                    return this.modelService.getModel(category.modelId);
-                })
-            )
-            .subscribe(model => {
-                this.model = model;
-            });
+        if (this.options.sorting) {
+            this.selectedField = `${this.options.sorting.field}:${this.options.sorting.direction}`;
+        }
     }
 
     changeSelect($event: any): void {
         this.sorting($event);
     }
 
-    private sorting(param: { label: string; mode: string; field: string }): void {
-        const fieldSorting = this.model.fields.find(field => field.type === param.field);
-        if (fieldSorting?.id) {
-            const options = {
-                sortingField: fieldSorting.id,
-                sortingMode: param.mode,
-            } as GetAdvertsDto;
-            this.advertDataService.loadAdverts(this.categoryId, options);
+    getPriceField(): FieldEntity[] {
+        return this.model?.fields.filter(field => field.type === FieldType.PRICE);
+    }
+
+    private sorting(param: string): void {
+        if (param) {
+            const [fieldId, direction] = param.split(':');
+            return this.advertDataService.changeSorting(
+                {
+                    field: fieldId,
+                    direction: direction as Direction,
+                },
+                this.category.id
+            );
         }
+        return this.advertDataService.changeSorting({} as { field: string; direction: Direction }, this.category.id);
     }
 }

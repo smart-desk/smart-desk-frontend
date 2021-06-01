@@ -2,8 +2,7 @@ import { Advert } from './advert.entity';
 import { DynamicFieldsBaseCreateDto } from '../field/dynamic-fields-base-create.dto';
 import { DynamicFieldsBaseUpdateDto } from '../field/dynamic-fields-base-update.dto';
 import { Filters } from '../../modules/dynamic-fields/models/filter';
-import { FieldType } from '../field/field.entity';
-import { SortingMode } from '../../modules/main/interfaces/sorting-field.interface';
+import { Direction } from '../../modules/main/enums/direction.enum';
 
 export class CreateAdvertDto {
     category_id: string;
@@ -24,8 +23,7 @@ export class GetAdvertsDto {
     limit?: number = GetAdvertsDto.DEFAULT_LIMIT;
     search?: string = GetAdvertsDto.DEFAULT_SEARCH;
     filters?: Filters = {};
-    sortingField?: FieldType;
-    sortingMode?: SortingMode;
+    sorting?: { field: string; direction: Direction };
     user?: string;
 
     static DEFAULT_PAGE = 1;
@@ -49,6 +47,13 @@ export class GetAdvertsDto {
             return;
         }
         return Object.keys(this.filters).length === 0 ? undefined : JSON.stringify(this.filters);
+    }
+
+    get queryParamSorting(): string | undefined {
+        if (!this.sorting) {
+            return;
+        }
+        return Object.keys(this.sorting).length === 0 ? undefined : JSON.stringify(this.sorting);
     }
 }
 
