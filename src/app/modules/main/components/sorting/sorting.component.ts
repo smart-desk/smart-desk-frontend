@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdvertDataService, CategoryService, ModelService } from '../../../../services';
-import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../models/advert/advert.dto';
+import { GetAdvertsResponseDto } from '../../../../models/advert/advert.dto';
 import { Model } from '../../../../models/model/model.entity';
 import { FieldEntity, FieldType } from '../../../../models/field/field.entity';
 import { Direction } from '../../enums/direction.enum';
 import { Category } from '../../../../models/category/category.entity';
+import { Sorting } from '../../interfaces/sorting.interface';
 
 @Component({
     selector: 'app-sorting',
@@ -16,9 +17,11 @@ import { Category } from '../../../../models/category/category.entity';
 export class SortingComponent implements OnInit {
     @Input() model: Model;
     @Input() category: Category;
-    @Input() options: GetAdvertsDto;
+    @Input() sorting: Sorting;
     selectedField = '';
     advertsResponse: GetAdvertsResponseDto;
+    defaultSelect = 'По умолчанию';
+    sortDirection = Direction;
 
     constructor(
         private router: Router,
@@ -29,20 +32,25 @@ export class SortingComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        if (this.options.sorting) {
-            this.selectedField = `${this.options.sorting.field}:${this.options.sorting.direction}`;
+        this.selectedField = this.defaultSelect;
+        if (this.sorting) {
+            this.selectedField = `${this.sorting.field}:${this.sorting.direction}`;
         }
     }
 
-    changeSelect($event: any): void {
-        this.sorting($event);
+    changeSelect($event: string): void {
+        if ($event === this.defaultSelect) {
+            this.runSorting('');
+        } else {
+            this.runSorting($event);
+        }
     }
 
     getPriceField(): FieldEntity[] {
         return this.model?.fields.filter(field => field.type === FieldType.PRICE);
     }
 
-    private sorting(param: string): void {
+    private runSorting(param: string): void {
         if (param) {
             const [fieldId, direction] = param.split(':');
             return this.advertDataService.changeSorting(
@@ -53,6 +61,6 @@ export class SortingComponent implements OnInit {
                 this.category.id
             );
         }
-        return this.advertDataService.changeSorting({} as { field: string; direction: Direction }, this.category.id);
+        return this.advertDataService.changeSorting(null, this.category.id);
     }
 }

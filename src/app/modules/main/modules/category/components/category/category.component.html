@@ -5,6 +5,6 @@
 </ng-template>
 
 <ng-template #right>
-    <app-sorting *ngIf="model" [model]="model" [category]="category" [options]="options"></app-sorting>
+    <app-sorting *ngIf="model" [model]="model" [category]="category" [sorting]="options.sorting"></app-sorting>
     <app-filters *ngIf="model" [model]="model" [filters]="filters"></app-filters>
 </ng-template>

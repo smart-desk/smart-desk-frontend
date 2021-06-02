@@ -4,7 +4,7 @@ import { ActivatedRoute, NavigationExtras, ParamMap, Router } from '@angular/rou
 import { AdvertService } from './advert.service';
 import { GetAdvertsDto, GetAdvertsResponseDto } from '../../models/advert/advert.dto';
 import { Filters } from '../../modules/dynamic-fields/models/filter';
-import { Direction } from '../../modules/main/enums/direction.enum';
+import { Sorting } from '../../modules/main/interfaces/sorting.interface';
 
 @Injectable({
     providedIn: 'root',
@@ -23,8 +23,7 @@ export class AdvertDataService {
         this.updateQueryParams();
     }
 
-    changeSorting(sorting: { field: string; direction: Direction }, categoryId: string): void {
-        this.categoryId = categoryId;
+    changeSorting(sorting: Sorting | null, categoryId: string): void {
         this.options.sorting = sorting;
         this.requestAdverts();
         this.updateQueryParams();
