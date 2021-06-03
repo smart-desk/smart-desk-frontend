@@ -104,7 +104,7 @@ export class AdvertService {
             optionsList.push(this.buildFiltersQuery(options.filters));
         }
 
-        if (options.sorting?.field) {
+        if (options.sorting?.field && options.sorting?.direction) {
             optionsList.push(`sorting[${options.sorting.field}]=${options.sorting.direction}`);
         }
 

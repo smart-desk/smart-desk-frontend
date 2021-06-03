@@ -23,7 +23,7 @@ export class AdvertDataService {
         this.updateQueryParams();
     }
 
-    changeSorting(sorting: Sorting | null, categoryId: string): void {
+    changeSorting(sorting: Sorting | null): void {
         this.options.sorting = sorting;
         this.requestAdverts();
         this.updateQueryParams();

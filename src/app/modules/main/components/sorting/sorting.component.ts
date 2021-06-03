@@ -5,7 +5,6 @@ import { GetAdvertsResponseDto } from '../../../../models/advert/advert.dto';
 import { Model } from '../../../../models/model/model.entity';
 import { FieldEntity, FieldType } from '../../../../models/field/field.entity';
 import { Direction } from '../../enums/direction.enum';
-import { Category } from '../../../../models/category/category.entity';
 import { Sorting } from '../../interfaces/sorting.interface';
 
 @Component({
@@ -16,11 +15,9 @@ import { Sorting } from '../../interfaces/sorting.interface';
 })
 export class SortingComponent implements OnInit {
     @Input() model: Model;
-    @Input() category: Category;
     @Input() sorting: Sorting;
     selectedField = '';
-    advertsResponse: GetAdvertsResponseDto;
-    defaultSelect = 'По умолчанию';
+    defaultSelection = 'По умолчанию';
     sortDirection = Direction;
 
     constructor(
@@ -32,14 +29,14 @@ export class SortingComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.selectedField = this.defaultSelect;
+        this.selectedField = this.defaultSelection;
         if (this.sorting) {
             this.selectedField = `${this.sorting.field}:${this.sorting.direction}`;
         }
     }
 
     changeSelect($event: string): void {
-        if ($event === this.defaultSelect) {
+        if ($event === this.defaultSelection) {
             this.runSorting('');
         } else {
             this.runSorting($event);
@@ -53,14 +50,11 @@ export class SortingComponent implements OnInit {
     private runSorting(param: string): void {
         if (param) {
             const [fieldId, direction] = param.split(':');
-            return this.advertDataService.changeSorting(
-                {
-                    field: fieldId,
-                    direction: direction as Direction,
-                },
-                this.category.id
-            );
+            return this.advertDataService.changeSorting({
+                field: fieldId,
+                direction: direction as Direction,
+            });
         }
-        return this.advertDataService.changeSorting(null, this.category.id);
+        return this.advertDataService.changeSorting(null);
     }
 }
