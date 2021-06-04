@@ -3,8 +3,8 @@
     <nz-select class="sort-box__select" (ngModelChange)="changeSelect($event)" [ngModel]="selectedField">
         <nz-option [nzValue]="defaultSelection" [nzLabel]="defaultSelection"></nz-option>
         <ng-container *ngFor="let field of getPriceField()">
-            <nz-option [nzValue]="field.id + ':' + sortDirection.DESC" [nzLabel]="field.title + ': По убыванию'"></nz-option>
-            <nz-option [nzValue]="field.id + ':' + sortDirection.ASC" [nzLabel]="field.title + ': По возрастанию'"></nz-option>
+            <nz-option [nzValue]="field.id + ':' + sortDirection.DESC" [nzLabel]="field.params.title + ': По убыванию'"></nz-option>
+            <nz-option [nzValue]="field.id + ':' + sortDirection.ASC" [nzLabel]="field.params.title + ': По возрастанию'"></nz-option>
         </ng-container>
     </nz-select>
 </div>
