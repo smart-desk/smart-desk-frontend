@@ -4,6 +4,7 @@ import { ActivatedRoute, NavigationExtras, ParamMap, Router } from '@angular/rou
 import { AdvertService } from './advert.service';
 import { GetAdvertsDto, GetAdvertsResponseDto } from '../../models/advert/advert.dto';
 import { Filters } from '../../modules/dynamic-fields/models/filter';
+import { Sorting } from '../../modules/main/interfaces/sorting.interface';
 
 @Injectable({
     providedIn: 'root',
@@ -18,6 +19,12 @@ export class AdvertDataService {
     loadAdverts(categoryId: string | null, options?: GetAdvertsDto): void {
         this.categoryId = categoryId;
         this.options = options ? options : this.options;
+        this.requestAdverts();
+        this.updateQueryParams();
+    }
+
+    changeSorting(sorting: Sorting | null): void {
+        this.options.sorting = sorting;
         this.requestAdverts();
         this.updateQueryParams();
     }
@@ -64,6 +71,11 @@ export class AdvertDataService {
                 resultParams.filters = JSON.parse(queryParams.get('filters') || '');
             } catch (e) {}
         }
+        if (queryParams.has('sorting')) {
+            try {
+                resultParams.sorting = JSON.parse(queryParams.get('sorting') || '');
+            } catch (e) {}
+        }
         return resultParams;
     }
 
@@ -82,6 +94,7 @@ export class AdvertDataService {
                 limit: this.options.queryParamLimit,
                 search: this.options.queryParamSearch,
                 filters: this.options.queryParamFilters,
+                sorting: this.options.queryParamSorting,
             },
         };
 

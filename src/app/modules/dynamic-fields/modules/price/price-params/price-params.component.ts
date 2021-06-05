@@ -24,6 +24,7 @@ export class PriceParamsComponent extends AbstractFieldParamsComponent<PricePara
         this.form = this.fb.group({
             filterable: [this.field.filterable || false],
             required: [this.field.required || false],
+            title: [this.field.title || 'Цена', Validators.required],
             currency: [params?.currency || '', Validators.required],
         });
     }
@@ -31,6 +32,7 @@ export class PriceParamsComponent extends AbstractFieldParamsComponent<PricePara
     getField(): Field<unknown, PriceParamsDto> {
         this.field.filterable = this.form.get('filterable')?.value;
         this.field.required = this.form.get('required')?.value;
+        this.field.title = this.form.get('title')?.value;
         this.field.params = {
             currency: this.form.get('currency')?.value,
         };

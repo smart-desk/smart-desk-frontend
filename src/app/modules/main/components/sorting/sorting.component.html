@@ -1,0 +1,10 @@
+<div class="sort-box">
+    <div>Сортировать</div>
+    <nz-select class="sort-box__select" (ngModelChange)="changeSelect($event)" [ngModel]="selectedField">
+        <nz-option [nzValue]="" nzLabel="По умолчанию"></nz-option>
+        <ng-container *ngFor="let field of getPriceField()">
+            <nz-option [nzValue]="field.id + ':' + sortDirection.DESC" [nzLabel]="field.title + ': По убыванию'"></nz-option>
+            <nz-option [nzValue]="field.id + ':' + sortDirection.ASC" [nzLabel]="field.title + ': По возрастанию'"></nz-option>
+        </ng-container>
+    </nz-select>
+</div>

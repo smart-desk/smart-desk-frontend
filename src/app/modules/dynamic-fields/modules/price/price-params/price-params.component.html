@@ -1,6 +1,10 @@
 <form nz-form nzLayout="vertical" [formGroup]="form">
     <nz-form-item>
-        <nz-form-label>Currency</nz-form-label>
+        <nz-form-label>Заголовок</nz-form-label>
+        <input nz-input required formControlName="title" />
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label>Валюта</nz-form-label>
         <nz-select formControlName="currency">
             <nz-option *ngFor="let c of currencies" [nzValue]="c.code" [nzLabel]="c.symbol"></nz-option>
         </nz-select>
