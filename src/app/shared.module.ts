@@ -30,6 +30,7 @@ import { PhoneService } from './services/phone/phone.service';
 import { SearchComponent } from './components/search/search.component';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { AdCampaignService } from './services/ad-campaign/ad-campaign.service';
 
 const NZModules = [
     NzFormModule,
@@ -60,6 +61,7 @@ const services = [
     PhoneService,
     UserService,
     AdvertDataService,
+    AdCampaignService,
 ];
 
 /**
