@@ -12,6 +12,8 @@ import { FormNameComponent } from '../../../../components/form-name/form-name.co
 import { FormVerifyComponent } from '../../../../components/form-verify/form-verify.component';
 import { FormPhoneComponent } from '../../../../components/form-phone/form-phone.component';
 import { ContentComponent } from '../../../../interfaces/content-component.interface';
+import { NotificationsComponent } from '../notifications/notifications.component';
+import { Notification } from '../notifications/enums/notification.enum';
 
 @Component({
     selector: 'app-user-settings',
@@ -22,6 +24,7 @@ import { ContentComponent } from '../../../../interfaces/content-component.inter
 export class ProfileComponent implements OnInit {
     profile: User;
     verificationRequestId: string;
+    not = Notification;
 
     constructor(
         private modalService: NzModalService,
@@ -108,5 +111,17 @@ export class ProfileComponent implements OnInit {
         verificationDto.requestId = this.verificationRequestId;
         verificationDto.code = (modal.getContentComponent().formConfirm.get('code') as AbstractControl).value.toString();
         this.phoneService.checkVerification(verificationDto).subscribe();
+    }
+
+    setUpNotifications(): void {
+        const modalRef: NzModalRef = this.modalService.create<NotificationsComponent>({
+            nzTitle: 'Уведомления',
+            nzContent: NotificationsComponent,
+            nzComponentParams: { profile: this.profile },
+            nzOnOk: () => {
+                const emailNotifications = modalRef.getContentComponent().getNotificationOption();
+                this.userService.updateProfile({ emailNotifications }).subscribe();
+            },
+        });
     }
 }

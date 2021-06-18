@@ -10,4 +10,5 @@ export class User {
     status: UserStatus;
     roles: string[];
     avatar?: string;
+    emailNotifications: string[];
 }
