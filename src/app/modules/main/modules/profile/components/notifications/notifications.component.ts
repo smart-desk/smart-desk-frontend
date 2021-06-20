@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { User } from '../../../../../../models/user/user.entity';
+import { User } from '../../../../../../services/user/models/user.entity';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NotificationTypes } from './enums/notification.enum';
 

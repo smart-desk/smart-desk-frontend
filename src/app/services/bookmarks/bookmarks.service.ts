@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Bookmark } from '../../models/bookmarks/bookmark.entity';
+import { Bookmark } from './models/bookmark.entity';
 import { HttpClient } from '@angular/common/http';
-import { CreateBookmarkDto } from '../../models/bookmarks/create-bookmark.dto';
+import { CreateBookmarkDto } from './models/create-bookmark.dto';
 
 @Injectable()
 export class BookmarksService {

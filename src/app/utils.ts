@@ -1,8 +1,8 @@
 import { InjectionToken, Provider, Type } from '@angular/core';
 import { DynamicFieldsMap } from './modules/dynamic-fields/dynamic-fields.map';
 import { AbstractFieldService } from './modules/dynamic-fields/models/abstract-field.service';
-import { FieldType } from './models/field/field.entity';
-import { Category } from './models/category/category.entity';
+import { FieldType } from './services/field/models/field.entity';
+import { Category } from './services/category/models/category.entity';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
 import { NzTreeNode } from 'ng-zorro-antd/tree';
 import arrayToTree from 'array-to-tree';

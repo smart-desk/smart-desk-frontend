@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AbstractFieldParamsComponent } from '../../../models/abstract-field-params.component';
 import { TextParamsDto } from '../dto/text-params.dto';
-import { Field } from '../../../../../models/field/field';
+import { Field } from '../../../../../services/field/models/field';
 
 @Component({
     selector: 'app-text-editor',

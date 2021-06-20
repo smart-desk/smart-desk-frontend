@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { AbstractFieldParamsComponent } from '../../../models/abstract-field-params.component';
 import { RadioItem, RadioParamsDto } from '../dto/radio-params.dto';
-import { Field } from '../../../../../models/field/field';
+import { Field } from '../../../../../services/field/models/field';
 
 @Component({
     selector: 'app-radio',

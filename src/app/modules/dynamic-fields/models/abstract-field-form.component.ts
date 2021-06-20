@@ -1,5 +1,5 @@
 import { Directive, Input } from '@angular/core';
-import { Field } from '../../../models/field/field';
+import { Field } from '../../../services/field/models/field';
 @Directive()
 // tslint:disable-next-line:directive-class-suffix
 export abstract class AbstractFieldFormComponent<T, K> {

@@ -5,11 +5,11 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AbstractFieldFormComponent } from '../../../../../dynamic-fields/models/abstract-field-form.component';
 import { EMPTY, Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
-import { Advert } from '../../../../../../models/advert/advert.entity';
-import { Model } from '../../../../../../models/model/model.entity';
+import { Advert } from '../../../../../../services/advert/models/advert.entity';
+import { Model } from '../../../../../../services/model/models/model.entity';
 import { DynamicFieldsService } from '../../../../../dynamic-fields/dynamic-fields.service';
 import { PreferContact } from '../../../../enums/contact-values.enum';
-import { UpdateAdvertDto } from '../../../../../../models/advert/advert.dto';
+import { UpdateAdvertDto } from '../../../../../../services/advert/models/advert.dto';
 
 @Component({
     selector: 'app-advert-edit',

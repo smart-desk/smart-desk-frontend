@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModelService } from '../../../../services';
-import { Model } from '../../../../models/model/model.entity';
+import { Model } from '../../../../services/model/models/model.entity';
 
 @Component({
     selector: 'app-create-model',

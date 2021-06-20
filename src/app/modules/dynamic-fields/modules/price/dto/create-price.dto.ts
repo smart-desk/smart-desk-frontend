@@ -1,4 +1,4 @@
-import { DynamicFieldsBaseCreateDto } from '../../../../../../../models/field/dynamic-fields-base-create.dto';
+import { DynamicFieldsBaseCreateDto } from '../../../../../services/field/models/dynamic-fields-base-create.dto';
 
 export class CreatePriceDto extends DynamicFieldsBaseCreateDto {
     value: number;

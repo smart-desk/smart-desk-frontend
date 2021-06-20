@@ -1,4 +1,4 @@
-import { Advert } from '../advert/advert.entity';
+import { Advert } from '../../advert/models/advert.entity';
 
 export class Bookmark {
     id: string;

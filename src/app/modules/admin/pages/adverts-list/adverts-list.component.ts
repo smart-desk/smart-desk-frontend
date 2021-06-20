@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import * as dayjs from 'dayjs';
 import { zip } from 'rxjs';
 import { AdvertService, CategoryService } from '../../../../services';
-import { Category } from '../../../../models/category/category.entity';
-import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../models/advert/advert.dto';
+import { Category } from '../../../../services/category/models/category.entity';
+import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../services/advert/models/advert.dto';
 
 @Component({
     selector: 'app-table-adverts',

@@ -1,7 +1,7 @@
 import { Advert } from './advert.entity';
-import { DynamicFieldsBaseCreateDto } from '../field/dynamic-fields-base-create.dto';
-import { DynamicFieldsBaseUpdateDto } from '../field/dynamic-fields-base-update.dto';
-import { Filters } from '../../modules/dynamic-fields/models/filter';
+import { DynamicFieldsBaseCreateDto } from '../../field/models/dynamic-fields-base-create.dto';
+import { DynamicFieldsBaseUpdateDto } from '../../field/models/dynamic-fields-base-update.dto';
+import { Filters } from '../../../modules/dynamic-fields/models/filter';
 
 export class CreateAdvertDto {
     category_id: string;

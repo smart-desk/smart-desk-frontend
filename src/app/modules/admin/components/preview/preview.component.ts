@@ -9,17 +9,17 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import { FieldService, ModelService } from '../../../../services';
-import { FieldEntity } from '../../../../models/field/field.entity';
+import { FieldEntity } from '../../../../services/field/models/field.entity';
 import { NzDrawerService } from 'ng-zorro-antd/drawer';
 import { PreviewToolsComponent } from '../preview-tools/preview-tools.component';
 import { FieldSettingsComponent } from '../field-settings/field-settings.component';
 import { AddFieldComponent } from '../add-field/add-field.component';
-import { Model } from '../../../../models/model/model.entity';
+import { Model } from '../../../../services/model/models/model.entity';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DynamicFieldsService } from 'src/app/modules/dynamic-fields/dynamic-fields.service';
-import { OperationState } from '../../../../models/operation-state.enum';
+import { OperationState } from '../../../../services/field/models/operation-state.enum';
 
 const DRAWER_BASE_CONFIG = {
     nzWidth: 400,

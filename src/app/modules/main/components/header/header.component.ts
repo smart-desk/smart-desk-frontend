@@ -4,9 +4,9 @@ import { BehaviorSubject, EMPTY, of, Subject } from 'rxjs';
 import { filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
 import { AdvertDataService, CategoryService } from '../../../../services';
-import { Category } from '../../../../models/category/category.entity';
+import { Category } from '../../../../services/category/models/category.entity';
 import { LoginService } from '../../../../services/login/login.service';
-import { User } from '../../../../models/user/user.entity';
+import { User } from '../../../../services/user/models/user.entity';
 import { transformCategoryArrayToNZCascade } from '../../../../utils';
 
 @Component({

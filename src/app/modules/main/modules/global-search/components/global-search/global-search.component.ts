@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { filter, pairwise, startWith, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { Subject } from 'rxjs';
-import { GetAdvertsResponseDto } from '../../../../../../models/advert/advert.dto';
+import { GetAdvertsResponseDto } from '../../../../../../services/advert/models/advert.dto';
 import { AdvertDataService } from '../../../../../../services';
 import { BookmarksStoreService } from '../../../../../../services/bookmarks/bookmarks-store.service';
 

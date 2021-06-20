@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
 import { Chat } from '../../models/chat.entity';
-import { User } from '../../../../models/user/user.entity';
-import { RolesEnum } from '../../../../models/user/user-roles.enum';
+import { User } from '../../../../services/user/models/user.entity';
+import { RolesEnum } from '../../../../services/user/models/user-roles.enum';
 
 @Component({
     selector: 'app-chat-list',

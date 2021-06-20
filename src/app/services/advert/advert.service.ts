@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { GetAdvertsDto, GetAdvertsResponseDto, CreateAdvertDto, UpdateAdvertDto } from '../../models/advert/advert.dto';
-import { Advert } from '../../models/advert/advert.entity';
+import { GetAdvertsDto, GetAdvertsResponseDto, CreateAdvertDto, UpdateAdvertDto } from './models/advert.dto';
+import { Advert } from './models/advert.entity';
 import { objectToQueryString } from '../../helpers/object-to-query-string.helper';
 import { Filters } from '../../modules/dynamic-fields/models/filter';
 

@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 // todo we can do it on backend
-import { Category } from '../../models/category/category.entity';
-import { CreateCategoryDto } from '../../models/category/create-category.dto';
-import { UpdateCategoryDto } from '../../models/category/update-category.dto';
+import { Category } from './models/category.entity';
+import { CreateCategoryDto } from './models/create-category.dto';
+import { UpdateCategoryDto } from './models/update-category.dto';
 
 @Injectable()
 export class CategoryService {

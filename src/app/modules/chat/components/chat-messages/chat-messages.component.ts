@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
 import { ChatMessage } from '../../models/chat-message.entity';
 import { Chat } from '../../models/chat.entity';
-import { User } from '../../../../models/user/user.entity';
+import { User } from '../../../../services/user/models/user.entity';
 
 @Component({
     selector: 'app-chat-messages',

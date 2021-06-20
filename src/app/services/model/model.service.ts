@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Model } from '../../models/model/model.entity';
-import { ModelCreateDto, ModelUpdateDto } from '../../models/model/model.dto';
+import { Model } from './models/model.entity';
+import { ModelCreateDto, ModelUpdateDto } from './models/model.dto';
 
 @Injectable()
 export class ModelService {

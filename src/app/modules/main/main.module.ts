@@ -42,9 +42,9 @@ import { FormNameComponent } from './components/form-name/form-name.component';
 import { FormPhoneComponent } from './components/form-phone/form-phone.component';
 import { FormVerifyComponent } from './components/form-verify/form-verify.component';
 import { AdvertFormComponent } from './components/advert-form/advert-form.component';
-import { AdvertComponent } from './modules/advert/components/advert/advert.component';
 import { VkRedirectComponent } from './components/vk-redirect/vk-redirect.component';
 import { NzResultModule } from 'ng-zorro-antd/result';
+import { AdvertComponent } from './modules/advert/components/advert/advert.component';
 
 const NZModules = [
     NzModalModule,

@@ -1,4 +1,4 @@
-import { FieldEntity } from '../field/field.entity';
+import { FieldEntity } from '../../field/models/field.entity';
 
 export class Model {
     id: string;

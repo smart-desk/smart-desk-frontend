@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../models/advert/advert.dto';
+import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../services/advert/models/advert.dto';
 import { AdvertService } from '../../../../services';
 import { Router } from '@angular/router';
 import { zip } from 'rxjs';

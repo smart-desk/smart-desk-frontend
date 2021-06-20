@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AdvertService, UserService } from '../../../../../../services';
-import { GetAdvertsResponseDto } from '../../../../../../models/advert/advert.dto';
-import { User } from '../../../../../../models/user/user.entity';
+import { GetAdvertsResponseDto } from '../../../../../../services/advert/models/advert.dto';
+import { User } from '../../../../../../services/user/models/user.entity';
 import { ExtraActions } from '../../../../components/advert-card/advert-card.component';
-import { Advert } from '../../../../../../models/advert/advert.entity';
+import { Advert } from '../../../../../../services/advert/models/advert.entity';
 import { Router } from '@angular/router';
 
 @Component({

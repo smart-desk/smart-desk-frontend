@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { User } from '../../models/user/user.entity';
-import { UpdateUserDto } from '../../models/user/update-user.dto';
-import { UpdateUserRolesDto } from '../../models/user/update-user-roles.dto';
-import { BlockUserDto } from '../../models/user/block-user.dto';
+import { User } from './models/user.entity';
+import { UpdateUserDto } from './models/update-user.dto';
+import { UpdateUserRolesDto } from './models/update-user-roles.dto';
+import { BlockUserDto } from './models/block-user.dto';
 
 @Injectable({
     providedIn: 'root',

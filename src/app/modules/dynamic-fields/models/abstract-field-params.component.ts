@@ -1,6 +1,6 @@
 import { Directive, Input, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Field } from '../../../models/field/field';
+import { Field } from '../../../services/field/models/field';
 
 @Directive()
 // tslint:disable-next-line:directive-class-suffix

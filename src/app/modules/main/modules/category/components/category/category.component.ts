@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { ActivatedRoute, NavigationEnd, ParamMap, Router, RouterEvent } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, pairwise, startWith, switchMap, takeUntil } from 'rxjs/operators';
-import { GetAdvertsResponseDto } from '../../../../../../models/advert/advert.dto';
+import { GetAdvertsResponseDto } from '../../../../../../services/advert/models/advert.dto';
 import { Filters } from '../../../../../dynamic-fields/models/filter';
-import { Category } from '../../../../../../models/category/category.entity';
-import { Model } from '../../../../../../models/model/model.entity';
+import { Category } from '../../../../../../services/category/models/category.entity';
+import { Model } from '../../../../../../services/model/models/model.entity';
 import { AdvertDataService, CategoryService, ModelService } from '../../../../../../services';
 
 @Component({

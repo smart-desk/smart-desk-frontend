@@ -4,8 +4,7 @@ import { Injectable } from '@angular/core';
 import { catchError, map } from 'rxjs/operators';
 import { LoginService } from '../login/login.service';
 import { UserService } from '../index';
-import { RolesEnum } from '../../models/user/user-roles.enum';
-import { User } from '../../models/user/user.entity';
+import { RolesEnum } from '../user/models/user-roles.enum';
 
 @Injectable()
 export class AdminGuard implements CanActivate {

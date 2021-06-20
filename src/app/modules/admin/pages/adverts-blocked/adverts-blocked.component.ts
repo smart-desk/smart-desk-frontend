@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { AdvertService, CategoryService } from '../../../../services';
 import { Router } from '@angular/router';
 import { zip } from 'rxjs';
-import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../models/advert/advert.dto';
+import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../services/advert/models/advert.dto';
 import * as dayjs from 'dayjs';
 
 @Component({

@@ -3,7 +3,7 @@ import { AuthService } from '../../../../services';
 import { LoginService } from '../../../../services/login/login.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { User } from '../../../../models/user/user.entity';
+import { User } from '../../../../services/user/models/user.entity';
 import { ChatModalService } from '../../../chat/services/chat-modal.service';
 
 @Component({

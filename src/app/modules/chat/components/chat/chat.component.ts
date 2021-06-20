@@ -5,8 +5,8 @@ import { ChatService } from '../../services/chat.service';
 import { Chat } from '../../models/chat.entity';
 import { ChatMessage } from '../../models/chat-message.entity';
 import { CreateChatMessageDto } from '../../models/create-chat-message.dto';
-import { User } from '../../../../models/user/user.entity';
-import { Advert } from '../../../../models/advert/advert.entity';
+import { User } from '../../../../services/user/models/user.entity';
+import { Advert } from '../../../../services/advert/models/advert.entity';
 import { UserService } from '../../../../services';
 
 @Component({

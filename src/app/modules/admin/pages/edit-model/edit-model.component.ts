@@ -3,7 +3,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { ModelService } from '../../../../services';
 import { PreviewComponent } from '../../components/preview/preview.component';
-import { Model } from '../../../../models/model/model.entity';
+import { Model } from '../../../../services/model/models/model.entity';
 import { EMPTY } from 'rxjs';
 
 @Component({

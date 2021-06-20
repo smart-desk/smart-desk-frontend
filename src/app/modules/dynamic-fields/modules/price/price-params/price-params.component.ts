@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AbstractFieldParamsComponent } from '../../../models/abstract-field-params.component';
 import { PriceParamsDto } from '../dto/price-params.dto';
 import { CURRENCIES } from '../constants';
-import { Field } from '../../../../../models/field/field';
+import { Field } from '../../../../../services/field/models/field';
 
 @Component({
     selector: 'app-price',

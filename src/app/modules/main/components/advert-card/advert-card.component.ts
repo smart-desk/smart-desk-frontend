@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Advert } from '../../../../models/advert/advert.entity';
-import { FieldType, SectionType } from '../../../../models/field/field.entity';
+import { Advert } from '../../../../services/advert/models/advert.entity';
+import { FieldType, SectionType } from '../../../../services/field/models/field.entity';
 import { PriceEntity } from '../../../dynamic-fields/modules/price/dto/price.entity';
 import { PriceParamsDto } from '../../../dynamic-fields/modules/price/dto/price-params.dto';
 import { getCurrencySymbolByCode, roundPrice } from '../../../dynamic-fields/modules/price/helpers';
