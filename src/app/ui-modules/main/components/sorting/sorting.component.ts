@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdvertDataService, CategoryService, ModelService } from '../../../../services';
-import { Model } from '../../../../models/model/model.entity';
-import { FieldEntity, FieldType } from '../../../../models/field/field.entity';
-import { Direction } from '../../enums/direction.enum';
-import { Sorting } from '../../interfaces/sorting.interface';
+import { Direction } from '../../../../modules/advert/models/direction.enum';
+import { Sorting } from '../../../../modules/advert/models/sorting.interface';
+import { Model } from '../../../../modules/model/models/model.entity';
+import { AdvertDataService, CategoryService, ModelService } from '../../../../modules';
+import { FieldEntity, FieldType } from '../../../../modules/field/models/field.entity';
 
 @Component({
     selector: 'app-sorting',

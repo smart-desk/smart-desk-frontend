@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ActivatedRoute, NavigationExtras, ParamMap, Router } from '@angular/router';
 import { AdvertService } from './advert.service';
-import { Sorting } from '../../modules/main/interfaces/sorting.interface';
+import { Sorting } from './models/sorting.interface';
 import { GetAdvertsDto, GetAdvertsResponseDto } from './models/advert.dto';
 import { Filters } from './models/filter';
 

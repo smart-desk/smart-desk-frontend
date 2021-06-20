@@ -1,8 +1,8 @@
 import { Advert } from './advert.entity';
-import { Sorting } from '../../modules/main/interfaces/sorting.interface';
 import { DynamicFieldsBaseCreateDto } from '../../field/models/dynamic-fields-base-create.dto';
 import { DynamicFieldsBaseUpdateDto } from '../../field/models/dynamic-fields-base-update.dto';
 import { Filters } from './filter';
+import { Sorting } from './sorting.interface';
 
 export class CreateAdvertDto {
     category_id: string;
