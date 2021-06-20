@@ -4,7 +4,7 @@ import { MainComponent } from './main.component';
 import { AuthGuard } from '../../services/auth/auth.guard';
 import { ForbiddenComponent } from '../../pages/forbidden/forbidden.component';
 import { UnauthorizedComponent } from '../../pages/unauthorized/unauthorized.component';
-import { AdvertComponent } from './modules/advert/components/advert/advert.component';
+import { AdvertComponent } from './pages/advert/components/advert/advert.component';
 import { VkRedirectComponent } from './components/vk-redirect/vk-redirect.component';
 
 const routes: Routes = [
@@ -22,30 +22,30 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: () => import('./modules/index/index.module').then(m => m.IndexModule),
+                loadChildren: () => import('./pages/index/index.module').then(m => m.IndexModule),
             },
             {
                 path: 'profile',
                 canActivate: [AuthGuard],
-                loadChildren: () => import('./modules/profile/profile.module').then(m => m.ProfileModule),
+                loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfileModule),
             },
             {
                 path: 'search',
-                loadChildren: () => import('./modules/global-search/global-search.module').then(m => m.GlobalSearchModule),
+                loadChildren: () => import('./pages/global-search/global-search.module').then(m => m.GlobalSearchModule),
                 runGuardsAndResolvers: 'always',
             },
             {
                 path: 'user/:id',
-                loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule),
+                loadChildren: () => import('./pages/user/user.module').then(m => m.UserModule),
             },
             {
                 path: 'adverts/create',
-                loadChildren: () => import('./modules/advert-create/advert-create.module').then(m => m.AdvertCreateModule),
+                loadChildren: () => import('./pages/advert-create/advert-create.module').then(m => m.AdvertCreateModule),
                 canActivate: [AuthGuard],
             },
             {
                 path: 'adverts/:advert_id/edit',
-                loadChildren: () => import('./modules/advert-edit/advert-edit.module').then(m => m.AdvertEditModule),
+                loadChildren: () => import('./pages/advert-edit/advert-edit.module').then(m => m.AdvertEditModule),
                 canActivate: [AuthGuard],
             },
             {
@@ -54,7 +54,7 @@ const routes: Routes = [
             },
             {
                 path: 'category/:category_id',
-                loadChildren: () => import('./modules/category/category.module').then(m => m.CategoryModule),
+                loadChildren: () => import('./pages/category/category.module').then(m => m.CategoryModule),
             },
             {
                 path: 'vk/redirect',

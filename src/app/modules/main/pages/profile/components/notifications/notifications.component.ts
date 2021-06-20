@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { User } from '../../../../../../services/user/models/user.entity';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { NotificationTypes } from './enums/notification.enum';
+import { NotificationTypes } from '../../../../../../services/user/models/notification-types.enum';
 
 @Component({
     selector: 'app-notifications',

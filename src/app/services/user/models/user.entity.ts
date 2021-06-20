@@ -1,5 +1,5 @@
 import { UserStatus } from './user-status.enum';
-import { NotificationTypes } from '../../../modules/main/modules/profile/components/notifications/enums/notification.enum';
+import { NotificationTypes } from './notification-types.enum';
 
 export class User {
     id: string;

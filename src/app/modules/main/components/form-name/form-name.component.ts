@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
-import { ProfileFormEnum } from '../../modules/profile/components/profile/profile-form.enum';
 import { User } from '../../../../services/user/models/user.entity';
+import { ProfileFormEnum } from '../../pages/profile/components/profile/profile-form.enum';
 
 @Component({
     selector: 'app-modal-name',

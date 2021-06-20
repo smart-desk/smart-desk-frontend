@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { ProfileFormEnum } from '../../modules/profile/components/profile/profile-form.enum';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { User } from '../../../../services/user/models/user.entity';
+import { ProfileFormEnum } from '../../pages/profile/components/profile/profile-form.enum';
 
 @Component({
     selector: 'app-form-phone',
