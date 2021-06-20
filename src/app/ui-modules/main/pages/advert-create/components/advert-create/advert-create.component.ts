@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
-import { AdvertService, CategoryService, ModelService } from '../../../../../../services';
-import { Category } from '../../../../../../services/category/models/category.entity';
-import { CreateAdvertDto } from '../../../../../../services/advert/models/advert.dto';
+import { AdvertService, CategoryService, ModelService } from '../../../../../../modules';
+import { Category } from '../../../../../../modules/category/models/category.entity';
+import { CreateAdvertDto } from '../../../../../../modules/advert/models/advert.dto';
 import { DynamicFieldsService } from '../../../../../dynamic-fields/dynamic-fields.service';
-import { Advert } from '../../../../../../services/advert/models/advert.entity';
+import { Advert } from '../../../../../../modules/advert/models/advert.entity';
 import { cloneDeep } from 'lodash';
 import { transformCategoryArrayToNZCascade } from '../../../../../../utils';
 

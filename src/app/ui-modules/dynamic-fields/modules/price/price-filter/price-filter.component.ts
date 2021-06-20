@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { omitBy, isNull } from 'lodash';
 import { AbstractFieldFilterComponent } from '../../../models/abstract-field-filter.component';
 import { PriceParamsDto } from '../dto/price-params.dto';
-import { Filter } from '../../../../../services/advert/models/filter';
+import { Filter } from '../../../../../modules/advert/models/filter';
 import { PriceFilterDto } from '../dto/price-filter.dto';
 
 @Component({

@@ -6,7 +6,7 @@ import { ModelsComponent } from './pages/models/models.component';
 import { EditModelComponent } from './pages/edit-model/edit-model.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { AdvertsListComponent } from './pages/adverts-list/adverts-list.component';
-import { AdminGuard } from '../../services/auth/admin.guard';
+import { AdminGuard } from '../../modules/auth/admin.guard';
 import { UsersComponent } from './pages/users/users.component';
 import { AdvertsBlockedComponent } from './pages/adverts-blocked/adverts-blocked.component';
 import { AdvertsPendingComponent } from './pages/adverts-pending/adverts-pending.component';

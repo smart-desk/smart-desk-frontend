@@ -10,10 +10,10 @@ import {
     ViewChild,
     ViewContainerRef,
 } from '@angular/core';
-import { FieldEntity } from '../../../../services/field/models/field.entity';
-import { OperationState } from '../../../../services/field/models/operation-state.enum';
+import { FieldEntity } from '../../../../modules/field/models/field.entity';
+import { OperationState } from '../../../../modules/field/models/operation-state.enum';
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
-import { FieldService } from '../../../../services';
+import { FieldService } from '../../../../modules';
 import { AbstractFieldParamsComponent } from '../../../dynamic-fields/models/abstract-field-params.component';
 
 @Component({

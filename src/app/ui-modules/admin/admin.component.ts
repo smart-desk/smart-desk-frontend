@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { User } from '../../services/user/models/user.entity';
-import { UserService } from '../../services';
+import { User } from '../../modules/user/models/user.entity';
+import { UserService } from '../../modules';
 
 @Component({
     selector: 'app-admin',

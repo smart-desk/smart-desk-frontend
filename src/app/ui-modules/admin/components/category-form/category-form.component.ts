@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { Category } from '../../../../services/category/models/category.entity';
-import { Model } from '../../../../services/model/models/model.entity';
+import { Category } from '../../../../modules/category/models/category.entity';
+import { Model } from '../../../../modules/model/models/model.entity';
 
 @Component({
     selector: 'app-category-form',

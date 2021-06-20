@@ -14,9 +14,9 @@ import { PreferContact } from '../../enums/contact-values.enum';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AbstractFieldFormComponent } from '../../../dynamic-fields/models/abstract-field-form.component';
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
-import { FieldEntity } from '../../../../services/field/models/field.entity';
-import { CreateAdvertDto, UpdateAdvertDto } from '../../../../services/advert/models/advert.dto';
-import { Advert } from '../../../../services/advert/models/advert.entity';
+import { FieldEntity } from '../../../../modules/field/models/field.entity';
+import { CreateAdvertDto, UpdateAdvertDto } from '../../../../modules/advert/models/advert.dto';
+import { Advert } from '../../../../modules/advert/models/advert.entity';
 
 @Component({
     selector: 'app-advert-form',

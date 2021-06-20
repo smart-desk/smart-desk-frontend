@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { AdvertService, CategoryService } from '../../../../services';
+import { AdvertService } from '../../../../modules';
 import { Router } from '@angular/router';
 import { zip } from 'rxjs';
-import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../services/advert/models/advert.dto';
+import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../modules/advert/models/advert.dto';
 import * as dayjs from 'dayjs';
 
 @Component({

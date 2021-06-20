@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Filter } from '../../../../../services/advert/models/filter';
+import { Filter } from '../../../../../modules/advert/models/filter';
 import { isNull } from 'lodash';
 import { AbstractFieldFilterComponent } from '../../../models/abstract-field-filter.component';
 import { DatepickerParamsDto } from '../dto/datepicker-params.dto';

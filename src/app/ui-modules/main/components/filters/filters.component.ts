@@ -9,12 +9,12 @@ import {
     ViewChild,
     ViewContainerRef,
 } from '@angular/core';
-import { Model } from '../../../../services/model/models/model.entity';
-import { AdvertDataService } from '../../../../services';
-import { Filter, Filters } from '../../../../services/advert/models/filter';
+import { Model } from '../../../../modules/model/models/model.entity';
+import { AdvertDataService } from '../../../../modules';
+import { Filter, Filters } from '../../../../modules/advert/models/filter';
 import { AbstractFieldFilterComponent } from '../../../dynamic-fields/models/abstract-field-filter.component';
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
-import { SectionType } from '../../../../services/field/models/field.entity';
+import { SectionType } from '../../../../modules/field/models/field.entity';
 
 @Component({
     selector: 'app-filters',

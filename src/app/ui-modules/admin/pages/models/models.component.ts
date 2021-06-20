@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModelService } from '../../../../services';
-import { Model } from '../../../../services/model/models/model.entity';
+import { ModelService } from '../../../../modules';
+import { Model } from '../../../../modules/model/models/model.entity';
 
 @Component({
     selector: 'app-models',

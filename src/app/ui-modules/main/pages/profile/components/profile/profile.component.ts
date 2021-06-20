@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder } from '@angular/forms';
-import { UserService } from '../../../../../../services';
-import { User } from '../../../../../../services/user/models/user.entity';
+import { UserService } from '../../../../../../modules';
+import { User } from '../../../../../../modules/user/models/user.entity';
 import { ProfileFormEnum } from './profile-form.enum';
-import { LoginService } from '../../../../../../services/login/login.service';
-import { UpdateUserDto } from '../../../../../../services/user/models/update-user.dto';
-import { PhoneService } from '../../../../../../services/phone/phone.service';
-import { PhoneVerifyCheckDto } from '../../../../../../services/phone/models/phone-verify-check.dto';
+import { LoginService } from '../../../../../../modules/login/login.service';
+import { UpdateUserDto } from '../../../../../../modules/user/models/update-user.dto';
+import { PhoneService } from '../../../../../../modules/phone/phone.service';
+import { PhoneVerifyCheckDto } from '../../../../../../modules/phone/models/phone-verify-check.dto';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { FormNameComponent } from '../../../../components/form-name/form-name.component';
 import { FormVerifyComponent } from '../../../../components/form-verify/form-verify.component';

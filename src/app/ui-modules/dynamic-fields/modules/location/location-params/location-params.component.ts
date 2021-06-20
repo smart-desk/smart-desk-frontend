@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AbstractFieldParamsComponent } from '../../../models/abstract-field-params.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { LocationParamsDto } from '../dto/location-params.dto';
-import { Field } from '../../../../../services/field/models/field';
+import { Field } from '../../../../../modules/field/models/field';
 
 @Component({
     selector: 'app-location-params',

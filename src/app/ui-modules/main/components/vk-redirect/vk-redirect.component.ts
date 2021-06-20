@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../../../services';
+import { AuthService } from '../../../../modules';
 import { environment } from '../../../../../environments/environment';
 
 @Component({

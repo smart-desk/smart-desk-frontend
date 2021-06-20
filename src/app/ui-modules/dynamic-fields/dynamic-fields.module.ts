@@ -18,7 +18,7 @@ import { LocationService } from './modules/location/location.service';
 import { LocationModule } from './modules/location/location.module';
 import { CheckboxService } from './modules/checkbox/checkbox.service';
 import { CheckboxModule } from './modules/checkbox/checkbox.module';
-import { FieldType } from '../../services/field/models/field.entity';
+import { FieldType } from '../../modules/field/models/field.entity';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DatepickerModule } from './modules/datepicker/datepicker.module';
 import { DatepickerService } from './modules/datepicker/datepicker.service';

@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../../../services/advert/models/advert.dto';
-import { BookmarksStoreService } from '../../../../../../services/bookmarks/bookmarks-store.service';
-import { User } from '../../../../../../services/user/models/user.entity';
-import { AdvertService, UserService } from '../../../../../../services';
+import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../../../modules/advert/models/advert.dto';
+import { BookmarksStoreService } from '../../../../../../modules/bookmarks/bookmarks-store.service';
+import { User } from '../../../../../../modules/user/models/user.entity';
+import { AdvertService, UserService } from '../../../../../../modules';
 
 @Component({
     selector: 'app-user',

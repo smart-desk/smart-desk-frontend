@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AuthService } from '../../../../services';
-import { LoginService } from '../../../../services/login/login.service';
+import { AuthService } from '../../../../modules';
+import { LoginService } from '../../../../modules/login/login.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { User } from '../../../../services/user/models/user.entity';
+import { User } from '../../../../modules/user/models/user.entity';
 import { ChatModalService } from '../../../chat/services/chat-modal.service';
 
 @Component({

@@ -1,6 +1,6 @@
 import { Directive, Input } from '@angular/core';
-import { Filter } from '../../../services/advert/models/filter';
-import { Field } from '../../../services/field/models/field';
+import { Filter } from '../../../modules/advert/models/filter';
+import { Field } from '../../../modules/field/models/field';
 
 @Directive()
 // tslint:disable-next-line:directive-class-suffix

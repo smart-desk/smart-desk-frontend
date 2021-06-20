@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AbstractFieldFilterComponent } from '../../../models/abstract-field-filter.component';
 import { CheckboxItem, CheckboxParamsDto } from '../dto/checkbox-params.dto';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { Filter } from '../../../../../services/advert/models/filter';
+import { Filter } from '../../../../../modules/advert/models/filter';
 import { CheckboxFilterDto } from '../dto/checkbox-filter.dto';
 
 @Component({

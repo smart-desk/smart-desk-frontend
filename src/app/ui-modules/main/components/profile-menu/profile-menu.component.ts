@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { UserService } from '../../../../services';
-import { User } from '../../../../services/user/models/user.entity';
-import { LoginService } from '../../../../services/login/login.service';
+import { UserService } from '../../../../modules';
+import { User } from '../../../../modules/user/models/user.entity';
+import { LoginService } from '../../../../modules/login/login.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 

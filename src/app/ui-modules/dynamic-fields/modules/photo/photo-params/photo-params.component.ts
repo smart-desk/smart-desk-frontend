@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AbstractFieldParamsComponent } from '../../../models/abstract-field-params.component';
 import { PhotoParamsDto } from '../dto/photo-params.dto';
-import { Field } from '../../../../../services/field/models/field';
+import { Field } from '../../../../../modules/field/models/field';
 
 @Component({
     selector: 'app-photo-params',

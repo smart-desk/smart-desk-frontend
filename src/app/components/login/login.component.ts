@@ -4,8 +4,8 @@ import { fromPromise } from 'rxjs/internal-compatibility';
 import { finalize, switchMap } from 'rxjs/operators';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { AuthService, UserService } from '../../services';
-import { LoginService } from '../../services/login/login.service';
+import { AuthService, UserService } from '../../modules';
+import { LoginService } from '../../modules/login/login.service';
 import { environment } from '../../../environments/environment';
 
 @Component({

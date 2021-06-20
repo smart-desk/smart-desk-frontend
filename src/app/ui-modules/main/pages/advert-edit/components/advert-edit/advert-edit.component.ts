@@ -1,15 +1,15 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, OnInit } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
-import { AdvertService, ModelService } from '../../../../../../services';
+import { AdvertService, ModelService } from '../../../../../../modules';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AbstractFieldFormComponent } from '../../../../../dynamic-fields/models/abstract-field-form.component';
 import { EMPTY, Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
-import { Advert } from '../../../../../../services/advert/models/advert.entity';
-import { Model } from '../../../../../../services/model/models/model.entity';
+import { Advert } from '../../../../../../modules/advert/models/advert.entity';
+import { Model } from '../../../../../../modules/model/models/model.entity';
 import { DynamicFieldsService } from '../../../../../dynamic-fields/dynamic-fields.service';
 import { PreferContact } from '../../../../enums/contact-values.enum';
-import { UpdateAdvertDto } from '../../../../../../services/advert/models/advert.dto';
+import { UpdateAdvertDto } from '../../../../../../modules/advert/models/advert.dto';
 
 @Component({
     selector: 'app-advert-edit',

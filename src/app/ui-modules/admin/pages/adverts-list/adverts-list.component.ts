@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { Router } from '@angular/router';
 import * as dayjs from 'dayjs';
 import { zip } from 'rxjs';
-import { AdvertService, CategoryService } from '../../../../services';
-import { Category } from '../../../../services/category/models/category.entity';
-import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../services/advert/models/advert.dto';
+import { AdvertService, CategoryService } from '../../../../modules';
+import { Category } from '../../../../modules/category/models/category.entity';
+import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../modules/advert/models/advert.dto';
 
 @Component({
     selector: 'app-table-adverts',

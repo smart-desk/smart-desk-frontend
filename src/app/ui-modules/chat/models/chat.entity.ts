@@ -1,5 +1,5 @@
-import { Advert } from '../../../services/advert/models/advert.entity';
-import { User } from '../../../services/user/models/user.entity';
+import { Advert } from '../../../modules/advert/models/advert.entity';
+import { User } from '../../../modules/user/models/user.entity';
 
 export class Chat {
     id: string;

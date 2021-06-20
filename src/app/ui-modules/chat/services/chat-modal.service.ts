@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ChatComponent } from '../components/chat/chat.component';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { User } from '../../../services/user/models/user.entity';
-import { Advert } from '../../../services/advert/models/advert.entity';
+import { User } from '../../../modules/user/models/user.entity';
+import { Advert } from '../../../modules/advert/models/advert.entity';
 
 @Injectable()
 export class ChatModalService {

@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { isEqual } from 'lodash';
-import { RolesEnum } from '../../../../services/user/models/user-roles.enum';
+import { RolesEnum } from '../../../../modules/user/models/user-roles.enum';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { User } from '../../../../services/user/models/user.entity';
-import { UserService } from '../../../../services';
+import { User } from '../../../../modules/user/models/user.entity';
+import { UserService } from '../../../../modules';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 
 @Component({

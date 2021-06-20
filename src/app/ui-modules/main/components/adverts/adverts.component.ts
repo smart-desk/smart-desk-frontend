@@ -13,11 +13,11 @@ import { ExtraActions } from '../advert-card/advert-card.component';
 import { cloneDeep } from 'lodash';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { GetAdvertsResponseDto } from '../../../../services/advert/models/advert.dto';
-import { BookmarksStoreService } from '../../../../services/bookmarks/bookmarks-store.service';
-import { Bookmark } from '../../../../services/bookmarks/models/bookmark.entity';
-import { Advert } from '../../../../services/advert/models/advert.entity';
-import { AdvertDataService } from '../../../../services';
+import { GetAdvertsResponseDto } from '../../../../modules/advert/models/advert.dto';
+import { BookmarksStoreService } from '../../../../modules/bookmarks/bookmarks-store.service';
+import { Bookmark } from '../../../../modules/bookmarks/models/bookmark.entity';
+import { Advert } from '../../../../modules/advert/models/advert.entity';
+import { AdvertDataService } from '../../../../modules';
 
 @Component({
     selector: 'app-adverts',

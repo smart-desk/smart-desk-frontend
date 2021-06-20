@@ -3,10 +3,10 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, EMPTY, of, Subject } from 'rxjs';
 import { filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
-import { AdvertDataService, CategoryService } from '../../../../services';
-import { Category } from '../../../../services/category/models/category.entity';
-import { LoginService } from '../../../../services/login/login.service';
-import { User } from '../../../../services/user/models/user.entity';
+import { AdvertDataService, CategoryService } from '../../../../modules';
+import { Category } from '../../../../modules/category/models/category.entity';
+import { LoginService } from '../../../../modules/login/login.service';
+import { User } from '../../../../modules/user/models/user.entity';
 import { transformCategoryArrayToNZCascade } from '../../../../utils';
 
 @Component({

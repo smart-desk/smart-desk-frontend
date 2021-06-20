@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { ModelService } from '../../../../services';
+import { ModelService } from '../../../../modules';
 import { PreviewComponent } from '../../components/preview/preview.component';
-import { Model } from '../../../../services/model/models/model.entity';
+import { Model } from '../../../../modules/model/models/model.entity';
 import { EMPTY } from 'rxjs';
 
 @Component({

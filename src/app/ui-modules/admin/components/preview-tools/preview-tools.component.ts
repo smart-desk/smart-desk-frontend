@@ -10,7 +10,7 @@ import {
     EventEmitter,
 } from '@angular/core';
 import { NzDrawerService } from 'ng-zorro-antd/drawer';
-import { FieldEntity } from '../../../../services/field/models/field.entity';
+import { FieldEntity } from '../../../../modules/field/models/field.entity';
 import { DynamicFieldsService } from 'src/app/ui-modules/dynamic-fields/dynamic-fields.service';
 
 /**
