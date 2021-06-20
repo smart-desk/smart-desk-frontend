@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { User } from '../../../../../../models/user/user.entity';
-import { FormControl, FormGroup } from '@angular/forms';
-import { Notification } from './enums/notification.enum';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { NotificationTypes } from './enums/notification.enum';
 
 @Component({
     selector: 'app-notifications',
@@ -11,35 +11,34 @@ import { Notification } from './enums/notification.enum';
 export class NotificationsComponent implements OnInit {
     @Input() profile: User;
     form: FormGroup;
-    notif = Notification;
-    constructor() {}
+    constructor(private fb: FormBuilder) {}
 
     ngOnInit(): void {
-        this.form = new FormGroup({
-            messages: new FormControl(this.profile.emailNotifications?.find(el => el === this.notif.MESSAGES)),
-            website: new FormControl(
+        this.form = this.fb.group({
+            chat: [this.profile.emailNotifications?.find(el => el === NotificationTypes.CHAT_MESSAGE)],
+            general: [
                 this.profile.emailNotifications?.find(
                     el =>
-                        el === this.notif.PUBLISHING_ADS ||
-                        el === this.notif.PUBLISHING_ADS ||
-                        el === this.notif.BLOCK_USER ||
-                        el === this.notif.UNBLOCK_USER ||
+                        el === NotificationTypes.ADVERT_BLOCKED ||
+                        el === NotificationTypes.ADVERT_PUBLISHED ||
+                        el === NotificationTypes.USER_BLOCKED ||
+                        el === NotificationTypes.USER_UNBLOCKED ||
                         false
-                )
-            ),
+                ),
+            ],
         });
     }
 
-    getNotificationOption(): string[] {
+    getNotificationOption(): NotificationTypes[] {
         const notificationOptions = [];
-        if (this.form.get('messages')?.value) {
-            notificationOptions.push(this.notif.MESSAGES);
+        if (this.form.get('chat')?.value) {
+            notificationOptions.push(NotificationTypes.CHAT_MESSAGE);
         }
-        if (this.form.get('website')?.value) {
-            notificationOptions.push(this.notif.PUBLISHING_ADS);
-            notificationOptions.push(this.notif.BLOCK_ADS);
-            notificationOptions.push(this.notif.BLOCK_USER);
-            notificationOptions.push(this.notif.UNBLOCK_USER);
+        if (this.form.get('general')?.value) {
+            notificationOptions.push(NotificationTypes.ADVERT_PUBLISHED);
+            notificationOptions.push(NotificationTypes.ADVERT_BLOCKED);
+            notificationOptions.push(NotificationTypes.USER_BLOCKED);
+            notificationOptions.push(NotificationTypes.USER_UNBLOCKED);
         }
         return notificationOptions;
     }

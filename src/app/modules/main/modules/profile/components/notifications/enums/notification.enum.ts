@@ -1,7 +1,7 @@
-export enum Notification {
-    BLOCK_ADS = 'advert:blocked',
-    BLOCK_USER = 'user:blocked',
-    MESSAGES = 'chat:message',
-    PUBLISHING_ADS = 'advert:published',
-    UNBLOCK_USER = 'user:unblocked',
+export enum NotificationTypes {
+    ADVERT_BLOCKED = 'advert:blocked',
+    ADVERT_PUBLISHED = 'advert:published',
+    USER_BLOCKED = 'user:blocked',
+    USER_UNBLOCKED = 'user:unblocked',
+    CHAT_MESSAGE = 'chat:message',
 }

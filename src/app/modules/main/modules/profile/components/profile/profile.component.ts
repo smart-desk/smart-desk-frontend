@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder } from '@angular/forms';
 import { UserService } from '../../../../../../services';
 import { User } from '../../../../../../models/user/user.entity';
@@ -13,7 +13,8 @@ import { FormVerifyComponent } from '../../../../components/form-verify/form-ver
 import { FormPhoneComponent } from '../../../../components/form-phone/form-phone.component';
 import { ContentComponent } from '../../../../interfaces/content-component.interface';
 import { NotificationsComponent } from '../notifications/notifications.component';
-import { Notification } from '../notifications/enums/notification.enum';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'app-user-settings',
@@ -21,10 +22,10 @@ import { Notification } from '../notifications/enums/notification.enum';
     styleUrls: ['./profile.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfileComponent implements OnInit {
-    profile: User;
+export class ProfileComponent implements OnInit, OnDestroy {
+    profile: User | undefined;
     verificationRequestId: string;
-    not = Notification;
+    private destroy$ = new Subject();
 
     constructor(
         private modalService: NzModalService,
@@ -36,10 +37,15 @@ export class ProfileComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.userService.getCurrentUser().subscribe(user => {
+        this.loginService.login$.subscribe(user => {
             this.profile = user;
             this.cd.detectChanges();
         });
+    }
+
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     submitForm(data: ContentComponent): void {
@@ -120,7 +126,10 @@ export class ProfileComponent implements OnInit {
             nzComponentParams: { profile: this.profile },
             nzOnOk: () => {
                 const emailNotifications = modalRef.getContentComponent().getNotificationOption();
-                this.userService.updateProfile({ emailNotifications }).subscribe();
+                this.userService
+                    .updateProfile({ emailNotifications })
+                    .pipe(takeUntil(this.destroy$))
+                    .subscribe(() => this.loginService.updateLoginInfo());
             },
         });
     }
