@@ -1,6 +1,6 @@
 import { InjectionToken, Provider, Type } from '@angular/core';
-import { DynamicFieldsMap } from './modules/dynamic-fields/dynamic-fields.map';
-import { AbstractFieldService } from './modules/dynamic-fields/models/abstract-field.service';
+import { DynamicFieldsMap } from './ui-modules/dynamic-fields/dynamic-fields.map';
+import { AbstractFieldService } from './ui-modules/dynamic-fields/models/abstract-field.service';
 import { FieldType } from './services/field/models/field.entity';
 import { Category } from './services/category/models/category.entity';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';

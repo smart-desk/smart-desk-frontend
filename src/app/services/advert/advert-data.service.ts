@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 import { ActivatedRoute, NavigationExtras, ParamMap, Router } from '@angular/router';
 import { AdvertService } from './advert.service';
 import { GetAdvertsDto, GetAdvertsResponseDto } from './models/advert.dto';
-import { Filters } from '../../modules/dynamic-fields/models/filter';
+import { Filters } from './models/filter';
 
 @Injectable({
     providedIn: 'root',

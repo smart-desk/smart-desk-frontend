@@ -1,5 +1,5 @@
 /**
- * Import here all modules which are used on app side
+ * Import here all ui-modules which are used on app side
  */
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { ApiHostInterceptor, ErrorsInterceptor, TokenInterceptor } from './interceptors';
@@ -15,10 +15,10 @@ import { AuthGuard } from './services/auth/auth.guard';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { DynamicFieldsModule } from './modules/dynamic-fields/dynamic-fields.module';
+import { DynamicFieldsModule } from './ui-modules/dynamic-fields/dynamic-fields.module';
 import { NzResultModule } from 'ng-zorro-antd/result';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
-import { ChatModule } from './modules/chat/chat.module';
+import { ChatModule } from './ui-modules/chat/chat.module';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -63,7 +63,7 @@ const services = [
 ];
 
 /**
- * Components from `./modules` directory
+ * Components from `./ui-modules` directory
  */
 const components = [SearchComponent, PaginationComponent, LoginComponent, ForbiddenComponent, UnauthorizedComponent];
 
