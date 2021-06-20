@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { GetAdvertsResponseDto } from '../../../../../../modules/advert/models/advert.dto';
 import { BookmarksStoreService } from '../../../../../../modules/bookmarks/bookmarks-store.service';
-import { UserService } from '../../../../../../modules';
 import { User } from '../../../../../../modules/user/models/user.entity';
 import { Bookmark } from '../../../../../../modules/bookmarks/models/bookmark.entity';
+import { UserService } from '../../../../../../modules/user/user.service';
 
 @Component({
     selector: 'app-bookmarks',

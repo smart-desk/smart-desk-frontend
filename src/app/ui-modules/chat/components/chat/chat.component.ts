@@ -7,7 +7,7 @@ import { ChatMessage } from '../../models/chat-message.entity';
 import { CreateChatMessageDto } from '../../models/create-chat-message.dto';
 import { User } from '../../../../modules/user/models/user.entity';
 import { Advert } from '../../../../modules/advert/models/advert.entity';
-import { UserService } from '../../../../modules';
+import { UserService } from '../../../../modules/user/user.service';
 
 @Component({
     selector: 'app-chat',

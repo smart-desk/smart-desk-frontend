@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { ModelService } from '../../../../modules';
 import { PreviewComponent } from '../../components/preview/preview.component';
 import { Model } from '../../../../modules/model/models/model.entity';
 import { EMPTY } from 'rxjs';
+import { ModelService } from '../../../../modules/model/model.service';
 
 @Component({
     selector: 'app-edit-model',

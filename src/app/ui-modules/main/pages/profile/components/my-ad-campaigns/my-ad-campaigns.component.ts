@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { UserService } from '../../../../../../services';
-import { User } from '../../../../../../models/user/user.entity';
-import { AdCampaignService } from '../../../../../../services/ad-campaign/ad-campaign.service';
 import { loadStripe, Stripe } from '@stripe/stripe-js';
 import { from } from 'rxjs';
 import { environment } from '../../../../../../../environments/environment';
 import { switchMap } from 'rxjs/operators';
+import { User } from '../../../../../../modules/user/models/user.entity';
+import { AdCampaignService } from '../../../../../../modules/ad-campaign/ad-campaign.service';
+import { UserService } from '../../../../../../modules/user/user.service';
 
 @Component({
     selector: 'app-ad-campaigns',

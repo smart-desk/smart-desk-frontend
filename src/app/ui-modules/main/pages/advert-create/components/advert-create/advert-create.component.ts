@@ -3,13 +3,14 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
-import { AdvertService, CategoryService, ModelService } from '../../../../../../modules';
 import { Category } from '../../../../../../modules/category/models/category.entity';
 import { CreateAdvertDto } from '../../../../../../modules/advert/models/advert.dto';
-import { DynamicFieldsService } from '../../../../../dynamic-fields/dynamic-fields.service';
 import { Advert } from '../../../../../../modules/advert/models/advert.entity';
 import { cloneDeep } from 'lodash';
 import { transformCategoryArrayToNZCascade } from '../../../../../../utils';
+import { AdvertService } from '../../../../../../modules/advert/advert.service';
+import { CategoryService } from '../../../../../../modules/category/category.service';
+import { ModelService } from '../../../../../../modules/model/model.service';
 
 // todo check subscriptions
 @Component({
@@ -32,8 +33,7 @@ export class AdvertCreateComponent implements OnInit {
         private componentFactoryResolver: ComponentFactoryResolver,
         private categoryService: CategoryService,
         private advertService: AdvertService,
-        private router: Router,
-        protected dynamicFieldService: DynamicFieldsService
+        private router: Router
     ) {}
 
     ngOnInit(): void {

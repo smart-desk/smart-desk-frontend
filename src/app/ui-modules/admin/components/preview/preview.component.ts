@@ -8,7 +8,6 @@ import {
     ViewChild,
     ViewContainerRef,
 } from '@angular/core';
-import { FieldService, ModelService } from '../../../../modules';
 import { FieldEntity } from '../../../../modules/field/models/field.entity';
 import { NzDrawerService } from 'ng-zorro-antd/drawer';
 import { PreviewToolsComponent } from '../preview-tools/preview-tools.component';
@@ -20,6 +19,8 @@ import { forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DynamicFieldsService } from 'src/app/ui-modules/dynamic-fields/dynamic-fields.service';
 import { OperationState } from '../../../../modules/field/models/operation-state.enum';
+import { ModelService } from '../../../../modules/model/model.service';
+import { FieldService } from '../../../../modules/field/field.service';
 
 const DRAWER_BASE_CONFIG = {
     nzWidth: 400,

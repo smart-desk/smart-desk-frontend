@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { catchError, map } from 'rxjs/operators';
 import { LoginService } from '../login/login.service';
-import { UserService } from '../index';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

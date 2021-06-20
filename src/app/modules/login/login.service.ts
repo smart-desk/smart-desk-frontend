@@ -3,8 +3,8 @@ import { User } from '../user/models/user.entity';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { LoginComponent } from '../../components/login/login.component';
 import { switchMap } from 'rxjs/operators';
-import { UserService } from '../index';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { UserService } from '../user/user.service';
 
 @Injectable({
     providedIn: 'root',

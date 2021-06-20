@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../modules/advert/models/advert.dto';
-import { AdvertService } from '../../../../modules';
 import { Router } from '@angular/router';
 import { zip } from 'rxjs';
 import * as dayjs from 'dayjs';
+import { AdvertService } from '../../../../modules/advert/advert.service';
 
 @Component({
     selector: 'app-adverts-pending',

@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AbstractFieldParamsComponent } from '../../../models/abstract-field-params.component';
-import { FieldService } from '../../../../../modules';
 import { DatepickerParamsDto } from '../dto/datepicker-params.dto';
 import { Field } from '../../../../../modules/field/models/field';
+import { FieldService } from '../../../../../modules/field/field.service';
 
 @Component({
     selector: 'app-date-range-params',

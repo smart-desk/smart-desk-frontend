@@ -10,11 +10,11 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import { Model } from '../../../../modules/model/models/model.entity';
-import { AdvertDataService } from '../../../../modules';
 import { Filter, Filters } from '../../../../modules/advert/models/filter';
 import { AbstractFieldFilterComponent } from '../../../dynamic-fields/models/abstract-field-filter.component';
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
 import { SectionType } from '../../../../modules/field/models/field.entity';
+import { AdvertDataService } from '../../../../modules/advert/advert-data.service';
 
 @Component({
     selector: 'app-filters',

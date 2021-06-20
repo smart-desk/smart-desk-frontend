@@ -3,7 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../../../modules/advert/models/advert.dto';
 import { BookmarksStoreService } from '../../../../../../modules/bookmarks/bookmarks-store.service';
 import { User } from '../../../../../../modules/user/models/user.entity';
-import { AdvertService, UserService } from '../../../../../../modules';
+import { UserService } from '../../../../../../modules/user/user.service';
+import { AdvertService } from '../../../../../../modules/advert/advert.service';
 
 @Component({
     selector: 'app-user',

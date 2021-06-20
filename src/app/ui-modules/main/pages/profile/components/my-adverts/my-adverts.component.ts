@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { AdvertService, UserService } from '../../../../../../modules';
 import { GetAdvertsResponseDto } from '../../../../../../modules/advert/models/advert.dto';
 import { User } from '../../../../../../modules/user/models/user.entity';
 import { ExtraActions } from '../../../../components/advert-card/advert-card.component';
 import { Advert } from '../../../../../../modules/advert/models/advert.entity';
 import { Router } from '@angular/router';
+import { AdvertService } from '../../../../../../modules/advert/advert.service';
+import { UserService } from '../../../../../../modules/user/user.service';
 
 @Component({
     selector: 'app-my-adverts',

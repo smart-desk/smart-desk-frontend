@@ -5,7 +5,9 @@ import { filter, pairwise, startWith, switchMap, takeUntil } from 'rxjs/operator
 import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../../../modules/advert/models/advert.dto';
 import { Category } from '../../../../../../modules/category/models/category.entity';
 import { Model } from '../../../../../../modules/model/models/model.entity';
-import { AdvertDataService, CategoryService, ModelService } from '../../../../../../modules';
+import { CategoryService } from '../../../../../../modules/category/category.service';
+import { AdvertDataService } from '../../../../../../modules/advert/advert-data.service';
+import { ModelService } from '../../../../../../modules/model/model.service';
 
 @Component({
     selector: 'app-category',
