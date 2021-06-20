@@ -17,7 +17,7 @@ import { GetAdvertsResponseDto } from '../../../../modules/advert/models/advert.
 import { BookmarksStoreService } from '../../../../modules/bookmarks/bookmarks-store.service';
 import { Bookmark } from '../../../../modules/bookmarks/models/bookmark.entity';
 import { Advert } from '../../../../modules/advert/models/advert.entity';
-import { AdvertDataService } from '../../../../modules';
+import { AdvertDataService } from '../../../../modules/advert/advert-data.service';
 
 @Component({
     selector: 'app-adverts',

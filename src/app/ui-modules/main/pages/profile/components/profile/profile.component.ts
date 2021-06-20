@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder } from '@angular/forms';
-import { UserService } from '../../../../../../modules';
 import { User } from '../../../../../../modules/user/models/user.entity';
 import { ProfileFormEnum } from './profile-form.enum';
 import { LoginService } from '../../../../../../modules/login/login.service';
@@ -15,6 +14,7 @@ import { ContentComponent } from '../../../../interfaces/content-component.inter
 import { NotificationsComponent } from '../notifications/notifications.component';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { UserService } from '../../../../../../modules/user/user.service';
 
 @Component({
     selector: 'app-user-settings',

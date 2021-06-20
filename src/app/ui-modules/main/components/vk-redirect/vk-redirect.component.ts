@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../../../modules';
 import { environment } from '../../../../../environments/environment';
+import { AuthService } from '../../../../modules/auth/auth.service';
 
 @Component({
     selector: 'app-vk-redirect',

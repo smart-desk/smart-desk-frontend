@@ -3,8 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Direction } from '../../../../modules/advert/models/direction.enum';
 import { Sorting } from '../../../../modules/advert/models/sorting.interface';
 import { Model } from '../../../../modules/model/models/model.entity';
-import { AdvertDataService, CategoryService, ModelService } from '../../../../modules';
 import { FieldEntity, FieldType } from '../../../../modules/field/models/field.entity';
+import { CategoryService } from '../../../../modules/category/category.service';
+import { ModelService } from '../../../../modules/model/model.service';
+import { AdvertDataService } from '../../../../modules/advert/advert-data.service';
 
 @Component({
     selector: 'app-sorting',

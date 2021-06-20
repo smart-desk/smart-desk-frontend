@@ -3,8 +3,8 @@ import { isEqual } from 'lodash';
 import { RolesEnum } from '../../../../modules/user/models/user-roles.enum';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { User } from '../../../../modules/user/models/user.entity';
-import { UserService } from '../../../../modules';
 import { NzModalRef } from 'ng-zorro-antd/modal';
+import { UserService } from '../../../../modules/user/user.service';
 
 @Component({
     selector: 'app-roles-form',

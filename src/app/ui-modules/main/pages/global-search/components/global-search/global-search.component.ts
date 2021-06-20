@@ -3,8 +3,8 @@ import { filter, pairwise, startWith, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { Subject } from 'rxjs';
 import { GetAdvertsResponseDto } from '../../../../../../modules/advert/models/advert.dto';
-import { AdvertDataService } from '../../../../../../modules';
 import { BookmarksStoreService } from '../../../../../../modules/bookmarks/bookmarks-store.service';
+import { AdvertDataService } from '../../../../../../modules/advert/advert-data.service';
 
 @Component({
     selector: 'app-global-search',

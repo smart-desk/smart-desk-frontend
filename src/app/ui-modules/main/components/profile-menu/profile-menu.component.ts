@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { UserService } from '../../../../modules';
 import { User } from '../../../../modules/user/models/user.entity';
 import { LoginService } from '../../../../modules/login/login.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { UserService } from '../../../../modules/user/user.service';
 
 @Component({
     selector: 'app-profile-menu',

@@ -4,7 +4,6 @@
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { ApiHostInterceptor, ErrorsInterceptor, TokenInterceptor } from './interceptors';
 import { RouterModule } from '@angular/router';
-import { AdvertDataService, AdvertService, AuthService, CategoryService, FieldService, ModelService, UserService } from './modules';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './components/login/login.component';
 import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.component';
@@ -20,6 +19,8 @@ import { NzResultModule } from 'ng-zorro-antd/result';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { ChatModule } from './ui-modules/chat/chat.module';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { LoginService } from './modules/login/login.service';
@@ -28,8 +29,14 @@ import { AdminGuard } from './modules/auth/admin.guard';
 import { ForbiddenComponent } from './pages/forbidden/forbidden.component';
 import { PhoneService } from './modules/phone/phone.service';
 import { SearchComponent } from './components/search/search.component';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { AdCampaignService } from './modules/ad-campaign/ad-campaign.service';
+import { ModelService } from './modules/model/model.service';
+import { AuthService } from './modules/auth/auth.service';
+import { CategoryService } from './modules/category/category.service';
+import { AdvertService } from './modules/advert/advert.service';
+import { UserService } from './modules/user/user.service';
+import { AdvertDataService } from './modules/advert/advert-data.service';
+import { FieldService } from './modules/field/field.service';
 
 const NZModules = [
     NzFormModule,
@@ -60,6 +67,7 @@ const services = [
     PhoneService,
     UserService,
     AdvertDataService,
+    AdCampaignService,
 ];
 
 /**

@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AuthService } from '../../../../modules';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { LoginService } from '../../../../modules/login/login.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { User } from '../../../../modules/user/models/user.entity';
 import { ChatModalService } from '../../../chat/services/chat-modal.service';
+import { AuthService } from '../../../../modules/auth/auth.service';
 
 @Component({
     selector: 'app-navigation-header',

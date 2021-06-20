@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { EMPTY, Observable, Subject } from 'rxjs';
 import { switchMap, take, takeUntil, tap } from 'rxjs/operators';
-import { AdvertDataService, AdvertService, UserService } from '../../../../../../modules';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Advert } from '../../../../../../modules/advert/models/advert.entity';
 import { FieldEntity, SectionType } from '../../../../../../modules/field/models/field.entity';
@@ -22,6 +21,9 @@ import { PhoneService } from '../../../../../../modules/phone/phone.service';
 import { DynamicFieldsService } from '../../../../../dynamic-fields/dynamic-fields.service';
 import { ChatModalService } from '../../../../../chat/services/chat-modal.service';
 import { PreferContact } from '../../../../enums/contact-values.enum';
+import { AdvertService } from '../../../../../../modules/advert/advert.service';
+import { UserService } from '../../../../../../modules/user/user.service';
+import { AdvertDataService } from '../../../../../../modules/advert/advert-data.service';
 
 @Component({
     selector: 'app-advert',
