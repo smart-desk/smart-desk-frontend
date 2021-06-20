@@ -44,6 +44,7 @@ import { FormVerifyComponent } from './components/form-verify/form-verify.compon
 import { AdvertFormComponent } from './components/advert-form/advert-form.component';
 import { VkRedirectComponent } from './components/vk-redirect/vk-redirect.component';
 import { NzResultModule } from 'ng-zorro-antd/result';
+import { SortingComponent } from './components/sorting/sorting.component';
 import { AdvertComponent } from './pages/advert/components/advert/advert.component';
 
 const NZModules = [
@@ -90,6 +91,7 @@ const components = [
     FormPhoneComponent,
     FormVerifyComponent,
     AdvertFormComponent,
+    SortingComponent,
     VkRedirectComponent,
 ];
 

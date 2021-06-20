@@ -2,8 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { ActivatedRoute, NavigationEnd, ParamMap, Router, RouterEvent } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, pairwise, startWith, switchMap, takeUntil } from 'rxjs/operators';
-import { GetAdvertsResponseDto } from '../../../../../../modules/advert/models/advert.dto';
-import { Filters } from '../../../../../../modules/advert/models/filter';
+import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../../../modules/advert/models/advert.dto';
 import { Category } from '../../../../../../modules/category/models/category.entity';
 import { Model } from '../../../../../../modules/model/models/model.entity';
 import { AdvertDataService, CategoryService, ModelService } from '../../../../../../modules';
@@ -18,7 +17,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
     advertsResponse: GetAdvertsResponseDto;
     model: Model;
     category: Category;
-    filters: Filters | undefined;
+    options: GetAdvertsDto;
     private destroy$ = new Subject();
 
     constructor(
@@ -41,12 +40,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
                 switchMap(() => this.route.paramMap),
                 switchMap((paramMap: ParamMap) => {
                     const categoryId = paramMap.get('category_id') || '';
-                    const options = this.advertDataService.parseQueryParams(this.route.snapshot.queryParamMap);
-                    if (options) {
-                        this.filters = options.filters;
-                    }
-
-                    this.advertDataService.loadAdverts(categoryId, options);
+                    this.options = this.advertDataService.parseQueryParams(this.route.snapshot.queryParamMap);
+                    this.advertDataService.loadAdverts(categoryId, this.options);
                     return this.categoryService.getCategory(categoryId);
                 }),
                 switchMap(category => {
