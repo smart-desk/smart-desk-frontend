@@ -1,0 +1,24 @@
+<nz-page-header>
+    <nz-page-header-title>Цена в рекламных блоках, за час</nz-page-header-title>
+    <nz-page-header-subtitle>Тут вы можете найти настроить стоимость размещения рекламы</nz-page-header-subtitle>
+</nz-page-header>
+
+<form class="form" [formGroup]="form" nz-form [nzLayout]="'inline'">
+    <nz-form-item class="form__item">
+        <nz-form-label>Основной баннер</nz-form-label>
+        <nz-form-control class="form__control">
+            <input id="mainHourlyRate" type="number" nz-input formControlName="mainHourlyRate" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="form__item">
+        <nz-form-label>Сайд бар</nz-form-label>
+        <nz-form-control class="form__control">
+            <input id="sidebarHourlyRate" type="number" nz-input formControlName="sidebarHourlyRate" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-control [nzSpan]="4" [nzOffset]="5">
+            <button (click)="submitForm()" nz-button nzType="primary">Сохранить</button>
+        </nz-form-control>
+    </nz-form-item>
+</form>

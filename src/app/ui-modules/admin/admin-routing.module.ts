@@ -10,6 +10,7 @@ import { AdminGuard } from '../../modules/auth/admin.guard';
 import { UsersComponent } from './pages/users/users.component';
 import { AdvertsBlockedComponent } from './pages/adverts-blocked/adverts-blocked.component';
 import { AdvertsPendingComponent } from './pages/adverts-pending/adverts-pending.component';
+import { AdSetupComponent } from './pages/ad-setup/ad-setup.component';
 
 const routes: Routes = [
     {
@@ -48,6 +49,10 @@ const routes: Routes = [
             {
                 path: 'users',
                 component: UsersComponent,
+            },
+            {
+                path: 'ad-setup',
+                component: AdSetupComponent,
             },
         ],
     },
