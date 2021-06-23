@@ -29,7 +29,7 @@ import { AdminGuard } from './modules/auth/admin.guard';
 import { ForbiddenComponent } from './pages/forbidden/forbidden.component';
 import { PhoneService } from './modules/phone/phone.service';
 import { SearchComponent } from './components/search/search.component';
-import { AdCampaignService } from './modules/ad-campaign/ad-campaign.service';
+import { AdService } from './modules/ad-campaign/ad-campaign.service';
 import { ModelService } from './modules/model/model.service';
 import { AuthService } from './modules/auth/auth.service';
 import { CategoryService } from './modules/category/category.service';
@@ -37,6 +37,7 @@ import { AdvertService } from './modules/advert/advert.service';
 import { UserService } from './modules/user/user.service';
 import { AdvertDataService } from './modules/advert/advert-data.service';
 import { FieldService } from './modules/field/field.service';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
 
 const NZModules = [
     NzFormModule,
@@ -67,7 +68,7 @@ const services = [
     PhoneService,
     UserService,
     AdvertDataService,
-    AdCampaignService,
+    AdService,
 ];
 
 /**
@@ -97,7 +98,16 @@ const interceptors = [
 ];
 
 @NgModule({
-    imports: [...NZModules, CommonModule, FormsModule, ReactiveFormsModule, DynamicFieldsModule, RouterModule, ChatModule],
+    imports: [
+        ...NZModules,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        DynamicFieldsModule,
+        RouterModule,
+        ChatModule,
+        NzNotificationModule,
+    ],
     exports: [...components],
     declarations: [...components],
     providers: [...services, ...interceptors],

@@ -40,7 +40,7 @@ import { AdvertsBlockedComponent } from './pages/adverts-blocked/adverts-blocked
 import { AdvertsPendingComponent } from './pages/adverts-pending/adverts-pending.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SharedModule } from '../../shared.module';
-import { AdSetupComponent } from './pages/ad-setup/ad-setup.component';
+import { AdConfigComponent } from './pages/ad-config/ad-config.component';
 
 const components = [
     PreviewComponent,
@@ -62,7 +62,7 @@ const pages = [
     UsersComponent,
     AdvertsBlockedComponent,
     AdvertsPendingComponent,
-    AdSetupComponent,
+    AdConfigComponent,
 ];
 
 @NgModule({

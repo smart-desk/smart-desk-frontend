@@ -1,0 +1,16 @@
+@import './src/assets/styles/variables';
+
+.container {
+    max-width: 100%;
+    padding: $base-unit * 3;
+    background-color: $base-bg;
+}
+
+.form {
+    padding: $base-unit * 2 0;
+    margin: 0 auto;
+
+    &__control {
+        width: $base-unit * 12;
+    }
+}

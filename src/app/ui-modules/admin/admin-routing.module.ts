@@ -10,7 +10,7 @@ import { AdminGuard } from '../../modules/auth/admin.guard';
 import { UsersComponent } from './pages/users/users.component';
 import { AdvertsBlockedComponent } from './pages/adverts-blocked/adverts-blocked.component';
 import { AdvertsPendingComponent } from './pages/adverts-pending/adverts-pending.component';
-import { AdSetupComponent } from './pages/ad-setup/ad-setup.component';
+import { AdConfigComponent } from './pages/ad-config/ad-config.component';
 
 const routes: Routes = [
     {
@@ -51,8 +51,8 @@ const routes: Routes = [
                 component: UsersComponent,
             },
             {
-                path: 'ad-setup',
-                component: AdSetupComponent,
+                path: 'ad-config',
+                component: AdConfigComponent,
             },
         ],
     },
