@@ -13,7 +13,7 @@ export class BookmarksService {
     }
 
     createBookmark(advertId: string): Observable<Bookmark> {
-        return this.http.post<Bookmark>(`/bookmarks`, { advertId } as CreateBookmarkDto);
+        return this.http.post<Bookmark>(`/bookmarks`, { productId: advertId } as CreateBookmarkDto);
     }
 
     deleteBookmark(bookmarkId: string): Observable<Bookmark> {

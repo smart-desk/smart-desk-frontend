@@ -32,7 +32,7 @@ export class TextareaFormComponent extends AbstractFieldFormComponent<TextareaEn
 
         const advertField = new TextareaEntity();
         advertField.value = this.form.get('value')?.value;
-        advertField.field_id = this.field.id;
+        advertField.fieldId = this.field.id;
 
         return advertField;
     }

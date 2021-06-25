@@ -34,9 +34,9 @@ export class BookmarksComponent implements OnInit {
             return null;
         }
         const getAdvertsResponseDto = new GetAdvertsResponseDto();
-        getAdvertsResponseDto.adverts = bookmarks.map(bookmark => {
-            bookmark.advert.isBookmark = true;
-            return bookmark.advert;
+        getAdvertsResponseDto.products = bookmarks.map(bookmark => {
+            bookmark.product.isBookmark = true;
+            return bookmark.product;
         });
 
         return getAdvertsResponseDto;

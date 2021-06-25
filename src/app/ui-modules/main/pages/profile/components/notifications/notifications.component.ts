@@ -19,8 +19,8 @@ export class NotificationsComponent implements OnInit {
             general: [
                 this.profile.emailNotifications?.find(
                     el =>
-                        el === NotificationTypes.ADVERT_BLOCKED ||
-                        el === NotificationTypes.ADVERT_PUBLISHED ||
+                        el === NotificationTypes.PRODUCT_BLOCKED ||
+                        el === NotificationTypes.PRODUCT_PUBLISHED ||
                         el === NotificationTypes.USER_BLOCKED ||
                         el === NotificationTypes.USER_UNBLOCKED ||
                         false
@@ -35,8 +35,8 @@ export class NotificationsComponent implements OnInit {
             notificationOptions.push(NotificationTypes.CHAT_MESSAGE);
         }
         if (this.form.get('general')?.value) {
-            notificationOptions.push(NotificationTypes.ADVERT_PUBLISHED);
-            notificationOptions.push(NotificationTypes.ADVERT_BLOCKED);
+            notificationOptions.push(NotificationTypes.PRODUCT_PUBLISHED);
+            notificationOptions.push(NotificationTypes.PRODUCT_BLOCKED);
             notificationOptions.push(NotificationTypes.USER_BLOCKED);
             notificationOptions.push(NotificationTypes.USER_UNBLOCKED);
         }

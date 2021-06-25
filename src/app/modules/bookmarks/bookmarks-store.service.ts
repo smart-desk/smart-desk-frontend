@@ -22,7 +22,7 @@ export class BookmarksStoreService {
         if (!bookmarks) {
             return;
         }
-        const removedBookmark = bookmarks.find(bookmark => bookmark.advert.id === advertId);
+        const removedBookmark = bookmarks.find(bookmark => bookmark.product.id === advertId);
         if (!removedBookmark) {
             return;
         }

@@ -58,7 +58,7 @@ export class GetAdvertsDto {
 }
 
 export class GetAdvertsResponseDto {
-    adverts: Advert[];
+    products: Advert[];
     totalCount: number;
     page: number;
     limit: number;

@@ -1,7 +1,7 @@
 <div *ngIf="!advertsResponse || !advertsResponse.totalCount">Здесь еще нет объявлений :)</div>
 <div class="box__adverts">
     <app-advert-card
-        *ngFor="let advert of advertsResponse?.adverts; trackBy: trackByFn"
+        *ngFor="let advert of advertsResponse?.products; trackBy: trackByFn"
         [advert]="advert"
         [extraActions]="cardActions"
         (createBookmark)="addBookmarkEvent($event)"

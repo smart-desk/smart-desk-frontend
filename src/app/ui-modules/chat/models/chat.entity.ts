@@ -5,8 +5,8 @@ export class Chat {
     id: string;
     user1: string;
     user2: string;
-    advertId: string;
-    advertData: Advert;
+    productId: string;
+    productData: Advert;
     user1Data: User;
     user2Data: User;
     unreadMessagesCount: number;
