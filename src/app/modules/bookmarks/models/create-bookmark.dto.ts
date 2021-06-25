@@ -1,3 +1,3 @@
 export class CreateBookmarkDto {
-    advertId: string;
+    productId: string;
 }

@@ -20,7 +20,7 @@ export class CheckboxFormComponent extends AbstractFieldFormComponent<CheckboxEn
 
         const advertField = new CheckboxEntity();
         advertField.value = this.currentValue;
-        advertField.field_id = this.field.id;
+        advertField.fieldId = this.field.id;
 
         return advertField;
     }

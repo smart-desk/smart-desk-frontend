@@ -43,7 +43,7 @@ export class DatepickerFormComponent extends AbstractFieldFormComponent<Datepick
         } else {
             advertField.date1 = this.datepickerForm.get('date1')?.value;
         }
-        advertField.field_id = this.field.id;
+        advertField.fieldId = this.field.id;
 
         return advertField;
     }

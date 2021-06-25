@@ -107,7 +107,7 @@ export class LocationFormComponent extends AbstractFieldFormComponent<LocationEn
         location.lat = this.location.lat;
         location.lng = this.location.lng;
         location.title = this.location.title;
-        location.field_id = this.field.id;
+        location.fieldId = this.field.id;
         return location;
     }
 

@@ -43,7 +43,7 @@ export class PhotoFormComponent extends AbstractFieldFormComponent<PhotoEntity, 
 
         const fieldData = new PhotoEntity();
         fieldData.value = value;
-        fieldData.field_id = this.field.id;
+        fieldData.fieldId = this.field.id;
 
         return fieldData;
     }

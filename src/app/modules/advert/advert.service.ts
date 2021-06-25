@@ -11,71 +11,71 @@ export class AdvertService {
     constructor(private http: HttpClient) {}
 
     getAdvertsForCategory(category: string, options?: GetAdvertsDto): Observable<GetAdvertsResponseDto> {
-        const categoryPath = `/adverts/category/${category}`;
+        const categoryPath = `/products/category/${category}`;
         const path = options ? `${categoryPath}${this.buildQueryParams(options)}` : `${categoryPath}`;
         return this.http.get<GetAdvertsResponseDto>(path);
     }
 
     getMyAdverts(options?: GetAdvertsDto): Observable<GetAdvertsResponseDto> {
-        const path = options ? `/adverts/my${this.buildQueryParams(options)}` : '/adverts/my';
+        const path = options ? `/products/my${this.buildQueryParams(options)}` : '/products/my';
         return this.http.get<GetAdvertsResponseDto>(path);
     }
 
     getAdverts(options?: GetAdvertsDto): Observable<GetAdvertsResponseDto> {
-        const path = options ? `/adverts${this.buildQueryParams(options)}` : '/adverts';
+        const path = options ? `/products${this.buildQueryParams(options)}` : '/products';
         return this.http.get<GetAdvertsResponseDto>(path);
     }
 
     getRecommendedByAdvertId(id: string): Observable<GetAdvertsResponseDto> {
-        const path = `/adverts/${id}/recommended`;
+        const path = `/products/${id}/recommended`;
         return this.http.get<GetAdvertsResponseDto>(path);
     }
 
     getBlocked(options?: GetAdvertsDto): Observable<GetAdvertsResponseDto> {
-        const path = options ? `/adverts/blocked${this.buildQueryParams(options)}` : '/adverts/blocked';
+        const path = options ? `/products/blocked${this.buildQueryParams(options)}` : '/products/blocked';
         return this.http.get<GetAdvertsResponseDto>(path);
     }
 
     getPending(options?: GetAdvertsDto): Observable<GetAdvertsResponseDto> {
-        const path = options ? `/adverts/pending${this.buildQueryParams(options)}` : '/adverts/pending';
+        const path = options ? `/products/pending${this.buildQueryParams(options)}` : '/products/pending';
         return this.http.get<GetAdvertsResponseDto>(path);
     }
 
     getCompleted(options?: GetAdvertsDto): Observable<GetAdvertsResponseDto> {
-        const path = options ? `/adverts/completed${this.buildQueryParams(options)}` : '/adverts/completed';
+        const path = options ? `/products/completed${this.buildQueryParams(options)}` : '/products/completed';
         return this.http.get<GetAdvertsResponseDto>(path);
     }
 
     getAdvert(id: string): Observable<Advert> {
-        return this.http.get<Advert>(`/adverts/${id}`);
+        return this.http.get<Advert>(`/products/${id}`);
     }
 
     createAdvert(advert: CreateAdvertDto): Observable<Advert> {
-        return this.http.post<Advert>(`/adverts`, advert);
+        return this.http.post<Advert>(`/products`, advert);
     }
 
     updateAdvert(id: string, advert: UpdateAdvertDto): Observable<Advert> {
-        return this.http.patch<Advert>(`/adverts/${id}`, advert);
+        return this.http.patch<Advert>(`/products/${id}`, advert);
     }
 
     countView(id: string): Observable<Advert> {
-        return this.http.post<Advert>(`/adverts/${id}/view`, null);
+        return this.http.post<Advert>(`/products/${id}/view`, null);
     }
 
     blockAdvert(id: string): Observable<Advert> {
-        return this.http.patch<Advert>(`/adverts/${id}/block`, null);
+        return this.http.patch<Advert>(`/products/${id}/block`, null);
     }
 
     publishAdvert(id: string): Observable<Advert> {
-        return this.http.patch<Advert>(`/adverts/${id}/publish`, null);
+        return this.http.patch<Advert>(`/products/${id}/publish`, null);
     }
 
     completeAdvert(id: string): Observable<Advert> {
-        return this.http.patch<Advert>(`/adverts/${id}/complete`, null);
+        return this.http.patch<Advert>(`/products/${id}/complete`, null);
     }
 
     deleteAdvert(id: string): Observable<Advert> {
-        return this.http.delete<Advert>(`/adverts/${id}`);
+        return this.http.delete<Advert>(`/products/${id}`);
     }
 
     private buildQueryParams(options: GetAdvertsDto): string {
