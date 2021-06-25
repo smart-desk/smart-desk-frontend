@@ -4,8 +4,9 @@ import { from } from 'rxjs';
 import { environment } from '../../../../../../../environments/environment';
 import { switchMap } from 'rxjs/operators';
 import { User } from '../../../../../../modules/user/models/user.entity';
-import { AdService } from '../../../../../../modules/ad-campaign/ad-campaign.service';
+import { AdService } from '../../../../../../modules/ad/ad.service';
 import { UserService } from '../../../../../../modules/user/user.service';
+import { AdCampaign } from '../../../../../../modules/ad/models/ad-campaign.entity';
 
 @Component({
     selector: 'app-ad-campaigns',
@@ -15,6 +16,7 @@ import { UserService } from '../../../../../../modules/user/user.service';
 })
 export class MyAdCampaignsComponent implements OnInit {
     user: User;
+    ads: AdCampaign[];
     private stripe: Stripe;
 
     constructor(private cdr: ChangeDetectorRef, private userService: UserService, private adService: AdService) {
@@ -42,4 +44,6 @@ export class MyAdCampaignsComponent implements OnInit {
                 });
         }
     }
+
+    edit(id: string): void {}
 }

@@ -29,7 +29,7 @@ import { AdminGuard } from './modules/auth/admin.guard';
 import { ForbiddenComponent } from './pages/forbidden/forbidden.component';
 import { PhoneService } from './modules/phone/phone.service';
 import { SearchComponent } from './components/search/search.component';
-import { AdService } from './modules/ad-campaign/ad-campaign.service';
+import { AdService } from './modules/ad/ad.service';
 import { ModelService } from './modules/model/model.service';
 import { AuthService } from './modules/auth/auth.service';
 import { CategoryService } from './modules/category/category.service';

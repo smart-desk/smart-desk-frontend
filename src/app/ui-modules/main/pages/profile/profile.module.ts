@@ -12,6 +12,7 @@ import { NotificationsComponent } from './components/notifications/notifications
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { MyAdCampaignsComponent } from './components/my-ad-campaigns/my-ad-campaigns.component';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
 
 const components = [ProfileComponent, BookmarksComponent, MyAdvertsComponent, NotificationsComponent, MyAdCampaignsComponent];
 
@@ -26,6 +27,7 @@ const components = [ProfileComponent, BookmarksComponent, MyAdvertsComponent, No
         NzButtonModule,
         ReactiveFormsModule,
         NzCheckboxModule,
+        NzDividerModule,
     ],
 })
 export class ProfileModule {}

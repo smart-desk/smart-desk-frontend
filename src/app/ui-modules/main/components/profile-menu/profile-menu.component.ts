@@ -5,7 +5,7 @@ import { LoginService } from '../../../../modules/login/login.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { UserService } from '../../../../modules/user/user.service';
-import { AdService } from '../../../../modules/ad-campaign/ad-campaign.service';
+import { AdService } from '../../../../modules/ad/ad.service';
 
 @Component({
     selector: 'app-profile-menu',
