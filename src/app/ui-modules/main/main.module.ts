@@ -15,7 +15,6 @@ import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
-import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
@@ -62,7 +61,6 @@ const NZModules = [
     NzSpinModule,
     NzCardModule,
     NzPaginationModule,
-    NzNotificationModule,
     NzAvatarModule,
     NzDropDownModule,
     NzCollapseModule,
