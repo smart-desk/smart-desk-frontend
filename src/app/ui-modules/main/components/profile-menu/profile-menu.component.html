@@ -10,8 +10,10 @@
         <li [routerLink]="['profile']" nz-menu-item>Профиль</li>
         <li [routerLink]="['profile', 'bookmarks']" nz-menu-item>Избранные</li>
         <li [routerLink]="['profile', 'my-adverts']" nz-menu-item>Мои объявления</li>
-        <li nz-menu-divider></li>
-        <li [routerLink]="['profile', 'my-ad-campaigns']" nz-menu-item>Реклама</li>
+        <ng-container *ngIf="hasAdConfig">
+            <li nz-menu-divider></li>
+            <li [routerLink]="['profile', 'my-ad-campaigns']" nz-menu-item>Реклама</li>
+        </ng-container>
         <li nz-menu-divider></li>
         <li nz-menu-item (click)="logout()">Выйти</li>
     </ul>

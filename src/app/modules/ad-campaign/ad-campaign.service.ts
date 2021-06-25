@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AdConfigDto } from './models/ad-config-dto.interface';
 import { StripeSession } from './models/stripe-session.interface';
+import { AdConfigEntity } from './models/ad-config.entity';
+import { AdConfigDto } from './models/ad-config.dto';
 
 @Injectable()
 export class AdService {
@@ -13,11 +14,11 @@ export class AdService {
         return this.http.post<StripeSession>(`/ad/campaigns/${id}/pay`, {}).pipe(map(res => res.id));
     }
 
-    getAdConfig(): Observable<AdConfigDto> {
-        return this.http.get<AdConfigDto>(`/ad/config`);
+    getAdConfig(): Observable<AdConfigEntity> {
+        return this.http.get<AdConfigEntity>(`/ad/config`);
     }
 
-    updateAdConfig(config: AdConfigDto): Observable<AdConfigDto> {
-        return this.http.post<AdConfigDto>(`/ad/config`, config);
+    updateAdConfig(config: AdConfigDto): Observable<AdConfigEntity> {
+        return this.http.post<AdConfigEntity>(`/ad/config`, config);
     }
 }
