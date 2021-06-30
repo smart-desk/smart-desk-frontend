@@ -6,7 +6,7 @@ import { switchMap } from 'rxjs/operators';
 import { User } from '../../../../../../modules/user/models/user.entity';
 import { AdService } from '../../../../../../modules/ad/ad.service';
 import { UserService } from '../../../../../../modules/user/user.service';
-import { AdCampaign } from '../../../../../../modules/ad/models/ad-campaign.entity';
+import { AdCampaignEntity } from '../../../../../../modules/ad/models/ad-campaign.entity';
 
 @Component({
     selector: 'app-ad-campaigns',
@@ -16,7 +16,7 @@ import { AdCampaign } from '../../../../../../modules/ad/models/ad-campaign.enti
 })
 export class MyAdCampaignsComponent implements OnInit {
     user: User;
-    ads: AdCampaign[];
+    ads: AdCampaignEntity[];
     private stripe: Stripe;
 
     constructor(private cdr: ChangeDetectorRef, private userService: UserService, private adService: AdService) {

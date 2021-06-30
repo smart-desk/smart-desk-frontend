@@ -11,7 +11,7 @@ export enum AdCampaignStatus {
     PAID = 'paid',
 }
 
-export class AdCampaign {
+export class AdCampaignEntity {
     id: string;
     userId: string;
     startDate: Date;

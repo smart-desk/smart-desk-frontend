@@ -5,6 +5,8 @@ import { map } from 'rxjs/operators';
 import { StripeSession } from './models/stripe-session.interface';
 import { AdConfigEntity } from './models/ad-config.entity';
 import { AdConfigDto } from './models/ad-config.dto';
+import { AdCampaignDto } from './models/ad-campaign.dto';
+import { AdCampaignEntity } from './models/ad-campaign.entity';
 
 @Injectable()
 export class AdService {
@@ -20,5 +22,13 @@ export class AdService {
 
     updateAdConfig(config: AdConfigDto): Observable<AdConfigEntity> {
         return this.http.post<AdConfigEntity>(`/ad/config`, config);
+    }
+
+    createAdCampaign(adCampaign: AdCampaignDto): Observable<AdCampaignEntity> {
+        return this.http.post<AdCampaignEntity>(`/ad/campaigns`, adCampaign);
+    }
+
+    getAdCampaigns(): Observable<AdCampaignEntity[]> {
+        return this.http.get<AdCampaignEntity[]>(`/ad/campaigns`);
     }
 }

@@ -1,1 +1,43 @@
-<p>create-ad-campaign works!</p>
+<section class="create-ad-campaign">
+    <div class="create-ad-campaign__form-wrap">
+        <h2>Интервал рекламной компании</h2>
+        <form class="create-ad-campaign__form" [formGroup]="form">
+            <div class="row">
+                <nz-select class="form__item" formControlName="type">
+                    <nz-option *ngFor="let type of adTypes" [nzValue]="type.sysName" [nzLabel]="type.name"> </nz-option>
+                </nz-select>
+                <nz-range-picker class="form__item form__item--large" [nzDisabled]="!selectedRate" formControlName="timeRange">
+                </nz-range-picker>
+            </div>
+
+            <div class="row">
+                <input formControlName="link" nz-input placeholder="Разместите здесь ссылку на Ваш продукт" />
+            </div>
+            <div class="row">
+                <nz-upload
+                    class="upload-list-inline"
+                    nzAction="/s3/image"
+                    nzListType="picture-card"
+                    [nzFileList]="file"
+                    nzAccept="image/png, image/jpeg"
+                    [nzLimit]="1"
+                    (nzChange)="fileChanged($event)"
+                >
+                    <div>
+                        <i nz-icon nzType="plus"></i>
+                        <div style="margin-top: 8px;">Upload</div>
+                    </div>
+                </nz-upload>
+            </div>
+            <button nz-button nzType="primary" (click)="createCampaign()">Создать</button>
+        </form>
+    </div>
+    <div class="create-ad-campaign__rate">
+        <h2>Тарифная ставка</h2>
+        <p>{{ selectedRate }}</p>
+    </div>
+    <div class="create-ad-campaign__total-rate">
+        <h2>Сумма</h2>
+        <p>{{ totalSum }}</p>
+    </div>
+</section>

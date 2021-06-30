@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './components/profile/profile.component';
 import { NzTableModule } from 'ng-zorro-antd/table';
@@ -13,8 +13,20 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { MyAdCampaignsComponent } from './components/my-ad-campaigns/my-ad-campaigns.component';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { CreateAdCampaignComponent } from './components/create-ad-campaign/create-ad-campaign.component';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { NzInputModule } from 'ng-zorro-antd/input';
 
-const components = [ProfileComponent, BookmarksComponent, MyAdvertsComponent, NotificationsComponent, MyAdCampaignsComponent];
+const components = [
+    ProfileComponent,
+    BookmarksComponent,
+    MyAdvertsComponent,
+    NotificationsComponent,
+    MyAdCampaignsComponent,
+    CreateAdCampaignComponent,
+];
 
 @NgModule({
     declarations: [...components],
@@ -28,6 +40,11 @@ const components = [ProfileComponent, BookmarksComponent, MyAdvertsComponent, No
         ReactiveFormsModule,
         NzCheckboxModule,
         NzDividerModule,
+        NzDatePickerModule,
+        FormsModule,
+        NzSelectModule,
+        NzUploadModule,
+        NzInputModule,
     ],
 })
 export class ProfileModule {}
