@@ -2,19 +2,20 @@
     <div class="create-ad-campaign__form-wrap">
         <h2>Интервал рекламной компании</h2>
         <form class="create-ad-campaign__form" [formGroup]="form">
-            <div class="row">
+            <div class="form__row">
                 <nz-select class="form__item" formControlName="type">
-                    <nz-option *ngFor="let type of adTypes" [nzValue]="type.sysName" [nzLabel]="type.name"> </nz-option>
+                    <nz-option *ngFor="let type of adTypes" [nzValue]="type.sysName" [nzLabel]="type.name"></nz-option>
                 </nz-select>
                 <nz-range-picker class="form__item form__item--large" [nzDisabled]="!selectedRate" formControlName="timeRange">
                 </nz-range-picker>
             </div>
 
-            <div class="row">
-                <input formControlName="link" nz-input placeholder="Разместите здесь ссылку на Ваш продукт" />
+            <div class="form__row">
+                <input formControlName="link" nz-input [disabled]="!selectedRate" placeholder="Разместите здесь ссылку на Ваш продукт" />
             </div>
-            <div class="row">
+            <div class="form__row form__row--bottom">
                 <nz-upload
+                    [nzDisabled]="!selectedRate"
                     class="upload-list-inline"
                     nzAction="/s3/image"
                     nzListType="picture-card"
@@ -28,8 +29,8 @@
                         <div style="margin-top: 8px;">Upload</div>
                     </div>
                 </nz-upload>
+                <button nz-button nzType="primary" [disabled]="!form.valid" (click)="createCampaign()">Создать</button>
             </div>
-            <button nz-button nzType="primary" (click)="createCampaign()">Создать</button>
         </form>
     </div>
     <div class="create-ad-campaign__rate">

@@ -32,6 +32,11 @@ export class MyAdCampaignsComponent implements OnInit {
             this.user = res;
             this.cdr.detectChanges();
         });
+
+        this.adService.getAdCampaigns().subscribe(adData => {
+            this.ads = adData;
+            this.cdr.detectChanges();
+        });
     }
 
     pay(id: string): void {

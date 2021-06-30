@@ -1,17 +1,9 @@
-nz-range-picker {
-    margin: 0 8px 12px 0;
-}
-
-.form__item {
-    width: 100%;
-}
-
 .create-ad-campaign {
     display: flex;
     justify-content: space-evenly;
     width: 80%;
     padding-top: 40px;
-    margin: 0 auto;
+    margin-right: 0;
 
     &__form-wrap,
     &__rate,
@@ -21,32 +13,36 @@ nz-range-picker {
         align-items: center;
     }
 
-    //&__form {
-    //    display: flex;
-    //}
-}
-
-.form__item {
-    width: 150px;
-
-    &--large {
-        width: 250px;
+    &__form {
+        width: 400px;
     }
 }
 
-//::ng-deep {
-//    .ant-select-arrow {
-//        top: 40%;
-//    }
-//}
+.form {
+    &__item {
+        width: 40%;
+
+        &--large {
+            width: 60%;
+        }
+    }
+
+    &__row {
+        margin: 20px 0;
+        display: flex;
+
+        &--bottom {
+            align-items: flex-end;
+        }
+    }
+}
 
 :host ::ng-deep .upload-list-inline .ant-upload-list-item,
 :host ::ng-deep .ant-upload-list-picture-card-container,
 :host ::ng-deep .ant-upload.ant-upload-select-picture-card {
     float: left;
-    width: 200px;
-    //max-width: 50%;
-    //margin-right: 8px;
+    width: 150px;
+    margin: 0;
 }
 :host ::ng-deep .upload-list-inline [class*='-upload-list-rtl'] .ant-upload-list-item {
     float: right;
@@ -57,8 +53,3 @@ nz-range-picker {
 :host ::ng-deep .upload-list-inline .ant-upload-animate-leave {
     animation-name: uploadAnimateInlineOut;
 }
-//:host ::ng-deep.ant-upload.ant-upload-select-picture-card,
-//.ant-upload-list-picture-card-container,
-//[_nghost-feu-c380] .upload-list-inline .ant-upload-list-item{
-//    width: 100%
-// }

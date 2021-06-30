@@ -26,17 +26,16 @@ export class CreateAdCampaignComponent implements OnInit, OnDestroy {
     selectedRate: number;
     file: NzUploadFile[] = [];
     private rate: AdConfigEntity;
-    private HOURS_IN_DAY = 24;
     private destroy$ = new Subject();
     constructor(private fb: FormBuilder, private adService: AdService) {}
 
     ngOnInit(): void {
         this.adService.getAdConfig().subscribe(rateValue => (this.rate = rateValue));
         this.form = this.fb.group({
-            type: new FormControl(undefined),
-            timeRange: new FormControl(undefined),
-            link: new FormControl(undefined),
-            img: new FormControl(undefined),
+            type: new FormControl(undefined, [Validators.required]),
+            timeRange: new FormControl(undefined, [Validators.required]),
+            link: new FormControl(undefined, [Validators.required]),
+            img: new FormControl(undefined, [Validators.required]),
         });
 
         this.form
@@ -53,7 +52,7 @@ export class CreateAdCampaignComponent implements OnInit, OnDestroy {
         this.form
             .get('timeRange')
             ?.valueChanges.pipe(takeUntil(this.destroy$))
-            .subscribe(([startDate, endDate]) => (this.totalSum = ((endDate - startDate) / this.HOURS_IN_DAY) * this.selectedRate));
+            .subscribe(([startDate, endDate]) => (this.totalSum = dayjs(endDate).diff(dayjs(startDate), 'hour') * this.selectedRate));
     }
 
     ngOnDestroy(): void {
@@ -77,7 +76,6 @@ export class CreateAdCampaignComponent implements OnInit, OnDestroy {
         campaignOptions.startDate = dayjs(this.form.get('timeRange')?.value[0]).startOf('day').toDate();
         campaignOptions.endDate = dayjs(this.form.get('timeRange')?.value[1]).endOf('day').toDate();
 
-        // endDate.diff(startDate, 'hour');
         this.adService.createAdCampaign(campaignOptions).subscribe();
     }
 }

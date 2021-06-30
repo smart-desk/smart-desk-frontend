@@ -5,12 +5,14 @@
 </ng-template>
 
 <ng-template #main>
-    <p>Список рекламных кампаний</p>
-    <button routerLink="create" nz-button nzType="primary" [nzSize]="'large'" nzShape="round">Создать кампанию</button>
+    <button routerLink="create" nz-button nzType="primary" [nzSize]="'large'" nzShape="round">
+        Создать кампанию
+    </button>
     <nz-table class="table" [nzTemplateMode]="true" [nzFrontPagination]="true">
         <thead>
             <tr>
                 <th>Наименование</th>
+                <th>Статус</th>
                 <th>Дата начала кампания</th>
                 <th>Дата окончания кампании</th>
                 <th>Действие</th>
@@ -21,8 +23,9 @@
                 <td>
                     <a>{{ ad.id }}</a>
                 </td>
-                <td>{{ ad.startDate }}</td>
-                <td>{{ ad.endDate }}</td>
+                <td>{{ ad.status }}</td>
+                <td>{{ ad.startDate | date: 'dd.MM.yyyy' }}</td>
+                <td>{{ ad.endDate | date: 'dd.MM.yyyy' }}</td>
                 <td>
                     <a (click)="edit(ad.id)">Редатировать</a>
                     <nz-divider nzType="vertical"></nz-divider>
