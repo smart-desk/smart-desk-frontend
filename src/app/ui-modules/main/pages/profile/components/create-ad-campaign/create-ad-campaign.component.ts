@@ -32,21 +32,19 @@ export class CreateAdCampaignComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.adService.getAdConfig().subscribe(rateValue => (this.rate = rateValue));
         this.form = this.fb.group({
-            type: new FormControl(undefined, [Validators.required]),
-            timeRange: new FormControl(undefined, [Validators.required]),
-            link: new FormControl(undefined, [Validators.required]),
-            img: new FormControl(undefined, [Validators.required]),
+            type: [undefined, Validators.required],
+            timeRange: [undefined, Validators.required],
+            link: [undefined, Validators.required],
+            img: [undefined, Validators.required],
         });
 
         this.form
             .get('type')
             ?.valueChanges.pipe(takeUntil(this.destroy$))
             .subscribe(rateData => {
-                if (rateData === AdCampaignType.MAIN) {
-                    this.selectedRate = this.rate.mainHourlyRate;
-                } else {
-                    this.selectedRate = this.rate.sidebarHourlyRate;
-                }
+                rateData === AdCampaignType.MAIN
+                    ? (this.selectedRate = this.rate.mainHourlyRate)
+                    : (this.selectedRate = this.rate.sidebarHourlyRate);
             });
 
         this.form

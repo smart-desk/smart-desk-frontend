@@ -28,7 +28,8 @@ export class AdService {
         return this.http.post<AdCampaignEntity>(`/ad/campaigns`, adCampaign);
     }
 
-    getAdCampaigns(): Observable<AdCampaignEntity[]> {
-        return this.http.get<AdCampaignEntity[]>(`/ad/campaigns`);
+    getAdCampaigns(type?: string): Observable<AdCampaignEntity[]> {
+        const request = type ? `/ad/campaigns?type=${type}` : `/ad/campaigns`;
+        return this.http.get<AdCampaignEntity[]>(request);
     }
 }
