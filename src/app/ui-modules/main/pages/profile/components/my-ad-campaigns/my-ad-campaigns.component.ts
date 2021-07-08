@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { loadStripe, Stripe } from '@stripe/stripe-js';
 import { from } from 'rxjs';
-import { environment } from '../../../../../../../environments/environment';
 import { switchMap } from 'rxjs/operators';
 import { User } from '../../../../../../modules/user/models/user.entity';
 import { AdService } from '../../../../../../modules/ad-campaign/ad-campaign.service';
 import { UserService } from '../../../../../../modules/user/user.service';
+import { StripeService } from '../../../../../../modules/stripe/stripe.service';
 
 @Component({
     selector: 'app-ad-campaigns',
@@ -15,15 +14,13 @@ import { UserService } from '../../../../../../modules/user/user.service';
 })
 export class MyAdCampaignsComponent implements OnInit {
     user: User;
-    private stripe: Stripe;
 
-    constructor(private cdr: ChangeDetectorRef, private userService: UserService, private adService: AdService) {
-        from(loadStripe(environment.stripePublicKey)).subscribe(stripe => {
-            if (stripe) {
-                this.stripe = stripe;
-            }
-        });
-    }
+    constructor(
+        private cdr: ChangeDetectorRef,
+        private userService: UserService,
+        private adService: AdService,
+        private stripeService: StripeService
+    ) {}
 
     ngOnInit(): void {
         this.userService.getCurrentUser().subscribe(res => {
@@ -33,10 +30,10 @@ export class MyAdCampaignsComponent implements OnInit {
     }
 
     pay(id: string): void {
-        if (this.stripe) {
+        if (this.stripeService.stripe) {
             this.adService
                 .payCampaign(id)
-                .pipe(switchMap(stripeSessionId => from(this.stripe.redirectToCheckout({ sessionId: stripeSessionId }))))
+                .pipe(switchMap(stripeSessionId => from(this.stripeService.stripe.redirectToCheckout({ sessionId: stripeSessionId }))))
                 .subscribe(res => {
                     console.log(res);
                 });

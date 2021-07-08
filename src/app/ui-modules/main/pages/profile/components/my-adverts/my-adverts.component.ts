@@ -6,6 +6,9 @@ import { Advert } from '../../../../../../modules/advert/models/advert.entity';
 import { Router } from '@angular/router';
 import { AdvertService } from '../../../../../../modules/advert/advert.service';
 import { UserService } from '../../../../../../modules/user/user.service';
+import { StripeService } from '../../../../../../modules/stripe/stripe.service';
+import { from } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-my-adverts',
@@ -21,6 +24,10 @@ export class MyAdvertsComponent implements OnInit {
     user: User;
 
     activeAdvertsActions: ExtraActions[] = [
+        {
+            title: 'Поднять',
+            action: this.liftProduct.bind(this),
+        },
         {
             title: 'Завершить',
             action: this.completeAdvert.bind(this),
@@ -60,7 +67,8 @@ export class MyAdvertsComponent implements OnInit {
         private advertService: AdvertService,
         private cdr: ChangeDetectorRef,
         private userService: UserService,
-        private router: Router
+        private router: Router,
+        private stripeService: StripeService
     ) {}
 
     ngOnInit(): void {
@@ -120,5 +128,16 @@ export class MyAdvertsComponent implements OnInit {
         this.advertService.deleteAdvert(advert.id).subscribe(() => {
             this.getAdverts();
         });
+    }
+
+    private liftProduct(product: Advert) {
+        if (this.stripeService.stripe) {
+            this.advertService
+                .liftProduct(product.id)
+                .pipe(switchMap(res => from(this.stripeService.stripe.redirectToCheckout({ sessionId: res.id }))))
+                .subscribe(res => {
+                    console.log(res);
+                });
+        }
     }
 }

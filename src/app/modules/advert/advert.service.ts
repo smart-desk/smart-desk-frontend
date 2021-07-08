@@ -5,6 +5,7 @@ import { GetAdvertsDto, GetAdvertsResponseDto, CreateAdvertDto, UpdateAdvertDto 
 import { Advert } from './models/advert.entity';
 import { objectToQueryString } from '../../helpers/object-to-query-string.helper';
 import { Filters } from './models/filter';
+import { StripeSession } from '../stripe/models/stripe-session.interface';
 
 @Injectable()
 export class AdvertService {
@@ -76,6 +77,10 @@ export class AdvertService {
 
     deleteAdvert(id: string): Observable<Advert> {
         return this.http.delete<Advert>(`/products/${id}`);
+    }
+
+    liftProduct(id: string): Observable<StripeSession> {
+        return this.http.post<StripeSession>(`/products/${id}/lift`, null);
     }
 
     private buildQueryParams(options: GetAdvertsDto): string {

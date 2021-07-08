@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AdConfigDto } from './models/ad-config-dto.interface';
-import { StripeSession } from './models/stripe-session.interface';
+import { StripeSession } from '../stripe/models/stripe-session.interface';
 
 @Injectable()
 export class AdService {
