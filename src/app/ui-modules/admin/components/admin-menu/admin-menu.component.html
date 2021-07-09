@@ -29,4 +29,18 @@
         <i nz-icon nzType="dollar-circle" nzTheme="outline"></i>
         <span>Настройка рекламы</span>
     </li>
+    <li nz-submenu nzOpen nzTitle="Объявления" nzIcon="copyright">
+        <ul>
+            <!-- todo add badge with number-->
+            <li [nzMatchRouterExact]="true" nz-menu-item routerLink="/admin/ad/pending">
+                <span>Ожидают</span>
+            </li>
+            <li [nzMatchRouterExact]="true" nz-menu-item routerLink="/admin/ad/paid">
+                <span>Активные</span>
+            </li>
+            <li [nzMatchRouterExact]="true" nz-menu-item routerLink="/admin/ad/reject">
+                <span>Отклоненные</span>
+            </li>
+        </ul>
+    </li>
 </ul>

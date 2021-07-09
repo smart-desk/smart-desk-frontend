@@ -18,6 +18,7 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import { SharedModule } from '../../../../shared.module';
 
 const components = [
     ProfileComponent,
@@ -45,6 +46,7 @@ const components = [
         NzSelectModule,
         NzUploadModule,
         NzInputModule,
+        SharedModule,
     ],
 })
 export class ProfileModule {}

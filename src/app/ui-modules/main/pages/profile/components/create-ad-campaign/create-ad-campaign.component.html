@@ -1,37 +1,8 @@
 <section class="create-ad-campaign">
     <div class="create-ad-campaign__form-wrap">
         <h2>Интервал рекламной компании</h2>
-        <form class="create-ad-campaign__form" [formGroup]="form">
-            <div class="form__row">
-                <nz-select class="form__item" formControlName="type">
-                    <nz-option *ngFor="let type of adTypes" [nzValue]="type.sysName" [nzLabel]="type.name"></nz-option>
-                </nz-select>
-                <nz-range-picker class="form__item form__item--large" [nzDisabled]="!selectedRate" formControlName="timeRange">
-                </nz-range-picker>
-            </div>
-
-            <div class="form__row">
-                <input formControlName="link" nz-input [disabled]="!selectedRate" placeholder="Разместите здесь ссылку на Ваш продукт" />
-            </div>
-            <div class="form__row form__row--bottom">
-                <nz-upload
-                    [nzDisabled]="!selectedRate"
-                    class="upload-list-inline"
-                    nzAction="/s3/image"
-                    nzListType="picture-card"
-                    [nzFileList]="file"
-                    nzAccept="image/png, image/jpeg"
-                    [nzLimit]="1"
-                    (nzChange)="fileChanged($event)"
-                >
-                    <div>
-                        <i nz-icon nzType="plus"></i>
-                        <div style="margin-top: 8px;">Upload</div>
-                    </div>
-                </nz-upload>
-                <button nz-button nzType="primary" [disabled]="!form.valid" (click)="createCampaign()">Создать</button>
-            </div>
-        </form>
+        <app-form-ad-campaign #form class="create-ad-campaign__form" (changeFormEvent)="formValueChange($event)"> </app-form-ad-campaign>
+        <button nz-button nzType="primary" [disabled]="!formLink?.form.valid" (click)="saveCampaign()">Создать</button>
     </div>
     <div class="create-ad-campaign__rate">
         <h2>Тарифная ставка</h2>

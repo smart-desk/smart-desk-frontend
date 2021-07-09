@@ -27,7 +27,7 @@
                 <td>{{ ad.startDate | date: 'dd.MM.yyyy' }}</td>
                 <td>{{ ad.endDate | date: 'dd.MM.yyyy' }}</td>
                 <td>
-                    <a (click)="edit(ad.id)">Редатировать</a>
+                    <a *ngIf="ad.status !== adsStatus.PAID" (click)="edit(ad.id)">Редатировать</a>
                     <nz-divider nzType="vertical"></nz-divider>
                     <a (click)="pay(ad.id)">Оплатить</a>
                     <nz-divider nzType="vertical"></nz-divider>

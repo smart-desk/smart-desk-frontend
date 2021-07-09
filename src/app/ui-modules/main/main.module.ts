@@ -98,6 +98,8 @@ const components = [
     exports: [...components],
     imports: [
         ...NZModules,
+        // todo: разобратсья
+        SharedModule,
         CommonModule,
         MainRoutingModule,
         FormsModule,

@@ -73,7 +73,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         });
     }
 
-    openFormName() {
+    openFormName(): void {
         const modalRef: NzModalRef = this.modalService.create<FormNameComponent>({
             nzContent: FormNameComponent,
             nzComponentParams: { profile: this.profile },
@@ -83,7 +83,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         modalRef.getContentComponent().submitEvent.subscribe((data: ContentComponent) => this.submitForm(data));
     }
 
-    openFormConfirmPhone() {
+    openFormConfirmPhone(): void {
         const modalRef: NzModalRef = this.modalService.create<FormVerifyComponent>({
             nzTitle: 'Подтверждение',
             nzContent: FormVerifyComponent,
@@ -96,7 +96,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         modalRef.getContentComponent().submitFormEvent.subscribe(() => this.checkVerification(modalRef));
     }
 
-    openFormChangePhone() {
+    openFormChangePhone(): void {
         const modalRef: NzModalRef = this.modalService.create<FormPhoneComponent>({
             nzTitle: 'Телефон',
             nzContent: FormPhoneComponent,

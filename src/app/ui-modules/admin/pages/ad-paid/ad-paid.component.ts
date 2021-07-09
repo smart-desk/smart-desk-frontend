@@ -1,0 +1,20 @@
+import { Component, OnInit } from '@angular/core';
+import { AdCampaignComponent } from '../../classes/ad-campaign';
+import { AdService } from '../../../../modules/ad/ad.service';
+import { NzModalService } from 'ng-zorro-antd/modal';
+
+@Component({
+    selector: 'app-ad-paid',
+    templateUrl: './ad-paid.component.html',
+    styleUrls: ['./ad-paid.component.scss'],
+})
+export class AdPaidComponent extends AdCampaignComponent implements OnInit {
+    constructor(protected readonly adService: AdService, protected readonly modalService: NzModalService) {
+        super(adService, modalService);
+    }
+
+    ngOnInit(): void {
+        // todo: сделать enum
+        this.getAd('paid');
+    }
+}

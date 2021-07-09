@@ -6,7 +6,9 @@ import { switchMap } from 'rxjs/operators';
 import { User } from '../../../../../../modules/user/models/user.entity';
 import { AdService } from '../../../../../../modules/ad/ad.service';
 import { UserService } from '../../../../../../modules/user/user.service';
-import { AdCampaignEntity } from '../../../../../../modules/ad/models/ad-campaign.entity';
+import { AdCampaignEntity, AdCampaignStatus } from '../../../../../../modules/ad/models/ad-campaign.entity';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { FormAdCampaignComponent } from '../../../../../../components/form-ad-campaign/form-ad-campaign.component';
 
 @Component({
     selector: 'app-ad-campaigns',
@@ -17,9 +19,15 @@ import { AdCampaignEntity } from '../../../../../../modules/ad/models/ad-campaig
 export class MyAdCampaignsComponent implements OnInit {
     user: User;
     ads: AdCampaignEntity[];
+    adsStatus = AdCampaignStatus;
     private stripe: Stripe;
 
-    constructor(private cdr: ChangeDetectorRef, private userService: UserService, private adService: AdService) {
+    constructor(
+        private cdr: ChangeDetectorRef,
+        private userService: UserService,
+        private adService: AdService,
+        private modalService: NzModalService
+    ) {
         from(loadStripe(environment.stripePublicKey)).subscribe(stripe => {
             if (stripe) {
                 this.stripe = stripe;
@@ -50,5 +58,12 @@ export class MyAdCampaignsComponent implements OnInit {
         }
     }
 
-    edit(id: string): void {}
+    edit(id: string): void {
+        const editAd = this.ads.find(ad => ad.id === id);
+        const modalRef: NzModalRef = this.modalService.create<FormAdCampaignComponent>({
+            nzContent: FormAdCampaignComponent,
+            nzComponentParams: { adData: editAd },
+            nzOnOk: () => modalRef.getContentComponent().submit(),
+        });
+    }
 }

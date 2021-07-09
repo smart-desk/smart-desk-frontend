@@ -38,6 +38,10 @@ import { UserService } from './modules/user/user.service';
 import { AdvertDataService } from './modules/advert/advert-data.service';
 import { FieldService } from './modules/field/field.service';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import { FormAdCampaignComponent } from './components/form-ad-campaign/form-ad-campaign.component';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
 
 const NZModules = [
     NzFormModule,
@@ -74,7 +78,14 @@ const services = [
 /**
  * Components from `./ui-modules` directory
  */
-const components = [SearchComponent, PaginationComponent, LoginComponent, ForbiddenComponent, UnauthorizedComponent];
+const components = [
+    FormAdCampaignComponent,
+    SearchComponent,
+    PaginationComponent,
+    LoginComponent,
+    ForbiddenComponent,
+    UnauthorizedComponent,
+];
 
 /**
  * Interceptors from `./interceptors` directory
@@ -107,6 +118,9 @@ const interceptors = [
         RouterModule,
         ChatModule,
         NzNotificationModule,
+        NzSelectModule,
+        NzDatePickerModule,
+        NzUploadModule,
     ],
     exports: [...components],
     declarations: [...components],

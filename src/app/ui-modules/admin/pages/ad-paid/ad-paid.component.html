@@ -1,0 +1,25 @@
+<nz-page-header>
+    <nz-page-header-title>Рекламные объявления оплаченные</nz-page-header-title>
+</nz-page-header>
+<nz-table class="table" [nzTemplateMode]="true" [nzFrontPagination]="true">
+    <thead>
+        <tr>
+            <th>Ссылка</th>
+            <th>Дата создания</th>
+            <th>Дата окончания</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let ad of ads">
+            <td>
+                <a href="" target="_self">{{ ad.link }}</a>
+            </td>
+            <td>{{ formatDate(ad.startDate) }}</td>
+            <td>{{ formatDate(ad.endDate) }}</td>
+            <td>
+                <a (click)="showAds(ad.id)">Просмотр</a>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
