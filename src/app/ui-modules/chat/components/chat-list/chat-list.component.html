@@ -13,7 +13,7 @@
                     </nz-badge>
                 </nz-list-item-meta-avatar>
                 <nz-list-item-meta-description>
-                    <a [routerLink]="['/', 'adverts', chat.advertId]">{{ chat.advertData?.title }}</a>
+                    <a [routerLink]="['/', 'adverts', chat.productId]">{{ chat.productData?.title }}</a>
                 </nz-list-item-meta-description>
                 <nz-list-item-meta-title>
                     <a *ngIf="currentUser" [routerLink]="['/', 'user', getConversationalist(chat)?.id]">

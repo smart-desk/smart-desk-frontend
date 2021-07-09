@@ -54,14 +54,14 @@ export class AdvertsListComponent implements OnInit {
 
     delete(id: string): void {
         this.advertService.deleteAdvert(id).subscribe(() => {
-            this.advertResponse.adverts = this.advertResponse.adverts.filter(item => item.id !== id);
+            this.advertResponse.products = this.advertResponse.products.filter(item => item.id !== id);
             this.cd.detectChanges();
         });
     }
 
     block(id: string): void {
         this.advertService.blockAdvert(id).subscribe(() => {
-            this.advertResponse.adverts = this.advertResponse.adverts.filter(item => item.id !== id);
+            this.advertResponse.products = this.advertResponse.products.filter(item => item.id !== id);
             this.cd.detectChanges();
         });
     }

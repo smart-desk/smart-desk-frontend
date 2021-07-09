@@ -19,10 +19,10 @@ export class PhoneService {
         });
     }
 
-    getUserPhone(id: string, advertId: string): Observable<string> {
+    getUserPhone(id: string, productId: string): Observable<string> {
         return this.http.get(`/users/${id}/phone`, {
             responseType: 'text',
-            params: { advert: advertId },
+            params: { product: productId },
         });
     }
 }

@@ -1,3 +1,3 @@
 export class CreateChatDto {
-    advertId: string;
+    productId: string;
 }

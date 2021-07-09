@@ -94,7 +94,7 @@ export class ChatComponent implements OnDestroy, OnInit {
         message.content = content;
 
         if (!this.activeChat.id) {
-            this.chatService.createChat({ advertId: this.advert.id }).subscribe(chat => {
+            this.chatService.createChat({ productId: this.advert.id }).subscribe(chat => {
                 const indexOfActiveChat = this.chats.indexOf(this.activeChat);
                 this.chats[indexOfActiveChat] = chat;
                 this.activeChat = chat;
@@ -118,7 +118,7 @@ export class ChatComponent implements OnDestroy, OnInit {
                 let activeChat: Chat | undefined;
 
                 if (this.advert) {
-                    activeChat = chats.find(c => c.advertId === this.advert.id);
+                    activeChat = chats.find(c => c.productId === this.advert.id);
                     if (!activeChat) {
                         const emptyChat = this.createEmptyChat();
                         activeChat = emptyChat;
@@ -136,8 +136,8 @@ export class ChatComponent implements OnDestroy, OnInit {
 
     private createEmptyChat(): Chat {
         const chat = new Chat();
-        chat.advertId = this.advert.id;
-        chat.advertData = this.advert;
+        chat.productId = this.advert.id;
+        chat.productData = this.advert;
         chat.user1 = this.currentUser.id;
         chat.user1Data = this.currentUser;
         chat.user2 = this.user.id;

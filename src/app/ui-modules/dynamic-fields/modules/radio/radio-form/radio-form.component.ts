@@ -27,7 +27,7 @@ export class RadioFormComponent extends AbstractFieldFormComponent<RadioEntity, 
 
         const advertField = new RadioEntity();
         advertField.value = this.form.get('value')?.value;
-        advertField.field_id = this.field.id;
+        advertField.fieldId = this.field.id;
 
         return advertField;
     }

@@ -20,7 +20,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let advert of advertResponse?.adverts">
+        <tr *ngFor="let advert of advertResponse?.products">
             <td [nzChecked]="selectedItems.has(advert.id)" (nzCheckedChange)="updateSelectedItems(advert.id, $event)"></td>
             <td>
                 <a [routerLink]="['/', 'adverts', advert.id]">{{ advert.title }}</a>

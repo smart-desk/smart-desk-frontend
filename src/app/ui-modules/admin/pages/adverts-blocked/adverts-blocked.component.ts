@@ -49,14 +49,14 @@ export class AdvertsBlockedComponent implements OnInit {
 
     delete(id: string): void {
         this.advertService.deleteAdvert(id).subscribe(() => {
-            this.advertResponse.adverts = this.advertResponse.adverts.filter(advert => advert.id !== id);
+            this.advertResponse.products = this.advertResponse.products.filter(advert => advert.id !== id);
             this.cd.detectChanges();
         });
     }
 
     publish(id: string): void {
         this.advertService.publishAdvert(id).subscribe(() => {
-            this.advertResponse.adverts = this.advertResponse.adverts.filter(advert => advert.id !== id);
+            this.advertResponse.products = this.advertResponse.products.filter(advert => advert.id !== id);
             this.cd.detectChanges();
         });
     }
