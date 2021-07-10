@@ -33,15 +33,8 @@ export class CreateAdCampaignComponent implements OnInit, OnDestroy {
     }
 
     saveCampaign(): void {
-        const formValue = this.formLink.saveCampaign();
-        const campaignOptions = new AdCampaignDto();
-        campaignOptions.img = formValue.img;
-        campaignOptions.link = formValue.link;
-        campaignOptions.type = formValue.type;
-        campaignOptions.startDate = dayjs(formValue.timeRange[0]).startOf('day').toDate();
-        campaignOptions.endDate = dayjs(formValue.timeRange[1]).endOf('day').toDate();
-
-        if (!formValue.id) {
+        const campaignOptions = this.formLink.saveCampaign();
+        if (!campaignOptions.id) {
             this.adService.createAdCampaign(campaignOptions).subscribe();
         } else {
             // todo: реализовать кейс обновления

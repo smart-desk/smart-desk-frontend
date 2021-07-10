@@ -4,6 +4,7 @@ import { AdCampaignEntity, AdCampaignType } from '../../modules/ad/models/ad-cam
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
+import * as dayjs from 'dayjs';
 
 @Component({
     selector: 'app-form-ad-campaign',
@@ -12,8 +13,7 @@ import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormAdCampaignComponent implements OnInit {
-    @Output() changeFormEvent = new EventEmitter<Record<any, any>>(true);
-    @Output() saveEvent = new EventEmitter<Record<any, any>>(true);
+    @Output() changeFormEvent = new EventEmitter<Record<string, any>>(true);
     @Input() adData: AdCampaignEntity;
     form: FormGroup;
     isSelectType: boolean;
@@ -61,7 +61,14 @@ export class FormAdCampaignComponent implements OnInit {
         }
     }
 
-    saveCampaign(): Record<any, any> {
-        return { id: this.adData.id, ...this.form.value };
+    saveCampaign(): AdCampaignEntity {
+        const formValue = { id: this.adData.id, ...this.form.value };
+        const campaignOptions = new AdCampaignEntity();
+        campaignOptions.img = formValue.img;
+        campaignOptions.link = formValue.link;
+        campaignOptions.type = formValue.type;
+        campaignOptions.startDate = dayjs(formValue.timeRange[0]).startOf('day').toDate();
+        campaignOptions.endDate = dayjs(formValue.timeRange[1]).endOf('day').toDate();
+        return campaignOptions;
     }
 }

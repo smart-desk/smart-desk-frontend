@@ -1,19 +1,17 @@
-import { AdService } from '../../../modules/ad/ad.service';
-import { Component, OnDestroy } from '@angular/core';
+import { AdService } from './ad.service';
+import { ChangeDetectorRef, Directive, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { AdCampaignEntity } from '../../../modules/ad/models/ad-campaign.entity';
+import { AdCampaignEntity } from './models/ad-campaign.entity';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import * as dayjs from 'dayjs';
-import { FormAdCampaignComponent } from '../../../components/form-ad-campaign/form-ad-campaign.component';
+import { FormAdCampaignComponent } from '../../components/form-ad-campaign/form-ad-campaign.component';
 
-@Component({
-    template: '',
-})
-export class AdCampaignComponent implements OnDestroy {
+@Directive()
+export abstract class AdCampaignDirective implements OnDestroy {
     public ads: AdCampaignEntity[];
     protected destroy$ = new Subject();
-    constructor(protected readonly adService: AdService, protected readonly modalService: NzModalService) {}
+    constructor(protected readonly adService: AdService, protected readonly modalService: NzModalService, private cd: ChangeDetectorRef) {}
 
     ngOnDestroy(): void {
         this.destroy$.next();
@@ -24,7 +22,10 @@ export class AdCampaignComponent implements OnDestroy {
         this.adService
             .getAdCampaigns(type)
             .pipe(takeUntil(this.destroy$))
-            .subscribe(ads => (this.ads = ads));
+            .subscribe(ads => {
+                this.ads = ads;
+                this.cd.detectChanges();
+            });
     }
 
     showAds(id: string): void {

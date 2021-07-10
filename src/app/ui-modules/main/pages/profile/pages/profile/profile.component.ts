@@ -11,7 +11,7 @@ import { FormNameComponent } from '../../../../components/form-name/form-name.co
 import { FormVerifyComponent } from '../../../../components/form-verify/form-verify.component';
 import { FormPhoneComponent } from '../../../../components/form-phone/form-phone.component';
 import { ContentComponent } from '../../../../interfaces/content-component.interface';
-import { NotificationsComponent } from '../notifications/notifications.component';
+import { NotificationsComponent } from '../../components/notifications/notifications.component';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { UserService } from '../../../../../../modules/user/user.service';
