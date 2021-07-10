@@ -44,8 +44,11 @@ import { AdConfigComponent } from './pages/ad-config/ad-config.component';
 import { AdPendingComponent } from './pages/ad-pending/ad-pending.component';
 import { AdPaidComponent } from './pages/ad-paid/ad-paid.component';
 import { AdRejectComponent } from './pages/ad-reject/ad-reject.component';
+import { AdRejectReasonComponent } from './components/ad-modal/ad-modal.component';
+import { MainModule } from '../main/main.module';
 
 const components = [
+    AdRejectReasonComponent,
     PreviewComponent,
     CategoryFormComponent,
     AdminMenuComponent,
@@ -99,6 +102,7 @@ const pages = [
         NzModalModule,
         NzCheckboxModule,
         DragDropModule,
+        MainModule,
     ],
     declarations: [...pages, ...components],
 })

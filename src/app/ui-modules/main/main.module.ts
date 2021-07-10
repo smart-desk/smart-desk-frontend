@@ -45,6 +45,7 @@ import { VkRedirectComponent } from './components/vk-redirect/vk-redirect.compon
 import { NzResultModule } from 'ng-zorro-antd/result';
 import { AdvertComponent } from './pages/advert/components/advert/advert.component';
 import { SortingComponent } from './components/sorting/sorting.component';
+import { AdCardComponent } from '../admin/components/ad-card/ad-card.component';
 
 const NZModules = [
     NzModalModule,
@@ -94,8 +95,8 @@ const components = [
 ];
 
 @NgModule({
-    declarations: [...components],
-    exports: [...components],
+    declarations: [...components, AdCardComponent],
+    exports: [...components, AdCardComponent],
     imports: [
         ...NZModules,
         SharedModule,

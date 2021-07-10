@@ -1,3 +1,5 @@
+@import '~src/assets/styles/variables';
+
 .form {
     &__item {
         width: 40%;
@@ -8,11 +10,12 @@
     }
 
     &__row {
-        margin: 20px 0;
+        margin: $base-unit * 3 0;
         display: flex;
 
         &--bottom {
             align-items: flex-end;
+            margin: 0;
         }
     }
 }

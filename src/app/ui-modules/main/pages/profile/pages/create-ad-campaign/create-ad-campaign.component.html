@@ -2,7 +2,9 @@
     <div class="create-ad-campaign__form-wrap">
         <h2>Интервал рекламной компании</h2>
         <app-form-ad-campaign #form class="create-ad-campaign__form" (changeFormEvent)="formValueChange($event)"> </app-form-ad-campaign>
-        <button nz-button nzType="primary" [disabled]="!formLink?.form.valid" (click)="saveCampaign()">Создать</button>
+        <button class="create-ad-campaign__submit" nz-button nzType="primary" [disabled]="!formLink?.form.valid" (click)="saveCampaign()">
+            Создать
+        </button>
     </div>
     <div class="create-ad-campaign__rate">
         <h2>Тарифная ставка</h2>

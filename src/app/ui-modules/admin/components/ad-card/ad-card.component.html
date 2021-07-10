@@ -1,0 +1,6 @@
+<nz-card class="card" [nzCover]="coverTemplate"></nz-card>
+<ng-template #coverTemplate>
+    <a class="card__link" [href]="link" target="_blank">
+        <img class="card__img" alt="example" [src]="thumb || 'assets/images/not-found.png'" />
+    </a>
+</ng-template>

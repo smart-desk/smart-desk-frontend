@@ -13,14 +13,12 @@
     <tbody>
         <tr *ngFor="let ad of ads">
             <td>
-                <a href="" target="_self">{{ ad.link }}</a>
+                <a [href]="ad.link" target="_self">{{ ad.link }}</a>
             </td>
             <td>{{ formatDate(ad.startDate) }}</td>
             <td>{{ formatDate(ad.endDate) }}</td>
             <td>
                 <a (click)="showAds(ad.id)">Просмотр</a>
-                <nz-divider nzType="vertical"></nz-divider>
-                <a nzType="danger">Одобрить</a>
             </td>
         </tr>
     </tbody>

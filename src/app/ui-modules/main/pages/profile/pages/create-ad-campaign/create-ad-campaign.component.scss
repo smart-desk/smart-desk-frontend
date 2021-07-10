@@ -1,55 +1,27 @@
+@import '~src/assets/styles/variables';
+
 .create-ad-campaign {
     display: flex;
     justify-content: space-evenly;
     width: 80%;
-    padding-top: 40px;
+    padding-top: $base-unit * 5;
     margin-right: 0;
 
     &__form-wrap,
     &__rate,
     &__total-rate {
+        position: relative;
         display: flex;
         flex-direction: column;
         align-items: center;
     }
 
     &__form {
-        width: 400px;
+        width: $base-unit * 50;
     }
-}
-
-.form {
-    &__item {
-        width: 40%;
-
-        &--large {
-            width: 60%;
-        }
+    &__submit {
+        position: absolute;
+        bottom: 0;
+        right: 0;
     }
-
-    &__row {
-        margin: 20px 0;
-        display: flex;
-
-        &--bottom {
-            align-items: flex-end;
-        }
-    }
-}
-
-:host ::ng-deep .upload-list-inline .ant-upload-list-item,
-:host ::ng-deep .ant-upload-list-picture-card-container,
-:host ::ng-deep .ant-upload.ant-upload-select-picture-card {
-    float: left;
-    width: 150px;
-    margin: 0;
-}
-:host ::ng-deep .upload-list-inline [class*='-upload-list-rtl'] .ant-upload-list-item {
-    float: right;
-}
-:host ::ng-deep .upload-list-inline .ant-upload-animate-enter {
-    animation-name: uploadAnimateInlineIn;
-}
-:host ::ng-deep .upload-list-inline .ant-upload-animate-leave {
-    animation-name: uploadAnimateInlineOut;
 }
