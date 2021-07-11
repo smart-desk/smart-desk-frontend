@@ -39,6 +39,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { AdCardComponent } from './components/ad-card/ad-card.component';
+import { NzCardModule } from 'ng-zorro-antd/card';
 
 const NZModules = [
     NzFormModule,
@@ -54,6 +55,7 @@ const NZModules = [
     NzSelectModule,
     NzDatePickerModule,
     NzUploadModule,
+    NzCardModule,
 ];
 
 const services = [
