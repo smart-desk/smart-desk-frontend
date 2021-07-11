@@ -32,4 +32,12 @@ export class AdService {
         const request = status ? `/ad/campaigns?status=${status}` : `/ad/campaigns`;
         return this.http.get<AdCampaignEntity[]>(request);
     }
+
+    rejectAdCampaigns(id: string, body: { reason: string }): Observable<AdCampaignEntity> {
+        return this.http.patch<AdCampaignEntity>(`/ad/campaigns/${id}/reject`, body);
+    }
+
+    approveAdCampaigns(id: string): Observable<AdCampaignEntity> {
+        return this.http.patch<AdCampaignEntity>(`/ad/campaigns/${id}/approve`, null);
+    }
 }
