@@ -1,6 +1,15 @@
 <nz-page-header>
     <nz-page-header-title>Рекламные кампании</nz-page-header-title>
 </nz-page-header>
+
+<nz-radio-group [(ngModel)]="status" nzButtonStyle="solid" (ngModelChange)="changeStatus()" class="top-actions">
+    <label nz-radio-button [nzValue]="null">Все</label>
+    <label nz-radio-button [nzValue]="adCampaignStatus.PENDING">В ожидании</label>
+    <label nz-radio-button [nzValue]="adCampaignStatus.APPROVED">Одобренные</label>
+    <label nz-radio-button [nzValue]="adCampaignStatus.REJECTED">Отклоненные</label>
+    <label nz-radio-button [nzValue]="adCampaignStatus.PAID">Активные</label>
+</nz-radio-group>
+
 <nz-table class="table" [nzTemplateMode]="true" [nzFrontPagination]="true">
     <thead>
         <tr>

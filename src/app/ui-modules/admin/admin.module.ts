@@ -43,6 +43,7 @@ import { SharedModule } from '../../shared.module';
 import { AdConfigComponent } from './pages/ad-config/ad-config.component';
 import { AdRejectReasonComponent } from './components/ad-modal/ad-modal.component';
 import { AdCampaignListComponent } from './pages/ad-campaign-list/ad-campaign-list.component';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 
 const components = [
     AdRejectReasonComponent,
@@ -97,6 +98,7 @@ const pages = [
         NzModalModule,
         NzCheckboxModule,
         DragDropModule,
+        NzRadioModule,
     ],
     declarations: [...pages, ...components],
 })

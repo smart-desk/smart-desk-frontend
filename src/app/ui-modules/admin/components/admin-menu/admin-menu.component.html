@@ -25,39 +25,14 @@
         <i nz-icon nzType="user" nzTheme="outline"></i>
         <span>Пользователи</span>
     </li>
-    <li nz-menu-item [nzMatchRouter]="true" routerLink="/admin/ad-config">
-        <i nz-icon nzType="dollar-circle" nzTheme="outline"></i>
-        <span>Настройка рекламы</span>
-    </li>
-    <li nz-submenu nzOpen nzTitle="Объявления" nzIcon="copyright">
+
+    <li nz-submenu nzOpen nzTitle="Реклама" nzIcon="copyright">
         <ul>
-            <!-- todo add badge with number-->
-            <li
-                [nzMatchRouterExact]="true"
-                nz-menu-item
-                routerLink="/admin/ad-campaigns"
-                [queryParams]="{ status: adCampaignStatus.PENDING }"
-            >
-                <span>Ожидают</span>
+            <li nz-menu-item [nzMatchRouter]="true" routerLink="/admin/ad-config">
+                <span>Настройка рекламы</span>
             </li>
-            <li
-                [nzMatchRouterExact]="true"
-                nz-menu-item
-                routerLink="/admin/ad-campaigns"
-                [queryParams]="{ status: adCampaignStatus.APPROVED }"
-            >
-                <span>Одобренные</span>
-            </li>
-            <li [nzMatchRouterExact]="true" nz-menu-item routerLink="/admin/ad-campaigns" [queryParams]="{ status: adCampaignStatus.PAID }">
-                <span>Активные</span>
-            </li>
-            <li
-                [nzMatchRouterExact]="true"
-                nz-menu-item
-                routerLink="/admin/ad-campaigns"
-                [queryParams]="{ status: adCampaignStatus.REJECTED }"
-            >
-                <span>Отклоненные</span>
+            <li nz-menu-item [nzMatchRouterExact]="true" routerLink="/admin/ad-campaigns">
+                <span>Рекламные кампании</span>
             </li>
         </ul>
     </li>

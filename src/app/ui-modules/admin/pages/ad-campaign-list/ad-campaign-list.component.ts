@@ -7,11 +7,12 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import * as dayjs from 'dayjs';
 import { AdCardComponent } from '../../../../components/ad-card/ad-card.component';
 import { AdRejectReasonComponent } from '../../components/ad-modal/ad-modal.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-ad-campaign-list',
     templateUrl: './ad-campaign-list.component.html',
+    styleUrls: ['./ad-campaign-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdCampaignListComponent implements OnInit, OnDestroy {
@@ -24,7 +25,8 @@ export class AdCampaignListComponent implements OnInit, OnDestroy {
         private readonly adService: AdService,
         private readonly modalService: NzModalService,
         private cd: ChangeDetectorRef,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private router: Router
     ) {}
 
     ngOnInit(): void {
@@ -94,6 +96,10 @@ export class AdCampaignListComponent implements OnInit, OnDestroy {
             this.getCampaigns(this.status);
             modalRef?.close();
         });
+    }
+
+    changeStatus() {
+        this.router.navigate([], { relativeTo: this.route, queryParams: { status: this.status } });
     }
 
     private rejectCampaign(id: string, reason: string, modalRef?: NzModalRef): void {
