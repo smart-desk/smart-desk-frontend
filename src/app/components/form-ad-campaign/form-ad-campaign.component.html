@@ -1,18 +1,23 @@
-<form class="create-ad-campaign__form" [formGroup]="form">
-    <div class="form__row">
-        <nz-select class="form__item" formControlName="type">
-            <nz-option *ngFor="let type of adTypes" [nzValue]="type.sysName" [nzLabel]="type.name"></nz-option>
-        </nz-select>
-        <nz-range-picker class="form__item form__item--large" [nzDisabled]="!isSelectType" formControlName="timeRange"></nz-range-picker>
-    </div>
+<form nz-form class="form" [formGroup]="form" nzLayout="vertical">
+    <nz-form-item>
+        <nz-radio-group formControlName="type">
+            <label *ngFor="let type of adTypes" nz-radio [nzValue]="type.sysName">{{ type.name }}</label>
+        </nz-radio-group>
+    </nz-form-item>
 
-    <div class="form__row">
-        <input formControlName="link" nz-input [disabled]="!isSelectType" placeholder="Разместите здесь ссылку на Ваш продукт" />
-    </div>
-    <div class="form__row form__row--bottom">
+    <nz-form-item>
+        <nz-form-label nzFor="timeRange">Даты</nz-form-label>
+        <nz-range-picker [nzDisabled]="!isTypeSelected" formControlName="timeRange"></nz-range-picker>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label nzFor="link">Ссылка</nz-form-label>
+        <input formControlName="link" nz-input placeholder="Разместите здесь ссылку на Ваш продукт" />
+    </nz-form-item>
+
+    <nz-form-item>
         <nz-upload
-            [nzDisabled]="!isSelectType"
-            class="upload-list-inline"
+            [nzDisabled]="!isTypeSelected"
             nzAction="/s3/image"
             nzListType="picture-card"
             [nzFileList]="file"
@@ -25,5 +30,5 @@
                 <div style="margin-top: 8px;">Upload</div>
             </div>
         </nz-upload>
-    </div>
+    </nz-form-item>
 </form>

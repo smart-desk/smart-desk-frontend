@@ -19,6 +19,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { SharedModule } from '../../../../shared.module';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzTypographyModule } from 'ng-zorro-antd/typography';
 
 const components = [
     ProfileComponent,
@@ -47,6 +49,8 @@ const components = [
         NzUploadModule,
         NzInputModule,
         SharedModule,
+        NzFormModule,
+        NzTypographyModule,
     ],
 })
 export class ProfileModule {}

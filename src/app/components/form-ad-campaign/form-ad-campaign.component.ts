@@ -13,10 +13,10 @@ import * as dayjs from 'dayjs';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormAdCampaignComponent implements OnInit {
-    @Output() changeFormEvent = new EventEmitter<Record<string, any>>(true);
     @Input() adData: AdCampaignEntity;
+    @Output() changeFormEvent = new EventEmitter<AdCampaignEntity>();
     form: FormGroup;
-    isSelectType: boolean;
+    isTypeSelected: boolean;
     adTypes = [
         { name: 'Главная', sysName: AdCampaignType.MAIN },
         { name: 'Сайдбар', sysName: AdCampaignType.SIDEBAR },
@@ -32,7 +32,10 @@ export class FormAdCampaignComponent implements OnInit {
         }
         this.form = this.fb.group({
             type: [this.adData?.type, Validators.required],
-            timeRange: [this.adData ? [this.adData.endDate, this.adData.startDate] : undefined, Validators.required],
+            timeRange: [
+                { value: this.adData ? [this.adData.endDate, this.adData.startDate] : undefined, disabled: !this.isTypeSelected },
+                Validators.required,
+            ],
             link: [this.adData?.link, Validators.required],
             img: [this.adData?.img, Validators.required],
         });
@@ -40,16 +43,18 @@ export class FormAdCampaignComponent implements OnInit {
         this.form
             .get('type')
             ?.valueChanges.pipe(takeUntil(this.destroy$))
-            .subscribe(adType => {
-                this.isSelectType = true;
-                this.changeFormEvent.emit({ control: 'type', value: adType });
+            .subscribe(() => {
+                this.isTypeSelected = true;
+                const campaign = this.buildAdCampaign();
+                this.changeFormEvent.emit(campaign);
             });
 
         this.form
             .get('timeRange')
             ?.valueChanges.pipe(takeUntil(this.destroy$))
-            .subscribe(([startDate, endDate]) => {
-                this.changeFormEvent.emit({ control: 'timeRange', value: [startDate, endDate] });
+            .subscribe(() => {
+                const campaign = this.buildAdCampaign();
+                this.changeFormEvent.emit(campaign);
             });
     }
 
@@ -62,13 +67,18 @@ export class FormAdCampaignComponent implements OnInit {
     }
 
     saveCampaign(): AdCampaignEntity {
-        const formValue = { id: this.adData.id, ...this.form.value };
+        return this.buildAdCampaign();
+    }
+
+    private buildAdCampaign(): AdCampaignEntity {
         const campaignOptions = new AdCampaignEntity();
-        campaignOptions.img = formValue.img;
-        campaignOptions.link = formValue.link;
-        campaignOptions.type = formValue.type;
-        campaignOptions.startDate = dayjs(formValue.timeRange[0]).startOf('day').toDate();
-        campaignOptions.endDate = dayjs(formValue.timeRange[1]).endOf('day').toDate();
+        campaignOptions.id = this.adData?.id;
+        campaignOptions.img = this.form.get('img')?.value;
+        campaignOptions.link = this.form.get('link')?.value;
+        campaignOptions.type = this.form.get('type')?.value;
+        campaignOptions.startDate = dayjs(this.form.get('timeRange')?.value?.[0]).startOf('day').toDate();
+        campaignOptions.endDate = dayjs(this.form.get('timeRange')?.value?.[1]).endOf('day').toDate();
+
         return campaignOptions;
     }
 }

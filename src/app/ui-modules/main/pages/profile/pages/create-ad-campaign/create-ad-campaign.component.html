@@ -1,17 +1,9 @@
-<section class="create-ad-campaign">
-    <div class="create-ad-campaign__form-wrap">
-        <h2>Интервал рекламной компании</h2>
-        <app-form-ad-campaign #form class="create-ad-campaign__form" (changeFormEvent)="formValueChange($event)"> </app-form-ad-campaign>
-        <button class="create-ad-campaign__submit" nz-button nzType="primary" [disabled]="!formLink?.form.valid" (click)="saveCampaign()">
-            Создать
-        </button>
-    </div>
-    <div class="create-ad-campaign__rate">
-        <h2>Тарифная ставка</h2>
-        <p>{{ selectedRate }}</p>
-    </div>
-    <div class="create-ad-campaign__total-rate">
-        <h2>Сумма</h2>
-        <p>{{ totalSum }}</p>
-    </div>
-</section>
+<h1>Создание новой рекламной кампании</h1>
+<app-form-ad-campaign #form (changeFormEvent)="formValueChange($event)"></app-form-ad-campaign>
+<p *ngIf="totalAmount">
+    Стоимость вашей рекламы <b>{{ totalAmount }}</b> рублей.
+</p>
+<nz-form-control>
+    <button nz-button nzType="primary" [disabled]="!formLink?.form.valid" (click)="saveCampaign()">Создать</button>
+    <p nz-typography nzType="secondary">Ваша кампания отправится на модерацию</p>
+</nz-form-control>
