@@ -6,21 +6,29 @@
         <tr>
             <th>Ссылка</th>
             <th>Статус</th>
-            <th>Дата создания</th>
+            <th>Дата начала</th>
             <th>Дата окончания</th>
-            <th>Действия</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let ad of adCampaigns">
+        <tr *ngFor="let campaign of adCampaigns">
             <td>
-                <a [href]="ad.link" target="_blank">{{ ad.link }}</a>
+                <a [href]="campaign.link" target="_blank">{{ campaign.link }}</a>
             </td>
-            <td>{{ ad.status }}</td>
-            <td>{{ formatDate(ad.startDate) }}</td>
-            <td>{{ formatDate(ad.endDate) }}</td>
+            <td>{{ campaign.status }}</td>
+            <td>{{ formatDate(campaign.startDate) }}</td>
+            <td>{{ formatDate(campaign.endDate) }}</td>
             <td>
-                <a (click)="viewAdCampaign(ad.id)">Просмотр</a>
+                <a (click)="viewAdCampaign(campaign.id)">Просмотреть</a>
+                <ng-container *ngIf="status !== adCampaignStatus.APPROVED">
+                    <nz-divider nzType="vertical"></nz-divider>
+                    <a (click)="approveCampaign(campaign.id)">Одобрить</a>
+                </ng-container>
+                <ng-container *ngIf="status !== adCampaignStatus.REJECTED">
+                    <nz-divider nzType="vertical"></nz-divider>
+                    <a (click)="openRejectModal(campaign.id)">Отклонить</a>
+                </ng-container>
             </td>
         </tr>
     </tbody>

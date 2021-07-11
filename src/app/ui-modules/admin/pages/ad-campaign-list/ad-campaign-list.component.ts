@@ -16,8 +16,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AdCampaignListComponent implements OnInit, OnDestroy {
     adCampaigns: AdCampaignEntity[];
+    status: AdCampaignStatus;
+    adCampaignStatus = AdCampaignStatus;
     private destroy$ = new Subject();
-    private status: AdCampaignStatus;
 
     constructor(
         private readonly adService: AdService,
@@ -88,7 +89,7 @@ export class AdCampaignListComponent implements OnInit, OnDestroy {
         return dayjs(date).format('DD MMM YYYY HH:mm');
     }
 
-    private approveCampaign(id: string, modalRef?: NzModalRef): void {
+    approveCampaign(id: string, modalRef?: NzModalRef): void {
         this.adService.approveAdCampaigns(id).subscribe(() => {
             this.getCampaigns(this.status);
             modalRef?.close();
