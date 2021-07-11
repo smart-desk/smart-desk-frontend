@@ -16,7 +16,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AdCampaignListComponent implements OnInit, OnDestroy {
     adCampaigns: AdCampaignEntity[];
-    protected destroy$ = new Subject();
+    private destroy$ = new Subject();
     private status: AdCampaignStatus;
 
     constructor(
@@ -45,10 +45,12 @@ export class AdCampaignListComponent implements OnInit, OnDestroy {
             nzComponentParams: { ad: viewedAd },
             nzFooter: [
                 {
+                    show: this.status !== AdCampaignStatus.APPROVED,
                     label: 'Одобрить',
                     onClick: () => this.approveCampaign(id, modalRef),
                 },
                 {
+                    show: this.status !== AdCampaignStatus.REJECTED,
                     label: 'Отклонить',
                     onClick: () => {
                         modalRef.close();
@@ -76,9 +78,7 @@ export class AdCampaignListComponent implements OnInit, OnDestroy {
                 },
                 {
                     label: 'Нет',
-                    onClick: () => {
-                        modalReasonRef.close();
-                    },
+                    onClick: () => modalReasonRef.close(),
                 },
             ],
         });
