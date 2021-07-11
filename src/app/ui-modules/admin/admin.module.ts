@@ -42,7 +42,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SharedModule } from '../../shared.module';
 import { AdConfigComponent } from './pages/ad-config/ad-config.component';
 import { AdRejectReasonComponent } from './components/ad-modal/ad-modal.component';
-import { MainModule } from '../main/main.module';
 import { AdCampaignListComponent } from './pages/ad-campaign-list/ad-campaign-list.component';
 
 const components = [
@@ -98,7 +97,6 @@ const pages = [
         NzModalModule,
         NzCheckboxModule,
         DragDropModule,
-        MainModule,
     ],
     declarations: [...pages, ...components],
 })
