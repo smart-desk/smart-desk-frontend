@@ -5,6 +5,7 @@
     <thead>
         <tr>
             <th>Ссылка</th>
+            <th>Статус</th>
             <th>Дата создания</th>
             <th>Дата окончания</th>
             <th>Действия</th>
@@ -13,12 +14,13 @@
     <tbody>
         <tr *ngFor="let ad of ads">
             <td>
-                <a [href]="ad.link" target="_self">{{ ad.link }}</a>
+                <a [href]="ad.link" target="_blank">{{ ad.link }}</a>
             </td>
+            <td>{{ ad.status }}</td>
             <td>{{ formatDate(ad.startDate) }}</td>
             <td>{{ formatDate(ad.endDate) }}</td>
             <td>
-                <a (click)="showAds(ad.id)">Просмотр</a>
+                <a (click)="viewAdCampaign(ad.id)">Просмотр</a>
             </td>
         </tr>
     </tbody>

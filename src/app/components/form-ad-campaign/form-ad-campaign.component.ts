@@ -31,10 +31,10 @@ export class FormAdCampaignComponent implements OnInit {
             this.file = [{ uid: '-1', name: 'ad-image.png', url: this.adData?.img }];
         }
         this.form = this.fb.group({
-            type: [this.adData?.type || undefined, Validators.required],
+            type: [this.adData?.type, Validators.required],
             timeRange: [this.adData ? [this.adData.endDate, this.adData.startDate] : undefined, Validators.required],
-            link: [this.adData?.link || undefined, Validators.required],
-            img: [this.adData?.img || undefined, Validators.required],
+            link: [this.adData?.link, Validators.required],
+            img: [this.adData?.img, Validators.required],
         });
 
         this.form

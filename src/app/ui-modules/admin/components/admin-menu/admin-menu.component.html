@@ -32,13 +32,31 @@
     <li nz-submenu nzOpen nzTitle="Объявления" nzIcon="copyright">
         <ul>
             <!-- todo add badge with number-->
-            <li [nzMatchRouterExact]="true" nz-menu-item routerLink="/admin/ad/pending">
+            <li
+                [nzMatchRouterExact]="true"
+                nz-menu-item
+                routerLink="/admin/ad-campaigns"
+                [queryParams]="{ status: adCampaignStatus.PENDING }"
+            >
                 <span>Ожидают</span>
             </li>
-            <li [nzMatchRouterExact]="true" nz-menu-item routerLink="/admin/ad/paid">
+            <li
+                [nzMatchRouterExact]="true"
+                nz-menu-item
+                routerLink="/admin/ad-campaigns"
+                [queryParams]="{ status: adCampaignStatus.APPROVED }"
+            >
+                <span>Одобренные</span>
+            </li>
+            <li [nzMatchRouterExact]="true" nz-menu-item routerLink="/admin/ad-campaigns" [queryParams]="{ status: adCampaignStatus.PAID }">
                 <span>Активные</span>
             </li>
-            <li [nzMatchRouterExact]="true" nz-menu-item routerLink="/admin/ad/reject">
+            <li
+                [nzMatchRouterExact]="true"
+                nz-menu-item
+                routerLink="/admin/ad-campaigns"
+                [queryParams]="{ status: adCampaignStatus.REJECTED }"
+            >
                 <span>Отклоненные</span>
             </li>
         </ul>

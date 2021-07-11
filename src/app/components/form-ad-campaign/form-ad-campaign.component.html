@@ -3,7 +3,7 @@
         <nz-select class="form__item" formControlName="type">
             <nz-option *ngFor="let type of adTypes" [nzValue]="type.sysName" [nzLabel]="type.name"></nz-option>
         </nz-select>
-        <nz-range-picker class="form__item form__item--large" [nzDisabled]="!isSelectType" formControlName="timeRange"> </nz-range-picker>
+        <nz-range-picker class="form__item form__item--large" [nzDisabled]="!isSelectType" formControlName="timeRange"></nz-range-picker>
     </div>
 
     <div class="form__row">
@@ -25,6 +25,5 @@
                 <div style="margin-top: 8px;">Upload</div>
             </div>
         </nz-upload>
-        <!--        <button nz-button nzType="primary" [disabled]="!form.valid" (click)="saveCampaign()">Создать</button>-->
     </div>
 </form>

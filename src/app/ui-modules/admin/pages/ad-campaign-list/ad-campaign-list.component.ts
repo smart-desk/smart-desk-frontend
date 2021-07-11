@@ -1,37 +1,49 @@
-import { AdService } from './ad.service';
-import { ChangeDetectorRef, Directive, OnDestroy } from '@angular/core';
+import { AdService } from '../../../../modules/ad/ad.service';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { AdCampaignEntity, AdCampaignStatus } from './models/ad-campaign.entity';
+import { switchMap, takeUntil } from 'rxjs/operators';
+import { AdCampaignEntity, AdCampaignStatus } from '../../../../modules/ad/models/ad-campaign.entity';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import * as dayjs from 'dayjs';
-import { AdCardComponent } from '../../ui-modules/admin/components/ad-card/ad-card.component';
-import { AdRejectReasonComponent } from '../../ui-modules/admin/components/ad-modal/ad-modal.component';
+import { AdCardComponent } from '../../components/ad-card/ad-card.component';
+import { AdRejectReasonComponent } from '../../components/ad-modal/ad-modal.component';
+import { ActivatedRoute } from '@angular/router';
 
-@Directive()
-export abstract class AdCampaignDirective implements OnDestroy {
+@Component({
+    selector: 'app-ad-campaign-list',
+    templateUrl: './ad-campaign-list.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class AdCampaignListComponent implements OnInit, OnDestroy {
     ads: AdCampaignEntity[];
     viewedAd: AdCampaignEntity | undefined;
     protected destroy$ = new Subject();
 
-    constructor(protected readonly adService: AdService, protected readonly modalService: NzModalService, private cd: ChangeDetectorRef) {}
+    constructor(
+        private readonly adService: AdService,
+        private readonly modalService: NzModalService,
+        private cd: ChangeDetectorRef,
+        private route: ActivatedRoute
+    ) {}
 
-    ngOnDestroy(): void {
-        this.destroy$.next();
-        this.destroy$.complete();
-    }
-
-    getAd(type: string): void {
-        this.adService
-            .getAdCampaigns(type)
-            .pipe(takeUntil(this.destroy$))
+    ngOnInit(): void {
+        this.route.queryParamMap
+            .pipe(
+                takeUntil(this.destroy$),
+                switchMap(param => this.adService.getAdCampaigns(param.get('status') || undefined))
+            )
             .subscribe(ads => {
                 this.ads = ads;
                 this.cd.detectChanges();
             });
     }
 
-    showAds(id: string): void {
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
+
+    viewAdCampaign(id: string): void {
         this.viewedAd = this.ads.find(ad => ad.id === id);
         if (!this.viewedAd) {
             return;
