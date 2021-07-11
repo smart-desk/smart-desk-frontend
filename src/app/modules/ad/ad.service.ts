@@ -2,11 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { StripeSession } from './models/stripe-session.interface';
 import { AdConfigEntity } from './models/ad-config.entity';
 import { AdConfigDto } from './models/ad-config.dto';
 import { AdCampaignDto } from './models/ad-campaign.dto';
 import { AdCampaignEntity } from './models/ad-campaign.entity';
+import { StripeSession } from '../stripe/models/stripe-session.interface';
 
 @Injectable()
 export class AdService {

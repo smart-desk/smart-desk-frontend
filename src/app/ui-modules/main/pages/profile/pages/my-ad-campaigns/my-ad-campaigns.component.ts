@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { loadStripe, Stripe } from '@stripe/stripe-js';
 import { from } from 'rxjs';
-import { environment } from '../../../../../../../environments/environment';
 import { switchMap } from 'rxjs/operators';
 import { User } from '../../../../../../modules/user/models/user.entity';
 import { AdService } from '../../../../../../modules/ad/ad.service';
 import { UserService } from '../../../../../../modules/user/user.service';
+import { StripeService } from '../../../../../../modules/stripe/stripe.service';
 import { AdCampaignEntity, AdCampaignStatus } from '../../../../../../modules/ad/models/ad-campaign.entity';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { FormAdCampaignComponent } from '../../../../components/form-ad-campaign/form-ad-campaign.component';
@@ -20,20 +19,14 @@ export class MyAdCampaignsComponent implements OnInit {
     user: User;
     ads: AdCampaignEntity[];
     adsStatus = AdCampaignStatus;
-    private stripe: Stripe;
 
     constructor(
         private cdr: ChangeDetectorRef,
         private userService: UserService,
         private adService: AdService,
+        private stripeService: StripeService,
         private modalService: NzModalService
-    ) {
-        from(loadStripe(environment.stripePublicKey)).subscribe(stripe => {
-            if (stripe) {
-                this.stripe = stripe;
-            }
-        });
-    }
+    ) {}
 
     ngOnInit(): void {
         this.userService.getCurrentUser().subscribe(res => {
@@ -48,10 +41,10 @@ export class MyAdCampaignsComponent implements OnInit {
     }
 
     pay(id: string): void {
-        if (this.stripe) {
+        if (this.stripeService.stripe) {
             this.adService
                 .payCampaign(id)
-                .pipe(switchMap(stripeSessionId => from(this.stripe.redirectToCheckout({ sessionId: stripeSessionId }))))
+                .pipe(switchMap(stripeSessionId => from(this.stripeService.stripe.redirectToCheckout({ sessionId: stripeSessionId }))))
                 .subscribe(res => {
                     console.log(res);
                 });
