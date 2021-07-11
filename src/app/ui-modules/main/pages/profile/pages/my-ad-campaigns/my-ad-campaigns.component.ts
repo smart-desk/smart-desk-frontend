@@ -8,7 +8,7 @@ import { AdService } from '../../../../../../modules/ad/ad.service';
 import { UserService } from '../../../../../../modules/user/user.service';
 import { AdCampaignEntity, AdCampaignStatus } from '../../../../../../modules/ad/models/ad-campaign.entity';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
-import { FormAdCampaignComponent } from '../../../../../../components/form-ad-campaign/form-ad-campaign.component';
+import { FormAdCampaignComponent } from '../../../../components/form-ad-campaign/form-ad-campaign.component';
 
 @Component({
     selector: 'app-ad-campaigns',

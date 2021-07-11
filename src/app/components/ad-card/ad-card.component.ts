@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AdCampaignEntity } from '../../../../modules/ad/models/ad-campaign.entity';
+import { AdCampaignEntity } from '../../modules/ad/models/ad-campaign.entity';
 
 @Component({
     selector: 'app-ad-card',

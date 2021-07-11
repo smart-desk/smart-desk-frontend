@@ -1,6 +1,3 @@
-/**
- * Import here all ui-modules which are used on app side
- */
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { ApiHostInterceptor, ErrorsInterceptor, TokenInterceptor } from './interceptors';
 import { RouterModule } from '@angular/router';
@@ -38,10 +35,10 @@ import { UserService } from './modules/user/user.service';
 import { AdvertDataService } from './modules/advert/advert-data.service';
 import { FieldService } from './modules/field/field.service';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
-import { FormAdCampaignComponent } from './components/form-ad-campaign/form-ad-campaign.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { AdCardComponent } from './components/ad-card/ad-card.component';
 
 const NZModules = [
     NzFormModule,
@@ -53,11 +50,12 @@ const NZModules = [
     NzPaginationModule,
     NzSpinModule,
     NzResultModule,
+    NzNotificationModule,
+    NzSelectModule,
+    NzDatePickerModule,
+    NzUploadModule,
 ];
 
-/**
- * Services from `./modules` directory
- */
 const services = [
     ModelService,
     FieldService,
@@ -75,17 +73,7 @@ const services = [
     AdService,
 ];
 
-/**
- * Components from `./ui-modules` directory
- */
-const components = [
-    FormAdCampaignComponent,
-    SearchComponent,
-    PaginationComponent,
-    LoginComponent,
-    ForbiddenComponent,
-    UnauthorizedComponent,
-];
+const components = [SearchComponent, PaginationComponent, LoginComponent, ForbiddenComponent, UnauthorizedComponent, AdCardComponent];
 
 /**
  * Interceptors from `./interceptors` directory
@@ -109,19 +97,7 @@ const interceptors = [
 ];
 
 @NgModule({
-    imports: [
-        ...NZModules,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        DynamicFieldsModule,
-        RouterModule,
-        ChatModule,
-        NzNotificationModule,
-        NzSelectModule,
-        NzDatePickerModule,
-        NzUploadModule,
-    ],
+    imports: [...NZModules, CommonModule, FormsModule, ReactiveFormsModule, DynamicFieldsModule, RouterModule, ChatModule],
     exports: [...components],
     declarations: [...components],
     providers: [...services, ...interceptors],

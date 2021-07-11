@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AdCampaignEntity, AdCampaignType } from '../../modules/ad/models/ad-campaign.entity';
+import { AdCampaignEntity, AdCampaignType } from '../../../../modules/ad/models/ad-campaign.entity';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';

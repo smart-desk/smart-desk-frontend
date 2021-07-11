@@ -5,7 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { AdCampaignEntity, AdCampaignStatus } from '../../../../modules/ad/models/ad-campaign.entity';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import * as dayjs from 'dayjs';
-import { AdCardComponent } from '../../components/ad-card/ad-card.component';
+import { AdCardComponent } from '../../../../components/ad-card/ad-card.component';
 import { AdRejectReasonComponent } from '../../components/ad-modal/ad-modal.component';
 import { ActivatedRoute } from '@angular/router';
 

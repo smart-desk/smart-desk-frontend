@@ -4,7 +4,7 @@ import { AdConfigEntity } from '../../../../../../modules/ad/models/ad-config.en
 import { Subject } from 'rxjs';
 import { AdCampaignEntity, AdCampaignType } from '../../../../../../modules/ad/models/ad-campaign.entity';
 import * as dayjs from 'dayjs';
-import { FormAdCampaignComponent } from '../../../../../../components/form-ad-campaign/form-ad-campaign.component';
+import { FormAdCampaignComponent } from '../../../../components/form-ad-campaign/form-ad-campaign.component';
 import { Router } from '@angular/router';
 
 @Component({
