@@ -45,6 +45,8 @@ import { VkRedirectComponent } from './components/vk-redirect/vk-redirect.compon
 import { NzResultModule } from 'ng-zorro-antd/result';
 import { AdvertComponent } from './pages/advert/components/advert/advert.component';
 import { SortingComponent } from './components/sorting/sorting.component';
+import { FormAdCampaignComponent } from './components/form-ad-campaign/form-ad-campaign.component';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 const NZModules = [
     NzModalModule,
@@ -69,8 +71,8 @@ const NZModules = [
     NzUploadModule,
     NzTabsModule,
     NzRadioModule,
-    SharedModule,
     NzResultModule,
+    NzDatePickerModule,
 ];
 
 const components = [
@@ -91,6 +93,7 @@ const components = [
     AdvertFormComponent,
     SortingComponent,
     VkRedirectComponent,
+    FormAdCampaignComponent,
 ];
 
 @NgModule({
@@ -98,6 +101,7 @@ const components = [
     exports: [...components],
     imports: [
         ...NZModules,
+        SharedModule,
         CommonModule,
         MainRoutingModule,
         FormsModule,

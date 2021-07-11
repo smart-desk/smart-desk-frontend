@@ -1,0 +1,38 @@
+<app-content-layout title="Мои рекламные кампании" [main]="main" [left]="left"></app-content-layout>
+
+<ng-template #left>
+    <app-user-info [user]="user"></app-user-info>
+</ng-template>
+
+<ng-template #main>
+    <button routerLink="create" nz-button nzType="primary" [nzSize]="'large'" nzShape="round">
+        Создать кампанию
+    </button>
+    <nz-table class="table" [nzTemplateMode]="true" [nzFrontPagination]="true">
+        <thead>
+            <tr>
+                <th>Наименование</th>
+                <th>Статус</th>
+                <th>Дата начала кампания</th>
+                <th>Дата окончания кампании</th>
+                <th>Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let ad of ads">
+                <td>
+                    <a>{{ ad.id }}</a>
+                </td>
+                <td>{{ ad.status }}</td>
+                <td>{{ ad.startDate | date: 'dd.MM.yyyy' }}</td>
+                <td>{{ ad.endDate | date: 'dd.MM.yyyy' }}</td>
+                <td>
+                    <a *ngIf="ad.status !== adsStatus.PAID" (click)="edit(ad.id)">Редатировать</a>
+                    <nz-divider nzType="vertical"></nz-divider>
+                    <a (click)="pay(ad.id)">Оплатить</a>
+                    <nz-divider nzType="vertical"></nz-divider>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</ng-template>

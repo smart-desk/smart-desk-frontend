@@ -1,6 +1,3 @@
-/**
- * Import here all ui-modules which are used on app side
- */
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { ApiHostInterceptor, ErrorsInterceptor, TokenInterceptor } from './interceptors';
 import { RouterModule } from '@angular/router';
@@ -29,7 +26,7 @@ import { AdminGuard } from './modules/auth/admin.guard';
 import { ForbiddenComponent } from './pages/forbidden/forbidden.component';
 import { PhoneService } from './modules/phone/phone.service';
 import { SearchComponent } from './components/search/search.component';
-import { AdService } from './modules/ad-campaign/ad-campaign.service';
+import { AdService } from './modules/ad/ad.service';
 import { ModelService } from './modules/model/model.service';
 import { AuthService } from './modules/auth/auth.service';
 import { CategoryService } from './modules/category/category.service';
@@ -38,6 +35,11 @@ import { UserService } from './modules/user/user.service';
 import { AdvertDataService } from './modules/advert/advert-data.service';
 import { FieldService } from './modules/field/field.service';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { AdCardComponent } from './components/ad-card/ad-card.component';
+import { NzCardModule } from 'ng-zorro-antd/card';
 
 const NZModules = [
     NzFormModule,
@@ -49,11 +51,13 @@ const NZModules = [
     NzPaginationModule,
     NzSpinModule,
     NzResultModule,
+    NzNotificationModule,
+    NzSelectModule,
+    NzDatePickerModule,
+    NzUploadModule,
+    NzCardModule,
 ];
 
-/**
- * Services from `./modules` directory
- */
 const services = [
     ModelService,
     FieldService,
@@ -71,10 +75,7 @@ const services = [
     AdService,
 ];
 
-/**
- * Components from `./ui-modules` directory
- */
-const components = [SearchComponent, PaginationComponent, LoginComponent, ForbiddenComponent, UnauthorizedComponent];
+const components = [SearchComponent, PaginationComponent, LoginComponent, ForbiddenComponent, UnauthorizedComponent, AdCardComponent];
 
 /**
  * Interceptors from `./interceptors` directory
@@ -98,16 +99,7 @@ const interceptors = [
 ];
 
 @NgModule({
-    imports: [
-        ...NZModules,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        DynamicFieldsModule,
-        RouterModule,
-        ChatModule,
-        NzNotificationModule,
-    ],
+    imports: [...NZModules, CommonModule, FormsModule, ReactiveFormsModule, DynamicFieldsModule, RouterModule, ChatModule],
     exports: [...components],
     declarations: [...components],
     providers: [...services, ...interceptors],

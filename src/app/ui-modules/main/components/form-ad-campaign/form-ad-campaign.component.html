@@ -1,0 +1,34 @@
+<form nz-form class="form" [formGroup]="form" nzLayout="vertical">
+    <nz-form-item>
+        <nz-radio-group formControlName="type">
+            <label *ngFor="let type of adTypes" nz-radio [nzValue]="type.sysName">{{ type.name }}</label>
+        </nz-radio-group>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label nzFor="timeRange">Даты</nz-form-label>
+        <nz-range-picker [nzDisabled]="!isTypeSelected" formControlName="timeRange"></nz-range-picker>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label nzFor="link">Ссылка</nz-form-label>
+        <input formControlName="link" nz-input placeholder="Разместите здесь ссылку на Ваш продукт" />
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-upload
+            [nzDisabled]="!isTypeSelected"
+            nzAction="/s3/image"
+            nzListType="picture-card"
+            [nzFileList]="file"
+            nzAccept="image/png, image/jpeg"
+            [nzLimit]="1"
+            (nzChange)="fileChanged($event)"
+        >
+            <div>
+                <i nz-icon nzType="plus"></i>
+                <div style="margin-top: 8px;">Upload</div>
+            </div>
+        </nz-upload>
+    </nz-form-item>
+</form>

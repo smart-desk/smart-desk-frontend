@@ -1,0 +1,9 @@
+<h1>Создание новой рекламной кампании</h1>
+<app-form-ad-campaign #form (changeFormEvent)="formValueChange($event)"></app-form-ad-campaign>
+<p *ngIf="totalAmount">
+    Стоимость вашей рекламы <b>{{ totalAmount }}</b> рублей.
+</p>
+<nz-form-control>
+    <button nz-button nzType="primary" [disabled]="!formLink?.form.valid" (click)="saveCampaign()">Создать</button>
+    <p nz-typography nzType="secondary">Ваша кампания отправится на модерацию</p>
+</nz-form-control>

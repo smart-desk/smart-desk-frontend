@@ -25,8 +25,15 @@
         <i nz-icon nzType="user" nzTheme="outline"></i>
         <span>Пользователи</span>
     </li>
-    <li nz-menu-item [nzMatchRouter]="true" routerLink="/admin/ad-config">
-        <i nz-icon nzType="dollar-circle" nzTheme="outline"></i>
-        <span>Настройка рекламы</span>
+
+    <li nz-submenu nzOpen nzTitle="Реклама" nzIcon="copyright">
+        <ul>
+            <li nz-menu-item [nzMatchRouter]="true" routerLink="/admin/ad-config">
+                <span>Настройка рекламы</span>
+            </li>
+            <li nz-menu-item [nzMatchRouterExact]="true" routerLink="/admin/ad-campaigns">
+                <span>Рекламные кампании</span>
+            </li>
+        </ul>
     </li>
 </ul>

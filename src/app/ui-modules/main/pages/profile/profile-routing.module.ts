@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProfileComponent } from './components/profile/profile.component';
-import { BookmarksComponent } from './components/bookmarks/bookmarks.component';
-import { MyAdvertsComponent } from './components/my-adverts/my-adverts.component';
-import { MyAdCampaignsComponent } from './components/my-ad-campaigns/my-ad-campaigns.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { BookmarksComponent } from './pages/bookmarks/bookmarks.component';
+import { MyAdvertsComponent } from './pages/my-adverts/my-adverts.component';
+import { MyAdCampaignsComponent } from './pages/my-ad-campaigns/my-ad-campaigns.component';
+import { CreateAdCampaignComponent } from './pages/create-ad-campaign/create-ad-campaign.component';
 
 const routes: Routes = [
     {
@@ -21,6 +22,10 @@ const routes: Routes = [
     {
         path: 'my-ad-campaigns',
         component: MyAdCampaignsComponent,
+    },
+    {
+        path: 'my-ad-campaigns/create',
+        component: CreateAdCampaignComponent,
     },
 ];
 

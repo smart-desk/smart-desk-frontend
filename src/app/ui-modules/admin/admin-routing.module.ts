@@ -11,6 +11,7 @@ import { UsersComponent } from './pages/users/users.component';
 import { AdvertsBlockedComponent } from './pages/adverts-blocked/adverts-blocked.component';
 import { AdvertsPendingComponent } from './pages/adverts-pending/adverts-pending.component';
 import { AdConfigComponent } from './pages/ad-config/ad-config.component';
+import { AdCampaignListComponent } from './pages/ad-campaign-list/ad-campaign-list.component';
 
 const routes: Routes = [
     {
@@ -45,6 +46,10 @@ const routes: Routes = [
             {
                 path: 'adverts/pending',
                 component: AdvertsPendingComponent,
+            },
+            {
+                path: 'ad-campaigns',
+                component: AdCampaignListComponent,
             },
             {
                 path: 'users',

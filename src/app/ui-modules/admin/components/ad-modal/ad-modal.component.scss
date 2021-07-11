@@ -1,0 +1,6 @@
+@import '~src/assets/styles/variables';
+
+.form__control {
+    width: 100%;
+    min-height: $base-unit * 4;
+}

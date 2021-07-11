@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { AdService } from '../../../../modules/ad-campaign/ad-campaign.service';
+import { AdService } from '../../../../modules/ad/ad.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { catchError } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';

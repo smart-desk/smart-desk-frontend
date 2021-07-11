@@ -1,0 +1,10 @@
+@import '../../../assets/styles/variables';
+
+.card__img {
+    width: inherit;
+    height: auto;
+}
+
+.card__link {
+    padding: $base-unit * 3;
+}

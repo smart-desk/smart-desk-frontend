@@ -41,8 +41,12 @@ import { AdvertsPendingComponent } from './pages/adverts-pending/adverts-pending
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SharedModule } from '../../shared.module';
 import { AdConfigComponent } from './pages/ad-config/ad-config.component';
+import { AdRejectReasonComponent } from './components/ad-modal/ad-modal.component';
+import { AdCampaignListComponent } from './pages/ad-campaign-list/ad-campaign-list.component';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 
 const components = [
+    AdRejectReasonComponent,
     PreviewComponent,
     CategoryFormComponent,
     AdminMenuComponent,
@@ -63,6 +67,7 @@ const pages = [
     AdvertsBlockedComponent,
     AdvertsPendingComponent,
     AdConfigComponent,
+    AdCampaignListComponent,
 ];
 
 @NgModule({
@@ -93,6 +98,7 @@ const pages = [
         NzModalModule,
         NzCheckboxModule,
         DragDropModule,
+        NzRadioModule,
     ],
     declarations: [...pages, ...components],
 })

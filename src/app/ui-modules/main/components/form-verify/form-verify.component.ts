@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ProfileFormEnum } from '../../pages/profile/components/profile/profile-form.enum';
+import { ProfileFormEnum } from '../../pages/profile/pages/profile/profile-form.enum';
 
 @Component({
     selector: 'app-form-verify',
