@@ -92,11 +92,12 @@ const components = [
     AdvertFormComponent,
     SortingComponent,
     VkRedirectComponent,
+    AdCardComponent,
 ];
 
 @NgModule({
-    declarations: [...components, AdCardComponent],
-    exports: [...components, AdCardComponent],
+    declarations: [...components],
+    exports: [...components],
     imports: [
         ...NZModules,
         SharedModule,
