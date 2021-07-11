@@ -1,7 +1,7 @@
 import { AdService } from '../../../../modules/ad/ad.service';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { AdCampaignEntity, AdCampaignStatus } from '../../../../modules/ad/models/ad-campaign.entity';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import * as dayjs from 'dayjs';
@@ -17,6 +17,7 @@ import { ActivatedRoute } from '@angular/router';
 export class AdCampaignListComponent implements OnInit, OnDestroy {
     adCampaigns: AdCampaignEntity[];
     protected destroy$ = new Subject();
+    private status: AdCampaignStatus;
 
     constructor(
         private readonly adService: AdService,
@@ -26,15 +27,10 @@ export class AdCampaignListComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        this.route.queryParamMap
-            .pipe(
-                takeUntil(this.destroy$),
-                switchMap(param => this.getCampaigns(param.get('status') || undefined))
-            )
-            .subscribe(ads => {
-                this.adCampaigns = ads;
-                this.cd.detectChanges();
-            });
+        this.route.queryParamMap.pipe(takeUntil(this.destroy$)).subscribe(param => {
+            this.status = param.get('status') as AdCampaignStatus;
+            this.getCampaigns(this.status);
+        });
     }
 
     ngOnDestroy(): void {
@@ -93,14 +89,23 @@ export class AdCampaignListComponent implements OnInit, OnDestroy {
     }
 
     private approveCampaign(id: string, modalRef?: NzModalRef): void {
-        this.adService.approveAdCampaigns(id).subscribe(() => modalRef?.close());
+        this.adService.approveAdCampaigns(id).subscribe(() => {
+            this.getCampaigns(this.status);
+            modalRef?.close();
+        });
     }
 
     private rejectCampaign(id: string, reason: string, modalRef?: NzModalRef): void {
-        this.adService.rejectAdCampaigns(id, { reason }).subscribe(() => modalRef?.close());
+        this.adService.rejectAdCampaigns(id, { reason }).subscribe(() => {
+            this.getCampaigns(this.status);
+            modalRef?.close();
+        });
     }
 
-    private getCampaigns(status?: string) {
-        return this.adService.getAdCampaigns(status);
+    private getCampaigns(status?: AdCampaignStatus): void {
+        this.adService.getAdCampaigns(status).subscribe(ads => {
+            this.adCampaigns = ads;
+            this.cd.detectChanges();
+        });
     }
 }
