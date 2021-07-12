@@ -15,6 +15,7 @@
                 <th>Статус</th>
                 <th>Дата начала кампания</th>
                 <th>Дата окончания кампании</th>
+                <th>Причина отклонения</th>
                 <th>Действие</th>
             </tr>
         </thead>
@@ -26,10 +27,11 @@
                 <td>{{ ad.status }}</td>
                 <td>{{ ad.startDate | date: 'dd.MM.yyyy' }}</td>
                 <td>{{ ad.endDate | date: 'dd.MM.yyyy' }}</td>
+                <td>{{ ad.reason }}</td>
                 <td>
-                    <a *ngIf="ad.status !== adsStatus.PAID" (click)="edit(ad.id)">Редатировать</a>
+                    <a *ngIf="ad.status === adsStatus.REJECTED || ad.status !== adsStatus.PENDING" (click)="edit(ad.id)">Редатировать</a>
                     <nz-divider nzType="vertical"></nz-divider>
-                    <a (click)="pay(ad.id)">Оплатить</a>
+                    <a *ngIf="ad.status === adsStatus.APPROVED" (click)="pay(ad.id)">Оплатить</a>
                     <nz-divider nzType="vertical"></nz-divider>
                 </td>
             </tr>
