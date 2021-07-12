@@ -25,7 +25,7 @@ export class AdConfigComponent implements OnInit {
             .updateAdConfig(this.form.value)
             .pipe(
                 catchError(() => {
-                    this.notificationService.error('Произошла ошибка', 'Попробуйте поврторить позже');
+                    this.notificationService.error('Произошла ошибка', 'Попробуйте повторить позже');
                     return EMPTY;
                 })
             )
