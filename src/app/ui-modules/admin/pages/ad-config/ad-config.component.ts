@@ -25,17 +25,18 @@ export class AdConfigComponent implements OnInit {
             .updateAdConfig(this.form.value)
             .pipe(
                 catchError(() => {
-                    this.notificationService.error('Произошла ошибка', 'Попытайтесь позже');
+                    this.notificationService.error('Произошла ошибка', 'Попробуйте поврторить позже');
                     return EMPTY;
                 })
             )
-            .subscribe(() => this.notificationService.success('Уведомление', 'Данне успешно сохранены'));
+            .subscribe(() => this.notificationService.success('Сохранено', 'Настройки успешно сохранены'));
     }
 
     ngOnInit(): void {
         this.form = this.fb.group({
-            mainHourlyRate: [undefined],
-            sidebarHourlyRate: [undefined],
+            mainHourlyRate: [],
+            sidebarHourlyRate: [],
+            liftRate: [],
         });
         this.adService.getAdConfig().subscribe(data => this.form.patchValue(data));
     }
