@@ -5,7 +5,7 @@ import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { BookmarksComponent } from './pages/bookmarks/bookmarks.component';
-import { MyAdvertsComponent } from './pages/my-adverts/my-adverts.component';
+import { MyProductsComponent } from './pages/my-products/my-products.component';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { MainModule } from '../../main.module';
 import { NotificationsComponent } from './components/notifications/notifications.component';
@@ -25,7 +25,7 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 const components = [
     ProfileComponent,
     BookmarksComponent,
-    MyAdvertsComponent,
+    MyProductsComponent,
     NotificationsComponent,
     MyAdCampaignsComponent,
     CreateAdCampaignComponent,

@@ -30,9 +30,9 @@ import { AdService } from './modules/ad/ad.service';
 import { ModelService } from './modules/model/model.service';
 import { AuthService } from './modules/auth/auth.service';
 import { CategoryService } from './modules/category/category.service';
-import { AdvertService } from './modules/advert/advert.service';
+import { ProductService } from './modules/product/product.service';
 import { UserService } from './modules/user/user.service';
-import { AdvertDataService } from './modules/advert/advert-data.service';
+import { ProductDataService } from './modules/product/product-data.service';
 import { FieldService } from './modules/field/field.service';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzSelectModule } from 'ng-zorro-antd/select';
@@ -62,7 +62,7 @@ const services = [
     ModelService,
     FieldService,
     CategoryService,
-    AdvertService,
+    ProductService,
     AuthService,
     AuthGuard,
     AdminGuard,
@@ -71,7 +71,7 @@ const services = [
     BookmarksService,
     PhoneService,
     UserService,
-    AdvertDataService,
+    ProductDataService,
     AdService,
 ];
 

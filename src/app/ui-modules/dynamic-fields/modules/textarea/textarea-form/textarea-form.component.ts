@@ -30,11 +30,11 @@ export class TextareaFormComponent extends AbstractFieldFormComponent<TextareaEn
             return this.field.data;
         }
 
-        const advertField = new TextareaEntity();
-        advertField.value = this.form.get('value')?.value;
-        advertField.fieldId = this.field.id;
+        const productField = new TextareaEntity();
+        productField.value = this.form.get('value')?.value;
+        productField.fieldId = this.field.id;
 
-        return advertField;
+        return productField;
     }
 
     isFieldDataValid(): boolean {

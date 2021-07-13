@@ -3,10 +3,10 @@
 <ng-template #main>
     <nz-tabset [nzAnimated]="false">
         <nz-tab nzTitle="Активные">
-            <app-adverts [advertsResponse]="advertResponse"></app-adverts>
+            <app-products [productsResponse]="productResponse"></app-products>
         </nz-tab>
         <nz-tab nzTitle="Завершенные">
-            <app-adverts [advertsResponse]="completedAdverts"></app-adverts>
+            <app-products [productsResponse]="completedProducts"></app-products>
         </nz-tab>
     </nz-tabset>
 </ng-template>

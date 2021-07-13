@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnChanges, OnInit } from '@angular/
 import { AbstractFieldFilterComponent } from '../../../models/abstract-field-filter.component';
 import { RadioItem, RadioParamsDto } from '../dto/radio-params.dto';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { Filter } from '../../../../../modules/advert/models/filter';
+import { Filter } from '../../../../../modules/product/models/filter';
 import { RadioFilterDto } from '../dto/radio-filter.dto';
 
 @Component({

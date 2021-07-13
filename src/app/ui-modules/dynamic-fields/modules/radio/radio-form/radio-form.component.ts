@@ -25,11 +25,11 @@ export class RadioFormComponent extends AbstractFieldFormComponent<RadioEntity, 
             return this.field.data;
         }
 
-        const advertField = new RadioEntity();
-        advertField.value = this.form.get('value')?.value;
-        advertField.fieldId = this.field.id;
+        const productField = new RadioEntity();
+        productField.value = this.form.get('value')?.value;
+        productField.fieldId = this.field.id;
 
-        return advertField;
+        return productField;
     }
 
     isFieldDataValid(): boolean {

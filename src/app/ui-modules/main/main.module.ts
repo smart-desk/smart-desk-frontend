@@ -31,19 +31,19 @@ import { SharedModule } from '../../shared.module';
 import { ContentLayoutComponent } from './components/content-layout/content-layout.component';
 import { HeaderComponent } from './components/header/header.component';
 import { NavigationHeaderComponent } from './components/navigation-header/navigation-header.component';
-import { AdvertCardComponent } from './components/advert-card/advert-card.component';
+import { ProductCardComponent } from './components/product-card/product-card.component';
 import { ProfileMenuComponent } from './components/profile-menu/profile-menu.component';
 import { FiltersComponent } from './components/filters/filters.component';
 import { ProfileSideBarComponent } from './components/profile-side-bar/profile-side-bar.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
-import { AdvertsComponent } from './components/adverts/adverts.component';
+import { ProductsComponent } from './components/products/products.component';
 import { FormNameComponent } from './components/form-name/form-name.component';
 import { FormPhoneComponent } from './components/form-phone/form-phone.component';
 import { FormVerifyComponent } from './components/form-verify/form-verify.component';
-import { AdvertFormComponent } from './components/advert-form/advert-form.component';
+import { ProductFormComponent } from './components/product-form/product-form.component';
 import { VkRedirectComponent } from './components/vk-redirect/vk-redirect.component';
 import { NzResultModule } from 'ng-zorro-antd/result';
-import { AdvertComponent } from './pages/advert/components/advert/advert.component';
+import { ProductComponent } from './pages/product/components/product/product.component';
 import { SortingComponent } from './components/sorting/sorting.component';
 import { FormAdCampaignComponent } from './components/form-ad-campaign/form-ad-campaign.component';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
@@ -76,21 +76,21 @@ const NZModules = [
 ];
 
 const components = [
-    AdvertComponent,
+    ProductComponent,
     MainComponent,
     ContentLayoutComponent,
     HeaderComponent,
     NavigationHeaderComponent,
-    AdvertCardComponent,
+    ProductCardComponent,
     ProfileMenuComponent,
     FiltersComponent,
     ProfileSideBarComponent,
     UserInfoComponent,
-    AdvertsComponent,
+    ProductsComponent,
     FormNameComponent,
     FormPhoneComponent,
     FormVerifyComponent,
-    AdvertFormComponent,
+    ProductFormComponent,
     SortingComponent,
     VkRedirectComponent,
     FormAdCampaignComponent,

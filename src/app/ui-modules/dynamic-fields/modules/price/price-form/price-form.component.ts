@@ -36,11 +36,11 @@ export class PriceFormComponent extends AbstractFieldFormComponent<PriceEntity, 
             return this.field.data;
         }
 
-        const advertField = new PriceEntity();
-        advertField.value = this.form.get('value')?.value;
-        advertField.fieldId = this.field.id;
+        const productField = new PriceEntity();
+        productField.value = this.form.get('value')?.value;
+        productField.fieldId = this.field.id;
 
-        return advertField;
+        return productField;
     }
 
     isFieldDataValid(): boolean {

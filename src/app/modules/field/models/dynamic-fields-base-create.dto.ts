@@ -1,4 +1,4 @@
 export abstract class DynamicFieldsBaseCreateDto {
-    advert_id: string;
+    product_id: string;
     fieldId: string;
 }

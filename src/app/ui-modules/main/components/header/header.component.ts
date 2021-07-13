@@ -7,7 +7,7 @@ import { Category } from '../../../../modules/category/models/category.entity';
 import { LoginService } from '../../../../modules/login/login.service';
 import { User } from '../../../../modules/user/models/user.entity';
 import { transformCategoryArrayToNZCascade } from '../../../../utils';
-import { AdvertDataService } from '../../../../modules/advert/advert-data.service';
+import { ProductDataService } from '../../../../modules/product/product-data.service';
 import { CategoryService } from '../../../../modules/category/category.service';
 
 @Component({
@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     constructor(
         private cd: ChangeDetectorRef,
-        private advertDataService: AdvertDataService,
+        private productDataService: ProductDataService,
         private categoryService: CategoryService,
         private router: Router,
         private route: ActivatedRoute,
@@ -85,7 +85,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     search(searchPhrase: string): void {
         if (searchPhrase.trim() || searchPhrase === '') {
             if (this.currentCategory) {
-                return this.advertDataService.search(searchPhrase.trim());
+                return this.productDataService.search(searchPhrase.trim());
             }
             return this.navigateToGlobalSearchPage(searchPhrase.trim());
         }
@@ -98,8 +98,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         return 'Поиск по объявлениям';
     }
 
-    navigateToAdvertCreate(): void {
-        this.user ? this.router.navigate(['/adverts/create']) : this.loginService.openLoginModal();
+    navigateToProductCreate(): void {
+        this.user ? this.router.navigate(['/products/create']) : this.loginService.openLoginModal();
     }
 
     navigateToMain(): void {

@@ -1,0 +1,18 @@
+<div *ngIf="!productsResponse || !productsResponse.totalCount">Здесь еще нет объявлений :)</div>
+<div class="box__products">
+    <app-product-card
+        *ngFor="let product of productsResponse?.products; trackBy: trackByFn"
+        [product]="product"
+        [extraActions]="cardActions"
+        (createBookmark)="addBookmarkEvent($event)"
+        (deleteBookmark)="removeBookmarkEvent($event)"
+    ></app-product-card>
+</div>
+<app-pagination
+    class="pagination"
+    *ngIf="productsResponse?.totalCount > productsResponse?.limit"
+    [pageIndex]="productsResponse?.page"
+    [totalItems]="productsResponse?.totalCount"
+    [pageSize]="productsResponse?.limit"
+    (changePage)="changePage($event)"
+></app-pagination>

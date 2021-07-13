@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { filter, pairwise, startWith, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { Subject } from 'rxjs';
-import { GetAdvertsResponseDto } from '../../../../../../modules/advert/models/advert.dto';
+import { GetProductsResponseDto } from '../../../../../../modules/product/models/product.dto';
 import { BookmarksStoreService } from '../../../../../../modules/bookmarks/bookmarks-store.service';
-import { AdvertDataService } from '../../../../../../modules/advert/advert-data.service';
+import { ProductDataService } from '../../../../../../modules/product/product-data.service';
 
 @Component({
     selector: 'app-global-search',
@@ -13,13 +13,13 @@ import { AdvertDataService } from '../../../../../../modules/advert/advert-data.
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GlobalSearchComponent implements OnInit, OnDestroy {
-    advertsResponse: GetAdvertsResponseDto;
+    productsResponse: GetProductsResponseDto;
     private destroy$ = new Subject();
 
     constructor(
         private route: ActivatedRoute,
         private cd: ChangeDetectorRef,
-        private advertDataService: AdvertDataService,
+        private productDataService: ProductDataService,
         private bookmarksStoreService: BookmarksStoreService,
         private router: Router
     ) {}
@@ -34,8 +34,8 @@ export class GlobalSearchComponent implements OnInit, OnDestroy {
                 takeUntil(this.destroy$)
             )
             .subscribe(() => {
-                const options = this.advertDataService.parseQueryParams(this.route.snapshot.queryParamMap);
-                this.advertDataService.loadAdverts(null, options);
+                const options = this.productDataService.parseQueryParams(this.route.snapshot.queryParamMap);
+                this.productDataService.loadProducts(null, options);
                 this.cd.detectChanges();
             });
     }

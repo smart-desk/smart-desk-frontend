@@ -1,0 +1,21 @@
+<form nz-form nzLayout="vertical" class="form" [formGroup]="formDefaultFields">
+    <nz-form-item>
+        <nz-form-label [nzRequired]="true">Заголовок</nz-form-label>
+        <nz-form-control nzErrorTip="Обязательное поле">
+            <input nz-input [required]="true" formControlName="title" [placeholder]="'Введите заголовок'" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label>Предпочитаемый способ связи</nz-form-label>
+        <nz-form-control>
+            <nz-radio-group formControlName="preferredContact">
+                <label nz-radio [nzValue]="preferContact.PHONE">Телефон</label>
+                <label nz-radio [nzValue]="preferContact.CHAT">Чат</label>
+                <label nz-radio [nzValue]="null">Любой</label>
+            </nz-radio-group>
+        </nz-form-control>
+    </nz-form-item>
+</form>
+<ng-container #fields></ng-container>
+
+<button nz-button nzType="primary" (click)="save()">{{ product.id ? 'Сохранить' : 'Добавить' }} объявление</button>
