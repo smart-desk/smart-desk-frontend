@@ -6,6 +6,7 @@ import { Category } from '../../../../modules/category/models/category.entity';
 import { GetProductsDto, GetProductsResponseDto } from '../../../../modules/product/models/product.dto';
 import { ProductService } from '../../../../modules/product/product.service';
 import { CategoryService } from '../../../../modules/category/category.service';
+import { ProductStatusEnum } from '../../../../modules/advert/models/product-status.enum';
 
 @Component({
     selector: 'app-table-products',
@@ -17,6 +18,8 @@ export class ProductsListComponent implements OnInit {
     productResponse: GetProductsResponseDto;
     selectedItems = new Set<string>();
     categories: Category[] = [];
+    status: ProductStatusEnum;
+    productStatus = ProductStatusEnum;
 
     constructor(
         private productService: ProductService,
@@ -90,6 +93,14 @@ export class ProductsListComponent implements OnInit {
     getCategoryName(id: string): string {
         const categoryProduct = this.categories.find(category => category.id === id);
         return categoryProduct ? categoryProduct.name : 'Категория не определена';
+    }
+
+    changeStatus(): void {
+        if (this.status) {
+            this.router.navigate([`./admin/advert/${this.status}`]);
+        } else {
+            this.router.navigate([`./admin/advert`]);
+        }
     }
 
     private getProducts(options?: GetProductsDto): void {

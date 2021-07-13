@@ -1,6 +1,11 @@
 <nz-page-header>
     <nz-page-header-title>Заблокированные объявления</nz-page-header-title>
 </nz-page-header>
+<nz-radio-group [(ngModel)]="status" nzButtonStyle="solid" (ngModelChange)="changeStatus()" class="top-actions">
+    <label nz-radio-button [nzValue]="null">Все</label>
+    <label nz-radio-button [nzValue]="productStatus.PENDING">В ожидании</label>
+    <label nz-radio-button [nzValue]="productStatus.BLOCKED">Одобренные</label>
+</nz-radio-group>
 <section class="actions-box">
     <!-- todo вынести как отдельную компоненту-->
     <button nz-button nzType="primary" [disabled]="selectedItems.size === 0" (click)="bulkAction('publish')">

@@ -4,6 +4,7 @@ import { zip } from 'rxjs';
 import { GetProductsDto, GetProductsResponseDto } from '../../../../modules/product/models/product.dto';
 import * as dayjs from 'dayjs';
 import { ProductService } from '../../../../modules/product/product.service';
+import { ProductStatusEnum } from '../../../../modules/advert/models/product-status.enum';
 
 @Component({
     selector: 'app-products-blocked',
@@ -14,6 +15,8 @@ import { ProductService } from '../../../../modules/product/product.service';
 export class ProductsBlockedComponent implements OnInit {
     productResponse: GetProductsResponseDto;
     selectedItems = new Set<string>();
+    status: ProductStatusEnum;
+    productStatus = ProductStatusEnum;
 
     constructor(private productService: ProductService, private router: Router, private cd: ChangeDetectorRef) {}
 
@@ -71,6 +74,14 @@ export class ProductsBlockedComponent implements OnInit {
 
     formatDate(date: Date | string): string {
         return dayjs(date).format('DD MMM YYYY HH:mm');
+    }
+
+    changeStatus(): void {
+        if (this.status) {
+            this.router.navigate([`./admin/advert/${this.status}`]);
+        } else {
+            this.router.navigate([`./admin/advert`]);
+        }
     }
 
     private getProducts(options?: GetProductsDto): void {
