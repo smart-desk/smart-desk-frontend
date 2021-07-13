@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AdCampaignStatus } from '../../../../modules/ad/models/ad-campaign.entity';
 
 @Component({
     selector: 'app-admin-menu',
@@ -7,6 +6,4 @@ import { AdCampaignStatus } from '../../../../modules/ad/models/ad-campaign.enti
     styleUrls: ['./admin-menu.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdminMenuComponent {
-    adCampaignStatus = AdCampaignStatus;
-}
+export class AdminMenuComponent {}

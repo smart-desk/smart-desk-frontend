@@ -1,7 +1,7 @@
 @import './src/assets/styles/variables';
 
 .top-actions {
-    padding-bottom: 20px;
+    margin-bottom: $base-unit * 2;
 }
 
 .actions-box {
@@ -16,4 +16,9 @@
 
 .table {
     margin-bottom: $base-unit * 2;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
 }

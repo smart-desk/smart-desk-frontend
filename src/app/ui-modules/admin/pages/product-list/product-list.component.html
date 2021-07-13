@@ -1,10 +1,11 @@
 <nz-page-header>
-    <nz-page-header-title>Активные объявления</nz-page-header-title>
+    <nz-page-header-title>Объявления</nz-page-header-title>
 </nz-page-header>
 <nz-radio-group [(ngModel)]="status" nzButtonStyle="solid" (ngModelChange)="changeStatus()" class="top-actions">
-    <label nz-radio-button [nzValue]="null">Все</label>
     <label nz-radio-button [nzValue]="productStatus.PENDING">В ожидании</label>
-    <label nz-radio-button [nzValue]="productStatus.BLOCKED">Одобренные</label>
+    <label nz-radio-button [nzValue]="null">Активные</label>
+    <label nz-radio-button [nzValue]="productStatus.BLOCKED">Заблокированные</label>
+    <label nz-radio-button [nzValue]="productStatus.COMPLETED">Завершенные</label>
 </nz-radio-group>
 <section class="actions-box">
     <button nz-button nzType="primary" [disabled]="selectedItems.size === 0" (click)="bulkAction('block')">
@@ -19,6 +20,7 @@
         <tr>
             <th class="column-checkbox"></th>
             <th>Заголовок</th>
+            <th>Статус</th>
             <th>Дата создания</th>
             <th>Категория</th>
             <th>Действия</th>
@@ -30,6 +32,7 @@
             <td>
                 <a [routerLink]="['/', 'products', product.id]">{{ product.title }}</a>
             </td>
+            <td>{{ product.status }}</td>
             <td>{{ formatDate(product.createdAt) }}</td>
             <td>{{ getCategoryName(product.category_id) }}</td>
             <td>

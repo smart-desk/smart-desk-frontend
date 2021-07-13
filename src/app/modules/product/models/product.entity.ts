@@ -1,4 +1,5 @@
 import { FieldEntity } from '../../field/models/field.entity';
+import { ProductStatus } from './product-status.enum';
 
 export class Product {
     id: string;
@@ -14,4 +15,5 @@ export class Product {
     fields: FieldEntity[];
     isBookmark: boolean;
     views: number;
+    status: ProductStatus;
 }
