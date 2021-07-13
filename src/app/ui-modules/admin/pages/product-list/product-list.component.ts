@@ -58,7 +58,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
         this.destroy$.complete();
     }
 
-    bulkAction(action: 'delete' | 'block'): void {
+    bulkAction(action: 'delete' | 'block' | 'publish'): void {
         let requests = [];
         switch (action) {
             case 'delete':
@@ -67,6 +67,9 @@ export class ProductListComponent implements OnInit, OnDestroy {
             case 'block':
                 requests = [...this.selectedItems.values()].map(id => this.productService.blockProduct(id));
                 break;
+            case 'publish':
+                requests = [...this.selectedItems.values()].map(id => this.productService.publishProduct(id));
+                break;
         }
 
         zip(...requests).subscribe(() => {
@@ -74,10 +77,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
             this.cd.detectChanges();
             this.getProducts();
         });
-    }
-
-    edit(id: string): void {
-        this.router.navigate([`/products/${id}/edit`]);
     }
 
     delete(id: string): void {
@@ -89,8 +88,13 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
     block(id: string): void {
         this.productService.blockProduct(id).subscribe(() => {
-            this.productResponse.products = this.productResponse.products.filter(item => item.id !== id);
-            this.cd.detectChanges();
+            this.getProducts();
+        });
+    }
+
+    publish(id: string): void {
+        this.productService.publishProduct(id).subscribe(() => {
+            this.getProducts();
         });
     }
 
@@ -119,6 +123,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
     }
 
     changeStatus(): void {
+        this.selectedItems.clear();
+        this.cd.detectChanges();
         this.router.navigate([], { queryParams: { status: this.status } });
     }
 

@@ -4,15 +4,18 @@
 <nz-radio-group [(ngModel)]="status" nzButtonStyle="solid" (ngModelChange)="changeStatus()" class="top-actions">
     <label nz-radio-button [nzValue]="productStatus.PENDING">В ожидании</label>
     <label nz-radio-button [nzValue]="null">Активные</label>
-    <label nz-radio-button [nzValue]="productStatus.BLOCKED">Заблокированные</label>
+    <label nz-radio-button [nzValue]="productStatus.BLOCKED">Отклонённые</label>
     <label nz-radio-button [nzValue]="productStatus.COMPLETED">Завершенные</label>
 </nz-radio-group>
 <section class="actions-box">
-    <button nz-button nzType="primary" [disabled]="selectedItems.size === 0" (click)="bulkAction('block')">
-        <i nz-icon nzType="delete"></i>Блокировать
+    <button *ngIf="status" nz-button [disabled]="selectedItems.size === 0" (click)="bulkAction('publish')">
+        <i nz-icon nzType="like" nzTheme="outline"></i>Опубликовать
+    </button>
+    <button *ngIf="status !== productStatus.BLOCKED" nz-button [disabled]="selectedItems.size === 0" (click)="bulkAction('block')">
+        <i nz-icon nzType="dislike" nzTheme="outline"></i>Отклонить
     </button>
     <button nz-button nzType="danger" [disabled]="selectedItems.size === 0" (click)="bulkAction('delete')">
-        <i nz-icon nzType="delete"></i>Удалить
+        <i nz-icon nzType="delete" nzTheme="outline"></i>Удалить
     </button>
 </section>
 <nz-table [nzTemplateMode]="true">
@@ -36,9 +39,15 @@
             <td>{{ formatDate(product.createdAt) }}</td>
             <td>{{ getCategoryName(product.category_id) }}</td>
             <td>
-                <a (click)="edit(product.id)">Редактировать</a>
-                <nz-divider nzType="vertical"></nz-divider>
-                <a (click)="block(product.id)">Заблокировать</a>
+                <ng-container *ngIf="status && status !== productStatus.ACTIVE">
+                    <a (click)="publish(product.id)">Опубликовать</a>
+                </ng-container>
+
+                <ng-container *ngIf="status !== productStatus.BLOCKED">
+                    <nz-divider nzType="vertical"></nz-divider>
+                    <a (click)="block(product.id)">Отклонить</a>
+                </ng-container>
+
                 <nz-divider nzType="vertical"></nz-divider>
                 <a (click)="delete(product.id)" nz-typography nzType="danger">Удалить</a>
             </td>
