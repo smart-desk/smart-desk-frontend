@@ -26,14 +26,13 @@
         <span>Пользователи</span>
     </li>
 
-    <li nz-submenu nzOpen nzTitle="Реклама" nzIcon="copyright">
-        <ul>
-            <li nz-menu-item [nzMatchRouter]="true" routerLink="/admin/ad-config">
-                <span>Настройка рекламы</span>
-            </li>
-            <li nz-menu-item [nzMatchRouterExact]="true" routerLink="/admin/ad-campaigns">
-                <span>Рекламные кампании</span>
-            </li>
-        </ul>
+    <li nz-menu-item [nzMatchRouter]="true" routerLink="/admin/ad-config">
+        <i nz-icon nzType="dollar-circle" nzTheme="outline"></i>
+        <span>Настройка платных услуг</span>
+    </li>
+
+    <li nz-menu-item [nzMatchRouterExact]="true" routerLink="/admin/ad-campaigns">
+        <i nz-icon nzType="calendar" nzTheme="outline"></i>
+        <span>Рекламные кампании</span>
     </li>
 </ul>
