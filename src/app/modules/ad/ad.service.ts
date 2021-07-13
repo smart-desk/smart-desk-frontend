@@ -29,7 +29,7 @@ export class AdService {
     }
 
     updateAdCampaign(adCampaign: AdCampaignEntity): Observable<AdCampaignEntity> {
-        return this.http.patch<AdCampaignEntity>(`/ad/campaigns/:${adCampaign.id}`, adCampaign);
+        return this.http.patch<AdCampaignEntity>(`/ad/campaigns/${adCampaign.id}`, adCampaign);
     }
 
     getAdCampaigns(status?: string): Observable<AdCampaignEntity[]> {
