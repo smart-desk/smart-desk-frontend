@@ -34,11 +34,11 @@ export class InputTextFormComponent extends AbstractFieldFormComponent<InputText
             return this.field.data;
         }
 
-        const advertField = new InputTextEntity();
-        advertField.value = this.form.get('value')?.value;
-        advertField.fieldId = this.field.id;
+        const productField = new InputTextEntity();
+        productField.value = this.form.get('value')?.value;
+        productField.fieldId = this.field.id;
 
-        return advertField;
+        return productField;
     }
 
     isFieldDataValid(): boolean {

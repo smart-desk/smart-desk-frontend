@@ -4,7 +4,7 @@ import { MainComponent } from './main.component';
 import { AuthGuard } from '../../modules/auth/auth.guard';
 import { ForbiddenComponent } from '../../pages/forbidden/forbidden.component';
 import { UnauthorizedComponent } from '../../pages/unauthorized/unauthorized.component';
-import { AdvertComponent } from './pages/advert/components/advert/advert.component';
+import { ProductComponent } from './pages/product/components/product/product.component';
 import { VkRedirectComponent } from './components/vk-redirect/vk-redirect.component';
 
 const routes: Routes = [
@@ -39,18 +39,18 @@ const routes: Routes = [
                 loadChildren: () => import('./pages/user/user.module').then(m => m.UserModule),
             },
             {
-                path: 'adverts/create',
-                loadChildren: () => import('./pages/advert-create/advert-create.module').then(m => m.AdvertCreateModule),
+                path: 'products/create',
+                loadChildren: () => import('./pages/product-create/product-create.module').then(m => m.ProductCreateModule),
                 canActivate: [AuthGuard],
             },
             {
-                path: 'adverts/:advert_id/edit',
-                loadChildren: () => import('./pages/advert-edit/advert-edit.module').then(m => m.AdvertEditModule),
+                path: 'products/:advert_id/edit',
+                loadChildren: () => import('./pages/product-edit/product-edit.module').then(m => m.ProductEditModule),
                 canActivate: [AuthGuard],
             },
             {
-                path: 'adverts/:advert_id',
-                component: AdvertComponent,
+                path: 'products/:advert_id',
+                component: ProductComponent,
             },
             {
                 path: 'category/:category_id',

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { GetAdvertsResponseDto } from '../../../../../../modules/advert/models/advert.dto';
+import { GetProductsResponseDto } from '../../../../../../modules/product/models/product.dto';
 import { BookmarksStoreService } from '../../../../../../modules/bookmarks/bookmarks-store.service';
 import { User } from '../../../../../../modules/user/models/user.entity';
 import { Bookmark } from '../../../../../../modules/bookmarks/models/bookmark.entity';
@@ -13,7 +13,7 @@ import { UserService } from '../../../../../../modules/user/user.service';
 })
 export class BookmarksComponent implements OnInit {
     user: User;
-    advertDto: GetAdvertsResponseDto | null;
+    productDto: GetProductsResponseDto | null;
 
     constructor(private bookmarksStoreService: BookmarksStoreService, private cd: ChangeDetectorRef, private userService: UserService) {}
 
@@ -24,21 +24,21 @@ export class BookmarksComponent implements OnInit {
         });
 
         this.bookmarksStoreService.bookmarks$.subscribe(bookmarks => {
-            this.advertDto = this.createGetAdvertResponse(bookmarks);
+            this.productDto = this.createGetProductResponse(bookmarks);
             this.cd.detectChanges();
         });
     }
 
-    private createGetAdvertResponse(bookmarks: Bookmark[]): GetAdvertsResponseDto | null {
+    private createGetProductResponse(bookmarks: Bookmark[]): GetProductsResponseDto | null {
         if (!bookmarks) {
             return null;
         }
-        const getAdvertsResponseDto = new GetAdvertsResponseDto();
-        getAdvertsResponseDto.products = bookmarks.map(bookmark => {
+        const getProductsResponseDto = new GetProductsResponseDto();
+        getProductsResponseDto.products = bookmarks.map(bookmark => {
             bookmark.product.isBookmark = true;
             return bookmark.product;
         });
 
-        return getAdvertsResponseDto;
+        return getProductsResponseDto;
     }
 }

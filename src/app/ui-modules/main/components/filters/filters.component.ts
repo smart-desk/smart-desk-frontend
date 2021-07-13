@@ -10,11 +10,11 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import { Model } from '../../../../modules/model/models/model.entity';
-import { Filter, Filters } from '../../../../modules/advert/models/filter';
+import { Filter, Filters } from '../../../../modules/product/models/filter';
 import { AbstractFieldFilterComponent } from '../../../dynamic-fields/models/abstract-field-filter.component';
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
 import { SectionType } from '../../../../modules/field/models/field.entity';
-import { AdvertDataService } from '../../../../modules/advert/advert-data.service';
+import { ProductDataService } from '../../../../modules/product/product-data.service';
 
 @Component({
     selector: 'app-filters',
@@ -43,7 +43,7 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
     constructor(
         private dynamicFieldService: DynamicFieldsService,
         private cdr: ChangeDetectorRef,
-        private advertDataService: AdvertDataService
+        private productDataService: ProductDataService
     ) {}
 
     ngAfterViewInit(): void {
@@ -60,12 +60,12 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
             .filter(f => !!f)
             .reduce((prev, cur) => ({ ...prev, ...cur?.getFilterObject() }), {});
 
-        this.advertDataService.applyFilters(filters);
+        this.productDataService.applyFilters(filters);
     }
 
     dropFilters(): void {
         this.filters = {};
-        this.advertDataService.applyFilters(this.filters);
+        this.productDataService.applyFilters(this.filters);
         this.filterComponents.forEach(component => {
             component.instance.dropFilters();
             component.changeDetectorRef.detectChanges();

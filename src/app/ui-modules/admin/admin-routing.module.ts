@@ -5,11 +5,11 @@ import { CreateModelComponent } from './pages/create-model/create-model.componen
 import { ModelsComponent } from './pages/models/models.component';
 import { EditModelComponent } from './pages/edit-model/edit-model.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
-import { AdvertsListComponent } from './pages/adverts-list/adverts-list.component';
+import { ProductsListComponent } from './pages/products-list/products-list.component';
 import { AdminGuard } from '../../modules/auth/admin.guard';
 import { UsersComponent } from './pages/users/users.component';
-import { AdvertsBlockedComponent } from './pages/adverts-blocked/adverts-blocked.component';
-import { AdvertsPendingComponent } from './pages/adverts-pending/adverts-pending.component';
+import { ProductsBlockedComponent } from './pages/products-blocked/products-blocked.component';
+import { ProductsPendingComponent } from './pages/products-pending/products-pending.component';
 import { AdConfigComponent } from './pages/ad-config/ad-config.component';
 import { AdCampaignListComponent } from './pages/ad-campaign-list/ad-campaign-list.component';
 
@@ -36,16 +36,16 @@ const routes: Routes = [
                 component: CategoriesComponent,
             },
             {
-                path: 'adverts',
-                component: AdvertsListComponent,
+                path: 'products',
+                component: ProductsListComponent,
             },
             {
-                path: 'adverts/blocked',
-                component: AdvertsBlockedComponent,
+                path: 'products/blocked',
+                component: ProductsBlockedComponent,
             },
             {
-                path: 'adverts/pending',
-                component: AdvertsPendingComponent,
+                path: 'products/pending',
+                component: ProductsPendingComponent,
             },
             {
                 path: 'ad-campaigns',

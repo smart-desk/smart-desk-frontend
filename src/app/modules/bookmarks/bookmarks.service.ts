@@ -12,8 +12,8 @@ export class BookmarksService {
         return this.http.get<Bookmark[]>(`/bookmarks`);
     }
 
-    createBookmark(advertId: string): Observable<Bookmark> {
-        return this.http.post<Bookmark>(`/bookmarks`, { productId: advertId } as CreateBookmarkDto);
+    createBookmark(productId: string): Observable<Bookmark> {
+        return this.http.post<Bookmark>(`/bookmarks`, { productId } as CreateBookmarkDto);
     }
 
     deleteBookmark(bookmarkId: string): Observable<Bookmark> {

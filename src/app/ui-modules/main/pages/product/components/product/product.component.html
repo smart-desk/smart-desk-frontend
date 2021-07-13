@@ -1,0 +1,39 @@
+<app-content-layout [title]="product?.title" [main]="main" [right]="right"></app-content-layout>
+
+<ng-template #main>
+    <div class="meta"><i nz-icon nzType="eye" nzTheme="outline"></i> {{ product?.views }}</div>
+    <ng-container #params></ng-container>
+    <section class="similar">
+        <h1>Похожие объявления</h1>
+        <app-products [productsResponse]="similarProducts"></app-products>
+    </section>
+</ng-template>
+
+<ng-template #right>
+    <div>
+        <ng-container #price></ng-container>
+    </div>
+    <div class="user" *ngIf="user" [routerLink]="['/', 'user', user.id]">
+        <nz-avatar [nzSrc]="user?.avatar" nzIcon="user" nzSize="large"></nz-avatar>
+        <h3>{{ user?.firstName }} {{ user?.lastName }}</h3>
+    </div>
+    <div>
+        <h2>Местоположение</h2>
+        <ng-container #location></ng-container>
+    </div>
+    <div class="contacts">
+        <div class="contacts__phone" *ngIf="isContactAvailable(preferContact.PHONE) && this.user?.isPhoneVerified">
+            <button *ngIf="!isPhoneVisible" nzBlock class="contacts" nz-button (click)="showPhone()">
+                <i nz-icon nzType="phone" nzTheme="outline"></i>
+                Показать телефон
+            </button>
+            <h3 *ngIf="isPhoneVisible">{{ userPhone }}</h3>
+        </div>
+        <div class="contacts__chat" *ngIf="isContactAvailable(preferContact.CHAT)">
+            <button nz-button nzBlock nzType="primary" (click)="openChat()">
+                <i nz-icon nzType="message" nzTheme="outline"></i>
+                Написать сообщение
+            </button>
+        </div>
+    </div>
+</ng-template>

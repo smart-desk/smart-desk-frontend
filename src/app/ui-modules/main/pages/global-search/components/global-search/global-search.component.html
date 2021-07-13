@@ -1,8 +1,8 @@
 <app-content-layout [title]="'Поиск по объявлениям'" [main]="main" [right]="right"></app-content-layout>
 
 <ng-template #main>
-    <div *ngIf="!advertsResponse || !advertsResponse.totalCount">Ничего не найдено</div>
-    <app-adverts [advertsResponse]="advertsResponse"></app-adverts>
+    <div *ngIf="!productsResponse || !productsResponse.totalCount">Ничего не найдено</div>
+    <app-products [productsResponse]="productsResponse"></app-products>
 </ng-template>
 
 <ng-template #right>

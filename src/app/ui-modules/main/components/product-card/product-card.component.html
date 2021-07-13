@@ -1,0 +1,28 @@
+<nz-card [nzActions]="[bookmarkIcon]" nzHoverable [nzCover]="coverTemplate" [nzExtra]="extraActions ? extra : null">
+    <nz-card-meta [nzTitle]="title" [nzDescription]="description"></nz-card-meta>
+</nz-card>
+<ng-template #coverTemplate>
+    <img [routerLink]="['/', 'products', product.id]" alt="example" [src]="thumb || 'assets/images/not-found.png'" />
+</ng-template>
+
+<ng-template #bookmarkIcon>
+    <i *ngIf="!product?.isBookmark" (click)="toggleBookmark(product.id)" nz-icon [nzType]="'heart'" [nzTheme]="'outline'"> </i>
+    <i
+        *ngIf="product?.isBookmark"
+        (click)="toggleBookmark(product.id)"
+        nz-icon
+        [nzType]="'heart'"
+        [nzTheme]="'twotone'"
+        [nzTwotoneColor]="'#eb2f96'"
+    >
+    </i>
+</ng-template>
+
+<ng-template #extra>
+    <i nz-icon nzType="ellipsis" nzTheme="outline" nz-dropdown [nzDropdownMenu]="menu" nzTrigger="click"></i>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu nzSelectable>
+            <li nz-menu-item *ngFor="let action of extraActions" (click)="action.action(product)">{{ action.title }}</li>
+        </ul>
+    </nz-dropdown-menu>
+</ng-template>
