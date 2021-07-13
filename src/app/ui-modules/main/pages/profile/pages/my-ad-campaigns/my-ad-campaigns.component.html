@@ -29,10 +29,15 @@
                 <td>{{ ad.endDate | date: 'dd.MM.yyyy' }}</td>
                 <td>{{ ad.reason }}</td>
                 <td>
-                    <a *ngIf="editButtonDisplayConditions(ad)" (click)="showEditModal(ad.id)">Редатировать</a>
-                    <nz-divider nzType="vertical"></nz-divider>
-                    <a *ngIf="payButtonDisplayConditions(ad)" (click)="showPayPage(ad.id)">Оплатить</a>
-                    <nz-divider nzType="vertical"></nz-divider>
+                    <div *ngIf="editButtonDisplayConditions(ad)">
+                        <a (click)="showEditModal(ad.id)">Редатировать</a>
+                    </div>
+                    <div *ngIf="payButtonDisplayConditions(ad)">
+                        <a (click)="showPayPage(ad.id)">Оплатить</a>
+                    </div>
+                    <div>
+                        <a (click)="showAdCampaign(ad.id)">Просмотр</a>
+                    </div>
                 </td>
             </tr>
         </tbody>

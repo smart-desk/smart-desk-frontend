@@ -8,6 +8,7 @@ import { StripeService } from '../../../../../../modules/stripe/stripe.service';
 import { AdCampaignEntity, AdCampaignStatus } from '../../../../../../modules/ad/models/ad-campaign.entity';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { FormAdCampaignComponent } from '../../../../components/form-ad-campaign/form-ad-campaign.component';
+import { AdCardComponent } from '../../../../../../components/ad-card/ad-card.component';
 
 @Component({
     selector: 'app-ad-campaigns',
@@ -78,5 +79,14 @@ export class MyAdCampaignsComponent implements OnInit {
 
     payButtonDisplayConditions(ad: AdCampaignEntity): boolean {
         return ad.status === this.adsStatus.APPROVED;
+    }
+
+    showAdCampaign(id: string): void {
+        const viewedAd = this.ads.find(ad => ad.id === id);
+        const modalRef: NzModalRef = this.modalService.create<AdCardComponent>({
+            nzContent: AdCardComponent,
+            nzComponentParams: { ad: viewedAd },
+            nzFooter: null,
+        });
     }
 }
