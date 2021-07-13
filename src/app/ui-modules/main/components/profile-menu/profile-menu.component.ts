@@ -46,7 +46,7 @@ export class ProfileMenuComponent implements OnInit, OnDestroy {
         this.loginService.openLoginModal();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.destroy$.next(null);
         this.destroy$.complete();
     }

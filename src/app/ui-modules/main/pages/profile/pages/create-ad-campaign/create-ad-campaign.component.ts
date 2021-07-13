@@ -29,16 +29,9 @@ export class CreateAdCampaignComponent implements OnInit, OnDestroy {
         this.destroy$.complete();
     }
 
-    saveCampaign(): void {
-        const campaignOptions = this.formLink.saveCampaign();
-        if (!campaignOptions.id) {
-            this.adService.createAdCampaign(campaignOptions).subscribe(() => {
-                this.router.navigate(['/profile/my-ad-campaigns']);
-            });
-        } else {
-            // todo: реализовать кейс обновления
-            // this.adService.updateAdCampaign(campaignOptions).subscribe();
-        }
+    createAdCampaign(): void {
+        const campaignData = this.formLink.getAdCampaignData();
+        this.adService.createAdCampaign(campaignData).subscribe(() => this.router.navigate(['/profile/my-ad-campaigns']));
     }
 
     formValueChange(adCampaign: AdCampaignEntity) {

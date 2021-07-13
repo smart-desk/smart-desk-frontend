@@ -66,7 +66,7 @@ export class FormAdCampaignComponent implements OnInit {
         }
     }
 
-    saveCampaign(): AdCampaignEntity {
+    getAdCampaignData(): AdCampaignEntity {
         return this.buildAdCampaign();
     }
 

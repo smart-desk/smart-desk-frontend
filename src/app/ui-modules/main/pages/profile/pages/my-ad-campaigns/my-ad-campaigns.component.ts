@@ -40,7 +40,7 @@ export class MyAdCampaignsComponent implements OnInit {
         });
     }
 
-    pay(id: string): void {
+    showPayPage(id: string): void {
         if (this.stripeService.stripe) {
             this.adService
                 .payCampaign(id)
@@ -51,12 +51,32 @@ export class MyAdCampaignsComponent implements OnInit {
         }
     }
 
-    edit(id: string): void {
+    showEditModal(id: string): void {
         const editAd = this.ads.find(ad => ad.id === id);
         const modalRef: NzModalRef = this.modalService.create<FormAdCampaignComponent>({
             nzContent: FormAdCampaignComponent,
             nzComponentParams: { adData: editAd },
-            nzOnOk: () => modalRef.getContentComponent().submit(),
+            nzFooter: [
+                {
+                    label: 'Сохранить',
+                    type: 'primary',
+                    danger: true,
+                    disabled: modal => !modal?.form?.valid,
+                    onClick: () => {
+                        const adCampaignEntity = modalRef.getContentComponent()?.getAdCampaignData();
+                        this.adService.updateAdCampaign(adCampaignEntity).subscribe();
+                        modalRef.close();
+                    },
+                },
+            ],
         });
+    }
+
+    editButtonDisplayConditions(ad: AdCampaignEntity): boolean {
+        return ad.status === this.adsStatus.PENDING || ad.status === this.adsStatus.REJECTED || ad.status === this.adsStatus.APPROVED;
+    }
+
+    payButtonDisplayConditions(ad: AdCampaignEntity): boolean {
+        return ad.status === this.adsStatus.APPROVED;
     }
 }
