@@ -7,10 +7,5 @@
 }
 
 .form {
-    padding: $base-unit * 2 0;
-    margin: 0 auto;
-
-    &__control {
-        width: $base-unit * 12;
-    }
+    width: $base-unit * 30;
 }
