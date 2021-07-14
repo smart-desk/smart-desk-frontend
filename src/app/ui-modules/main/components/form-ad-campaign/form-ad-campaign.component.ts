@@ -33,7 +33,10 @@ export class FormAdCampaignComponent implements OnInit {
         this.form = this.fb.group({
             type: [this.adData?.type, Validators.required],
             timeRange: [
-                { value: this.adData ? [this.adData.endDate, this.adData.startDate] : undefined, disabled: !this.isTypeSelected },
+                {
+                    value: this.adData ? [this.adData.endDate, this.adData.startDate] : [undefined, undefined],
+                    disabled: !this.isTypeSelected,
+                },
                 Validators.required,
             ],
             link: [this.adData?.link, Validators.required],

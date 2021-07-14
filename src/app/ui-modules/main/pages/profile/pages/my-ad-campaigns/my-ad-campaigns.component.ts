@@ -7,8 +7,8 @@ import { UserService } from '../../../../../../modules/user/user.service';
 import { StripeService } from '../../../../../../modules/stripe/stripe.service';
 import { AdCampaignEntity, AdCampaignStatus } from '../../../../../../modules/ad/models/ad-campaign.entity';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
-import { FormAdCampaignComponent } from '../../../../components/form-ad-campaign/form-ad-campaign.component';
 import { AdCardComponent } from '../../../../../../components/ad-card/ad-card.component';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-ad-campaigns',
@@ -26,7 +26,8 @@ export class MyAdCampaignsComponent implements OnInit {
         private userService: UserService,
         private adService: AdService,
         private stripeService: StripeService,
-        private modalService: NzModalService
+        private modalService: NzModalService,
+        private router: Router
     ) {}
 
     ngOnInit(): void {
@@ -41,7 +42,7 @@ export class MyAdCampaignsComponent implements OnInit {
         });
     }
 
-    showPayPage(id: string): void {
+    navigateToPaymentPage(id: string): void {
         if (this.stripeService.stripe) {
             this.adService
                 .payCampaign(id)
@@ -52,33 +53,9 @@ export class MyAdCampaignsComponent implements OnInit {
         }
     }
 
-    showEditModal(id: string): void {
+    navigateToCampaignPage(id: string): void {
         const editAd = this.ads.find(ad => ad.id === id);
-        const modalRef: NzModalRef = this.modalService.create<FormAdCampaignComponent>({
-            nzContent: FormAdCampaignComponent,
-            nzComponentParams: { adData: editAd },
-            nzFooter: [
-                {
-                    label: 'Сохранить',
-                    type: 'primary',
-                    danger: true,
-                    disabled: modal => !modal?.form?.valid,
-                    onClick: () => {
-                        const adCampaignEntity = modalRef.getContentComponent()?.getAdCampaignData();
-                        this.adService.updateAdCampaign(adCampaignEntity).subscribe();
-                        modalRef.close();
-                    },
-                },
-            ],
-        });
-    }
-
-    editButtonDisplayConditions(ad: AdCampaignEntity): boolean {
-        return ad.status === this.adsStatus.PENDING || ad.status === this.adsStatus.REJECTED || ad.status === this.adsStatus.APPROVED;
-    }
-
-    payButtonDisplayConditions(ad: AdCampaignEntity): boolean {
-        return ad.status === this.adsStatus.APPROVED;
+        this.router.navigate(['./profile/my-ad-campaigns/update'], { state: editAd });
     }
 
     showAdCampaign(id: string): void {

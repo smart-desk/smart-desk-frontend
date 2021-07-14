@@ -29,11 +29,11 @@
                 <td>{{ ad.endDate | date: 'dd.MM.yyyy' }}</td>
                 <td>{{ ad.reason }}</td>
                 <td>
-                    <div *ngIf="editButtonDisplayConditions(ad)">
-                        <a (click)="showEditModal(ad.id)">Редатировать</a>
+                    <div *ngIf="ad.status !== this.adsStatus.PAID">
+                        <a (click)="navigateToCampaignPage(ad.id)">Редатировать</a>
                     </div>
-                    <div *ngIf="payButtonDisplayConditions(ad)">
-                        <a (click)="showPayPage(ad.id)">Оплатить</a>
+                    <div *ngIf="ad.status === this.adsStatus.APPROVED">
+                        <a (click)="navigateToPaymentPage(ad.id)">Оплатить</a>
                     </div>
                     <div>
                         <a (click)="showAdCampaign(ad.id)">Просмотр</a>

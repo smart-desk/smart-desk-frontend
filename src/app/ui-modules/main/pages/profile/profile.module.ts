@@ -21,6 +21,8 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { SharedModule } from '../../../../shared.module';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { AdCampaignDirective } from './pages/ad-campaign.directive';
+import { UpdateAdCampaignComponent } from './pages/update-ad-campaign/update-ad-campaign.component';
 
 const components = [
     ProfileComponent,
@@ -29,10 +31,11 @@ const components = [
     NotificationsComponent,
     MyAdCampaignsComponent,
     CreateAdCampaignComponent,
+    UpdateAdCampaignComponent,
 ];
 
 @NgModule({
-    declarations: [...components],
+    declarations: [...components, AdCampaignDirective],
     imports: [
         CommonModule,
         ProfileRoutingModule,

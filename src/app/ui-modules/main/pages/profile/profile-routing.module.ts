@@ -5,6 +5,7 @@ import { BookmarksComponent } from './pages/bookmarks/bookmarks.component';
 import { MyAdvertsComponent } from './pages/my-adverts/my-adverts.component';
 import { MyAdCampaignsComponent } from './pages/my-ad-campaigns/my-ad-campaigns.component';
 import { CreateAdCampaignComponent } from './pages/create-ad-campaign/create-ad-campaign.component';
+import { UpdateAdCampaignComponent } from './pages/update-ad-campaign/update-ad-campaign.component';
 
 const routes: Routes = [
     {
@@ -26,6 +27,10 @@ const routes: Routes = [
     {
         path: 'my-ad-campaigns/create',
         component: CreateAdCampaignComponent,
+    },
+    {
+        path: 'my-ad-campaigns/update',
+        component: UpdateAdCampaignComponent,
     },
 ];
 
