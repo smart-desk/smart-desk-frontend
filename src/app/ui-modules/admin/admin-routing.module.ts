@@ -5,11 +5,9 @@ import { CreateModelComponent } from './pages/create-model/create-model.componen
 import { ModelsComponent } from './pages/models/models.component';
 import { EditModelComponent } from './pages/edit-model/edit-model.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
-import { ProductsListComponent } from './pages/products-list/products-list.component';
+import { ProductListComponent } from './pages/product-list/product-list.component';
 import { AdminGuard } from '../../modules/auth/admin.guard';
 import { UsersComponent } from './pages/users/users.component';
-import { ProductsBlockedComponent } from './pages/products-blocked/products-blocked.component';
-import { ProductsPendingComponent } from './pages/products-pending/products-pending.component';
 import { AdConfigComponent } from './pages/ad-config/ad-config.component';
 import { AdCampaignListComponent } from './pages/ad-campaign-list/ad-campaign-list.component';
 
@@ -37,15 +35,7 @@ const routes: Routes = [
             },
             {
                 path: 'products',
-                component: ProductsListComponent,
-            },
-            {
-                path: 'products/blocked',
-                component: ProductsBlockedComponent,
-            },
-            {
-                path: 'products/pending',
-                component: ProductsPendingComponent,
+                component: ProductListComponent,
             },
             {
                 path: 'ad-campaigns',
