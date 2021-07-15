@@ -22,7 +22,7 @@ export class ProductEditComponent implements OnInit {
     protected components: ComponentRef<AbstractFieldFormComponent<any, any>>[] = [];
 
     constructor(
-        private advertService: ProductService,
+        private productService: ProductService,
         private modelService: ModelService,
         private componentFactoryResolver: ComponentFactoryResolver,
         private router: Router,
@@ -34,23 +34,23 @@ export class ProductEditComponent implements OnInit {
         this.route.paramMap
             .pipe(
                 switchMap((paramMap: ParamMap) => {
-                    const advertId = paramMap.get('advert_id');
-                    if (advertId) {
-                        return this.advertService.getProduct(advertId);
+                    const productId = paramMap.get('product_id');
+                    if (productId) {
+                        return this.productService.getProduct(productId);
                     }
                     return EMPTY;
                 })
             )
             .subscribe(
-                (advert: Product): Observable<Model> => {
-                    this.product = advert;
+                (product: Product): Observable<Model> => {
+                    this.product = product;
                     this.cd.detectChanges();
-                    return this.modelService.getModel(advert.model_id);
+                    return this.modelService.getModel(product.model_id);
                 }
             );
     }
 
-    save(advert: UpdateProductDto): void {
-        this.advertService.updateProduct(this.product.id, advert).subscribe(() => this.router.navigate(['products', this.product.id]));
+    save(product: UpdateProductDto): void {
+        this.productService.updateProduct(this.product.id, product).subscribe(() => this.router.navigate(['products', this.product.id]));
     }
 }
