@@ -2,13 +2,13 @@
     <li nz-submenu nzOpen nzTitle="Объявления" nzIcon="laptop">
         <ul>
             <!-- todo add badge with number-->
-            <li [nzMatchRouterExact]="true" nz-menu-item routerLink="/admin/adverts/pending">
+            <li [nzMatchRouterExact]="true" nz-menu-item routerLink="/admin/products/pending">
                 <span>На модерации</span>
             </li>
-            <li [nzMatchRouterExact]="true" nz-menu-item routerLink="/admin/adverts">
+            <li [nzMatchRouterExact]="true" nz-menu-item routerLink="/admin/products">
                 <span>Активные</span>
             </li>
-            <li [nzMatchRouterExact]="true" nz-menu-item routerLink="/admin/adverts/blocked">
+            <li [nzMatchRouterExact]="true" nz-menu-item routerLink="/admin/products/blocked">
                 <span>Заблокированные</span>
             </li>
         </ul>
@@ -26,14 +26,13 @@
         <span>Пользователи</span>
     </li>
 
-    <li nz-submenu nzOpen nzTitle="Реклама" nzIcon="copyright">
-        <ul>
-            <li nz-menu-item [nzMatchRouter]="true" routerLink="/admin/ad-config">
-                <span>Настройка рекламы</span>
-            </li>
-            <li nz-menu-item [nzMatchRouterExact]="true" routerLink="/admin/ad-campaigns">
-                <span>Рекламные кампании</span>
-            </li>
-        </ul>
+    <li nz-menu-item [nzMatchRouter]="true" routerLink="/admin/ad-config">
+        <i nz-icon nzType="dollar-circle" nzTheme="outline"></i>
+        <span>Настройка платных услуг</span>
+    </li>
+
+    <li nz-menu-item [nzMatchRouterExact]="true" routerLink="/admin/ad-campaigns">
+        <i nz-icon nzType="calendar" nzTheme="outline"></i>
+        <span>Рекламные кампании</span>
     </li>
 </ul>

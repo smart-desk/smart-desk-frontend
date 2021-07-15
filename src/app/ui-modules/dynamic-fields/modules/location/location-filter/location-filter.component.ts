@@ -5,7 +5,7 @@ import { LocationParamsDto } from '../dto/location-params.dto';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { MapsAPILoader } from '@agm/core';
 import { AbstractFieldFilterComponent } from '../../../models/abstract-field-filter.component';
-import { Filter } from '../../../../../modules/advert/models/filter';
+import { Filter } from '../../../../../modules/product/models/filter';
 import { LocationModalComponent } from '../location-modal/location-modal.component';
 import { Area } from '../location.class';
 

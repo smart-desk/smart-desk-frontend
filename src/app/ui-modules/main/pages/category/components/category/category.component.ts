@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { ActivatedRoute, NavigationEnd, ParamMap, Router, RouterEvent } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, pairwise, startWith, switchMap, takeUntil } from 'rxjs/operators';
-import { GetAdvertsDto, GetAdvertsResponseDto } from '../../../../../../modules/advert/models/advert.dto';
+import { GetProductsDto, GetProductsResponseDto } from '../../../../../../modules/product/models/product.dto';
 import { Category } from '../../../../../../modules/category/models/category.entity';
 import { Model } from '../../../../../../modules/model/models/model.entity';
 import { CategoryService } from '../../../../../../modules/category/category.service';
-import { AdvertDataService } from '../../../../../../modules/advert/advert-data.service';
+import { ProductDataService } from '../../../../../../modules/product/product-data.service';
 import { ModelService } from '../../../../../../modules/model/model.service';
 
 @Component({
@@ -16,15 +16,15 @@ import { ModelService } from '../../../../../../modules/model/model.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryComponent implements OnInit, OnDestroy {
-    advertsResponse: GetAdvertsResponseDto;
+    productsResponse: GetProductsResponseDto;
     model: Model;
     category: Category;
-    options: GetAdvertsDto;
+    options: GetProductsDto;
     private destroy$ = new Subject();
 
     constructor(
         private categoryService: CategoryService,
-        private advertDataService: AdvertDataService,
+        private productDataService: ProductDataService,
         private modelService: ModelService,
         private cd: ChangeDetectorRef,
         private route: ActivatedRoute,
@@ -42,8 +42,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
                 switchMap(() => this.route.paramMap),
                 switchMap((paramMap: ParamMap) => {
                     const categoryId = paramMap.get('category_id') || '';
-                    this.options = this.advertDataService.parseQueryParams(this.route.snapshot.queryParamMap);
-                    this.advertDataService.loadAdverts(categoryId, this.options);
+                    this.options = this.productDataService.parseQueryParams(this.route.snapshot.queryParamMap);
+                    this.productDataService.loadProducts(categoryId, this.options);
                     return this.categoryService.getCategory(categoryId);
                 }),
                 switchMap(category => {
@@ -56,8 +56,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
                 this.cd.detectChanges();
             });
 
-        this.advertDataService.adverts$.pipe(takeUntil(this.destroy$)).subscribe(res => {
-            this.advertsResponse = res;
+        this.productDataService.products$.pipe(takeUntil(this.destroy$)).subscribe(res => {
+            this.productsResponse = res;
             this.cd.detectChanges();
         });
     }

@@ -17,12 +17,12 @@ export class BookmarksStoreService {
         });
     }
 
-    deleteBookmark(advertId: string) {
+    deleteBookmark(productId: string) {
         const bookmarks = this.bookmarks$.getValue();
         if (!bookmarks) {
             return;
         }
-        const removedBookmark = bookmarks.find(bookmark => bookmark.product.id === advertId);
+        const removedBookmark = bookmarks.find(bookmark => bookmark.product.id === productId);
         if (!removedBookmark) {
             return;
         }
@@ -32,8 +32,8 @@ export class BookmarksStoreService {
         });
     }
 
-    createBookmark(advertId: string) {
-        this.bookmarksService.createBookmark(advertId).subscribe(bookmark => {
+    createBookmark(productId: string) {
+        this.bookmarksService.createBookmark(productId).subscribe(bookmark => {
             const bookmarks = this.bookmarks$.getValue();
             bookmarks.push(bookmark);
             this.bookmarks$.next(bookmarks);

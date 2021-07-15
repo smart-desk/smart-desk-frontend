@@ -18,11 +18,11 @@ export class CheckboxFormComponent extends AbstractFieldFormComponent<CheckboxEn
             return this.field.data;
         }
 
-        const advertField = new CheckboxEntity();
-        advertField.value = this.currentValue;
-        advertField.fieldId = this.field.id;
+        const productField = new CheckboxEntity();
+        productField.value = this.currentValue;
+        productField.fieldId = this.field.id;
 
-        return advertField;
+        return productField;
     }
 
     isFieldDataValid(): boolean {

@@ -10,7 +10,7 @@ import { CategoriesComponent } from './pages/categories/categories.component';
 import { CreateModelComponent } from './pages/create-model/create-model.component';
 import { EditModelComponent } from './pages/edit-model/edit-model.component';
 import { ModelsComponent } from './pages/models/models.component';
-import { AdvertsListComponent } from './pages/adverts-list/adverts-list.component';
+import { ProductsListComponent } from './pages/products-list/products-list.component';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -36,8 +36,8 @@ import { UsersComponent } from './pages/users/users.component';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { RolesFormComponent } from './components/roles-form/roles-form.component';
-import { AdvertsBlockedComponent } from './pages/adverts-blocked/adverts-blocked.component';
-import { AdvertsPendingComponent } from './pages/adverts-pending/adverts-pending.component';
+import { ProductsBlockedComponent } from './pages/products-blocked/products-blocked.component';
+import { ProductsPendingComponent } from './pages/products-pending/products-pending.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SharedModule } from '../../shared.module';
 import { AdConfigComponent } from './pages/ad-config/ad-config.component';
@@ -62,10 +62,10 @@ const pages = [
     CreateModelComponent,
     ModelsComponent,
     CategoriesComponent,
-    AdvertsListComponent,
+    ProductsListComponent,
     UsersComponent,
-    AdvertsBlockedComponent,
-    AdvertsPendingComponent,
+    ProductsBlockedComponent,
+    ProductsPendingComponent,
     AdConfigComponent,
     AdCampaignListComponent,
 ];

@@ -6,7 +6,7 @@ import { Chat } from '../../models/chat.entity';
 import { ChatMessage } from '../../models/chat-message.entity';
 import { CreateChatMessageDto } from '../../models/create-chat-message.dto';
 import { User } from '../../../../modules/user/models/user.entity';
-import { Advert } from '../../../../modules/advert/models/advert.entity';
+import { Product } from '../../../../modules/product/models/product.entity';
 import { UserService } from '../../../../modules/user/user.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class ChatComponent implements OnDestroy, OnInit {
     currentUser: User;
 
     @Input()
-    advert: Advert;
+    product: Product;
 
     @Input()
     user: User;
@@ -94,7 +94,7 @@ export class ChatComponent implements OnDestroy, OnInit {
         message.content = content;
 
         if (!this.activeChat.id) {
-            this.chatService.createChat({ productId: this.advert.id }).subscribe(chat => {
+            this.chatService.createChat({ productId: this.product.id }).subscribe(chat => {
                 const indexOfActiveChat = this.chats.indexOf(this.activeChat);
                 this.chats[indexOfActiveChat] = chat;
                 this.activeChat = chat;
@@ -117,8 +117,8 @@ export class ChatComponent implements OnDestroy, OnInit {
             .subscribe(chats => {
                 let activeChat: Chat | undefined;
 
-                if (this.advert) {
-                    activeChat = chats.find(c => c.productId === this.advert.id);
+                if (this.product) {
+                    activeChat = chats.find(c => c.productId === this.product.id);
                     if (!activeChat) {
                         const emptyChat = this.createEmptyChat();
                         activeChat = emptyChat;
@@ -136,8 +136,8 @@ export class ChatComponent implements OnDestroy, OnInit {
 
     private createEmptyChat(): Chat {
         const chat = new Chat();
-        chat.productId = this.advert.id;
-        chat.productData = this.advert;
+        chat.productId = this.product.id;
+        chat.productData = this.product;
         chat.user1 = this.currentUser.id;
         chat.user1Data = this.currentUser;
         chat.user2 = this.user.id;

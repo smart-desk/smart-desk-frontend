@@ -7,13 +7,13 @@ import { AbstractFieldFilterComponent } from './abstract-field-filter.component'
 export abstract class AbstractFieldService {
     /**
      * Returns component resolver for user part form
-     * This component must be displayed when user creates and edits advert
+     * This component must be displayed when user creates and edits product
      */
     abstract getFormComponentResolver(): ComponentFactory<AbstractFieldFormComponent<any, any>> | null;
 
     /**
      * Returns component resolver for admin part form
-     * This component must be displayed when admin edit model of adverts
+     * This component must be displayed when admin edit model of products
      */
     abstract getParamsComponentResolver(): ComponentFactory<AbstractFieldParamsComponent<any>> | null;
 

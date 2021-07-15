@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Direction } from '../../../../modules/advert/models/direction.enum';
-import { Sorting } from '../../../../modules/advert/models/sorting.interface';
+import { Direction } from '../../../../modules/product/models/direction.enum';
+import { Sorting } from '../../../../modules/product/models/sorting.interface';
 import { Model } from '../../../../modules/model/models/model.entity';
 import { FieldEntity, FieldType } from '../../../../modules/field/models/field.entity';
 import { CategoryService } from '../../../../modules/category/category.service';
 import { ModelService } from '../../../../modules/model/model.service';
-import { AdvertDataService } from '../../../../modules/advert/advert-data.service';
+import { ProductDataService } from '../../../../modules/product/product-data.service';
 
 @Component({
     selector: 'app-sorting',
@@ -25,7 +25,7 @@ export class SortingComponent implements OnInit {
         private route: ActivatedRoute,
         private categoryService: CategoryService,
         private modelService: ModelService,
-        private advertDataService: AdvertDataService
+        private productDataService: ProductDataService
     ) {}
 
     ngOnInit(): void {
@@ -37,12 +37,12 @@ export class SortingComponent implements OnInit {
     changeSelect(sortValue: string): void {
         if (sortValue) {
             const [fieldId, direction] = sortValue.split(':');
-            return this.advertDataService.changeSorting({
+            return this.productDataService.changeSorting({
                 field: fieldId,
                 direction: direction as Direction,
             });
         } else {
-            return this.advertDataService.changeSorting(null);
+            return this.productDataService.changeSorting(null);
         }
     }
 

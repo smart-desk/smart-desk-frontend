@@ -36,16 +36,16 @@ export class DatepickerFormComponent extends AbstractFieldFormComponent<Datepick
             return this.field.data;
         }
 
-        const advertField = new CreateDatepickerDto();
+        const productField = new CreateDatepickerDto();
         if (this.field.params.range) {
-            advertField.date1 = this.datepickerForm.get('daterange')?.value[0];
-            advertField.date2 = this.datepickerForm.get('daterange')?.value[1];
+            productField.date1 = this.datepickerForm.get('daterange')?.value[0];
+            productField.date2 = this.datepickerForm.get('daterange')?.value[1];
         } else {
-            advertField.date1 = this.datepickerForm.get('date1')?.value;
+            productField.date1 = this.datepickerForm.get('date1')?.value;
         }
-        advertField.fieldId = this.field.id;
+        productField.fieldId = this.field.id;
 
-        return advertField;
+        return productField;
     }
 
     isFieldDataValid(): boolean {

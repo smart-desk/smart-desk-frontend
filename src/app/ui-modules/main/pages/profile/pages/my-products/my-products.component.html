@@ -1,0 +1,22 @@
+<app-content-layout title="Мои объявления" [main]="main" [left]="left"></app-content-layout>
+
+<ng-template #left>
+    <app-user-info [user]="user"></app-user-info>
+</ng-template>
+
+<ng-template #main>
+    <nz-tabset [nzAnimated]="false">
+        <nz-tab nzTitle="Активные">
+            <app-products [productsResponse]="activeProductsResponse" [cardActions]="activeProductsActions"></app-products>
+        </nz-tab>
+        <nz-tab nzTitle="На модерации">
+            <app-products [productsResponse]="pendingProductsResponse" [cardActions]="pendingProductsActions"></app-products>
+        </nz-tab>
+        <nz-tab nzTitle="Заблокированные">
+            <app-products [productsResponse]="blockedProductsResponse" [cardActions]="blockedProductsActions"></app-products>
+        </nz-tab>
+        <nz-tab nzTitle="Завершенные">
+            <app-products [productsResponse]="completedProductsResponse" [cardActions]="completedProductsActions"></app-products>
+        </nz-tab>
+    </nz-tabset>
+</ng-template>
