@@ -89,9 +89,9 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
         this.route.paramMap
             .pipe(
                 switchMap((param: ParamMap) => {
-                    const advertId = param.get('advert_id');
-                    if (advertId) {
-                        return this.productService.getProduct(advertId);
+                    const productId = param.get('product_id');
+                    if (productId) {
+                        return this.productService.getProduct(productId);
                     }
                     return EMPTY;
                 }),
@@ -99,8 +99,8 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.product = product;
                     this.countView();
                 }),
-                switchMap(advert => {
-                    return advert.userId ? this.userService.getUser(advert.userId) : EMPTY;
+                switchMap(product => {
+                    return product.userId ? this.userService.getUser(product.userId) : EMPTY;
                 })
             )
             .subscribe(user => {
@@ -137,12 +137,12 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.currentUser?.id === this.user?.id) {
             return false;
         }
-        const advertPreferContact = this.product?.preferContact;
-        if (!advertPreferContact) {
+        const productPreferContact = this.product?.preferContact;
+        if (!productPreferContact) {
             return true;
         }
 
-        return advertPreferContact === contact;
+        return productPreferContact === contact;
     }
 
     private addParamsFields(): void {

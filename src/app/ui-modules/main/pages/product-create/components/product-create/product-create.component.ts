@@ -76,11 +76,11 @@ export class ProductCreateComponent implements OnInit {
         }
     }
 
-    save(advert: CreateProductDto): void {
-        advert.category_id = this.selectedCategory.id;
-        advert.model_id = this.selectedCategory.modelId;
+    save(product: CreateProductDto): void {
+        product.category_id = this.selectedCategory.id;
+        product.model_id = this.selectedCategory.modelId;
 
-        this.productService.createProduct(advert).subscribe(
+        this.productService.createProduct(product).subscribe(
             res => {
                 this.router.navigate(['products', res.id]);
             },
