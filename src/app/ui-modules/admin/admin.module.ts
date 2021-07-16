@@ -39,12 +39,13 @@ import { RolesFormComponent } from './components/roles-form/roles-form.component
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SharedModule } from '../../shared.module';
 import { AdConfigComponent } from './pages/ad-config/ad-config.component';
-import { AdRejectReasonComponent } from './components/ad-modal/ad-modal.component';
+import { AdCampaignReasonFormComponent } from './components/ad-campaign-reason-form/ad-campaign-reason-form.component';
 import { AdCampaignListComponent } from './pages/ad-campaign-list/ad-campaign-list.component';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { PromoSetFormComponent } from './components/promo-set-form/promo-set-form.component';
 
 const components = [
-    AdRejectReasonComponent,
+    AdCampaignReasonFormComponent,
     PreviewComponent,
     CategoryFormComponent,
     AdminMenuComponent,
@@ -52,6 +53,7 @@ const components = [
     FieldSettingsComponent,
     AddFieldComponent,
     RolesFormComponent,
+    PromoSetFormComponent,
 ];
 
 const pages = [

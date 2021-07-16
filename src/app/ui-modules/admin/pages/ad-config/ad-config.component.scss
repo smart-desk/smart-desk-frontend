@@ -9,3 +9,9 @@
 .form {
     width: $base-unit * 30;
 }
+
+.ad-config {
+    &__promo-set-list {
+        margin-bottom: $base-unit * 2;
+    }
+}

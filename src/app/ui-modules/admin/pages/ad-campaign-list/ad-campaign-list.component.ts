@@ -6,7 +6,7 @@ import { AdCampaignEntity, AdCampaignStatus } from '../../../../modules/ad/model
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import * as dayjs from 'dayjs';
 import { AdCardComponent } from '../../../../components/ad-card/ad-card.component';
-import { AdRejectReasonComponent } from '../../components/ad-modal/ad-modal.component';
+import { AdCampaignReasonFormComponent } from '../../components/ad-campaign-reason-form/ad-campaign-reason-form.component';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -65,9 +65,9 @@ export class AdCampaignListComponent implements OnInit, OnDestroy {
     }
 
     openRejectModal(id: string): void {
-        const modalReasonRef: NzModalRef = this.modalService.create<AdRejectReasonComponent>({
+        const modalReasonRef: NzModalRef = this.modalService.create<AdCampaignReasonFormComponent>({
             nzTitle: 'Хотите отклонить рекламную кампанию?',
-            nzContent: AdRejectReasonComponent,
+            nzContent: AdCampaignReasonFormComponent,
             nzFooter: [
                 {
                     label: 'Да',

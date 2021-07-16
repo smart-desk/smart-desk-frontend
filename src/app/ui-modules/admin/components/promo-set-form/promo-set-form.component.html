@@ -1,0 +1,20 @@
+<form class="form" [formGroup]="form" nz-form [nzLayout]="'vertical'">
+    <nz-form-item>
+        <nz-form-label>Имя</nz-form-label>
+        <nz-form-control>
+            <input type="text" nz-input formControlName="name" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label>Количество дней</nz-form-label>
+        <nz-form-control>
+            <input type="number" nz-input formControlName="days" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label>Стоимость</nz-form-label>
+        <nz-form-control>
+            <input type="number" nz-input formControlName="price" />
+        </nz-form-control>
+    </nz-form-item>
+</form>
