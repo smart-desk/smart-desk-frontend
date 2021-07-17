@@ -13,31 +13,29 @@
             <tr>
                 <th>Наименование</th>
                 <th>Статус</th>
-                <th>Дата начала кампания</th>
-                <th>Дата окончания кампании</th>
+                <th>Период</th>
                 <th>Причина отклонения</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let ad of ads">
+            <tr *ngFor="let adCampaign of adCampaigns">
+                <td>{{ adCampaign.title }}</td>
+                <td>{{ adCampaign.status }}</td>
+                <td>{{ adCampaign.startDate }} - {{ adCampaign.endDate }}</td>
+                <td>{{ adCampaign.reason }}</td>
                 <td>
-                    <a>{{ ad.id }}</a>
-                </td>
-                <td>{{ ad.status }}</td>
-                <td>{{ ad.startDate }}</td>
-                <td>{{ ad.endDate }}</td>
-                <td>{{ ad.reason }}</td>
-                <td>
-                    <div *ngIf="ad.status !== this.adsStatus.PAID">
-                        <a (click)="navigateToCampaignPage(ad.id)">Редатировать</a>
-                    </div>
-                    <div *ngIf="ad.status === this.adsStatus.APPROVED">
-                        <a (click)="navigateToPaymentPage(ad.id)">Оплатить</a>
-                    </div>
-                    <div>
-                        <a (click)="showAdCampaign(ad.id)">Просмотр</a>
-                    </div>
+                    <a (click)="showAdCampaign(adCampaign.id)">Просмотр</a>
+                    <ng-container *ngIf="adCampaign.status !== this.adsStatus.PAID">
+                        <nz-divider [nzType]="'vertical'"></nz-divider>
+                        <a (click)="navigateToCampaignPage(adCampaign.id)"></a>
+                    </ng-container>
+                    <ng-container *ngIf="adCampaign.status === this.adsStatus.APPROVED">
+                        <nz-divider [nzType]="'vertical'"></nz-divider>
+                        <a (click)="navigateToPaymentPage(adCampaign.id)">Оплатить</a>
+                    </ng-container>
+                    <nz-divider [nzType]="'vertical'"></nz-divider>
+                    <a nz-typography nzType="danger" (click)="deleteAdCampaign(adCampaign)">Удалить</a>
                 </td>
             </tr>
         </tbody>

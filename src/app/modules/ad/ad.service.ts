@@ -52,4 +52,8 @@ export class AdService {
     approveAdCampaigns(id: string): Observable<AdCampaignEntity> {
         return this.http.patch<AdCampaignEntity>(`/ad/campaigns/${id}/approve`, null);
     }
+
+    deleteAdCampaign(id: string): Observable<void> {
+        return this.http.delete<void>(`/ad/campaigns/${id}`);
+    }
 }

@@ -18,7 +18,7 @@ import { Router } from '@angular/router';
 })
 export class MyAdCampaignsComponent implements OnInit {
     user: User;
-    ads: AdCampaignEntity[];
+    adCampaigns: AdCampaignEntity[];
     adsStatus = AdCampaignStatus;
 
     constructor(
@@ -35,9 +35,12 @@ export class MyAdCampaignsComponent implements OnInit {
             this.user = res;
             this.cdr.detectChanges();
         });
+        this.getAdCampaigns();
+    }
 
+    getAdCampaigns(): void {
         this.adService.getAdCampaigns().subscribe(adData => {
-            this.ads = adData;
+            this.adCampaigns = adData;
             this.cdr.detectChanges();
         });
     }
@@ -54,16 +57,20 @@ export class MyAdCampaignsComponent implements OnInit {
     }
 
     navigateToCampaignPage(id: string): void {
-        const editAd = this.ads.find(ad => ad.id === id);
+        const editAd = this.adCampaigns.find(ad => ad.id === id);
         this.router.navigate(['./profile/my-ad-campaigns/update'], { state: editAd });
     }
 
     showAdCampaign(id: string): void {
-        const viewedAd = this.ads.find(ad => ad.id === id);
+        const viewedAd = this.adCampaigns.find(ad => ad.id === id);
         const modalRef: NzModalRef = this.modalService.create<AdCardComponent>({
             nzContent: AdCardComponent,
             nzComponentParams: { ad: viewedAd },
             nzFooter: null,
         });
+    }
+
+    deleteAdCampaign(adCampaign: AdCampaignEntity) {
+        this.adService.deleteAdCampaign(adCampaign.id).subscribe(() => this.getAdCampaigns());
     }
 }

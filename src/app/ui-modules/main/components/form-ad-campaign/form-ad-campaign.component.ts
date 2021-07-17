@@ -35,6 +35,7 @@ export class FormAdCampaignComponent implements OnInit {
             this.file = [{ uid: '-1', name: 'ad-image.png', url: this.adData?.img }];
         }
         this.form = this.fb.group({
+            title: [this.adData?.title],
             type: [this.adData?.type, Validators.required],
             timeRange: [this.adData ? [this.adData.endDate, this.adData.startDate] : [undefined, undefined], Validators.required],
             link: [this.adData?.link, Validators.required],
@@ -85,6 +86,7 @@ export class FormAdCampaignComponent implements OnInit {
         const campaignOptions = new AdCampaignEntity();
         campaignOptions.id = this.adData?.id;
         campaignOptions.img = this.form.get('img')?.value;
+        campaignOptions.title = this.form.get('title')?.value;
         campaignOptions.link = this.form.get('link')?.value;
         campaignOptions.type = this.form.get('type')?.value;
         campaignOptions.startDate = dayjs(this.form.get('timeRange')?.value?.[0]).format(SHORT_DATE_FORMAT);

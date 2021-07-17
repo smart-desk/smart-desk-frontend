@@ -13,6 +13,7 @@
 <nz-table class="table" [nzTemplateMode]="true" [nzFrontPagination]="true">
     <thead>
         <tr>
+            <th>Название</th>
             <th>Ссылка</th>
             <th>Статус</th>
             <th>Дата начала</th>
@@ -22,6 +23,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let campaign of adCampaigns">
+            <td>{{ campaign.title }}</td>
             <td>
                 <a [href]="campaign.link" target="_blank">{{ campaign.link }}</a>
             </td>
