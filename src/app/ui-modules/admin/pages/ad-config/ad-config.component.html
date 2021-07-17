@@ -29,4 +29,22 @@
             </nz-form-control>
         </nz-form-item>
     </form>
+
+    <h2>Промо пакеты</h2>
+    <nz-list nzItemLayout="horizontal" nzBordered class="ad-config__promo-set-list">
+        <nz-list-item *ngFor="let promoSet of promoSets">
+            <nz-list-item-meta [nzAvatar]="avatar" nzDescription="{{ promoSet.days }} дней, {{ promoSet.price }} рублей">
+                <nz-list-item-meta-title>{{ promoSet.name }}</nz-list-item-meta-title>
+                <ng-template #avatar>
+                    <nz-avatar nzText="{{ promoSet.days }}"></nz-avatar>
+                </ng-template>
+            </nz-list-item-meta>
+            <ul nz-list-item-actions>
+                <nz-list-item-action><a (click)="openPromoSetForm(promoSet)">Редактировать</a></nz-list-item-action>
+                <nz-list-item-action><a (click)="deletePromoSet(promoSet)">Удалить</a></nz-list-item-action>
+            </ul>
+        </nz-list-item>
+        <nz-list-empty *ngIf="promoSets?.length === 0"></nz-list-empty>
+    </nz-list>
+    <button (click)="openPromoSetForm()" nz-button nzType="primary">Создать пакет</button>
 </div>

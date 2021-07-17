@@ -11,7 +11,7 @@
         <li nz-list-item *ngFor="let model of models" nzNoFlex>
             <ul nz-list-item-actions>
                 <nz-list-item-action>
-                    <a nz-button nzType="link" [routerLink]="['edit', model.id]">edit</a>
+                    <a nz-button nzType="link" [routerLink]="['edit', model.id]">Редактировать</a>
                 </nz-list-item-action>
                 <nz-list-item-action>
                     <a
@@ -24,7 +24,7 @@
                         nz-button
                         nzType="link"
                         nzDanger
-                        >delete</a
+                        >Удалить</a
                     >
                 </nz-list-item-action>
             </ul>
