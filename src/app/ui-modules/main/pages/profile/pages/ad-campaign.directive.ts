@@ -13,8 +13,9 @@ import * as dayjs from 'dayjs';
 export class AdCampaignDirective implements OnInit, OnDestroy {
     totalAmount: number;
     @Input() adCampaign: AdCampaignEntity;
-    @ViewChild('form') formLink: FormAdCampaignComponent;
+    @ViewChild(FormAdCampaignComponent) formLink: FormAdCampaignComponent;
     destroy$ = new Subject();
+    disabledRange: number;
     private adConfig: AdConfigEntity;
     constructor(protected readonly adService: AdService, protected cd: ChangeDetectorRef, protected router: Router) {}
 
@@ -28,6 +29,7 @@ export class AdCampaignDirective implements OnInit, OnDestroy {
     }
 
     formValueChange(adCampaign: AdCampaignEntity) {
+        this.setDisabledRange(adCampaign.type);
         const selectedRate = adCampaign.type === AdCampaignType.MAIN ? this.adConfig.mainHourlyRate : this.adConfig.sidebarHourlyRate;
         const startDate = dayjs(adCampaign.startDate);
         const endDate = dayjs(adCampaign.endDate);
@@ -45,5 +47,12 @@ export class AdCampaignDirective implements OnInit, OnDestroy {
         } else {
             this.adService.createAdCampaign(campaignData).subscribe(() => this.router.navigate(['/profile/my-ad-campaigns']));
         }
+    }
+
+    setDisabledRange(adType: AdCampaignType): void {
+        this.adService.getAdCampaignsSchedule(adType).subscribe(disabledDates => {
+            this.disabledRange = disabledDates;
+            this.cd.detectChanges();
+        });
     }
 }

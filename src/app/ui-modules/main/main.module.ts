@@ -47,6 +47,7 @@ import { ProductComponent } from './pages/product/components/product/product.com
 import { SortingComponent } from './components/sorting/sorting.component';
 import { FormAdCampaignComponent } from './components/form-ad-campaign/form-ad-campaign.component';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { AdCardsComponent } from './components/ad-cards/ad-cards.component';
 
 const NZModules = [
     NzModalModule,
@@ -94,6 +95,7 @@ const components = [
     SortingComponent,
     VkRedirectComponent,
     FormAdCampaignComponent,
+    AdCardsComponent,
 ];
 
 @NgModule({

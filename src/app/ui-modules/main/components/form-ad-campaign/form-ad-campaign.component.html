@@ -5,11 +5,10 @@
         </nz-radio-group>
     </nz-form-item>
 
-    <nz-form-item>
+    <nz-form-item *ngIf="disabledRange">
         <nz-form-label nzFor="timeRange">Даты</nz-form-label>
-        <nz-range-picker [nzDisabled]="!isTypeSelected" formControlName="timeRange"></nz-range-picker>
+        <nz-range-picker formControlName="timeRange" [nzDisabledDate]="disabledDate"></nz-range-picker>
     </nz-form-item>
-
     <nz-form-item>
         <nz-form-label nzFor="link">Ссылка</nz-form-label>
         <input formControlName="link" nz-input placeholder="Разместите здесь ссылку на Ваш продукт" />

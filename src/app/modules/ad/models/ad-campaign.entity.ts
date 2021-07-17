@@ -14,8 +14,8 @@ export enum AdCampaignStatus {
 export class AdCampaignEntity {
     id: string;
     userId: string;
-    startDate: Date;
-    endDate: Date;
+    startDate: string;
+    endDate: string;
     img: string;
     link: string;
     type: AdCampaignType;

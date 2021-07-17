@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { AdConfigEntity } from './models/ad-config.entity';
 import { AdConfigDto } from './models/ad-config.dto';
 import { AdCampaignDto } from './models/ad-campaign.dto';
-import { AdCampaignEntity } from './models/ad-campaign.entity';
+import { AdCampaignEntity, AdCampaignType } from './models/ad-campaign.entity';
 import { StripeSession } from '../stripe/models/stripe-session.interface';
 
 @Injectable()
@@ -35,6 +35,14 @@ export class AdService {
     getAdCampaigns(status?: string): Observable<AdCampaignEntity[]> {
         const request = status ? `/ad/campaigns?status=${status}` : `/ad/campaigns`;
         return this.http.get<AdCampaignEntity[]>(request);
+    }
+
+    getAdCampaignsSchedule(type: AdCampaignType): Observable<any> {
+        return this.http.get<any>(`/ad/campaigns/schedule?type=${type}`);
+    }
+
+    getAdCampaignsCurrent(type: AdCampaignType): Observable<any> {
+        return this.http.get<any>(`/ad/campaigns/current?type=${type}`);
     }
 
     rejectAdCampaigns(id: string, body: { reason: string }): Observable<AdCampaignEntity> {

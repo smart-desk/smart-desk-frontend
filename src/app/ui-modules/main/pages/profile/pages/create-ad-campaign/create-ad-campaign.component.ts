@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { AdService } from '../../../../../../modules/ad/ad.service';
 import { Router } from '@angular/router';
 import { AdCampaignDirective } from '../ad-campaign.directive';
