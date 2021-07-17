@@ -76,57 +76,57 @@ export class MyProductsComponent implements OnInit {
             this.user = res;
             this.cdr.detectChanges();
         });
-        this.getAdverts();
+        this.getProducts();
     }
 
-    getAdverts() {
-        this.getActiveAdverts();
-        this.getPendingAdverts();
-        this.getBlockedAdverts();
-        this.getCompletedAdverts();
+    getProducts() {
+        this.getActiveProducts();
+        this.getPendingProducts();
+        this.getBlockedProducts();
+        this.getCompletedProducts();
     }
 
-    private getActiveAdverts() {
+    private getActiveProducts() {
         this.productService.getMyProducts().subscribe(res => {
             this.activeProductsResponse = res;
             this.cdr.detectChanges();
         });
     }
 
-    private getPendingAdverts() {
+    private getPendingProducts() {
         this.productService.getPending().subscribe(res => {
             this.pendingProductsResponse = res;
             this.cdr.detectChanges();
         });
     }
 
-    private getBlockedAdverts() {
+    private getBlockedProducts() {
         this.productService.getBlocked().subscribe(res => {
             this.blockedProductsResponse = res;
             this.cdr.detectChanges();
         });
     }
 
-    private getCompletedAdverts() {
+    private getCompletedProducts() {
         this.productService.getCompleted().subscribe(res => {
             this.completedProductsResponse = res;
             this.cdr.detectChanges();
         });
     }
 
-    private completeProduct(advert: Product) {
-        this.productService.completeProduct(advert.id).subscribe(() => {
-            this.getAdverts();
+    private completeProduct(product: Product) {
+        this.productService.completeProduct(product.id).subscribe(() => {
+            this.getProducts();
         });
     }
 
-    private editProduct(advert: Product) {
-        this.router.navigate(['products', advert.id, 'edit']);
+    private editProduct(product: Product) {
+        this.router.navigate(['products', product.id, 'edit']);
     }
 
-    private deleteProduct(advert: Product) {
-        this.productService.deleteProduct(advert.id).subscribe(() => {
-            this.getAdverts();
+    private deleteProduct(product: Product) {
+        this.productService.deleteProduct(product.id).subscribe(() => {
+            this.getProducts();
         });
     }
 

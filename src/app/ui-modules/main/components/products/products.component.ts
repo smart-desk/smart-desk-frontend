@@ -64,19 +64,19 @@ export class ProductsComponent implements OnChanges, OnInit, OnDestroy {
         this.productDataService.changePage(page);
     }
 
-    addBookmarkEvent(advertId: string) {
-        this.bookmarksStoreService.createBookmark(advertId);
+    addBookmarkEvent(productId: string) {
+        this.bookmarksStoreService.createBookmark(productId);
     }
 
-    removeBookmarkEvent(advertId: string) {
-        this.bookmarksStoreService.deleteBookmark(advertId);
+    removeBookmarkEvent(productId: string) {
+        this.bookmarksStoreService.deleteBookmark(productId);
     }
 
     private updateProductsWithBookmarks(productsResponse: GetProductsResponseDto, bookmarks?: Bookmark[]): GetProductsResponseDto {
         if (bookmarks) {
-            productsResponse.products.forEach(advert => {
-                const bookmarkAdvert = bookmarks.find(bookmark => bookmark.product.id === advert.id);
-                advert.isBookmark = !!bookmarkAdvert;
+            productsResponse.products.forEach(product => {
+                const bookmarkProduct = bookmarks.find(bookmark => bookmark.product.id === product.id);
+                product.isBookmark = !!bookmarkProduct;
             });
         }
         return cloneDeep(productsResponse);

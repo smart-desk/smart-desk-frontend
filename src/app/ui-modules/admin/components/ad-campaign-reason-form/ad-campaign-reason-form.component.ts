@@ -2,12 +2,12 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-    selector: 'app-ad-modal',
-    templateUrl: './ad-modal.component.html',
-    styleUrls: ['./ad-modal.component.scss'],
+    selector: 'app-ad-campaign-reason-form',
+    templateUrl: './ad-campaign-reason-form.component.html',
+    styleUrls: ['./ad-campaign-reason-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdRejectReasonComponent implements OnInit {
+export class AdCampaignReasonFormComponent implements OnInit {
     form: FormGroup;
 
     constructor(private fb: FormBuilder) {}

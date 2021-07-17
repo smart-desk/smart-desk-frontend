@@ -44,12 +44,12 @@ const routes: Routes = [
                 canActivate: [AuthGuard],
             },
             {
-                path: 'products/:advert_id/edit',
+                path: 'products/:product_id/edit',
                 loadChildren: () => import('./pages/product-edit/product-edit.module').then(m => m.ProductEditModule),
                 canActivate: [AuthGuard],
             },
             {
-                path: 'products/:advert_id',
+                path: 'products/:product_id',
                 component: ProductComponent,
             },
             {

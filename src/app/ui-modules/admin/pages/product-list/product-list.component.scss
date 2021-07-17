@@ -1,5 +1,9 @@
 @import './src/assets/styles/variables';
 
+.top-actions {
+    margin-bottom: $base-unit * 2;
+}
+
 .actions-box {
     display: flex;
     align-items: center;
@@ -12,4 +16,9 @@
 
 .table {
     margin-bottom: $base-unit * 2;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
 }
