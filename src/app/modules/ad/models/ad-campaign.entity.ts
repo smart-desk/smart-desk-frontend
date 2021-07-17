@@ -1,3 +1,5 @@
+export const SHORT_DATE_FORMAT = 'DD.MM.YYYY';
+
 export enum AdCampaignType {
     MAIN = 'main',
     SIDEBAR = 'sidebar',

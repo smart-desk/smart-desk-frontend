@@ -87,10 +87,6 @@ export class AdCampaignListComponent implements OnInit, OnDestroy {
         });
     }
 
-    formatDate(date: Date | string): string {
-        return dayjs(date).format('DD MMM YYYY HH:mm');
-    }
-
     approveCampaign(id: string, modalRef?: NzModalRef): void {
         this.adService.approveAdCampaigns(id).subscribe(() => {
             this.getCampaigns(this.status);

@@ -16,7 +16,7 @@
                 <th>Дата начала кампания</th>
                 <th>Дата окончания кампании</th>
                 <th>Причина отклонения</th>
-                <th>Действие</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -25,8 +25,8 @@
                     <a>{{ ad.id }}</a>
                 </td>
                 <td>{{ ad.status }}</td>
-                <td>{{ ad.startDate | date: 'dd.MM.yyyy' }}</td>
-                <td>{{ ad.endDate | date: 'dd.MM.yyyy' }}</td>
+                <td>{{ ad.startDate }}</td>
+                <td>{{ ad.endDate }}</td>
                 <td>{{ ad.reason }}</td>
                 <td>
                     <div *ngIf="ad.status !== this.adsStatus.PAID">

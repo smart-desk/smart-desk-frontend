@@ -1,20 +1,13 @@
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AdCampaignEntity, AdCampaignType } from '../../../../modules/ad/models/ad-campaign.entity';
+import { AdCampaignEntity, AdCampaignType, SHORT_DATE_FORMAT } from '../../../../modules/ad/models/ad-campaign.entity';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import * as dayjs from 'dayjs';
+import * as customParseFormat from 'dayjs/plugin/customParseFormat';
+
+dayjs.extend(customParseFormat);
 
 @Component({
     selector: 'app-form-ad-campaign',
@@ -24,7 +17,7 @@ import * as dayjs from 'dayjs';
 })
 export class FormAdCampaignComponent implements OnInit {
     @Input() adData: AdCampaignEntity;
-    @Input() disabledRange: [{ startDate: string; endDate: string }];
+    @Input() disabledRange: Array<{ startDate: string; endDate: string }> = [];
     @Output() changeFormEvent = new EventEmitter<AdCampaignEntity>();
     form: FormGroup;
     isTypeSelected: boolean;
@@ -35,12 +28,7 @@ export class FormAdCampaignComponent implements OnInit {
     file: NzUploadFile[] = [];
     private destroy$ = new Subject();
 
-    constructor(private fb: FormBuilder, private cd: ChangeDetectorRef) {}
-
-    // ngOnChanges(changes: SimpleChanges): void {
-    //     console.log('changes', changes.disabledRange.currentValue);
-    //     this.disabledRange = changes.disabledRange.currentValue;
-    // }
+    constructor(private fb: FormBuilder) {}
 
     ngOnInit(): void {
         if (this.adData) {
@@ -83,13 +71,15 @@ export class FormAdCampaignComponent implements OnInit {
         return this.buildAdCampaign();
     }
 
-    disabledDate(current: Date): boolean {
+    disabledDate = (current: Date): boolean => {
         return this.disabledRange.some(range => {
-            const startDate = new Date(range.startDate);
-            const endDate = new Date(range.endDate);
-            return current >= startDate && endDate >= current;
+            const currentDate = dayjs(current);
+            const startDate = dayjs(range.startDate, SHORT_DATE_FORMAT);
+            const endDate = dayjs(range.endDate, SHORT_DATE_FORMAT);
+            return currentDate >= startDate && endDate >= currentDate;
         });
-    }
+        // tslint:disable-next-line
+    };
 
     private buildAdCampaign(): AdCampaignEntity {
         const campaignOptions = new AdCampaignEntity();
@@ -97,8 +87,8 @@ export class FormAdCampaignComponent implements OnInit {
         campaignOptions.img = this.form.get('img')?.value;
         campaignOptions.link = this.form.get('link')?.value;
         campaignOptions.type = this.form.get('type')?.value;
-        campaignOptions.startDate = dayjs(this.form.get('timeRange')?.value?.[0]).format('MM D, YYYY');
-        campaignOptions.endDate = dayjs(this.form.get('timeRange')?.value?.[1]).format('MM D, YYYY');
+        campaignOptions.startDate = dayjs(this.form.get('timeRange')?.value?.[0]).format(SHORT_DATE_FORMAT);
+        campaignOptions.endDate = dayjs(this.form.get('timeRange')?.value?.[1]).format(SHORT_DATE_FORMAT);
 
         return campaignOptions;
     }
