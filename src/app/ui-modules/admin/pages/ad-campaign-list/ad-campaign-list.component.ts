@@ -4,10 +4,9 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AdCampaignEntity, AdCampaignStatus } from '../../../../modules/ad/models/ad-campaign.entity';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
-import * as dayjs from 'dayjs';
-import { AdCardComponent } from '../../../../components/ad-card/ad-card.component';
 import { AdCampaignReasonFormComponent } from '../../components/ad-campaign-reason-form/ad-campaign-reason-form.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AdCampaignCardComponent } from '../../../../components/ad-campaign-card/ad-campaign-card.component';
 
 @Component({
     selector: 'app-ad-campaign-list',
@@ -43,9 +42,9 @@ export class AdCampaignListComponent implements OnInit, OnDestroy {
 
     viewAdCampaign(id: string): void {
         const viewedAd = this.adCampaigns.find(ad => ad.id === id);
-        const modalRef: NzModalRef = this.modalService.create<AdCardComponent>({
-            nzContent: AdCardComponent,
-            nzComponentParams: { ad: viewedAd },
+        const modalRef: NzModalRef = this.modalService.create<AdCampaignCardComponent>({
+            nzContent: AdCampaignCardComponent,
+            nzComponentParams: { campaign: viewedAd },
             nzFooter: [
                 {
                     show: this.status !== AdCampaignStatus.APPROVED,

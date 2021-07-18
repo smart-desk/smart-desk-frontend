@@ -11,6 +11,9 @@ export class ContentLayoutComponent {
     title: string;
 
     @Input()
+    advert: TemplateRef<any>;
+
+    @Input()
     left: TemplateRef<any>;
 
     @Input()

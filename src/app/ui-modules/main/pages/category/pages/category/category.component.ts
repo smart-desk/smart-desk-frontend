@@ -20,7 +20,8 @@ import { AdCampaignCurrentDto } from '../../../../../../modules/ad/models/ad-cam
 })
 export class CategoryComponent implements OnInit, OnDestroy {
     productsResponse: GetProductsResponseDto;
-    adCampaign: AdCampaignCurrentDto;
+    sidebarAdCampaign: AdCampaignCurrentDto;
+    mainAdCampaign: AdCampaignCurrentDto;
     model: Model;
     category: Category;
     options: GetProductsDto;
@@ -65,7 +66,12 @@ export class CategoryComponent implements OnInit, OnDestroy {
             this.cd.detectChanges();
         });
         this.adService.getAdCampaignsCurrent(AdCampaignType.SIDEBAR).subscribe(campaign => {
-            this.adCampaign = campaign;
+            this.sidebarAdCampaign = campaign;
+            this.cd.detectChanges();
+        });
+
+        this.adService.getAdCampaignsCurrent(AdCampaignType.MAIN).subscribe(campaign => {
+            this.mainAdCampaign = campaign;
             this.cd.detectChanges();
         });
     }

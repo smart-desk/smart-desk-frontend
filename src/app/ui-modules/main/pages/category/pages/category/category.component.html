@@ -1,0 +1,14 @@
+<app-content-layout [advert]="advert" [title]="category?.name" [main]="main" [right]="right"></app-content-layout>
+
+<ng-template #advert>
+    <app-main-advert *ngIf="mainAdCampaign" [adCampaign]="mainAdCampaign"></app-main-advert>
+</ng-template>
+
+<ng-template #main>
+    <app-products [productsResponse]="productsResponse" [adCampaign]="sidebarAdCampaign"></app-products>
+</ng-template>
+
+<ng-template #right>
+    <app-sorting *ngIf="model" [model]="model" [sorting]="options?.sorting"></app-sorting>
+    <app-filters *ngIf="model" [model]="model" [filters]="options?.filters"></app-filters>
+</ng-template>

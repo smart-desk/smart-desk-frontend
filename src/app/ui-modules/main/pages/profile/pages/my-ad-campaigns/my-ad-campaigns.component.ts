@@ -7,8 +7,8 @@ import { UserService } from '../../../../../../modules/user/user.service';
 import { StripeService } from '../../../../../../modules/stripe/stripe.service';
 import { AdCampaignEntity, AdCampaignStatus } from '../../../../../../modules/ad/models/ad-campaign.entity';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
-import { AdCardComponent } from '../../../../../../components/ad-card/ad-card.component';
 import { Router } from '@angular/router';
+import { AdCampaignCardComponent } from '../../../../../../components/ad-campaign-card/ad-campaign-card.component';
 
 @Component({
     selector: 'app-ad-campaigns',
@@ -63,9 +63,9 @@ export class MyAdCampaignsComponent implements OnInit {
 
     showAdCampaign(id: string): void {
         const viewedAd = this.adCampaigns.find(ad => ad.id === id);
-        const modalRef: NzModalRef = this.modalService.create<AdCardComponent>({
-            nzContent: AdCardComponent,
-            nzComponentParams: { ad: viewedAd },
+        const modalRef: NzModalRef = this.modalService.create<AdCampaignCardComponent>({
+            nzContent: AdCampaignCardComponent,
+            nzComponentParams: { campaign: viewedAd },
             nzFooter: null,
         });
     }

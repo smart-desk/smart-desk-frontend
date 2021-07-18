@@ -38,8 +38,8 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
-import { AdCardComponent } from './components/ad-card/ad-card.component';
 import { NzCardModule } from 'ng-zorro-antd/card';
+import { MainAdvertComponent } from './components/main-advert/main-advert.component';
 
 const NZModules = [
     NzFormModule,
@@ -75,7 +75,7 @@ const services = [
     AdService,
 ];
 
-const components = [SearchComponent, PaginationComponent, LoginComponent, ForbiddenComponent, UnauthorizedComponent, AdCardComponent];
+const components = [SearchComponent, PaginationComponent, LoginComponent, ForbiddenComponent, UnauthorizedComponent, MainAdvertComponent];
 
 /**
  * Interceptors from `./interceptors` directory

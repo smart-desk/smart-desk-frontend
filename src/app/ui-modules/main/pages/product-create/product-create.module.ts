@@ -5,11 +5,19 @@ import { ProductCreateComponent } from './components/product-create/product-crea
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzCascaderModule } from 'ng-zorro-antd/cascader';
 import { FormsModule } from '@angular/forms';
-import { MainModule } from '../../main.module';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { SharedMainModule } from '../../shared-main.module';
 
 @NgModule({
     declarations: [ProductCreateComponent],
-    imports: [CommonModule, ProductCreateRoutingModule, NzSkeletonModule, NzCascaderModule, FormsModule, MainModule, NzTypographyModule],
+    imports: [
+        CommonModule,
+        ProductCreateRoutingModule,
+        NzSkeletonModule,
+        NzCascaderModule,
+        FormsModule,
+        NzTypographyModule,
+        SharedMainModule,
+    ],
 })
 export class ProductCreateModule {}
