@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AdService } from '../../../../modules/ad/ad.service';
-import { AdCampaignType } from '../../../../modules/ad/models/ad-campaign.entity';
+import { Component, Input, OnInit } from '@angular/core';
+import { AdCampaignEntity } from '../../../../modules/ad/models/ad-campaign.entity';
 
 @Component({
     selector: 'app-ad-cards',
@@ -8,9 +7,9 @@ import { AdCampaignType } from '../../../../modules/ad/models/ad-campaign.entity
     styleUrls: ['./ad-cards.component.scss'],
 })
 export class AdCardsComponent implements OnInit {
-    constructor(private adSevice: AdService) {}
+    @Input() cards: AdCampaignEntity[];
 
-    ngOnInit(): void {
-        this.adSevice.getAdCampaignsCurrent(AdCampaignType.MAIN).subscribe(cards => console.log('cards', cards));
-    }
+    constructor() {}
+
+    ngOnInit(): void {}
 }

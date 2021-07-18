@@ -1,7 +1,7 @@
 <app-content-layout [title]="category?.name" [main]="main" [right]="right"></app-content-layout>
 
 <ng-template #main>
-    <app-ad-cards></app-ad-cards>
+    <app-ad-cards [cards]="adCards"></app-ad-cards>
     <app-products [productsResponse]="productsResponse"></app-products>
 </ng-template>
 

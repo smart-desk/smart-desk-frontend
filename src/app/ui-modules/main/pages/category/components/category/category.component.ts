@@ -8,6 +8,8 @@ import { Model } from '../../../../../../modules/model/models/model.entity';
 import { CategoryService } from '../../../../../../modules/category/category.service';
 import { ProductDataService } from '../../../../../../modules/product/product-data.service';
 import { ModelService } from '../../../../../../modules/model/model.service';
+import { AdCampaignEntity, AdCampaignType } from '../../../../../../modules/ad/models/ad-campaign.entity';
+import { AdService } from '../../../../../../modules/ad/ad.service';
 
 @Component({
     selector: 'app-category',
@@ -17,18 +19,19 @@ import { ModelService } from '../../../../../../modules/model/model.service';
 })
 export class CategoryComponent implements OnInit, OnDestroy {
     productsResponse: GetProductsResponseDto;
+    adCards: AdCampaignEntity[];
     model: Model;
     category: Category;
     options: GetProductsDto;
     private destroy$ = new Subject();
-
     constructor(
         private categoryService: CategoryService,
         private productDataService: ProductDataService,
         private modelService: ModelService,
         private cd: ChangeDetectorRef,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private adService: AdService
     ) {}
 
     ngOnInit(): void {
@@ -59,6 +62,11 @@ export class CategoryComponent implements OnInit, OnDestroy {
         this.productDataService.products$.pipe(takeUntil(this.destroy$)).subscribe(res => {
             this.productsResponse = res;
             this.cd.detectChanges();
+        });
+
+        this.adService.getAdCampaignsCurrent(AdCampaignType.MAIN).subscribe(cards => {
+            console.log('cards', cards);
+            this.adCards = cards;
         });
     }
 

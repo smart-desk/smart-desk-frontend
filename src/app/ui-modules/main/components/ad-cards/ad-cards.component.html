@@ -1,1 +1,11 @@
-<p>ad-cards works!</p>
+<ng-container *ngFor="let card of cards">
+    <nz-card nzHoverable [nzCover]="coverTemplate">
+        <nz-card-meta [nzTitle]="card.title"></nz-card-meta>
+    </nz-card>
+
+    <ng-template #coverTemplate>
+        <a [href]="card.link" target="_blank">
+            <img alt="example" [src]="card.img || 'assets/images/not-found.png'" />
+        </a>
+    </ng-template>
+</ng-container>

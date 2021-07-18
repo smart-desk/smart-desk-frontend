@@ -41,8 +41,8 @@ export class AdService {
         return this.http.get<any>(`/ad/campaigns/schedule?type=${type}`);
     }
 
-    getAdCampaignsCurrent(type: AdCampaignType): Observable<any> {
-        return this.http.get<any>(`/ad/campaigns/current?type=${type}`);
+    getAdCampaignsCurrent(type: AdCampaignType): Observable<AdCampaignEntity[]> {
+        return this.http.get<AdCampaignEntity[]>(`/ad/campaigns/current?type=${type}`);
     }
 
     rejectAdCampaigns(id: string, body: { reason: string }): Observable<AdCampaignEntity> {
