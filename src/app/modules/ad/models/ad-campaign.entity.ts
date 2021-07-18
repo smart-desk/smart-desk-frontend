@@ -1,3 +1,5 @@
+export const SHORT_DATE_FORMAT = 'DD.MM.YYYY';
+
 export enum AdCampaignType {
     MAIN = 'main',
     SIDEBAR = 'sidebar',
@@ -13,9 +15,10 @@ export enum AdCampaignStatus {
 
 export class AdCampaignEntity {
     id: string;
+    title: string;
     userId: string;
-    startDate: Date;
-    endDate: Date;
+    startDate: string;
+    endDate: string;
     img: string;
     link: string;
     type: AdCampaignType;

@@ -21,7 +21,7 @@
         <span>Настройка платных услуг</span>
     </li>
 
-    <li nz-menu-item [nzMatchRouter]="true" routerLink="/admin/ad-campaigns">
+    <li nz-menu-item [nzMatchRouter]="true" routerLink="/admin/ad-campaigns" [queryParams]="{ status: 'pending' }">
         <i nz-icon nzType="calendar" nzTheme="outline"></i>
         <span>Рекламные кампании</span>
     </li>

@@ -1,15 +1,19 @@
 <form nz-form class="form" [formGroup]="form" nzLayout="vertical">
     <nz-form-item>
+        <nz-form-label nzFor="title">Текст</nz-form-label>
+        <input formControlName="title" nz-input placeholder="Этот текст будет размещен в рекламе" />
+    </nz-form-item>
+
+    <nz-form-item>
         <nz-radio-group formControlName="type">
             <label *ngFor="let type of adTypes" nz-radio [nzValue]="type.sysName">{{ type.name }}</label>
         </nz-radio-group>
     </nz-form-item>
 
-    <nz-form-item>
+    <nz-form-item *ngIf="campaignSchedule">
         <nz-form-label nzFor="timeRange">Даты</nz-form-label>
-        <nz-range-picker [nzDisabled]="!isTypeSelected" formControlName="timeRange"></nz-range-picker>
+        <nz-range-picker formControlName="timeRange" [nzDisabledDate]="disabledDate"></nz-range-picker>
     </nz-form-item>
-
     <nz-form-item>
         <nz-form-label nzFor="link">Ссылка</nz-form-label>
         <input formControlName="link" nz-input placeholder="Разместите здесь ссылку на Ваш продукт" />

@@ -1,0 +1,11 @@
+<nz-card class="ad-campaign-card" nzHoverable [nzCover]="coverTemplate">
+    <a [href]="campaign.link" target="_blank">
+        <nz-card-meta [nzTitle]="campaign.title"></nz-card-meta>
+    </a>
+</nz-card>
+
+<ng-template #coverTemplate>
+    <a [href]="campaign.link" target="_blank">
+        <img class="ad-campaign-card__img" alt="example" [src]="campaign.img || 'assets/images/not-found.png'" />
+    </a>
+</ng-template>

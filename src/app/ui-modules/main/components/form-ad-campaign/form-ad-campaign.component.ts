@@ -1,10 +1,14 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AdCampaignEntity, AdCampaignType } from '../../../../modules/ad/models/ad-campaign.entity';
+import { AdCampaignEntity, AdCampaignType, SHORT_DATE_FORMAT } from '../../../../modules/ad/models/ad-campaign.entity';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import * as dayjs from 'dayjs';
+import * as customParseFormat from 'dayjs/plugin/customParseFormat';
+import { AdCampaignsScheduleDto } from '../../../../modules/ad/models/ad-campaigns-schedule.dto';
+
+dayjs.extend(customParseFormat);
 
 @Component({
     selector: 'app-form-ad-campaign',
@@ -14,6 +18,7 @@ import * as dayjs from 'dayjs';
 })
 export class FormAdCampaignComponent implements OnInit {
     @Input() adData: AdCampaignEntity;
+    @Input() campaignSchedule: AdCampaignsScheduleDto = [];
     @Output() changeFormEvent = new EventEmitter<AdCampaignEntity>();
     form: FormGroup;
     isTypeSelected: boolean;
@@ -31,11 +36,9 @@ export class FormAdCampaignComponent implements OnInit {
             this.file = [{ uid: '-1', name: 'ad-image.png', url: this.adData?.img }];
         }
         this.form = this.fb.group({
+            title: [this.adData?.title],
             type: [this.adData?.type, Validators.required],
-            timeRange: [
-                { value: this.adData ? [this.adData.endDate, this.adData.startDate] : undefined, disabled: !this.isTypeSelected },
-                Validators.required,
-            ],
+            timeRange: [this.adData ? [this.adData.endDate, this.adData.startDate] : [undefined, undefined], Validators.required],
             link: [this.adData?.link, Validators.required],
             img: [this.adData?.img, Validators.required],
         });
@@ -66,18 +69,29 @@ export class FormAdCampaignComponent implements OnInit {
         }
     }
 
-    saveCampaign(): AdCampaignEntity {
+    getAdCampaignData(): AdCampaignEntity {
         return this.buildAdCampaign();
     }
+
+    disabledDate = (current: Date): boolean => {
+        return this.campaignSchedule.some(range => {
+            const currentDate = dayjs(current);
+            const startDate = dayjs(range.startDate, SHORT_DATE_FORMAT);
+            const endDate = dayjs(range.endDate, SHORT_DATE_FORMAT);
+            return currentDate >= startDate && endDate >= currentDate;
+        });
+        // tslint:disable-next-line
+    };
 
     private buildAdCampaign(): AdCampaignEntity {
         const campaignOptions = new AdCampaignEntity();
         campaignOptions.id = this.adData?.id;
         campaignOptions.img = this.form.get('img')?.value;
+        campaignOptions.title = this.form.get('title')?.value;
         campaignOptions.link = this.form.get('link')?.value;
         campaignOptions.type = this.form.get('type')?.value;
-        campaignOptions.startDate = dayjs(this.form.get('timeRange')?.value?.[0]).startOf('day').toDate();
-        campaignOptions.endDate = dayjs(this.form.get('timeRange')?.value?.[1]).endOf('day').toDate();
+        campaignOptions.startDate = dayjs(this.form.get('timeRange')?.value?.[0]).format(SHORT_DATE_FORMAT);
+        campaignOptions.endDate = dayjs(this.form.get('timeRange')?.value?.[1]).format(SHORT_DATE_FORMAT);
 
         return campaignOptions;
     }

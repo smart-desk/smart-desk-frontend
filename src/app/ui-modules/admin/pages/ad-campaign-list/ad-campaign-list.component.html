@@ -10,33 +10,33 @@
     <label nz-radio-button [nzValue]="adCampaignStatus.PAID">Активные</label>
 </nz-radio-group>
 
-<nz-table class="table" [nzTemplateMode]="true" [nzFrontPagination]="true">
+<nz-table class="table" [nzTemplateMode]="true" [nzFrontPagination]="true" nzSize="middle">
     <thead>
         <tr>
+            <th>Название</th>
             <th>Ссылка</th>
             <th>Статус</th>
-            <th>Дата начала</th>
-            <th>Дата окончания</th>
+            <th>Даты</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let campaign of adCampaigns">
+            <td>{{ campaign.title }}</td>
             <td>
                 <a [href]="campaign.link" target="_blank">{{ campaign.link }}</a>
             </td>
             <td>{{ campaign.status }}</td>
-            <td>{{ formatDate(campaign.startDate) }}</td>
-            <td>{{ formatDate(campaign.endDate) }}</td>
+            <td>{{ campaign.startDate }}-{{ campaign.endDate }}</td>
             <td>
                 <a (click)="viewAdCampaign(campaign.id)">Просмотреть</a>
-                <ng-container *ngIf="status !== adCampaignStatus.APPROVED">
+                <ng-container *ngIf="campaign.status !== adCampaignStatus.APPROVED && status !== adCampaignStatus.PAID">
                     <nz-divider nzType="vertical"></nz-divider>
                     <a (click)="approveCampaign(campaign.id)">Одобрить</a>
                 </ng-container>
-                <ng-container *ngIf="status !== adCampaignStatus.REJECTED">
+                <ng-container *ngIf="campaign.status !== adCampaignStatus.REJECTED">
                     <nz-divider nzType="vertical"></nz-divider>
-                    <a (click)="openRejectModal(campaign.id)">Отклонить</a>
+                    <a nz-typography nzType="danger" (click)="openRejectModal(campaign.id)">Отклонить</a>
                 </ng-container>
             </td>
         </tr>

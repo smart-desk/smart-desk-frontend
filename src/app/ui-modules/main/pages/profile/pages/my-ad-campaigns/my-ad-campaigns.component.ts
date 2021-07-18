@@ -7,7 +7,8 @@ import { UserService } from '../../../../../../modules/user/user.service';
 import { StripeService } from '../../../../../../modules/stripe/stripe.service';
 import { AdCampaignEntity, AdCampaignStatus } from '../../../../../../modules/ad/models/ad-campaign.entity';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
-import { FormAdCampaignComponent } from '../../../../components/form-ad-campaign/form-ad-campaign.component';
+import { AdCardComponent } from '../../../../../../components/ad-card/ad-card.component';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-ad-campaigns',
@@ -17,7 +18,7 @@ import { FormAdCampaignComponent } from '../../../../components/form-ad-campaign
 })
 export class MyAdCampaignsComponent implements OnInit {
     user: User;
-    ads: AdCampaignEntity[];
+    adCampaigns: AdCampaignEntity[];
     adsStatus = AdCampaignStatus;
 
     constructor(
@@ -25,7 +26,8 @@ export class MyAdCampaignsComponent implements OnInit {
         private userService: UserService,
         private adService: AdService,
         private stripeService: StripeService,
-        private modalService: NzModalService
+        private modalService: NzModalService,
+        private router: Router
     ) {}
 
     ngOnInit(): void {
@@ -33,14 +35,17 @@ export class MyAdCampaignsComponent implements OnInit {
             this.user = res;
             this.cdr.detectChanges();
         });
+        this.getAdCampaigns();
+    }
 
+    getAdCampaigns(): void {
         this.adService.getAdCampaigns().subscribe(adData => {
-            this.ads = adData;
+            this.adCampaigns = adData;
             this.cdr.detectChanges();
         });
     }
 
-    pay(id: string): void {
+    navigateToPaymentPage(id: string): void {
         if (this.stripeService.stripe) {
             this.adService
                 .payCampaign(id)
@@ -51,12 +56,21 @@ export class MyAdCampaignsComponent implements OnInit {
         }
     }
 
-    edit(id: string): void {
-        const editAd = this.ads.find(ad => ad.id === id);
-        const modalRef: NzModalRef = this.modalService.create<FormAdCampaignComponent>({
-            nzContent: FormAdCampaignComponent,
-            nzComponentParams: { adData: editAd },
-            nzOnOk: () => modalRef.getContentComponent().submit(),
+    navigateToCampaignPage(id: string): void {
+        const editAd = this.adCampaigns.find(ad => ad.id === id);
+        this.router.navigate([`./profile/my-ad-campaigns/${id}/update`]);
+    }
+
+    showAdCampaign(id: string): void {
+        const viewedAd = this.adCampaigns.find(ad => ad.id === id);
+        const modalRef: NzModalRef = this.modalService.create<AdCardComponent>({
+            nzContent: AdCardComponent,
+            nzComponentParams: { ad: viewedAd },
+            nzFooter: null,
         });
+    }
+
+    deleteAdCampaign(adCampaign: AdCampaignEntity) {
+        this.adService.deleteAdCampaign(adCampaign.id).subscribe(() => this.getAdCampaigns());
     }
 }

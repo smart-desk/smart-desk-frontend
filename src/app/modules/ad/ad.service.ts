@@ -5,8 +5,10 @@ import { map } from 'rxjs/operators';
 import { AdConfigEntity } from './models/ad-config.entity';
 import { AdConfigDto } from './models/ad-config.dto';
 import { AdCampaignDto } from './models/ad-campaign.dto';
-import { AdCampaignEntity } from './models/ad-campaign.entity';
+import { AdCampaignEntity, AdCampaignType } from './models/ad-campaign.entity';
 import { StripeSession } from '../stripe/models/stripe-session.interface';
+import { AdCampaignCurrentDto } from './models/ad-campaign-current.dto';
+import { AdCampaignsScheduleDto } from './models/ad-campaigns-schedule.dto';
 
 @Injectable()
 export class AdService {
@@ -28,9 +30,25 @@ export class AdService {
         return this.http.post<AdCampaignEntity>(`/ad/campaigns`, adCampaign);
     }
 
+    updateAdCampaign(adCampaign: AdCampaignEntity): Observable<AdCampaignEntity> {
+        return this.http.patch<AdCampaignEntity>(`/ad/campaigns/${adCampaign.id}`, adCampaign);
+    }
+
     getAdCampaigns(status?: string): Observable<AdCampaignEntity[]> {
         const request = status ? `/ad/campaigns?status=${status}` : `/ad/campaigns`;
         return this.http.get<AdCampaignEntity[]>(request);
+    }
+
+    getAdCampaign(id: string): Observable<AdCampaignEntity> {
+        return this.http.get<AdCampaignEntity>(`/ad/campaigns/${id}`);
+    }
+
+    getAdCampaignsSchedule(type: AdCampaignType): Observable<AdCampaignsScheduleDto> {
+        return this.http.get<AdCampaignsScheduleDto>(`/ad/campaigns/schedule?type=${type}`);
+    }
+
+    getAdCampaignsCurrent(type: AdCampaignType): Observable<AdCampaignCurrentDto> {
+        return this.http.get<AdCampaignCurrentDto>(`/ad/campaigns/current?type=${type}`);
     }
 
     rejectAdCampaigns(id: string, body: { reason: string }): Observable<AdCampaignEntity> {
@@ -39,5 +57,9 @@ export class AdService {
 
     approveAdCampaigns(id: string): Observable<AdCampaignEntity> {
         return this.http.patch<AdCampaignEntity>(`/ad/campaigns/${id}/approve`, null);
+    }
+
+    deleteAdCampaign(id: string): Observable<void> {
+        return this.http.delete<void>(`/ad/campaigns/${id}`);
     }
 }

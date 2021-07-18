@@ -1,12 +1,15 @@
 <div *ngIf="!productsResponse || !productsResponse.totalCount">Здесь еще нет объявлений :)</div>
 <div class="box__products">
-    <app-product-card
-        *ngFor="let product of productsResponse?.products; trackBy: trackByFn"
-        [product]="product"
-        [extraActions]="cardActions"
-        (createBookmark)="addBookmarkEvent($event)"
-        (deleteBookmark)="removeBookmarkEvent($event)"
-    ></app-product-card>
+    <ng-container *ngFor="let product of productsResponse?.products; index as i; trackBy: trackByFn">
+        <app-product-card
+            [product]="product"
+            [extraActions]="cardActions"
+            (createBookmark)="addBookmarkEvent($event)"
+            (deleteBookmark)="removeBookmarkEvent($event)"
+        ></app-product-card>
+        <app-ad-campaign-card *ngIf="i === 4 && adCampaign && productsResponse?.products.length >= 7" [campaign]="adCampaign">
+        </app-ad-campaign-card>
+    </ng-container>
 </div>
 <app-pagination
     class="pagination"
