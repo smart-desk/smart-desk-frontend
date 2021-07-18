@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AdCampaignEntity, AdCampaignType, SHORT_DATE_FORMAT } from '../../../../modules/ad/models/ad-campaign.entity';
 import { Subject } from 'rxjs';
@@ -16,7 +16,7 @@ dayjs.extend(customParseFormat);
     styleUrls: ['./form-ad-campaign.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormAdCampaignComponent implements OnInit {
+export class FormAdCampaignComponent implements OnInit, OnChanges {
     @Input() adData: AdCampaignEntity;
     @Input() campaignSchedule: AdCampaignsScheduleDto = [];
     @Output() changeFormEvent = new EventEmitter<AdCampaignEntity>();
@@ -32,15 +32,12 @@ export class FormAdCampaignComponent implements OnInit {
     constructor(private fb: FormBuilder) {}
 
     ngOnInit(): void {
-        if (this.adData) {
-            this.file = [{ uid: '-1', name: 'ad-image.png', url: this.adData?.img }];
-        }
         this.form = this.fb.group({
-            title: [this.adData?.title],
-            type: [this.adData?.type, Validators.required],
-            timeRange: [this.adData ? [this.adData.endDate, this.adData.startDate] : [undefined, undefined], Validators.required],
-            link: [this.adData?.link, Validators.required],
-            img: [this.adData?.img, Validators.required],
+            title: [],
+            type: [undefined, Validators.required],
+            timeRange: [[], Validators.required],
+            link: ['', Validators.required],
+            img: ['', Validators.required],
         });
 
         this.form
@@ -59,6 +56,17 @@ export class FormAdCampaignComponent implements OnInit {
                 const campaign = this.buildAdCampaign();
                 this.changeFormEvent.emit(campaign);
             });
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes.adData && this.form) {
+            const value: AdCampaignEntity = changes.adData?.currentValue;
+            this.form.patchValue(changes.adData?.currentValue);
+            this.form
+                .get('timeRange')
+                ?.setValue([dayjs(value.startDate, SHORT_DATE_FORMAT).toDate(), dayjs(value.endDate, SHORT_DATE_FORMAT).toDate()]);
+            this.file = [{ uid: '-1', name: 'ad-image.png', url: this.adData?.img }];
+        }
     }
 
     fileChanged(event: NzUploadChangeParam): void {

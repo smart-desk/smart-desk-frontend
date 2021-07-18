@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Directive, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AdCampaignEntity, AdCampaignType } from '../../../../../../modules/ad/models/ad-campaign.entity';
+import { AdCampaignEntity, AdCampaignType, SHORT_DATE_FORMAT } from '../../../../../../modules/ad/models/ad-campaign.entity';
 import { FormAdCampaignComponent } from '../../../../components/form-ad-campaign/form-ad-campaign.component';
 import { AdConfigEntity } from '../../../../../../modules/ad/models/ad-config.entity';
 import { Subject } from 'rxjs';
@@ -11,7 +11,7 @@ import { AdCampaignsScheduleDto } from '../../../../../../modules/ad/models/ad-c
 @Directive({
     selector: '[appAdCampaign]',
 })
-export class AdCampaignListDirective implements OnInit, OnDestroy {
+export class AdCampaignFormDirective implements OnInit, OnDestroy {
     totalAmount: number;
     @Input() adCampaign: AdCampaignEntity;
     @ViewChild(FormAdCampaignComponent) formLink: FormAdCampaignComponent;
@@ -21,7 +21,10 @@ export class AdCampaignListDirective implements OnInit, OnDestroy {
     constructor(protected readonly adService: AdService, protected cd: ChangeDetectorRef, protected router: Router) {}
 
     ngOnInit(): void {
-        this.adService.getAdConfig().subscribe(adConfig => (this.adConfig = adConfig));
+        this.adService.getAdConfig().subscribe(adConfig => {
+            this.adConfig = adConfig;
+            this.cd.detectChanges();
+        });
     }
 
     ngOnDestroy(): void {
@@ -29,11 +32,14 @@ export class AdCampaignListDirective implements OnInit, OnDestroy {
         this.destroy$.complete();
     }
 
-    formValueChange(adCampaign: AdCampaignEntity) {
+    formValueChange(adCampaign: AdCampaignEntity): void {
+        if (!this.adConfig) {
+            return;
+        }
         this.setDisabledRange(adCampaign.type);
         const selectedRate = adCampaign.type === AdCampaignType.MAIN ? this.adConfig.mainHourlyRate : this.adConfig.sidebarHourlyRate;
-        const startDate = dayjs(adCampaign.startDate);
-        const endDate = dayjs(adCampaign.endDate);
+        const startDate = dayjs(adCampaign.startDate, SHORT_DATE_FORMAT);
+        const endDate = dayjs(adCampaign.endDate, SHORT_DATE_FORMAT);
         const diffHours = endDate.diff(startDate, 'hour') + 1;
         this.totalAmount = diffHours * selectedRate;
         this.cd.detectChanges();
