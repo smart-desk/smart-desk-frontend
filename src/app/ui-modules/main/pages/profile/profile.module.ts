@@ -21,7 +21,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { SharedModule } from '../../../../shared.module';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
-import { AdCampaignDirective } from './pages/ad-campaign.directive';
+import { AdCampaignListDirective } from './components/ad-campaign-list/ad-campaign-list.directive';
 import { UpdateAdCampaignComponent } from './pages/update-ad-campaign/update-ad-campaign.component';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 
@@ -36,7 +36,7 @@ const components = [
 ];
 
 @NgModule({
-    declarations: [...components, AdCampaignDirective],
+    declarations: [...components, AdCampaignListDirective],
     imports: [
         CommonModule,
         ProfileRoutingModule,

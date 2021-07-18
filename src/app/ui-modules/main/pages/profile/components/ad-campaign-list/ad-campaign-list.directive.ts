@@ -1,21 +1,22 @@
 import { ChangeDetectorRef, Directive, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AdCampaignEntity, AdCampaignType } from '../../../../../modules/ad/models/ad-campaign.entity';
-import { FormAdCampaignComponent } from '../../../components/form-ad-campaign/form-ad-campaign.component';
-import { AdConfigEntity } from '../../../../../modules/ad/models/ad-config.entity';
+import { AdCampaignEntity, AdCampaignType } from '../../../../../../modules/ad/models/ad-campaign.entity';
+import { FormAdCampaignComponent } from '../../../../components/form-ad-campaign/form-ad-campaign.component';
+import { AdConfigEntity } from '../../../../../../modules/ad/models/ad-config.entity';
 import { Subject } from 'rxjs';
-import { AdService } from '../../../../../modules/ad/ad.service';
+import { AdService } from '../../../../../../modules/ad/ad.service';
 import { Router } from '@angular/router';
 import * as dayjs from 'dayjs';
+import { AdCampaignsScheduleDto } from '../../../../../../modules/ad/models/ad-campaigns-schedule.dto';
 
 @Directive({
     selector: '[appAdCampaign]',
 })
-export class AdCampaignDirective implements OnInit, OnDestroy {
+export class AdCampaignListDirective implements OnInit, OnDestroy {
     totalAmount: number;
     @Input() adCampaign: AdCampaignEntity;
     @ViewChild(FormAdCampaignComponent) formLink: FormAdCampaignComponent;
     destroy$ = new Subject();
-    disabledRange: number;
+    campaignSchedule: AdCampaignsScheduleDto;
     private adConfig: AdConfigEntity;
     constructor(protected readonly adService: AdService, protected cd: ChangeDetectorRef, protected router: Router) {}
 
@@ -51,7 +52,7 @@ export class AdCampaignDirective implements OnInit, OnDestroy {
 
     setDisabledRange(adType: AdCampaignType): void {
         this.adService.getAdCampaignsSchedule(adType).subscribe(disabledDates => {
-            this.disabledRange = disabledDates;
+            this.campaignSchedule = disabledDates;
             this.cd.detectChanges();
         });
     }

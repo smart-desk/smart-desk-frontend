@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { AdService } from '../../../../../../modules/ad/ad.service';
 import { Router } from '@angular/router';
-import { AdCampaignDirective } from '../ad-campaign.directive';
+import { AdCampaignListDirective } from '../../components/ad-campaign-list/ad-campaign-list.directive';
 
 @Component({
     selector: 'app-create-ad-campaign',
@@ -9,7 +9,7 @@ import { AdCampaignDirective } from '../ad-campaign.directive';
     styleUrls: ['./create-ad-campaign.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CreateAdCampaignComponent extends AdCampaignDirective {
+export class CreateAdCampaignComponent extends AdCampaignListDirective {
     constructor(protected readonly adService: AdService, protected cd: ChangeDetectorRef, protected router: Router) {
         super(adService, cd, router);
     }

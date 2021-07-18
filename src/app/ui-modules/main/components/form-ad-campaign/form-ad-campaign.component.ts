@@ -6,6 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import * as dayjs from 'dayjs';
 import * as customParseFormat from 'dayjs/plugin/customParseFormat';
+import { AdCampaignsScheduleDto } from '../../../../modules/ad/models/ad-campaigns-schedule.dto';
 
 dayjs.extend(customParseFormat);
 
@@ -17,7 +18,7 @@ dayjs.extend(customParseFormat);
 })
 export class FormAdCampaignComponent implements OnInit {
     @Input() adData: AdCampaignEntity;
-    @Input() disabledRange: Array<{ startDate: string; endDate: string }> = [];
+    @Input() campaignSchedule: AdCampaignsScheduleDto = [];
     @Output() changeFormEvent = new EventEmitter<AdCampaignEntity>();
     form: FormGroup;
     isTypeSelected: boolean;
@@ -73,7 +74,7 @@ export class FormAdCampaignComponent implements OnInit {
     }
 
     disabledDate = (current: Date): boolean => {
-        return this.disabledRange.some(range => {
+        return this.campaignSchedule.some(range => {
             const currentDate = dayjs(current);
             const startDate = dayjs(range.startDate, SHORT_DATE_FORMAT);
             const endDate = dayjs(range.endDate, SHORT_DATE_FORMAT);

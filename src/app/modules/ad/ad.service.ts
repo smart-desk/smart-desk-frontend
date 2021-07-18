@@ -8,6 +8,7 @@ import { AdCampaignDto } from './models/ad-campaign.dto';
 import { AdCampaignEntity, AdCampaignType } from './models/ad-campaign.entity';
 import { StripeSession } from '../stripe/models/stripe-session.interface';
 import { AdCampaignCurrentDto } from './models/ad-campaign-current.dto';
+import { AdCampaignsScheduleDto } from './models/ad-campaigns-schedule.dto';
 
 @Injectable()
 export class AdService {
@@ -42,8 +43,8 @@ export class AdService {
         return this.http.get<AdCampaignEntity>(`/ad/campaigns/${id}`);
     }
 
-    getAdCampaignsSchedule(type: AdCampaignType): Observable<any> {
-        return this.http.get<any>(`/ad/campaigns/schedule?type=${type}`);
+    getAdCampaignsSchedule(type: AdCampaignType): Observable<AdCampaignsScheduleDto> {
+        return this.http.get<AdCampaignsScheduleDto>(`/ad/campaigns/schedule?type=${type}`);
     }
 
     getAdCampaignsCurrent(type: AdCampaignType): Observable<AdCampaignCurrentDto> {

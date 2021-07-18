@@ -10,7 +10,7 @@
         </nz-radio-group>
     </nz-form-item>
 
-    <nz-form-item *ngIf="disabledRange">
+    <nz-form-item *ngIf="campaignSchedule">
         <nz-form-label nzFor="timeRange">Даты</nz-form-label>
         <nz-range-picker formControlName="timeRange" [nzDisabledDate]="disabledDate"></nz-range-picker>
     </nz-form-item>
