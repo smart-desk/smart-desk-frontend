@@ -28,7 +28,7 @@
                     <a (click)="showAdCampaign(adCampaign.id)">Просмотр</a>
                     <ng-container *ngIf="adCampaign.status !== this.adsStatus.PAID">
                         <nz-divider [nzType]="'vertical'"></nz-divider>
-                        <a (click)="navigateToCampaignPage(adCampaign.id)"></a>
+                        <a (click)="navigateToCampaignPage(adCampaign.id)">Редатировать</a>
                     </ng-container>
                     <ng-container *ngIf="adCampaign.status === this.adsStatus.APPROVED">
                         <nz-divider [nzType]="'vertical'"></nz-divider>

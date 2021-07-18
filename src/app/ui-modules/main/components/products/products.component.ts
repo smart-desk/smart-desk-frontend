@@ -18,6 +18,7 @@ import { BookmarksStoreService } from '../../../../modules/bookmarks/bookmarks-s
 import { Bookmark } from '../../../../modules/bookmarks/models/bookmark.entity';
 import { Product } from '../../../../modules/product/models/product.entity';
 import { ProductDataService } from '../../../../modules/product/product-data.service';
+import { AdCampaignCurrentDto } from '../../../../modules/ad/models/ad-campaign-current.dto';
 
 @Component({
     selector: 'app-products',
@@ -28,6 +29,7 @@ import { ProductDataService } from '../../../../modules/product/product-data.ser
 export class ProductsComponent implements OnChanges, OnInit, OnDestroy {
     @Input() cardActions: ExtraActions[];
     @Input() productsResponse: GetProductsResponseDto | null;
+    @Input() adCampaign: AdCampaignCurrentDto;
     destroy$ = new Subject();
 
     constructor(

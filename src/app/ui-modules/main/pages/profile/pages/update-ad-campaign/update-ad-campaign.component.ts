@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { AdService } from '../../../../../../modules/ad/ad.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdCampaignDirective } from '../ad-campaign.directive';
-import { takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-update-ad-campaign',
@@ -22,7 +22,11 @@ export class UpdateAdCampaignComponent extends AdCampaignDirective implements On
 
     ngOnInit(): void {
         super.ngOnInit();
-        console.log('!!!', history.state);
-        this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe(param => console.log('???', param));
+        this.route.paramMap
+            .pipe(
+                takeUntil(this.destroy$),
+                switchMap(param => this.adService.getAdCampaign(param.get('id') || ''))
+            )
+            .subscribe(adData => (this.adCampaign = adData));
     }
 }

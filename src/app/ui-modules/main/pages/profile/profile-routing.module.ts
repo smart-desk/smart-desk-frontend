@@ -29,7 +29,7 @@ const routes: Routes = [
         component: CreateAdCampaignComponent,
     },
     {
-        path: 'my-ad-campaigns/update',
+        path: 'my-ad-campaigns/:id/update',
         component: UpdateAdCampaignComponent,
     },
 ];

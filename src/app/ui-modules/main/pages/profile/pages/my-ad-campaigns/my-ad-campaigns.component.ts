@@ -58,7 +58,7 @@ export class MyAdCampaignsComponent implements OnInit {
 
     navigateToCampaignPage(id: string): void {
         const editAd = this.adCampaigns.find(ad => ad.id === id);
-        this.router.navigate(['./profile/my-ad-campaigns/update'], { state: editAd });
+        this.router.navigate([`./profile/my-ad-campaigns/${id}/update`]);
     }
 
     showAdCampaign(id: string): void {

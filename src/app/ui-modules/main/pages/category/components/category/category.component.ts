@@ -8,8 +8,9 @@ import { Model } from '../../../../../../modules/model/models/model.entity';
 import { CategoryService } from '../../../../../../modules/category/category.service';
 import { ProductDataService } from '../../../../../../modules/product/product-data.service';
 import { ModelService } from '../../../../../../modules/model/model.service';
-import { AdCampaignEntity, AdCampaignType } from '../../../../../../modules/ad/models/ad-campaign.entity';
+import { AdCampaignType } from '../../../../../../modules/ad/models/ad-campaign.entity';
 import { AdService } from '../../../../../../modules/ad/ad.service';
+import { AdCampaignCurrentDto } from '../../../../../../modules/ad/models/ad-campaign-current.dto';
 
 @Component({
     selector: 'app-category',
@@ -19,7 +20,7 @@ import { AdService } from '../../../../../../modules/ad/ad.service';
 })
 export class CategoryComponent implements OnInit, OnDestroy {
     productsResponse: GetProductsResponseDto;
-    adCards: AdCampaignEntity[];
+    adCampaign: AdCampaignCurrentDto;
     model: Model;
     category: Category;
     options: GetProductsDto;
@@ -63,10 +64,9 @@ export class CategoryComponent implements OnInit, OnDestroy {
             this.productsResponse = res;
             this.cd.detectChanges();
         });
-
-        this.adService.getAdCampaignsCurrent(AdCampaignType.MAIN).subscribe(cards => {
-            console.log('cards', cards);
-            this.adCards = cards;
+        this.adService.getAdCampaignsCurrent(AdCampaignType.SIDEBAR).subscribe(campaign => {
+            this.adCampaign = campaign;
+            this.cd.detectChanges();
         });
     }
 
