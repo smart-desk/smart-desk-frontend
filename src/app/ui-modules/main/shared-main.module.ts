@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared.module';
-import { ProductComponent } from './pages/product/components/product/product.component';
 import { HeaderComponent } from './components/header/header.component';
 import { NavigationHeaderComponent } from './components/navigation-header/navigation-header.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
@@ -40,7 +39,6 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 const components = [
-    ProductComponent,
     HeaderComponent,
     NavigationHeaderComponent,
     ProductCardComponent,

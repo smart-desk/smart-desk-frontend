@@ -4,7 +4,6 @@ import { MainComponent } from './main.component';
 import { AuthGuard } from '../../modules/auth/auth.guard';
 import { ForbiddenComponent } from '../../pages/forbidden/forbidden.component';
 import { UnauthorizedComponent } from '../../pages/unauthorized/unauthorized.component';
-import { ProductComponent } from './pages/product/components/product/product.component';
 import { VkRedirectComponent } from './components/vk-redirect/vk-redirect.component';
 
 const routes: Routes = [
@@ -50,7 +49,7 @@ const routes: Routes = [
             },
             {
                 path: 'products/:product_id',
-                component: ProductComponent,
+                loadChildren: () => import('./pages/product/product.module').then(m => m.ProductModule),
             },
             {
                 path: 'category/:category_id',
