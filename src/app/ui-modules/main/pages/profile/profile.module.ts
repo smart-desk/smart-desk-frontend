@@ -32,10 +32,11 @@ const components = [
     MyAdCampaignsComponent,
     CreateAdCampaignComponent,
     UpdateAdCampaignComponent,
+    AdCampaignFormDirective,
 ];
 
 @NgModule({
-    declarations: [...components, AdCampaignFormDirective],
+    declarations: [...components],
     imports: [
         CommonModule,
         ProfileRoutingModule,
