@@ -4,11 +4,12 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { ProductRoutingModule } from './product-routing.module';
-import { MainModule } from '../../main.module';
+import { SharedMainModule } from '../../shared-main.module';
+import { ProductComponent } from './components/product/product.component';
 
-// TODO: Подключить как фича модуль
 @NgModule({
-    declarations: [],
-    imports: [MainModule, CommonModule, NzAvatarModule, ProductRoutingModule, NzIconModule, NzButtonModule],
+    declarations: [ProductComponent],
+    exports: [ProductComponent],
+    imports: [SharedMainModule, CommonModule, NzAvatarModule, ProductRoutingModule, NzIconModule, NzButtonModule],
 })
 export class ProductModule {}

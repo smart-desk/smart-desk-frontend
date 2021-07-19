@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { UserRoutingModule } from './user-routing.module';
 import { UserComponent } from './components/user/user.component';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
-import { MainModule } from '../../main.module';
+import { SharedMainModule } from '../../shared-main.module';
 
 @NgModule({
     declarations: [UserComponent],
-    imports: [CommonModule, UserRoutingModule, MainModule, NzTabsModule],
+    imports: [CommonModule, UserRoutingModule, SharedMainModule, NzTabsModule],
 })
 export class UserModule {}
