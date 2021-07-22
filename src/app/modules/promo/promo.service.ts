@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PromoSet } from './models/promo-set.entity';
 import { PromoSetDto } from './models/promo-set.dto';
+import { PayPromoSetDto } from './models/pay-promo-set.dto';
+import { StripeSession } from '../stripe/models/stripe-session.interface';
 
 @Injectable({
     providedIn: 'root',
@@ -24,5 +26,9 @@ export class PromoService {
 
     deletePromoSet(id: string): Observable<void> {
         return this.http.delete<void>(`/promo-set/${id}`);
+    }
+
+    payPromo(body: PayPromoSetDto): Observable<StripeSession> {
+        return this.http.post<StripeSession>('/promo', body);
     }
 }
