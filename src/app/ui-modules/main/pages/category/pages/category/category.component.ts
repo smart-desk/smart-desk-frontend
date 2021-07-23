@@ -11,6 +11,8 @@ import { ModelService } from '../../../../../../modules/model/model.service';
 import { AdCampaignType } from '../../../../../../modules/ad/models/ad-campaign.entity';
 import { AdService } from '../../../../../../modules/ad/ad.service';
 import { AdCampaignCurrentDto } from '../../../../../../modules/ad/models/ad-campaign-current.dto';
+import { Product } from '../../../../../../modules/product/models/product.entity';
+import { PromoService } from '../../../../../../modules/promo/promo.service';
 
 @Component({
     selector: 'app-category',
@@ -25,8 +27,10 @@ export class CategoryComponent implements OnInit, OnDestroy {
     model: Model;
     category: Category;
     options: GetProductsDto;
+    promoProducts: Product[];
     private destroy$ = new Subject();
     constructor(
+        private promoService: PromoService,
         private categoryService: CategoryService,
         private productDataService: ProductDataService,
         private modelService: ModelService,
@@ -47,6 +51,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
                 switchMap(() => this.route.paramMap),
                 switchMap((paramMap: ParamMap) => {
                     const categoryId = paramMap.get('category_id') || '';
+                    this.getPromoProducts(categoryId);
                     this.options = this.productDataService.parseQueryParams(this.route.snapshot.queryParamMap);
                     this.productDataService.loadProducts(categoryId, this.options);
                     return this.categoryService.getCategory(categoryId);
@@ -79,5 +84,12 @@ export class CategoryComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.destroy$.next();
         this.destroy$.complete();
+    }
+
+    private getPromoProducts(categoryId: string): void {
+        this.promoService.getPromoProducts(categoryId).subscribe(res => {
+            this.promoProducts = res;
+            this.cd.detectChanges();
+        });
     }
 }

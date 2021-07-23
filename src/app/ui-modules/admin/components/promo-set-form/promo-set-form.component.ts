@@ -18,9 +18,9 @@ export class PromoSetFormComponent implements OnInit {
 
     ngOnInit(): void {
         this.form = this.fb.group({
-            name: [this.promoSet?.name || '', Validators.required],
-            days: [this.promoSet?.days || null, Validators.required],
-            price: [this.promoSet?.price || null, Validators.required],
+            name: [this.promoSet?.name, Validators.required],
+            days: [this.promoSet?.days, Validators.required],
+            price: [this.promoSet?.price, Validators.required],
         });
     }
 

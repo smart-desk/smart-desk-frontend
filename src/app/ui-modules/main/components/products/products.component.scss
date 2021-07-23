@@ -8,3 +8,21 @@
         grid-row-gap: $base-unit * 3;
     }
 }
+
+.products {
+    &__promo-section {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-column-gap: $base-unit * 2;
+        grid-row-gap: $base-unit * 3;
+    }
+
+    &__promo-section-wrapper {
+        margin: -$base-unit * 2;
+        padding: $base-unit * 2;
+        margin-bottom: $base-unit * 2;
+        margin-top: 0;
+        background-color: $blue-background;
+        border-radius: 2px;
+    }
+}

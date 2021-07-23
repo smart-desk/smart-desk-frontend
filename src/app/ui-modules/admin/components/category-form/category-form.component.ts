@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Category } from '../../../../modules/category/models/category.entity';
 import { Model } from '../../../../modules/model/models/model.entity';
 
@@ -22,8 +22,8 @@ export class CategoryFormComponent implements OnInit {
 
     ngOnInit() {
         this.form = this.fb.group({
-            name: [(this.category && this.category.name) || ''],
-            model: [this.getModelByCategory(this.category) || null],
+            name: [this.category?.name],
+            model: [this.getModelByCategory(this.category)],
         });
     }
 

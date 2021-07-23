@@ -5,6 +5,7 @@ import { PromoSet } from './models/promo-set.entity';
 import { PromoSetDto } from './models/promo-set.dto';
 import { PayPromoSetDto } from './models/pay-promo-set.dto';
 import { StripeSession } from '../stripe/models/stripe-session.interface';
+import { Product } from '../product/models/product.entity';
 
 @Injectable({
     providedIn: 'root',
@@ -30,5 +31,9 @@ export class PromoService {
 
     payPromo(body: PayPromoSetDto): Observable<StripeSession> {
         return this.http.post<StripeSession>('/promo', body);
+    }
+
+    getPromoProducts(categoryId: string): Observable<Product[]> {
+        return this.http.get<Product[]>(`/promo/${categoryId}/products`);
     }
 }
