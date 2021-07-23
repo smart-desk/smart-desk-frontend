@@ -30,7 +30,7 @@ export class CheckboxFormComponent extends AbstractFieldFormComponent<CheckboxEn
     }
 
     isChecked(cb: CheckboxItem): boolean {
-        return this.field?.data?.value.some(c => c === cb.value);
+        return this.field?.data?.value?.some(c => c === cb.value);
     }
 
     checkboxChecked(checked: string[]): void {
