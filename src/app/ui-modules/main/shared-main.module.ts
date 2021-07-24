@@ -37,6 +37,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzResultModule } from 'ng-zorro-antd/result';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { PromoSetChooserComponent } from './components/promo-set-chooser/promo-set-chooser.component';
 
 const components = [
     HeaderComponent,
@@ -55,6 +56,7 @@ const components = [
     FormAdCampaignComponent,
     AdCampaignCardComponent,
     ContentLayoutComponent,
+    PromoSetChooserComponent,
 ];
 
 @NgModule({

@@ -22,7 +22,7 @@ export class DatepickerFilterComponent extends AbstractFieldFilterComponent<Date
 
     ngOnInit(): void {
         this.form = this.fb.group({
-            dateRange: [[this.filter?.getFilterParams()?.from || null, this.filter?.getFilterParams()?.to || null]],
+            dateRange: [[this.filter?.getFilterParams()?.from, this.filter?.getFilterParams()?.to]],
         });
     }
 
@@ -48,7 +48,7 @@ export class DatepickerFilterComponent extends AbstractFieldFilterComponent<Date
     private updateFormValues(): void {
         this.form.patchValue(
             {
-                dateRange: [[this.filter?.getFilterParams()?.from || null, this.filter?.getFilterParams()?.to || null]],
+                dateRange: [[this.filter?.getFilterParams()?.from, this.filter?.getFilterParams()?.to]],
             },
             { onlySelf: true }
         );

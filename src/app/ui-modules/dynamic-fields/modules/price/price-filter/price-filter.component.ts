@@ -21,8 +21,8 @@ export class PriceFilterComponent extends AbstractFieldFilterComponent<PricePara
 
     ngOnInit(): void {
         this.form = this.fb.group({
-            from: [(this.filter && this.filter.getFilterParams() && this.filter.getFilterParams().from) || null],
-            to: [(this.filter && this.filter.getFilterParams() && this.filter.getFilterParams().to) || null],
+            from: [this.filter?.getFilterParams()?.from],
+            to: [this.filter?.getFilterParams()?.to],
         });
     }
 
@@ -42,8 +42,8 @@ export class PriceFilterComponent extends AbstractFieldFilterComponent<PricePara
     private updateFormValues(): void {
         this.form.patchValue(
             {
-                from: (this.filter && this.filter.getFilterParams() && this.filter.getFilterParams().from) || null,
-                to: (this.filter && this.filter.getFilterParams() && this.filter.getFilterParams().to) || null,
+                from: this.filter?.getFilterParams()?.from,
+                to: this.filter?.getFilterParams()?.to,
             },
             { onlySelf: true }
         );

@@ -1,0 +1,17 @@
+<div class="promo-set-chooser__wrapper">
+    <nz-card
+        class="promo-set-chooser__item"
+        [class.promo-set-chooser__item--active]="promoSet === selectedPromoSet"
+        *ngFor="let promoSet of promoSets"
+        style="width: 240px;"
+        [nzTitle]="promoSet.name"
+        (click)="selectPromoSet(promoSet)"
+    >
+        <p>{{ promoSet.price }}руб.</p>
+        <p>Ваше объявление будет показываться в выделенных объявлениях {{ promoSet.days }} дней</p>
+    </nz-card>
+</div>
+
+<div class="promo-set-chooser__actions">
+    <button nz-button nzType="primary" (click)="payPromoSet()">К оплате</button>
+</div>

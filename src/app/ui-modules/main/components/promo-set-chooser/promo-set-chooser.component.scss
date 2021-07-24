@@ -1,0 +1,27 @@
+@import 'src/assets/styles/variables';
+
+.promo-set-chooser {
+    &__wrapper {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: $base-unit * 2;
+    }
+
+    &__item {
+        cursor: pointer;
+        margin-right: $base-unit;
+        flex: 1;
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        &--active {
+            border: 2px solid $blue-border;
+        }
+    }
+
+    &__actions {
+        text-align: right;
+    }
+}

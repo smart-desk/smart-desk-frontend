@@ -9,6 +9,8 @@ import { UserService } from '../../../../../../modules/user/user.service';
 import { StripeService } from '../../../../../../modules/stripe/stripe.service';
 import { from } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { PromoSetChooserComponent } from '../../../../components/promo-set-chooser/promo-set-chooser.component';
 
 @Component({
     selector: 'app-my-products',
@@ -27,6 +29,10 @@ export class MyProductsComponent implements OnInit {
         {
             title: 'Поднять',
             action: this.liftProduct.bind(this),
+        },
+        {
+            title: 'Продвинуть',
+            action: this.promoteProduct.bind(this),
         },
         {
             title: 'Завершить',
@@ -68,7 +74,8 @@ export class MyProductsComponent implements OnInit {
         private cdr: ChangeDetectorRef,
         private userService: UserService,
         private router: Router,
-        private stripeService: StripeService
+        private stripeService: StripeService,
+        private modalService: NzModalService
     ) {}
 
     ngOnInit(): void {
@@ -139,5 +146,14 @@ export class MyProductsComponent implements OnInit {
                     console.log(res);
                 });
         }
+    }
+
+    private promoteProduct(product: Product) {
+        this.modalService.create({
+            nzTitle: `Продвинуть ${product.title}`,
+            nzContent: PromoSetChooserComponent,
+            nzComponentParams: { product },
+            nzFooter: null,
+        });
     }
 }
