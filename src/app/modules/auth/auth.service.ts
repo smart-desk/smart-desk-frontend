@@ -28,6 +28,15 @@ export class AuthService {
         );
     }
 
+    facebookLogin(token: string): Observable<boolean> {
+        return this.http
+            .post<any>(`/auth/facebook/login`, { token })
+            .pipe(
+                map(res => this.handleResponse(res)),
+                catchError(err => of(false))
+            );
+    }
+
     private handleResponse(res: LoginResponse): boolean {
         if (res?.access_token) {
             localStorage.setItem('token', res.access_token);

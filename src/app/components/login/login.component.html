@@ -11,4 +11,9 @@
     <button class="button" *ngIf="!loading" (click)="vkLogin()" nz-button nzBlock nzType="primary" [nzSize]="'large'" nzShape="round">
         <span>Войти с VK</span>
     </button>
+
+    <button class="button" *ngIf="!loading" (click)="facebookLogin()" nz-button nzBlock nzType="primary" [nzSize]="'large'" nzShape="round">
+        <i nz-icon nzType="facebook" nzTheme="outline"></i>
+        <span>Войти с Facebook</span>
+    </button>
 </div>

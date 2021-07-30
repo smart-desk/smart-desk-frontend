@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { GoogleLoginProvider, SocialAuthService, VKLoginProvider } from 'angularx-social-login';
+import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { finalize, switchMap } from 'rxjs/operators';
 import { NzModalRef } from 'ng-zorro-antd/modal';
@@ -76,5 +76,20 @@ export class LoginComponent implements OnInit {
         };
 
         window.addEventListener('message', authResult, false);
+    }
+
+    facebookLogin(): void {
+        fromPromise(this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID))
+            .pipe(
+                switchMap(socialUser => this.authService.facebookLogin(socialUser.authToken)),
+                finalize(() => this.modal.close())
+            )
+            .subscribe(res => {
+                if (res) {
+                    this.loginService.updateLoginInfo();
+                } else {
+                    this.notificationService.error('Authorization failed', 'Try later');
+                }
+            });
     }
 }
