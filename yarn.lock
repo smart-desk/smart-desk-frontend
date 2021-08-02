@@ -4810,6 +4810,18 @@ image-size@~0.5.0:
   resolved "https://registry.yarnpkg.com/image-size/-/image-size-0.5.5.tgz#09dfd4ab9d20e29eb1c3e80b8990378df9e3cb9c"
   integrity sha1-Cd/Uq50g4p6xw+gLiZA3jfnjy5w=
 
+imagekit-javascript@^1.0.4:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/imagekit-javascript/-/imagekit-javascript-1.4.0.tgz#6ca4ef4ed8dedcc11440e092dc0be27331c52fd3"
+  integrity sha512-LY2vFfm6f1xqzDHQ4FKDynAlSQaIl6B7bM2OeXyquPCSzp3evnZYjhcfqHa2ZVtwCh20t9hLuJoYe4xyYY8P8Q==
+
+imagekitio-angular@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/imagekitio-angular/-/imagekitio-angular-1.0.2.tgz#e4ced68fc351f8d3465f0900baee803671e04b38"
+  integrity sha512-c/UaDgy5XhsDL4G4+cLKRV77rNMI053ZE2jpWto0+toUHXzbnglZLPsz/n6IIcZqtI/f2+AzeCUDKWNUDkqxKw==
+  dependencies:
+    imagekit-javascript "^1.0.4"
+
 immediate@~3.0.5:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"

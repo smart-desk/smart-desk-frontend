@@ -17,6 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared.module';
+import { ImagekitioAngularModule } from 'imagekitio-angular';
 
 // todo move to service
 const token = localStorage.getItem('token');
@@ -67,6 +68,11 @@ const socialProviders = {
         SocialLoginModule,
         HttpClientModule,
         SharedModule,
+        ImagekitioAngularModule.forRoot({
+            publicKey: environment.imageKitPublicKey,
+            urlEndpoint: environment.imageKitUrlEndpoint,
+            authenticationEndpoint: environment.imageKitAuthenticationEndpoint,
+        }),
         SocketIoModule.forRoot(socketIoConfig),
     ],
     bootstrap: [AppComponent],
