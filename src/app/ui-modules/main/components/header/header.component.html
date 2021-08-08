@@ -1,31 +1,33 @@
-<div class="container header">
-    <div class="logo">
-        <a (click)="navigateToMain()">
-            <img [src]="'../../../../../assets/images/smart-desk-logo.svg'" alt="Smart Desk" />
-        </a>
+<nz-affix [nzOffsetTop]="0" (nzChange)="onHeaderSticky($event)">
+    <div class="header-wrapper" [class.header-wrapper--sticky]="isHeaderSticky">
+        <div class="container header">
+            <div class="header__logo">
+                <a (click)="navigateToMain()">
+                    <img [src]="'../../../../../assets/images/smart-desk-logo.svg'" alt="Smart Desk" />
+                </a>
+            </div>
+            <nz-cascader
+                class="category-selector"
+                [nzShowInput]="false"
+                [nzAllowClear]="false"
+                [nzOptions]="categoryTree$ | async"
+                [(ngModel)]="selectedCategoriesIds"
+                [nzPlaceHolder]="'Выберите категорию'"
+                (ngModelChange)="onCategorySelect($event)"
+                [nzExpandTrigger]="'hover'"
+                nzChangeOnSelect
+            >
+                <button nz-button class="header__category-button">
+                    <i nz-icon nzType="align-right" nzTheme="outline"></i>
+                    Категория
+                </button>
+            </nz-cascader>
+            <app-search [searchPhrase]="searchPhrase" [placeholder]="getSearchPlaceholder()" (searchChange)="search($event)"></app-search>
+            <button class="header__new-button" (click)="navigateToProductCreate()" nz-button>
+                <i nz-icon nzType="plus"></i>
+                Разместить объявление
+            </button>
+            <app-profile-menu></app-profile-menu>
+        </div>
     </div>
-    <div class="category">
-        <nz-cascader
-            class="category-selector"
-            [nzShowInput]="false"
-            [nzAllowClear]="false"
-            [nzOptions]="categoryTree$ | async"
-            [(ngModel)]="selectedCategoriesIds"
-            [nzPlaceHolder]="'Выберите категорию'"
-            (ngModelChange)="onCategorySelect($event)"
-            [nzExpandTrigger]="'hover'"
-            nzChangeOnSelect
-        >
-            <button nz-button nzType="primary" nzShape="round"><i nz-icon nzType="unordered-list" nzTheme="outline"></i>Категория</button>
-        </nz-cascader>
-    </div>
-    <div class="search-box">
-        <app-search [searchPhrase]="searchPhrase" [placeholder]="getSearchPlaceholder()" (searchChange)="search($event)"></app-search>
-    </div>
-    <div>
-        <button (click)="navigateToProductCreate()" nz-button nzType="primary" nzShape="round">
-            <i nz-icon nzType="plus"></i>
-            <span>Разместить объявление</span>
-        </button>
-    </div>
-</div>
+</nz-affix>

@@ -13,9 +13,9 @@
         <button class="search__button" nz-button nzSearch (click)="search()">Найти</button>
     </ng-template>
     <ng-template #prefix>
-        <i nz-icon nzType="search"></i>
+        <i nz-icon nzType="search" style="font-size: 18px;"></i>
     </ng-template>
     <ng-template #suffix>
-        <i nz-icon nzType="close" *ngIf="searchPhrase" (click)="reset()"></i>
+        <i nz-icon nzType="close" *ngIf="searchPhrase" (click)="reset()" style="font-size: 18px;"></i>
     </ng-template>
 </form>

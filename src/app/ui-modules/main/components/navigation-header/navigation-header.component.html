@@ -1,23 +1,29 @@
-<nz-header>
-    <div class="container">
+<div class="container">
+    <div class="navigation-header">
         <nz-row [nzJustify]="'space-between'">
-            <nz-col> </nz-col>
+            <nz-col></nz-col>
             <nz-col>
                 <nz-row [nzJustify]="'space-between'">
                     <nz-col>
-                        <a *ngIf="user" (click)="openChat()" nz-button nzType="link">
-                            Сообщения
-                            <i nz-icon nzType="message" nzTheme="outline"></i>
+                        <a class="navigation-header__menu-item" *ngIf="isAdmin" [routerLink]="['admin']">
+                            <i nz-icon nzType="export" nzTheme="outline"></i>
+                            Управление сайтом
                         </a>
                     </nz-col>
                     <nz-col>
-                        <a *ngIf="isAdmin" routerLink="/admin" nz-button nzType="link">Управление сайтом</a>
+                        <a class="navigation-header__menu-item" *ngIf="user" [routerLink]="['profile', 'bookmarks']">
+                            <i nz-icon nzType="heart" nzTheme="outline"></i>
+                            Избранное
+                        </a>
                     </nz-col>
                     <nz-col>
-                        <app-profile-menu></app-profile-menu>
+                        <a class="navigation-header__menu-item" *ngIf="user" (click)="openChat()">
+                            <i nz-icon nzType="message" nzTheme="outline"></i>
+                            Сообщения
+                        </a>
                     </nz-col>
                 </nz-row>
             </nz-col>
         </nz-row>
     </div>
-</nz-header>
+</div>
