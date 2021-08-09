@@ -1,0 +1,23 @@
+<nz-page-header>
+    <nz-page-header-title>Статические страницы</nz-page-header-title>
+    <nz-page-header-subtitle>Эти страницы появятся в футере сайта</nz-page-header-subtitle>
+</nz-page-header>
+<button nz-button nzSize="large" nzType="primary" (click)="createPage()">Создать</button>
+<nz-table class="table" [nzTemplateMode]="true" [nzFrontPagination]="true" nzSize="middle">
+    <thead>
+        <tr>
+            <th nzWidth="75%">Название</th>
+            <th>Действие</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let page of pages">
+            <td>{{ page.title }}</td>
+            <td>
+                <a target="_blank" [routerLink]="['/', 'site-pages', page.id]">Открыть</a>
+                <nz-divider nzType="vertical"></nz-divider>
+                <a (click)="editPage(page.id)">Редактировать</a>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
