@@ -15,12 +15,12 @@ export class PhotoFormComponent extends AbstractFieldFormComponent<PhotoEntity, 
     fileList: NzUploadFile[] = [];
 
     ngOnInit() {
-        if (this.field && this.field.data && this.field.data.value) {
-            this.fileList = this.field.data.value.map((url, i) => ({
-                uid: `${(i += 1)}`,
-                name: `${i}`,
+        if (this?.field?.data?.value) {
+            this.fileList = this.field.data.value.map((path, i) => ({
+                uid: path,
+                name: path,
                 status: 'done',
-                url,
+                url: path,
             }));
         }
     }
@@ -33,7 +33,7 @@ export class PhotoFormComponent extends AbstractFieldFormComponent<PhotoEntity, 
 
     getFieldData(): PhotoEntity {
         const value = this.fileList.map(file => {
-            return file.response ? (file.response as UploadImageResponse).url : file.url || '';
+            return file.response ? (file.response as UploadImageResponse).key : file.url || '';
         });
 
         if (this.field.data) {

@@ -38,6 +38,7 @@ import { NzResultModule } from 'ng-zorro-antd/result';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { PromoSetChooserComponent } from './components/promo-set-chooser/promo-set-chooser.component';
+import { ImagekitioAngularModule } from 'imagekitio-angular';
 
 const components = [
     HeaderComponent,
@@ -86,6 +87,7 @@ const components = [
         NzResultModule,
         NzSpinModule,
         NzDatePickerModule,
+        ImagekitioAngularModule,
     ],
 })
 export class SharedMainModule {}
