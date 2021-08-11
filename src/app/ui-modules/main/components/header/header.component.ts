@@ -21,6 +21,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     categoryTree$ = new BehaviorSubject<NzCascaderOption[]>([]);
     selectedCategoriesIds: string[] = [];
     searchPhrase = '';
+    isHeaderSticky = false;
+
     private destroy$ = new Subject();
     private user: User | undefined;
 
@@ -104,6 +106,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     navigateToMain(): void {
         this.router.navigate(['/']);
+    }
+
+    onHeaderSticky(isSticky: boolean) {
+        this.isHeaderSticky = isSticky;
+        this.cd.detectChanges();
     }
 
     private navigateToGlobalSearchPage(searchPhrase: string) {

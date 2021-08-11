@@ -1,11 +1,35 @@
 @import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins';
 
-.header {
-    display: grid;
-    grid-template-columns: auto auto 1fr auto;
-    grid-column-gap: $base-unit * 2;
+.header-wrapper {
+    display: block;
+
+    &--sticky {
+        box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.05);
+    }
 }
 
-.logo {
-    line-height: $base-unit * 4;
+.header {
+    background-color: $background;
+    padding: $base-unit * 2;
+    display: grid;
+    grid-template-columns: auto auto 1fr auto auto;
+    grid-column-gap: $base-unit * 2;
+    align-items: center;
+
+    &__logo {
+        margin-right: $base-unit;
+    }
+
+    &__category-button {
+        @include sd-btn;
+        background-color: $primary-blue;
+        color: #fff;
+    }
+
+    &__new-button {
+        @include sd-btn;
+        background-color: $primary-green;
+        color: #fff;
+    }
 }

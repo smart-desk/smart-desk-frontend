@@ -1,0 +1,26 @@
+@import '~src/assets/styles/variables';
+@import '~src/assets/styles/mixins';
+
+.search {
+    ::ng-deep {
+        .ant-input-affix-wrapper {
+            border-top-left-radius: $border-radius !important;
+            border-bottom-left-radius: $border-radius !important;
+            border-color: $border-color;
+            padding: $base-unit - 2 $base-unit * 2;
+        }
+    }
+
+    &__input {
+        font-size: $font-16;
+        padding-left: $base-unit / 2 !important;
+        line-height: 1.65;
+    }
+
+    &__button {
+        @include sd-btn;
+        border-radius: 0 4px 4px 0 !important;
+        background-color: $border-color;
+        color: $font-color-gray;
+    }
+}

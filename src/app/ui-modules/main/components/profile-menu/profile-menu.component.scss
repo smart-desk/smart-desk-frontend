@@ -1,11 +1,7 @@
 @import 'src/assets/styles/variables';
 
-.profile {
+.profile-menu {
     &__avatar {
-        margin-left: $base-unit;
-    }
-
-    &__name {
         cursor: pointer;
     }
 }

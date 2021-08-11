@@ -1,0 +1,11 @@
+@import './variables';
+
+@mixin sd-btn {
+    text-shadow: none;
+    box-shadow: none;
+    font-size: $font-16;
+    border: 0;
+    border-radius: $border-radius;
+    padding: $base-unit $base-unit * 2;
+    height: $base-unit * 5;
+}
