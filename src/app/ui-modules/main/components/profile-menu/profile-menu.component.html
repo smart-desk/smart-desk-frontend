@@ -1,12 +1,24 @@
-<a *ngIf="!user" (click)="openLoginModal()">Войти</a>
+<button nz-button nzType="link" *ngIf="!user" (click)="openLoginModal()">
+    <i nz-icon nzType="user" nzTheme="outline"></i>
+    Войти
+</button>
 
-<p class="profile__name" nz-dropdown nzTrigger="click" *ngIf="user" [nzDropdownMenu]="profileMenu">
-    <span>{{ user.firstName }} {{ user.lastName }}</span>
-    <nz-avatar class="profile__avatar" [nzSrc]="user?.avatar" nzIcon="user" [nzSize]="24"></nz-avatar>
-</p>
+<nz-avatar
+    class="profile-menu__avatar"
+    [nzSrc]="user?.avatar"
+    nzIcon="user"
+    [nzSize]="40"
+    nz-dropdown
+    nzTrigger="click"
+    *ngIf="user"
+    [nzDropdownMenu]="profileMenu"
+    nzPlacement="bottomRight"
+></nz-avatar>
 
 <nz-dropdown-menu #profileMenu="nzDropdownMenu">
     <ul nz-menu>
+        <li nz-menu-item>{{ user?.firstName }} {{ user?.lastName }}</li>
+        <li nz-menu-divider></li>
         <li [routerLink]="['profile']" nz-menu-item>Профиль</li>
         <li [routerLink]="['profile', 'bookmarks']" nz-menu-item>Избранные</li>
         <li [routerLink]="['profile', 'my-products']" nz-menu-item>Мои объявления</li>

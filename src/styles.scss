@@ -4,6 +4,11 @@
 //@import '~@angular/cdk/overlay-prebuilt.css';
 @import 'src/assets/styles/variables';
 
+body {
+    background-color: $background;
+    color: $font-color;
+}
+
 .container {
     max-width: 1170px;
     margin: 0 auto;
@@ -11,7 +16,7 @@
 }
 
 .chat-body {
-    top: 32px;
+    top: $base-unit * 4;
     bottom: 0;
     height: calc(100vh - 64px);
     padding-bottom: 0;

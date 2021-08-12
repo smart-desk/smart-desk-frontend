@@ -1,8 +1,12 @@
 @import 'src/assets/styles/variables';
 
-nz-header {
-    background-color: $base-bg;
-    padding: 0;
-    height: $base-unit * 6;
-    line-height: $base-unit * 6;
+.navigation-header {
+    margin: $base-unit * 2 0 $base-unit;
+
+    &__menu-item {
+        display: inline-block;
+        color: $font-color;
+        font-size: $font-16;
+        margin-left: $base-unit * 3;
+    }
 }
