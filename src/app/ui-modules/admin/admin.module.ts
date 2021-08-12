@@ -45,7 +45,7 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { PromoSetFormComponent } from './components/promo-set-form/promo-set-form.component';
 import { SitePagesComponent } from './pages/site-pages/site-pages.component';
 import { SitePageComponent } from './pages/site-page/site-page.component';
-import { StaticPageFormComponent } from './components/page-form/static-page-form.component';
+import { PageFormComponent } from './components/page-form/page-form.component';
 
 const components = [
     AdCampaignReasonFormComponent,
@@ -57,7 +57,7 @@ const components = [
     AddFieldComponent,
     RolesFormComponent,
     PromoSetFormComponent,
-    StaticPageFormComponent,
+    PageFormComponent,
 ];
 
 const pages = [

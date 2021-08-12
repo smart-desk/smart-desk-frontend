@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class SitePagesComponent implements OnInit {
     pages: PageEntity[];
+    private pageRout = '/admin/site-pages';
     constructor(private pagesService: StaticPagesService, private cd: ChangeDetectorRef, private router: Router) {}
 
     ngOnInit(): void {
@@ -21,10 +22,10 @@ export class SitePagesComponent implements OnInit {
     }
 
     createPage(): void {
-        this.router.navigate(['/admin/site-pages/create']);
+        this.router.navigate([`${this.pageRout}/create`]);
     }
 
     editPage(id: string): void {
-        this.router.navigate([`/admin/static-pages/edit/${id}`]);
+        this.router.navigate([`${this.pageRout}/edit/${id}`]);
     }
 }

@@ -1,0 +1,23 @@
+@import '~src/assets/styles/variables';
+
+.form {
+    padding: $base-unit * 5 0;
+    margin: 0 auto;
+    max-width: $base-unit * 40;
+
+    &__row {
+        margin-bottom: $base-unit * 2;
+    }
+
+    &__content {
+        min-height: $base-unit * 30;
+    }
+}
+
+.login-form-forgot {
+    float: right;
+}
+
+.login-form-button {
+    width: 100%;
+}

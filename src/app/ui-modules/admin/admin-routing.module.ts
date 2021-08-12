@@ -11,7 +11,7 @@ import { UsersComponent } from './pages/users/users.component';
 import { AdConfigComponent } from './pages/ad-config/ad-config.component';
 import { AdCampaignListComponent } from './pages/ad-campaign-list/ad-campaign-list.component';
 import { SitePagesComponent } from './pages/site-pages/site-pages.component';
-import { StaticPageFormComponent } from './components/page-form/static-page-form.component';
+import { PageFormComponent } from './components/page-form/page-form.component';
 
 const routes: Routes = [
     {
@@ -57,11 +57,11 @@ const routes: Routes = [
             },
             {
                 path: 'site-pages/create',
-                component: StaticPageFormComponent,
+                component: PageFormComponent,
             },
             {
                 path: 'site-pages/edit/:id',
-                component: StaticPageFormComponent,
+                component: PageFormComponent,
             },
         ],
     },
