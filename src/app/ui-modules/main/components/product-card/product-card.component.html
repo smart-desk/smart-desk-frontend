@@ -1,32 +1,32 @@
-<nz-card [nzActions]="[bookmarkIcon]" nzHoverable [nzCover]="coverTemplate" [nzExtra]="extraActions ? extra : null">
-    <nz-card-meta [nzTitle]="title" [nzDescription]="description"></nz-card-meta>
-</nz-card>
-<ng-template #coverTemplate>
+<div class="product-card">
     <ik-image
         [routerLink]="['/', 'products', product.id]"
         [path]="thumb || '/public/not-found.png'"
         [transformation]="[{ width: 200, height: 140 }]"
     ></ik-image>
-</ng-template>
-
-<ng-template #bookmarkIcon>
-    <i *ngIf="!product?.isBookmark" (click)="toggleBookmark(product.id)" nz-icon [nzType]="'heart'" [nzTheme]="'outline'"> </i>
-    <i
-        *ngIf="product?.isBookmark"
-        (click)="toggleBookmark(product.id)"
-        nz-icon
-        [nzType]="'heart'"
-        [nzTheme]="'twotone'"
-        [nzTwotoneColor]="'#eb2f96'"
-    >
-    </i>
-</ng-template>
-
-<ng-template #extra>
-    <i nz-icon nzType="ellipsis" nzTheme="outline" nz-dropdown [nzDropdownMenu]="menu" nzTrigger="click"></i>
-    <nz-dropdown-menu #menu="nzDropdownMenu">
-        <ul nz-menu nzSelectable>
-            <li nz-menu-item *ngFor="let action of extraActions" (click)="action.action(product)">{{ action.title }}</li>
-        </ul>
-    </nz-dropdown-menu>
-</ng-template>
+    <div class="product-card__info">
+        <h3 class="product-card__title">
+            <span>{{ title }}</span>
+            <span class="product-card__title-icon" [class.product-card__title-icon--active]="product?.isBookmark">
+                <i nz-icon (click)="toggleBookmark(product.id)" nzType="heart" [nzTheme]="product?.isBookmark ? 'fill' : 'outline'"></i>
+            </span>
+        </h3>
+        <p class="product-card__desc">{{ description }}</p>
+    </div>
+    <div *ngIf="extraActions?.length" class="product-card__actions">
+        <i
+            class="product-card__action-icon"
+            nz-icon
+            nzType="ellipsis"
+            nzTheme="outline"
+            nz-dropdown
+            [nzDropdownMenu]="menu"
+            nzTrigger="click"
+        ></i>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu nzSelectable>
+                <li nz-menu-item *ngFor="let action of extraActions" (click)="action.action(product)">{{ action.title }}</li>
+            </ul>
+        </nz-dropdown-menu>
+    </div>
+</div>

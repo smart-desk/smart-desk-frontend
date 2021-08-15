@@ -1,0 +1,47 @@
+@import 'src/assets/styles/variables';
+
+.product-card {
+    position: relative;
+    cursor: pointer;
+    background-color: $primary-white;
+    border-radius: $border-radius;
+    box-shadow: $shadow;
+    overflow: hidden;
+    transition: box-shadow 0.4s;
+
+    &:hover {
+        box-shadow: $shadow-hover;
+    }
+
+    &__info {
+        padding: $base-unit * 1.5;
+    }
+
+    &__title {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: $base-unit / 2;
+        font-size: $font-18;
+    }
+
+    &__title-icon {
+        cursor: pointer;
+        color: $primary-gray;
+
+        &--active {
+            color: $primary-red;
+        }
+    }
+
+    &__desc {
+        margin: 0;
+    }
+
+    &__action-icon {
+        color: #ffffff;
+        position: absolute;
+        top: $base-unit;
+        right: $base-unit;
+        font-size: $base-unit * 3;
+    }
+}
