@@ -15,6 +15,10 @@
 
     &__info {
         padding: $base-unit * 1.5;
+
+        &--promo {
+            border-left: 4px solid $primary-red;
+        }
     }
 
     &__title {

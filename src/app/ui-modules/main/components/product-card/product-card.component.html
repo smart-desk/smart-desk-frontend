@@ -4,7 +4,7 @@
         [path]="thumb || '/public/not-found.png'"
         [transformation]="[{ width: 200, height: 140 }]"
     ></ik-image>
-    <div class="product-card__info">
+    <div class="product-card__info" [class.product-card__info--promo]="promo">
         <h3 class="product-card__title">
             <span>{{ title }}</span>
             <span class="product-card__title-icon" [class.product-card__title-icon--active]="product?.isBookmark">
