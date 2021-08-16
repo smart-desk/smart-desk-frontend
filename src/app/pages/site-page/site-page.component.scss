@@ -1,0 +1,12 @@
+@import '../../../assets/styles/variables';
+
+:host ::ng-deep .ant-page-header-heading {
+    padding-top: $base-unit * 6;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.content {
+    padding: $base-unit * 3 $base-unit * 6;
+}

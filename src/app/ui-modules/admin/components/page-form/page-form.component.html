@@ -14,12 +14,12 @@
     <nz-form-item class="form__row">
         <nz-form-control>
             <nz-input-group>
-                <textarea class="form__content" nz-input formControlName="content" placeholder="Содержание"></textarea>
+                <quill-editor class="form__content" nz-input formControlName="content" placeholder="Содержание"></quill-editor>
             </nz-input-group>
         </nz-form-control>
     </nz-form-item>
 
     <div class="form__row">
-        <button class="login-form-button" (click)="save()" nz-button [nzType]="'primary'">Сохранить</button>
+        <button (click)="save()" nz-button [nzType]="'primary'">Сохранить</button>
     </div>
 </form>

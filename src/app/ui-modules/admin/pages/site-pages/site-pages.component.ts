@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { StaticPagesService } from '../../../../modules/static-pages/static-pages.service';
+import { StaticService } from '../../../../modules/static-pages/static.service';
 import { PageEntity } from '../../../../modules/static-pages/models/page.entity';
 import { Router } from '@angular/router';
 
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class SitePagesComponent implements OnInit {
     pages: PageEntity[];
     private pageRout = '/admin/site-pages';
-    constructor(private pagesService: StaticPagesService, private cd: ChangeDetectorRef, private router: Router) {}
+    constructor(private pagesService: StaticService, private cd: ChangeDetectorRef, private router: Router) {}
 
     ngOnInit(): void {
         this.pagesService.getPages().subscribe(pages => {

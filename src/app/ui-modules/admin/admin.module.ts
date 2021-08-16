@@ -44,8 +44,9 @@ import { AdCampaignListComponent } from './pages/ad-campaign-list/ad-campaign-li
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { PromoSetFormComponent } from './components/promo-set-form/promo-set-form.component';
 import { SitePagesComponent } from './pages/site-pages/site-pages.component';
-import { SitePageComponent } from './pages/site-page/site-page.component';
+import { SitePageComponent } from '../../pages/site-page/site-page.component';
 import { PageFormComponent } from './components/page-form/page-form.component';
+import { QuillModule } from 'ngx-quill';
 
 const components = [
     AdCampaignReasonFormComponent,
@@ -103,6 +104,7 @@ const pages = [
         NzCheckboxModule,
         DragDropModule,
         NzRadioModule,
+        QuillModule,
     ],
     declarations: [...pages, ...components],
 })
