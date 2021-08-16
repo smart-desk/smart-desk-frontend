@@ -1,15 +1,14 @@
 <div *ngIf="!productsResponse || !productsResponse.totalCount">Здесь еще нет объявлений :)</div>
-<div *ngIf="promoProducts" class="products__promo-section-wrapper">
+<div *ngIf="promoProducts?.length" class="products__promo-section">
     <h3>Специальные предложения</h3>
-    <div class="products__promo-section">
-        <app-product-card
-            *ngFor="let promoProduct of promoProducts"
-            [product]="promoProduct"
-            [extraActions]="cardActions"
-            (createBookmark)="addBookmarkEvent($event)"
-            (deleteBookmark)="removeBookmarkEvent($event)"
-        ></app-product-card>
-    </div>
+    <app-product-card
+        *ngFor="let promoProduct of promoProducts"
+        [product]="promoProduct"
+        [promo]="true"
+        [extraActions]="cardActions"
+        (createBookmark)="addBookmarkEvent($event)"
+        (deleteBookmark)="removeBookmarkEvent($event)"
+    ></app-product-card>
 </div>
 <div class="box__products">
     <ng-container *ngFor="let product of productsResponse?.products; index as i; trackBy: trackByFn">
