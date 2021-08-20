@@ -20,6 +20,7 @@ export interface ExtraActions {
 export class ProductCardComponent implements OnInit {
     @Input() product: Product;
     @Input() extraActions: ExtraActions[];
+    @Input() promo: boolean;
     @Output() createBookmark = new EventEmitter<string>();
     @Output() deleteBookmark = new EventEmitter<string>();
     title = '';
