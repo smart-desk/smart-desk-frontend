@@ -1,12 +1,10 @@
 @import '../../../assets/styles/variables';
 
-:host ::ng-deep .ant-page-header-heading {
-    padding-top: $base-unit * 6;
-    width: 100%;
-    justify-content: center;
-    flex-wrap: wrap;
+.title {
+    text-align: center;
 }
 
+.title,
 .content {
-    padding: $base-unit * 3 $base-unit * 6;
+    margin: $base-unit * 3 $base-unit * 6;
 }

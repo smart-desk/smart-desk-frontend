@@ -1,0 +1,28 @@
+@import '../../../../../assets/styles/variables';
+
+.line {
+    border-top: 1px solid #d7d7d7;
+}
+
+.footer {
+    display: flex;
+
+    &__site-list {
+        margin: $base-unit * 5 0;
+        width: 60%;
+    }
+
+    &__logo {
+        margin: $base-unit * 5 0;
+        width: 20%;
+    }
+
+    &__site:not(:first-child):not(:last-child) {
+        margin: $base-unit * 4 0;
+    }
+
+    &__site {
+        color: #141414;
+        display: block;
+    }
+}
