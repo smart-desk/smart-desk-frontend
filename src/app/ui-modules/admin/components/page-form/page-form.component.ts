@@ -78,8 +78,10 @@ export class PageFormComponent implements OnInit, OnDestroy {
             return;
         }
 
+        const formValue = { ...this.form.value, content: this.form.get('content')?.value.replaceAll('script', '') };
+
         const request = this.pageId
-            ? this.staticPagesService.update(this.pageId, this.form.value)
+            ? this.staticPagesService.update(this.pageId, formValue)
             : this.staticPagesService.create(this.form.value);
 
         request.subscribe(() => {
