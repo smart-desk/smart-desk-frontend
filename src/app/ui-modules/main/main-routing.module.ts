@@ -17,6 +17,10 @@ const routes: Routes = [
         component: UnauthorizedComponent,
     },
     {
+        path: 'site-pages/:id',
+        component: SitePageComponent,
+    },
+    {
         path: '',
         component: MainComponent,
         children: [
@@ -61,10 +65,6 @@ const routes: Routes = [
                 component: VkRedirectComponent,
             },
         ],
-    },
-    {
-        path: 'site-pages/:id',
-        component: SitePageComponent,
     },
 ];
 
