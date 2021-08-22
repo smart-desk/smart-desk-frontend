@@ -7,7 +7,7 @@ import { PageDto } from './models/page.dto';
 @Injectable({
     providedIn: 'root',
 })
-export class StaticService {
+export class PageService {
     constructor(private http: HttpClient) {}
 
     getPages(): Observable<PageEntity[]> {

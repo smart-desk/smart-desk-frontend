@@ -1,7 +1,7 @@
 @import '../../../../../assets/styles/variables';
 
 .line {
-    border-top: 1px solid #d7d7d7;
+    border-top: 1px solid $border-color;
 }
 
 .footer {
@@ -22,7 +22,7 @@
     }
 
     &__site {
-        color: #141414;
+        color: $font-color;
         display: block;
     }
 }

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
-import { StaticService } from '../../../../modules/static-pages/static.service';
+import { PageService } from '../../../../modules/static-pages/static.service';
 import { PageEntity } from '../../../../modules/static-pages/models/page.entity';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
@@ -21,7 +21,7 @@ export class PageFormComponent implements OnInit, OnDestroy {
 
     constructor(
         private route: ActivatedRoute,
-        private readonly staticPagesService: StaticService,
+        private readonly staticPagesService: PageService,
         private cd: ChangeDetectorRef,
         private fb: FormBuilder,
         private router: Router,
