@@ -65,7 +65,7 @@ export class PageFormComponent implements OnInit, OnDestroy {
                 this.createNotification({
                     type: 'error',
                     title: 'Ошибка данных',
-                    content: 'Заголовок, обяхательное поле, с ограниченной длинной в 255 символа',
+                    content: 'Заголовок, обязательное поле, с ограниченной длинной в 255 символа',
                 });
             }
             if (this.form.get('content')?.status === 'INVALID') {
@@ -78,10 +78,8 @@ export class PageFormComponent implements OnInit, OnDestroy {
             return;
         }
 
-        const formValue = { ...this.form.value, content: this.form.get('content')?.value.replaceAll('script', '') };
-
         const request = this.pageId
-            ? this.staticPagesService.update(this.pageId, formValue)
+            ? this.staticPagesService.update(this.pageId, this.form.value)
             : this.staticPagesService.create(this.form.value);
 
         request.subscribe(() => {
