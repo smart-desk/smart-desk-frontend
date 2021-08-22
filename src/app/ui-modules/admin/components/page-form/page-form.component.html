@@ -1,0 +1,25 @@
+<nz-page-header>
+    <nz-page-header-title>{{ formTitle }}</nz-page-header-title>
+</nz-page-header>
+
+<form *ngIf="form" nz-form [formGroup]="form" class="form">
+    <nz-form-item class="form__row">
+        <nz-form-control>
+            <nz-input-group>
+                <textarea class="form__title" nz-input formControlName="title" placeholder="Заголовок"></textarea>
+            </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="form__row">
+        <nz-form-control>
+            <nz-input-group>
+                <quill-editor class="form__content" nz-input formControlName="content" placeholder="Содержание"></quill-editor>
+            </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+
+    <div class="form__row">
+        <button (click)="save()" nz-button [nzType]="'primary'">Сохранить</button>
+    </div>
+</form>

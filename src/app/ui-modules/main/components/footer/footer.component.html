@@ -1,0 +1,9 @@
+<div class="line"></div>
+<section class="footer">
+    <a class="footer__logo" (click)="navigateToMain()">
+        <img [src]="'../../../../../assets/images/smart-desk-logo.svg'" alt="Smart Desk" />
+    </a>
+    <div class="footer__site-list">
+        <a class="footer__site" *ngFor="let page of pages" target="_blank" [routerLink]="['/', 'site-pages', page.id]">{{ page.title }} </a>
+    </div>
+</section>

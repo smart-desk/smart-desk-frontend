@@ -1,0 +1,15 @@
+@import '~src/assets/styles/variables';
+
+.form {
+    padding: $base-unit * 5 0;
+    margin: 0 auto;
+    max-width: 100%;
+
+    &__row {
+        margin-bottom: $base-unit * 2;
+    }
+
+    &__content {
+        min-height: $base-unit * 30;
+    }
+}

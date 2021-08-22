@@ -3,12 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
     {
-        path: 'admin',
-        loadChildren: () => import('./ui-modules/admin/admin.module').then(m => m.AdminModule),
-    },
-    {
         path: '',
         loadChildren: () => import('./ui-modules/main/main.module').then(m => m.MainModule),
+    },
+    {
+        path: 'admin',
+        loadChildren: () => import('./ui-modules/admin/admin.module').then(m => m.AdminModule),
     },
 ];
 

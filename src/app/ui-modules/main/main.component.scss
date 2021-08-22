@@ -1,5 +1,16 @@
 @import 'src/assets/styles/variables';
 
-.main {
+.body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.main,
+.footer {
     padding: $base-unit * 2 $base-unit * 2;
+}
+
+.footer {
+    margin-top: auto;
 }
