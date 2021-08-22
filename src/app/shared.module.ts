@@ -20,7 +20,6 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { LoginService } from './modules/login/login.service';
 import { BookmarksService } from './modules/bookmarks/bookmarks.service';
 import { AdminGuard } from './modules/auth/admin.guard';
 import { ForbiddenComponent } from './pages/forbidden/forbidden.component';
@@ -66,7 +65,6 @@ const services = [
     AuthService,
     AuthGuard,
     AdminGuard,
-    LoginService,
     NzModalService,
     BookmarksService,
     PhoneService,

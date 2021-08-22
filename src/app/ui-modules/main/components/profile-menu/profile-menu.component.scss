@@ -1,7 +1,13 @@
 @import 'src/assets/styles/variables';
+@import 'src/assets/styles/mixins';
 
 .profile-menu {
     &__avatar {
         cursor: pointer;
+    }
+
+    &__login-btn {
+        @include sd-btn;
+        color: $font-color;
     }
 }

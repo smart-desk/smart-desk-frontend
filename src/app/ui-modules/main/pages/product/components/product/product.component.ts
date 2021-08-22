@@ -8,7 +8,7 @@ import {
     ViewChild,
     ViewContainerRef,
 } from '@angular/core';
-import { EMPTY, Observable, Subject } from 'rxjs';
+import { EMPTY, Observable, of, Subject } from 'rxjs';
 import { switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Product } from '../../../../../../modules/product/models/product.entity';
@@ -82,6 +82,7 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
             });
         this.loginService.login$.pipe(takeUntil(this.destroy$)).subscribe(currentUser => {
             this.currentUser = currentUser;
+            this.cd.detectChanges();
         });
     }
 
@@ -118,19 +119,26 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     openChat(): void {
-        this.chatModalService.open(this.product, this.user);
+        if (!this.currentUser) {
+            this.openModalLogin().subscribe(() => this.chatModalService.open(this.product, this.user));
+        } else {
+            this.chatModalService.open(this.product, this.user);
+        }
     }
 
     showPhone(): void {
-        const showPhoneReq: Observable<string> = !this.currentUser
-            ? this.openModalLogin()
-            : this.phoneService.getUserPhone(this.user.id, this.product.id);
+        const user$ = !this.currentUser ? this.openModalLogin() : of(this.currentUser);
 
-        showPhoneReq.pipe(takeUntil(this.destroy$)).subscribe((phone: string) => {
-            this.userPhone = phone;
-            this.isPhoneVisible = true;
-            this.cd.detectChanges();
-        });
+        user$
+            .pipe(
+                takeUntil(this.destroy$),
+                switchMap(() => this.phoneService.getUserPhone(this.user.id, this.product.id))
+            )
+            .subscribe((phone: string) => {
+                this.userPhone = phone;
+                this.isPhoneVisible = true;
+                this.cd.detectChanges();
+            });
     }
 
     isContactAvailable(contact: string): boolean {
@@ -153,11 +161,8 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    private openModalLogin(): Observable<string> {
-        return this.loginService.openModal().pipe(
-            tap((currentUser: User) => (this.currentUser = currentUser)),
-            switchMap(() => this.phoneService.getUserPhone(this.user.id, this.product.id))
-        );
+    private openModalLogin(): Observable<User> {
+        return this.loginService.openModal();
     }
 
     private addPriceFields(): void {
