@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { PageService } from '../../modules/static-pages/static.service';
@@ -13,12 +13,13 @@ export class SitePageComponent implements OnInit {
     title: string;
     content: string;
 
-    constructor(private route: ActivatedRoute, private pagesService: PageService) {}
+    constructor(private route: ActivatedRoute, private pagesService: PageService, private cd: ChangeDetectorRef) {}
 
     ngOnInit(): void {
         this.route.paramMap.pipe(switchMap(param => this.pagesService.getPage(param.get('id') || ''))).subscribe(page => {
             this.title = page.title;
             this.content = page.content;
+            this.cd.detectChanges();
         });
     }
 }
