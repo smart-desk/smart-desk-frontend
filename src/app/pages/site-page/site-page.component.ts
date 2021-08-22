@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { PageService } from '../../modules/static-pages/static.service';
-import { Subject } from 'rxjs';
 
 @Component({
     selector: 'app-static-page',
@@ -13,8 +12,6 @@ import { Subject } from 'rxjs';
 export class SitePageComponent implements OnInit {
     title: string;
     content: string;
-    destroy$ = new Subject();
-    @ViewChild('content', { read: ViewContainerRef }) contentRef: ElementRef;
 
     constructor(private route: ActivatedRoute, private pagesService: PageService) {}
 
