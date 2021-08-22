@@ -5,7 +5,6 @@ import { AuthGuard } from '../../modules/auth/auth.guard';
 import { ForbiddenComponent } from '../../pages/forbidden/forbidden.component';
 import { UnauthorizedComponent } from '../../pages/unauthorized/unauthorized.component';
 import { VkRedirectComponent } from './components/vk-redirect/vk-redirect.component';
-import { SitePageComponent } from '../../pages/site-page/site-page.component';
 
 const routes: Routes = [
     {
@@ -15,10 +14,6 @@ const routes: Routes = [
     {
         path: 'unauthorized',
         component: UnauthorizedComponent,
-    },
-    {
-        path: 'site-pages/:id',
-        component: SitePageComponent,
     },
     {
         path: '',
@@ -63,6 +58,10 @@ const routes: Routes = [
             {
                 path: 'vk/redirect',
                 component: VkRedirectComponent,
+            },
+            {
+                path: 'site-pages/:id',
+                loadChildren: () => import('./pages/site-page/site-page.module').then(m => m.SitePageModule),
             },
         ],
     },
