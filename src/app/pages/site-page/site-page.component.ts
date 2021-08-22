@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { PageService } from '../../modules/static-pages/static.service';
@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
     selector: 'app-static-page',
     templateUrl: './site-page.component.html',
     styleUrls: ['./site-page.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SitePageComponent implements OnInit {
     title: string;

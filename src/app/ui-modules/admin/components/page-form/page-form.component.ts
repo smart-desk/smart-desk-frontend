@@ -35,7 +35,7 @@ export class PageFormComponent implements OnInit, OnDestroy {
                 switchMap(paramMap => {
                     this.pageId = paramMap.get('id') || '';
                     if (this.pageId) {
-                        this.formTitle = 'Редактировани стринцу сайта';
+                        this.formTitle = 'Редактировать страницу сайта';
                         return this.staticPagesService.getPage(this.pageId);
                     }
                     return of(undefined);
