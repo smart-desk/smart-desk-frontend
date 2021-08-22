@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { PageService } from '../../modules/static-pages/static.service';
+import { PageService } from '../../../../modules/static-pages/static.service';
 
 @Component({
     selector: 'app-static-page',
