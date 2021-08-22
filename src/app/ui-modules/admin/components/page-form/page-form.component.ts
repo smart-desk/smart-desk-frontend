@@ -61,18 +61,18 @@ export class PageFormComponent implements OnInit, OnDestroy {
 
     save(): void {
         if (!this.form.valid) {
-            if (this.form.get('title')?.status === 'INVALID') {
+            if (!this.form.get('title')?.valid) {
                 this.createNotification({
                     type: 'error',
                     title: 'Ошибка данных',
                     content: 'Заголовок, обязательное поле, с ограниченной длинной в 255 символа',
                 });
             }
-            if (this.form.get('content')?.status === 'INVALID') {
+            if (!this.form.get('content')?.valid) {
                 this.createNotification({
                     type: 'error',
                     title: 'Ошибка данных',
-                    content: 'Содержание, обяхательное поле, с ограниченной длинной в 10000 символов',
+                    content: 'Содержание, обязательное поле, с ограниченной длинной в 10000 символов',
                 });
             }
             return;
