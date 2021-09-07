@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { omitBy, isNull } from 'lodash';
 import { AbstractFieldFilterComponent } from '../../../models/abstract-field-filter.component';
 import { PriceParamsDto } from '../dto/price-params.dto';
