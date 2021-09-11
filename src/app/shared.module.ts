@@ -39,6 +39,7 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { MainAdvertComponent } from './components/main-advert/main-advert.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 const NZModules = [
     NzFormModule,
@@ -73,7 +74,15 @@ const services = [
     AdService,
 ];
 
-const components = [SearchComponent, PaginationComponent, LoginComponent, ForbiddenComponent, UnauthorizedComponent, MainAdvertComponent];
+const components = [
+    SearchComponent,
+    PaginationComponent,
+    LoginComponent,
+    ForbiddenComponent,
+    UnauthorizedComponent,
+    MainAdvertComponent,
+    NotFoundComponent,
+];
 
 /**
  * Interceptors from `./interceptors` directory
