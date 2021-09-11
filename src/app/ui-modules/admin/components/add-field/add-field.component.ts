@@ -42,16 +42,15 @@ export class AddFieldComponent {
     }
 
     getSectionName(sectionType: SectionType): string {
-        // todo some const should be used
         switch (sectionType) {
             case SectionType.CONTACTS:
-                return 'Contacts';
+                return 'Контакты';
             case SectionType.LOCATION:
-                return 'Location';
+                return 'Местоположение';
             case SectionType.PARAMS:
-                return 'Params';
+                return 'Параметры';
             case SectionType.PRICE:
-                return 'Price';
+                return 'Цена';
         }
     }
 

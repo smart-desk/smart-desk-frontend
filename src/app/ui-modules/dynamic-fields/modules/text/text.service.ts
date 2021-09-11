@@ -17,7 +17,7 @@ export class TextService implements AbstractFieldService {
     }
 
     getFieldName(): string {
-        return 'Text';
+        return 'Вставить текст';
     }
 
     getFilterComponentResolver(): null {

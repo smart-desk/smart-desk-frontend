@@ -21,7 +21,7 @@ export class PhotoService implements AbstractFieldService {
     }
 
     getFieldName(): string {
-        return 'Photo';
+        return 'Фотогалерея';
     }
 
     getFilterComponentResolver(): null {

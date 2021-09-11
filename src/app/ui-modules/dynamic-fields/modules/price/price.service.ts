@@ -26,6 +26,6 @@ export class PriceService implements AbstractFieldService {
     }
 
     getFieldName(): string {
-        return 'Price';
+        return 'Цена';
     }
 }

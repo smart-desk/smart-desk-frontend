@@ -29,6 +29,6 @@ export class CheckboxService implements AbstractFieldService {
     }
 
     getFieldName(): string {
-        return 'Checkbox';
+        return 'Чекбоксы';
     }
 }
