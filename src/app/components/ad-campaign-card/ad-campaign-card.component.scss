@@ -1,6 +1,30 @@
-.ad-campaign-card {
-    &__img {
-        display: block;
-        width: 100%;
+@import 'src/assets/styles/variables';
+
+.product-card {
+    position: relative;
+    cursor: pointer;
+    background-color: $primary-white;
+    border-radius: $border-radius;
+    box-shadow: $shadow;
+    overflow: hidden;
+    transition: box-shadow 0.4s;
+
+    &:hover {
+        box-shadow: $shadow-hover;
+    }
+
+    &__info {
+        padding: $base-unit * 1.5;
+
+        &--promo {
+            border-left: 4px solid $primary-red;
+        }
+    }
+
+    &__title {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: $base-unit / 2;
+        font-size: $font-18;
     }
 }

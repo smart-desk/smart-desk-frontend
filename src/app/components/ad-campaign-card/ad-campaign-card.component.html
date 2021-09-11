@@ -1,11 +1,10 @@
-<nz-card class="ad-campaign-card" nzHoverable [nzCover]="coverTemplate">
-    <a [href]="campaign.link" target="_blank">
-        <nz-card-meta [nzTitle]="campaign.title"></nz-card-meta>
+<div class="product-card">
+    <a [href]="campaign.link">
+        <ik-image [path]="campaign.img || '/public/not-found.png'" [transformation]="[{ width: 200, height: 140 }]"></ik-image>
+        <div class="product-card__info">
+            <h3 class="product-card__title">
+                <span>{{ campaign.title }}</span>
+            </h3>
+        </div>
     </a>
-</nz-card>
-
-<ng-template #coverTemplate>
-    <a [href]="campaign.link" target="_blank">
-        <img class="ad-campaign-card__img" alt="example" [src]="campaign.img || 'assets/images/not-found.png'" />
-    </a>
-</ng-template>
+</div>
