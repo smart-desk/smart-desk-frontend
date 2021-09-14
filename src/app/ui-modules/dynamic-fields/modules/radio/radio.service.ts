@@ -29,6 +29,6 @@ export class RadioService implements AbstractFieldService {
     }
 
     getFieldName(): string {
-        return 'Radio';
+        return 'Радио кнопки';
     }
 }

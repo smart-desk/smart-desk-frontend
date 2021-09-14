@@ -80,6 +80,7 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.similarProducts = res;
                 this.cd.detectChanges();
             });
+
         this.loginService.login$.pipe(takeUntil(this.destroy$)).subscribe(currentUser => {
             this.currentUser = currentUser;
             this.cd.detectChanges();
@@ -104,13 +105,20 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
                     return product.userId ? this.userService.getUser(product.userId) : EMPTY;
                 })
             )
-            .subscribe(user => {
-                this.user = user;
-                this.addParamsFields();
-                this.addPriceFields();
-                this.addLocationFields();
-                this.cd.detectChanges();
-            });
+            .subscribe(
+                user => {
+                    this.user = user;
+                    this.addParamsFields();
+                    this.addPriceFields();
+                    this.addLocationFields();
+                    this.cd.detectChanges();
+                },
+                err => {
+                    if (err?.error?.statusCode === 404) {
+                        this.router.navigate(['/not-found']);
+                    }
+                }
+            );
     }
 
     ngOnDestroy(): void {

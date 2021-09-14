@@ -21,7 +21,7 @@ export class TextareaService implements AbstractFieldService {
     }
 
     getFieldName(): string {
-        return 'Textarea';
+        return 'Текстовое поле';
     }
 
     getFilterComponentResolver(): null {

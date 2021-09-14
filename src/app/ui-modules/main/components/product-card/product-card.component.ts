@@ -36,7 +36,8 @@ export class ProductCardComponent implements OnInit {
         this.cd.detectChanges();
     }
 
-    toggleBookmark(productId: string): void {
+    toggleBookmark(productId: string, event: MouseEvent): void {
+        event.stopPropagation();
         if (this.product.isBookmark) {
             this.deleteBookmark.emit(productId);
         } else {

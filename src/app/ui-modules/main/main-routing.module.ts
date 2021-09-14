@@ -5,6 +5,7 @@ import { AuthGuard } from '../../modules/auth/auth.guard';
 import { ForbiddenComponent } from '../../pages/forbidden/forbidden.component';
 import { UnauthorizedComponent } from '../../pages/unauthorized/unauthorized.component';
 import { VkRedirectComponent } from './components/vk-redirect/vk-redirect.component';
+import { NotFoundComponent } from '../../pages/not-found/not-found.component';
 
 const routes: Routes = [
     {
@@ -14,6 +15,10 @@ const routes: Routes = [
     {
         path: 'unauthorized',
         component: UnauthorizedComponent,
+    },
+    {
+        path: 'not-found',
+        component: NotFoundComponent,
     },
     {
         path: '',

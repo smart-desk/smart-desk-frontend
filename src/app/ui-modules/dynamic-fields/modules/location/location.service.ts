@@ -26,6 +26,6 @@ export class LocationService implements AbstractFieldService {
     }
 
     getFieldName(): string {
-        return 'Location';
+        return 'Местоположение';
     }
 }

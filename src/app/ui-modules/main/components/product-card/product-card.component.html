@@ -1,14 +1,15 @@
-<div class="product-card">
-    <ik-image
-        [routerLink]="['/', 'products', product.id]"
-        [path]="thumb || '/public/not-found.png'"
-        [transformation]="[{ width: 200, height: 140 }]"
-    ></ik-image>
+<div class="product-card" [routerLink]="['/', 'products', product.id]">
+    <ik-image [path]="thumb || '/public/not-found.png'" [transformation]="[{ width: 200, height: 140 }]"></ik-image>
     <div class="product-card__info" [class.product-card__info--promo]="promo">
         <h3 class="product-card__title">
             <span>{{ title }}</span>
             <span class="product-card__title-icon" [class.product-card__title-icon--active]="product?.isBookmark">
-                <i nz-icon (click)="toggleBookmark(product.id)" nzType="heart" [nzTheme]="product?.isBookmark ? 'fill' : 'outline'"></i>
+                <i
+                    nz-icon
+                    (click)="toggleBookmark(product.id, $event)"
+                    nzType="heart"
+                    [nzTheme]="product?.isBookmark ? 'fill' : 'outline'"
+                ></i>
             </span>
         </h3>
         <p class="product-card__desc">{{ description }}</p>

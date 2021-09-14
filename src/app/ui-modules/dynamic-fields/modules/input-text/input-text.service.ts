@@ -24,6 +24,6 @@ export class InputTextService implements AbstractFieldService {
     }
 
     getFieldName(): string {
-        return 'Input Text';
+        return 'Ввод текста';
     }
 }

@@ -16,7 +16,7 @@ export class DatepickerService implements AbstractFieldService {
     constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
     getFieldName(): string {
-        return 'Datepicker';
+        return 'Выбор даты';
     }
 
     getFilterComponentResolver(): ComponentFactory<AbstractFieldFilterComponent<any, any>> {
