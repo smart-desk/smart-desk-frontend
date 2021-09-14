@@ -5,6 +5,7 @@ import { AbstractFieldFilterComponent } from '../../../models/abstract-field-fil
 import { PriceParamsDto } from '../dto/price-params.dto';
 import { Filter } from '../../../../../modules/product/models/filter';
 import { PriceFilterDto } from '../dto/price-filter.dto';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-price-filter',
@@ -21,9 +22,20 @@ export class PriceFilterComponent extends AbstractFieldFilterComponent<PricePara
 
     ngOnInit(): void {
         this.form = this.fb.group({
-            from: [this.filter?.getFilterParams()?.from],
-            to: [this.filter?.getFilterParams()?.to],
+            from: [],
+            to: [],
         });
+
+        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => this.onChange.next());
+    }
+
+    setFormValue(): void {
+        this.form.patchValue({ from: this.filter?.getFilterParams()?.from, to: this.filter?.getFilterParams()?.to });
+    }
+
+    getActiveFilters(): number {
+        const { from, to } = this.form.getRawValue();
+        return from || to ? 1 : 0;
     }
 
     getFilterValue(): Filter<PriceFilterDto> | null {

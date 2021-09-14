@@ -6,6 +6,7 @@ import {
     ComponentRef,
     Input,
     OnChanges,
+    OnDestroy,
     ViewChild,
     ViewContainerRef,
 } from '@angular/core';
@@ -15,6 +16,8 @@ import { AbstractFieldFilterComponent } from '../../../dynamic-fields/models/abs
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
 import { SectionType } from '../../../../modules/field/models/field.entity';
 import { ProductDataService } from '../../../../modules/product/product-data.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'app-filters',
@@ -22,12 +25,23 @@ import { ProductDataService } from '../../../../modules/product/product-data.ser
     styleUrls: ['./filters.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FiltersComponent implements AfterViewInit, OnChanges {
+export class FiltersComponent implements AfterViewInit, OnChanges, OnDestroy {
     @Input()
     model: Model;
 
     @Input()
     filters: Filters;
+
+    sectionType = SectionType;
+
+    showSection: Record<SectionType, boolean> = {
+        params: true,
+        contacts: true,
+        location: true,
+        price: true,
+    };
+
+    activeFilters = 0;
 
     @ViewChild('params', { read: ViewContainerRef })
     private paramsContainerRef: ViewContainerRef;
@@ -39,6 +53,7 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
     private priceContainerRef: ViewContainerRef;
 
     private filterComponents: ComponentRef<AbstractFieldFilterComponent<any, any>>[] = [];
+    private destroy$ = new Subject();
 
     constructor(
         private dynamicFieldService: DynamicFieldsService,
@@ -48,10 +63,19 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
 
     ngAfterViewInit(): void {
         this.updateFilters();
+        this.setFilterListener();
+        this.setFormValue();
     }
 
-    ngOnChanges() {
+    ngOnChanges(): void {
         this.updateFilters();
+        this.setFilterListener();
+        this.setFormValue();
+    }
+
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     apply(): void {
@@ -98,6 +122,8 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
     ): AbstractFieldFilterComponent<any, any>[] | undefined {
         const fields = this.model.fields.filter(s => s.section === sectionType);
         if (!fields.length) {
+            this.showSection[sectionType] = false;
+            this.cdr.detectChanges();
             return;
         }
 
@@ -148,5 +174,26 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
                 .map(([key, params]) => new Filter(key, params))
                 .find(filter => filter?.getFieldId() === fieldId) || null
         );
+    }
+
+    private setFormValue(): void {
+        this.filterComponents.forEach(component => {
+            if (component.instance.form) {
+                component.instance.setFormValue();
+            }
+        });
+    }
+
+    private setFilterListener() {
+        this.filterComponents.forEach(component => {
+            component.instance.onChange.pipe(takeUntil(this.destroy$)).subscribe(() => {
+                this.recountFilters();
+            });
+        });
+    }
+
+    private recountFilters() {
+        this.activeFilters = 0;
+        this.filterComponents.forEach(component => (this.activeFilters += component.instance.getActiveFilters()));
     }
 }

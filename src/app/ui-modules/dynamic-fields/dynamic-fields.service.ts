@@ -1,4 +1,4 @@
-import { Inject, Injectable, Injector } from '@angular/core';
+import { Inject, Injectable, Injector, Type } from '@angular/core';
 import { DynamicFieldsMapType } from './dynamic-fields.map';
 import { AbstractFieldService } from './models/abstract-field.service';
 import { FieldType } from '../../modules/field/models/field.entity';
@@ -11,7 +11,7 @@ export class DynamicFieldsService {
 
     getService(type: FieldType): AbstractFieldService | undefined {
         if (this.fieldsMap.get(type)) {
-            return this.injector.get(this.fieldsMap.get(type));
+            return this.injector.get((this.fieldsMap.get(type) as unknown) as Type<AbstractFieldService>);
         }
         return;
     }

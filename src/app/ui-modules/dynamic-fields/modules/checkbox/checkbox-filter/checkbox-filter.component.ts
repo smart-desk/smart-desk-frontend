@@ -4,6 +4,7 @@ import { CheckboxItem, CheckboxParamsDto } from '../dto/checkbox-params.dto';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Filter } from '../../../../../modules/product/models/filter';
 import { CheckboxFilterDto } from '../dto/checkbox-filter.dto';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-checkbox-filter',
@@ -20,8 +21,18 @@ export class CheckboxFilterComponent extends AbstractFieldFilterComponent<Checkb
 
     ngOnInit(): void {
         this.form = this.fb.group({
-            checkboxes: this.fb.array(this.field.params.checkboxes.map(cb => this.fb.control(this.getCheckboxState(cb)))),
+            checkboxes: this.fb.array([]),
         });
+
+        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => this.onChange.next());
+    }
+
+    setFormValue(): void {
+        this.form.get('checkbox')?.setValue(this.field.params.checkboxes.map(cb => this.fb.control(this.getCheckboxState(cb))));
+    }
+
+    getActiveFilters(): number {
+        return this.form.getRawValue().checkboxes.filter((value: boolean) => value).length;
     }
 
     get checkboxes(): FormArray {
