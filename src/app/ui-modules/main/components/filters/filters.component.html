@@ -1,18 +1,24 @@
-<nz-collapse nzGhost>
+<nz-collapse class="filter-list" nzGhost>
     <!-- todo use names for sections -->
-    <nz-collapse-panel nzHeader="Цена" [nzActive]="true">
-        <ng-container #price></ng-container>
-    </nz-collapse-panel>
+    <div class="filter-list__item filter-list__item--price" *ngIf="showSection[sectionType.PRICE]">
+        <div>
+            <div class="container__title">Цена, ₽</div>
+            <ng-container #price></ng-container>
+        </div>
+    </div>
 
-    <nz-collapse-panel nzHeader="Параметры" [nzActive]="true">
-        <ng-container #params></ng-container>
-    </nz-collapse-panel>
-
-    <nz-collapse-panel nzHeader="Местоположение" [nzActive]="true">
-        <ng-container #location></ng-container>
-    </nz-collapse-panel>
+    <div class="filter-list__item" *ngIf="showSection[sectionType.PARAMS]">
+        <nz-collapse-panel nzExpandedIcon="caret-right" nzHeader="Параметры" [nzActive]="true">
+            <ng-container #params></ng-container>
+        </nz-collapse-panel>
+    </div>
+    <div class="filter-list__item" *ngIf="showSection[sectionType.LOCATION]">
+        <nz-collapse-panel nzExpandedIcon="caret-right" nzHeader="Местоположение" [nzActive]="true">
+            <ng-container #location></ng-container>
+        </nz-collapse-panel>
+    </div>
 </nz-collapse>
 <div class="button">
-    <button nz-button nzBlock (click)="apply()">Применить</button>
-    <button nz-button (click)="dropFilters()" nzType="link">Сбросить</button>
+    <button class="button button--sucsses" nz-button nzBlock (click)="apply()">Применить {{ activeFilters }}</button>
+    <button class="button button--reset" nz-button (click)="dropFilters()" nzType="text">Сбросить</button>
 </div>
