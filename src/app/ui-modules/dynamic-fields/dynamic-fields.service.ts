@@ -11,7 +11,7 @@ export class DynamicFieldsService {
 
     getService(type: FieldType): AbstractFieldService | undefined {
         if (this.fieldsMap.get(type)) {
-            return this.injector.get((this.fieldsMap.get(type) as unknown) as Type<AbstractFieldService>);
+            return this.injector.get(this.fieldsMap.get(type));
         }
         return;
     }

@@ -8,6 +8,7 @@ import { AbstractFieldFilterComponent } from '../../../models/abstract-field-fil
 import { Filter } from '../../../../../modules/product/models/filter';
 import { LocationModalComponent } from '../location-modal/location-modal.component';
 import { Area } from '../location.class';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-location-filter',
@@ -27,6 +28,7 @@ export class LocationFilterComponent extends AbstractFieldFilterComponent<Locati
         if (!this.filter || !this.filter.getFilterParams()) {
             return;
         }
+        this.onSetFormValue$.pipe(takeUntil(this.destroy$)).subscribe(() => this.setFormValue());
 
         this.area = new Area();
         this.area.radius = this.filter.getFilterParams().radius;

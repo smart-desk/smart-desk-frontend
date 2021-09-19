@@ -10,7 +10,8 @@ export abstract class AbstractFieldFilterComponent<TParams, TFilter> {
     @Input() field: Field<any, TParams>;
     @Input() filter: Filter<TFilter> | null;
     destroy$ = new Subject();
-    onChange = new Subject<null>();
+    onChange = new Subject();
+    onSetFormValue$ = new Subject();
     form: FormGroup;
     abstract setFormValue(): void;
     abstract getFilterValue(): Filter<TFilter> | null;

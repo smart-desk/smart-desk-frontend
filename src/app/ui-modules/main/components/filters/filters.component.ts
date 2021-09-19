@@ -179,7 +179,7 @@ export class FiltersComponent implements AfterViewInit, OnChanges, OnDestroy {
     private setFormValue(): void {
         this.filterComponents.forEach(component => {
             if (component.instance.form) {
-                component.instance.setFormValue();
+                component.instance.onSetFormValue$.next();
             }
         });
     }

@@ -20,6 +20,8 @@ export class CheckboxFilterComponent extends AbstractFieldFilterComponent<Checkb
     }
 
     ngOnInit(): void {
+        this.onSetFormValue$.pipe(takeUntil(this.destroy$)).subscribe(() => this.setFormValue());
+
         this.form = this.fb.group({
             checkboxes: this.fb.array([]),
         });

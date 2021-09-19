@@ -20,6 +20,8 @@ export class RadioFilterComponent extends AbstractFieldFilterComponent<RadioPara
     }
 
     ngOnInit(): void {
+        this.onSetFormValue$.pipe(takeUntil(this.destroy$)).subscribe(() => this.setFormValue());
+
         this.form = this.fb.group({
             radios: this.fb.array([]),
         });
