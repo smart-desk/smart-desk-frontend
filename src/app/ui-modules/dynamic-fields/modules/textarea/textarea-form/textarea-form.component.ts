@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AbstractFieldFormComponent } from '../../../models/abstract-field-form.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TextareaEntity } from '../dto/textarea.entity';
@@ -14,7 +14,7 @@ export class TextareaFormComponent extends AbstractFieldFormComponent<TextareaEn
     form: FormGroup;
 
     ngOnInit(): void {
-        const valueValidators = [];
+        const valueValidators = [Validators.maxLength(1000)];
         if (this.field?.required) {
             valueValidators.push(Validators.required);
         }
