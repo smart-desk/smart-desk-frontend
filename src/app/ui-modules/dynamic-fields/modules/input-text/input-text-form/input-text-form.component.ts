@@ -18,7 +18,7 @@ export class InputTextFormComponent extends AbstractFieldFormComponent<InputText
     }
 
     ngOnInit(): void {
-        const valueValidators = [];
+        const valueValidators = [Validators.maxLength(255)];
         if (this.field?.required) {
             valueValidators.push(Validators.required);
         }
