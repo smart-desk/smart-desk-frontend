@@ -90,6 +90,7 @@ export class ProductFormComponent implements OnInit, AfterViewInit {
     }
 
     protected isValid(): boolean {
+        // todo mark form as touched to show errors
         if (!this.formDefaultFields.valid) {
             return false;
         }
