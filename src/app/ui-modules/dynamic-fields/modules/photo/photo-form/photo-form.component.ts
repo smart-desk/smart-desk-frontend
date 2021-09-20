@@ -49,6 +49,6 @@ export class PhotoFormComponent extends AbstractFieldFormComponent<PhotoEntity, 
     }
 
     isFieldDataValid(): boolean {
-        return true;
+        return this.fileList.length >= this.field.params.min && this.fileList.length <= this.field.params.max;
     }
 }

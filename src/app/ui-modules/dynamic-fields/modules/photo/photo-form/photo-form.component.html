@@ -1,15 +1,24 @@
-<nz-upload
-    class="upload"
-    nzAction="/s3/image"
-    nzListType="picture-card"
-    nzAccept="image/png, image/jpeg"
-    [(nzFileList)]="fileList"
-    [nzMultiple]="true"
-    [nzDisabled]="fileList?.length === field?.params?.max"
-    (nzChange)="listChanged($event)"
->
-    <div>
-        <i nz-icon nzType="plus"></i>
-        <div style="margin-top: 8px;">Загрузить</div>
-    </div>
-</nz-upload>
+<form nz-form nzLayout="vertical">
+    <nz-form-item>
+        <nz-form-control>
+            <nz-form-label>Выберите фотографии</nz-form-label>
+            <nz-upload
+                nzAction="/s3/image"
+                nzListType="picture-card"
+                nzAccept="image/png, image/jpeg"
+                [(nzFileList)]="fileList"
+                [nzMultiple]="true"
+                [nzSize]="10000"
+                [nzDisabled]="fileList?.length >= field?.params?.max"
+                (nzChange)="listChanged($event)"
+            >
+                <div>
+                    <i nz-icon nzType="plus"></i>
+                    <div style="margin-top: 8px;">Загрузить</div>
+                </div>
+            </nz-upload>
+            <span *ngIf="field?.params?.min">не менее {{ field.params.min }} фото</span><br />
+            <span *ngIf="field?.params?.max">не более {{ field.params.max }} фото</span>
+        </nz-form-control>
+    </nz-form-item>
+</form>
