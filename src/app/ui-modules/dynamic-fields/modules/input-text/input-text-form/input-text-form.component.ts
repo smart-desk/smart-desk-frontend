@@ -42,6 +42,9 @@ export class InputTextFormComponent extends AbstractFieldFormComponent<InputText
     }
 
     isFieldDataValid(): boolean {
+        this.form.markAllAsTouched();
+        this.form.get('value')?.updateValueAndValidity({ emitEvent: true });
+
         return this.form.valid;
     }
 }

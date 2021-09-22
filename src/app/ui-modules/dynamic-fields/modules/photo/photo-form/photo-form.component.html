@@ -17,8 +17,12 @@
                     <div style="margin-top: 8px;">Загрузить</div>
                 </div>
             </nz-upload>
-            <span *ngIf="field?.params?.min">не менее {{ field.params.min }} фото</span><br />
-            <span *ngIf="field?.params?.max">не более {{ field.params.max }} фото</span>
+            <span *ngIf="field?.params?.min && fileList.length < field?.params?.min && showValidationErrors" nz-typography nzType="danger">
+                Не менее {{ field.params.min }} фото </span
+            ><br />
+            <span *ngIf="field?.params?.max && fileList.length > field?.params?.max && showValidationErrors" nz-typography nzType="danger">
+                Не более {{ field.params.max }} фото
+            </span>
         </nz-form-control>
     </nz-form-item>
 </form>

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AbstractFieldFormComponent } from '../../../models/abstract-field-form.component';
 import { PhotoEntity } from '../dto/photo.entity';
 import { PhotoParamsDto } from '../dto/photo-params.dto';
@@ -13,6 +13,11 @@ import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 })
 export class PhotoFormComponent extends AbstractFieldFormComponent<PhotoEntity, PhotoParamsDto> implements OnInit {
     fileList: NzUploadFile[] = [];
+    showValidationErrors = false;
+
+    constructor(private cd: ChangeDetectorRef) {
+        super();
+    }
 
     ngOnInit() {
         if (this?.field?.data?.value) {
@@ -49,6 +54,8 @@ export class PhotoFormComponent extends AbstractFieldFormComponent<PhotoEntity, 
     }
 
     isFieldDataValid(): boolean {
+        this.showValidationErrors = true;
+        this.cd.detectChanges();
         return this.fileList.length >= this.field.params.min && this.fileList.length <= this.field.params.max;
     }
 }

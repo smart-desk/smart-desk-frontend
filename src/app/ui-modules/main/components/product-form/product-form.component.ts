@@ -1,6 +1,7 @@
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     ComponentRef,
     EventEmitter,
@@ -33,7 +34,7 @@ export class ProductFormComponent implements OnInit, AfterViewInit {
     private fieldsFormContainerRef: ViewContainerRef;
     private components: ComponentRef<AbstractFieldFormComponent<any, any>>[] = [];
 
-    constructor(protected dynamicFieldService: DynamicFieldsService, private fb: FormBuilder) {}
+    constructor(protected dynamicFieldService: DynamicFieldsService, private fb: FormBuilder, private cd: ChangeDetectorRef) {}
 
     ngOnInit(): void {
         this.formDefaultFields = this.fb.group({
@@ -90,10 +91,13 @@ export class ProductFormComponent implements OnInit, AfterViewInit {
     }
 
     protected isValid(): boolean {
-        // todo mark form as touched to show errors
-        if (!this.formDefaultFields.valid) {
-            return false;
-        }
-        return this.components.every(component => component.instance.isFieldDataValid());
+        this.formDefaultFields.markAllAsTouched();
+        this.formDefaultFields.get('title')?.updateValueAndValidity({ emitEvent: true });
+
+        const allFieldsAreValid = this.components
+            .map(component => component.instance.isFieldDataValid())
+            .every(isFieldValid => isFieldValid);
+
+        return this.formDefaultFields.valid && allFieldsAreValid;
     }
 }

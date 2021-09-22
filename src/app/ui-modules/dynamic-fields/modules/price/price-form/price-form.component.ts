@@ -48,6 +48,9 @@ export class PriceFormComponent extends AbstractFieldFormComponent<PriceEntity, 
     }
 
     isFieldDataValid(): boolean {
+        this.form.markAllAsTouched();
+        this.form.get('value')?.updateValueAndValidity({ emitEvent: true });
+
         return this.form.valid;
     }
 }

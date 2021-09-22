@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AbstractFieldFormComponent } from '../../../models/abstract-field-form.component';
 import { DatepickerParamsDto } from '../dto/datepicker-params.dto';
 import { DatepickerEntity } from '../entities/datepicker.entity';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CreateDatepickerDto } from '../dto/create-datepicker.dto';
 
 @Component({
@@ -14,14 +14,19 @@ import { CreateDatepickerDto } from '../dto/create-datepicker.dto';
 export class DatepickerFormComponent extends AbstractFieldFormComponent<DatepickerEntity, DatepickerParamsDto> implements OnInit {
     datepickerForm: FormGroup;
 
-    constructor() {
+    constructor(private fb: FormBuilder) {
         super();
     }
 
     ngOnInit(): void {
-        this.datepickerForm = new FormGroup({
-            date1: new FormControl(this.field?.data?.date1),
-            daterange: new FormControl([this.field?.data?.date1, this.field?.data?.date2]),
+        const validators = [];
+        if (this.field.required) {
+            validators.push(Validators.required);
+        }
+
+        this.datepickerForm = this.fb.group({
+            date1: [this.field?.data?.date1, validators],
+            daterange: [[this.field?.data?.date1, this.field?.data?.date2], validators],
         });
     }
 
@@ -49,6 +54,10 @@ export class DatepickerFormComponent extends AbstractFieldFormComponent<Datepick
     }
 
     isFieldDataValid(): boolean {
-        return true;
+        this.datepickerForm.markAllAsTouched();
+        this.datepickerForm.get('date1')?.updateValueAndValidity({ emitEvent: true });
+        this.datepickerForm.get('daterange')?.updateValueAndValidity({ emitEvent: true });
+
+        return this.datepickerForm.valid;
     }
 }
