@@ -11,6 +11,7 @@ import { transformCategoryArrayToNZCascade } from '../../../../../../utils';
 import { ProductService } from '../../../../../../modules/product/product.service';
 import { CategoryService } from '../../../../../../modules/category/category.service';
 import { ModelService } from '../../../../../../modules/model/model.service';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 // todo check subscriptions
 @Component({
@@ -33,7 +34,8 @@ export class ProductCreateComponent implements OnInit {
         private componentFactoryResolver: ComponentFactoryResolver,
         private categoryService: CategoryService,
         private productService: ProductService,
-        private router: Router
+        private router: Router,
+        private notificationService: NzNotificationService
     ) {}
 
     ngOnInit(): void {
@@ -85,7 +87,11 @@ export class ProductCreateComponent implements OnInit {
                 this.router.navigate(['products', res.id]);
             },
             err => {
-                // todo server validation message
+                if (err?.error?.statusCode === 400) {
+                    this.notificationService.error('Проверьте правильность заполнения формы', err?.error?.message?.join(', '));
+                } else {
+                    this.notificationService.error('Что-то пошло не так', 'Попробуйте перезагрузить страницу');
+                }
             }
         );
     }

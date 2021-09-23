@@ -112,8 +112,10 @@ export class LocationFormComponent extends AbstractFieldFormComponent<LocationEn
     }
 
     isFieldDataValid(): boolean {
-        // todo check if field is required
-        return true;
+        if (!this.field?.required) {
+            return true;
+        }
+        return !!(this.location.lng && this.location.lat && this.location.title);
     }
 
     toggleMap() {

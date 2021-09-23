@@ -2,11 +2,14 @@
     <form nz-form nzLayout="vertical" [formGroup]="form">
         <nz-form-item>
             <nz-form-label [nzRequired]="field.required">{{ field.title }}</nz-form-label>
-            <nz-form-control class="price__input-group">
+            <nz-form-control class="price__input-group" [nzErrorTip]="errorRef">
                 <nz-input-group [nzAddOnAfter]="currencySymbolTemp">
                     <input nz-input formControlName="value" name="currency" placeholder="Введите цену" type="number" min="0" step="any" />
                 </nz-input-group>
                 <ng-template #currencySymbolTemp>{{ currencySymbol }}</ng-template>
+                <ng-template #errorRef let-control>
+                    <ng-container *ngIf="control.hasError('required')">Обязательное поле</ng-container>
+                </ng-template>
             </nz-form-control>
         </nz-form-item>
     </form>

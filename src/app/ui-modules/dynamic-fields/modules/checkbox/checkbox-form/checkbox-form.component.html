@@ -1,16 +1,11 @@
-<form nz-form nzLayout="vertical">
+<form nz-form nzLayout="vertical" [formGroup]="form">
     <nz-form-item>
-        <nz-form-label [nzRequired]="field.required">{{ field.title }}</nz-form-label>
-        <nz-checkbox-wrapper (nzOnChange)="checkboxChecked($event)">
-            <label
-                *ngFor="let checkbox of field.params.checkboxes"
-                nz-checkbox
-                [ngModel]="isChecked(checkbox)"
-                [nzValue]="checkbox.value"
-                [ngModelOptions]="{ standalone: true }"
-            >
-                {{ checkbox.label }}
-            </label>
-        </nz-checkbox-wrapper>
+        <nz-form-label [nzRequired]="field?.required">{{ field?.title }}</nz-form-label>
+        <nz-form-control [nzErrorTip]="errorRef">
+            <nz-checkbox-group formControlName="value"> </nz-checkbox-group>
+            <ng-template #errorRef let-control>
+                <ng-container *ngIf="control.hasError('checkboxRequired')">Обязательное поле</ng-container>
+            </ng-template>
+        </nz-form-control>
     </nz-form-item>
 </form>

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AbstractFieldFormComponent } from '../../../models/abstract-field-form.component';
 import { RadioEntity } from '../dto/radio.entity';
 import { RadioParamsDto } from '../dto/radio-params.dto';
@@ -13,9 +13,18 @@ import { RadioParamsDto } from '../dto/radio-params.dto';
 export class RadioFormComponent extends AbstractFieldFormComponent<RadioEntity, RadioParamsDto> implements OnInit {
     form: FormGroup;
 
+    constructor(private fb: FormBuilder) {
+        super();
+    }
+
     ngOnInit(): void {
-        this.form = new FormGroup({
-            value: new FormControl(this.field.data && this.field.data.value),
+        const validators = [];
+        if (this.field.required) {
+            validators.push(Validators.required);
+        }
+
+        this.form = this.fb.group({
+            value: [this.field?.data?.value, validators],
         });
     }
 
@@ -33,6 +42,9 @@ export class RadioFormComponent extends AbstractFieldFormComponent<RadioEntity, 
     }
 
     isFieldDataValid(): boolean {
+        this.form.markAllAsTouched();
+        this.form.get('value')?.updateValueAndValidity({ emitEvent: true });
+
         return this.form.valid;
     }
 }

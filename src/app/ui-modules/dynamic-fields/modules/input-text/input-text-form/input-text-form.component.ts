@@ -18,7 +18,7 @@ export class InputTextFormComponent extends AbstractFieldFormComponent<InputText
     }
 
     ngOnInit(): void {
-        const valueValidators = [];
+        const valueValidators = [Validators.maxLength(255)];
         if (this.field?.required) {
             valueValidators.push(Validators.required);
         }
@@ -42,6 +42,9 @@ export class InputTextFormComponent extends AbstractFieldFormComponent<InputText
     }
 
     isFieldDataValid(): boolean {
+        this.form.markAllAsTouched();
+        this.form.get('value')?.updateValueAndValidity({ emitEvent: true });
+
         return this.form.valid;
     }
 }
