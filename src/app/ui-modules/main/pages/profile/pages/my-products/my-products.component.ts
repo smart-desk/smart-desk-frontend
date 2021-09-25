@@ -86,58 +86,58 @@ export class MyProductsComponent implements OnInit {
         this.getProducts();
     }
 
-    getProducts() {
+    getProducts(): void {
         this.getActiveProducts();
         this.getPendingProducts();
         this.getBlockedProducts();
         this.getCompletedProducts();
     }
 
-    private getActiveProducts() {
+    private getActiveProducts(): void {
         this.productService.getMyProducts().subscribe(res => {
             this.activeProductsResponse = res;
             this.cdr.detectChanges();
         });
     }
 
-    private getPendingProducts() {
+    private getPendingProducts(): void {
         this.productService.getPending().subscribe(res => {
             this.pendingProductsResponse = res;
             this.cdr.detectChanges();
         });
     }
 
-    private getBlockedProducts() {
+    private getBlockedProducts(): void {
         this.productService.getBlocked().subscribe(res => {
             this.blockedProductsResponse = res;
             this.cdr.detectChanges();
         });
     }
 
-    private getCompletedProducts() {
+    private getCompletedProducts(): void {
         this.productService.getCompleted().subscribe(res => {
             this.completedProductsResponse = res;
             this.cdr.detectChanges();
         });
     }
 
-    private completeProduct(product: Product) {
+    private completeProduct(product: Product): void {
         this.productService.completeProduct(product.id).subscribe(() => {
             this.getProducts();
         });
     }
 
-    private editProduct(product: Product) {
+    private editProduct(product: Product): void {
         this.router.navigate(['products', product.id, 'edit']);
     }
 
-    private deleteProduct(product: Product) {
+    private deleteProduct(product: Product): void {
         this.productService.deleteProduct(product.id).subscribe(() => {
             this.getProducts();
         });
     }
 
-    private liftProduct(product: Product) {
+    private liftProduct(product: Product): void {
         if (this.stripeService.stripe) {
             this.productService
                 .liftProduct(product.id)
@@ -148,7 +148,7 @@ export class MyProductsComponent implements OnInit {
         }
     }
 
-    private promoteProduct(product: Product) {
+    private promoteProduct(product: Product): void {
         this.modalService.create({
             nzTitle: `Продвинуть ${product.title}`,
             nzContent: PromoSetChooserComponent,
