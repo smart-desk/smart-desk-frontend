@@ -25,7 +25,7 @@ import { Subject } from 'rxjs';
     styleUrls: ['./filters.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FiltersComponent implements AfterViewInit, OnChanges, OnDestroy {
+export class FiltersComponent implements AfterViewInit, OnDestroy {
     @Input()
     model: Model;
 
@@ -64,13 +64,7 @@ export class FiltersComponent implements AfterViewInit, OnChanges, OnDestroy {
     ngAfterViewInit(): void {
         this.updateFilters();
         this.setFilterListener();
-        this.setFormValue();
-    }
-
-    ngOnChanges(): void {
-        this.updateFilters();
-        this.setFilterListener();
-        this.setFormValue();
+        this.setFilterValues();
     }
 
     ngOnDestroy(): void {
@@ -176,23 +170,21 @@ export class FiltersComponent implements AfterViewInit, OnChanges, OnDestroy {
         );
     }
 
-    private setFormValue(): void {
+    private setFilterValues(): void {
         this.filterComponents.forEach(component => {
             if (component.instance.form) {
-                component.instance.onSetFormValue$.next();
+                component.instance.setFormValue();
             }
         });
     }
 
-    private setFilterListener() {
+    private setFilterListener(): void {
         this.filterComponents.forEach(component => {
-            component.instance.onChange.pipe(takeUntil(this.destroy$)).subscribe(() => {
-                this.recountFilters();
-            });
+            component.instance.onFormChange$.pipe(takeUntil(this.destroy$)).subscribe(() => this.recountFilters());
         });
     }
 
-    private recountFilters() {
+    private recountFilters(): void {
         this.activeFilters = 0;
         this.filterComponents.forEach(component => (this.activeFilters += component.instance.getActiveFilters()));
     }

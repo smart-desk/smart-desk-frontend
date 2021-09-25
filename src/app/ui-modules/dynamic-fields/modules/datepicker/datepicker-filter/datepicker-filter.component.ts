@@ -23,16 +23,11 @@ export class DatepickerFilterComponent extends AbstractFieldFilterComponent<Date
     }
 
     ngOnInit(): void {
-        this.onSetFormValue$.pipe(takeUntil(this.destroy$)).subscribe(() => this.setFormValue());
-
         this.form = this.fb.group({
             dateRange: [],
         });
 
-        this.form
-            .get('dateRange')
-            ?.valueChanges.pipe(takeUntil(this.destroy$))
-            .subscribe(() => this.onChange.next());
+        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => this.onFormChange$.next());
     }
 
     ngOnDestroy(): void {

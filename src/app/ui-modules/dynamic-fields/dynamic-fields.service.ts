@@ -1,4 +1,4 @@
-import { Inject, Injectable, Injector, Type } from '@angular/core';
+import { Inject, Injectable, Injector } from '@angular/core';
 import { DynamicFieldsMapType } from './dynamic-fields.map';
 import { AbstractFieldService } from './models/abstract-field.service';
 import { FieldType } from '../../modules/field/models/field.entity';

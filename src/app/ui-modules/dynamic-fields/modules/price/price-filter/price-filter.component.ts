@@ -21,14 +21,12 @@ export class PriceFilterComponent extends AbstractFieldFilterComponent<PricePara
     }
 
     ngOnInit(): void {
-        this.onSetFormValue$.pipe(takeUntil(this.destroy$)).subscribe(() => this.setFormValue());
-
         this.form = this.fb.group({
             from: [],
             to: [],
         });
 
-        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => this.onChange.next());
+        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => this.onFormChange$.next());
     }
 
     setFormValue(): void {
