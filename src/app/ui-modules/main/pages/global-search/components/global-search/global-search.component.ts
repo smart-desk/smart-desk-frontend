@@ -25,6 +25,11 @@ export class GlobalSearchComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
+        this.productDataService.products$.pipe(takeUntil(this.destroy$)).subscribe(products => {
+            this.productsResponse = products;
+            this.cd.detectChanges();
+        });
+
         this.router.events
             .pipe(
                 filter((event: RouterEvent) => event instanceof NavigationEnd),
@@ -40,7 +45,7 @@ export class GlobalSearchComponent implements OnInit, OnDestroy {
             });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
