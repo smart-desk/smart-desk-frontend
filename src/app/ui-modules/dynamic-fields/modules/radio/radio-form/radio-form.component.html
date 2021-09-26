@@ -1,8 +1,13 @@
 <form nz-form nzLayout="vertical" [formGroup]="form">
     <nz-form-item>
         <nz-form-label [nzRequired]="field.required">{{ field.title }}</nz-form-label>
-        <nz-radio-group formControlName="value">
-            <label *ngFor="let radio of field?.params?.radios" nz-radio [nzValue]="radio.value">{{ radio.label }}</label>
-        </nz-radio-group>
+        <nz-form-control [nzErrorTip]="errorRef">
+            <nz-radio-group formControlName="value">
+                <label *ngFor="let radio of field?.params?.radios" nz-radio [nzValue]="radio.value">{{ radio.label }}</label>
+                <ng-template #errorRef let-control>
+                    <ng-container *ngIf="control.hasError('required')">Обязательное поле</ng-container>
+                </ng-template>
+            </nz-radio-group>
+        </nz-form-control>
     </nz-form-item>
 </form>

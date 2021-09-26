@@ -1,9 +1,12 @@
 <form *ngIf="field" nz-form nzLayout="vertical" class="input-text" [formGroup]="datepickerForm">
     <nz-form-item>
-        <nz-form-label>{{ field.title }}</nz-form-label>
-        <nz-form-control>
+        <nz-form-label [nzRequired]="field?.required">{{ field.title }}</nz-form-label>
+        <nz-form-control [nzErrorTip]="errorRef">
             <nz-date-picker *ngIf="!field.params.range" nzFormat="dd.MM.yyyy" formControlName="date1"></nz-date-picker>
             <nz-range-picker *ngIf="field.params.range" nzFormat="dd.MM.yyyy" formControlName="daterange"></nz-range-picker>
+            <ng-template #errorRef let-control>
+                <ng-container *ngIf="control.hasError('required')">Обязательное поле</ng-container>
+            </ng-template>
         </nz-form-control>
     </nz-form-item>
 </form>

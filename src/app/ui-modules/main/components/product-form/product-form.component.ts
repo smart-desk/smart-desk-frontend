@@ -1,6 +1,7 @@
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     ComponentRef,
     EventEmitter,
@@ -11,7 +12,7 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import { PreferContact } from '../../enums/contact-values.enum';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AbstractFieldFormComponent } from '../../../dynamic-fields/models/abstract-field-form.component';
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
 import { FieldEntity } from '../../../../modules/field/models/field.entity';
@@ -33,12 +34,12 @@ export class ProductFormComponent implements OnInit, AfterViewInit {
     private fieldsFormContainerRef: ViewContainerRef;
     private components: ComponentRef<AbstractFieldFormComponent<any, any>>[] = [];
 
-    constructor(protected dynamicFieldService: DynamicFieldsService) {}
+    constructor(protected dynamicFieldService: DynamicFieldsService, private fb: FormBuilder, private cd: ChangeDetectorRef) {}
 
     ngOnInit(): void {
-        this.formDefaultFields = new FormGroup({
-            title: new FormControl(this.product.title || undefined, [Validators.required]),
-            preferredContact: new FormControl(this.product.preferContact || undefined),
+        this.formDefaultFields = this.fb.group({
+            title: [this.product?.title, [Validators.required, Validators.maxLength(255)]],
+            preferredContact: [this.product?.preferContact],
         });
     }
 
@@ -52,11 +53,11 @@ export class ProductFormComponent implements OnInit, AfterViewInit {
 
     save(): void {
         if (this.isValid()) {
-            const poduct = new UpdateProductDto();
-            poduct.fields = this.components.map(component => component.instance.getFieldData()).filter(value => !!value);
-            poduct.title = this.formDefaultFields.get('title')?.value;
-            poduct.preferContact = this.formDefaultFields.get('preferredContact')?.value;
-            this.submitForm.next(poduct);
+            const product = new UpdateProductDto();
+            product.fields = this.components.map(component => component.instance.getFieldData()).filter(value => !!value);
+            product.title = this.formDefaultFields.get('title')?.value;
+            product.preferContact = this.formDefaultFields.get('preferredContact')?.value;
+            this.submitForm.next(product);
         }
     }
 
@@ -90,9 +91,13 @@ export class ProductFormComponent implements OnInit, AfterViewInit {
     }
 
     protected isValid(): boolean {
-        if (!this.formDefaultFields.valid) {
-            return false;
-        }
-        return this.components.every(component => component.instance.isFieldDataValid());
+        this.formDefaultFields.markAllAsTouched();
+        this.formDefaultFields.get('title')?.updateValueAndValidity({ emitEvent: true });
+
+        const allFieldsAreValid = this.components
+            .map(component => component.instance.isFieldDataValid())
+            .every(isFieldValid => isFieldValid);
+
+        return this.formDefaultFields.valid && allFieldsAreValid;
     }
 }
