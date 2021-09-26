@@ -1,8 +1,12 @@
 <form nz-form nzLayout="vertical" [formGroup]="form">
     <nz-form-item>
-        <nz-form-control>
-            <nz-form-label>Максимальное количество фотографий</nz-form-label>
+        <nz-form-control [nzErrorTip]="errorRef">
+            <nz-form-label nzRequired>Максимальное количество фотографий</nz-form-label>
             <input nz-input formControlName="max" name="max" required placeholder="Max amount" type="number" />
+            <ng-template #errorRef let-control>
+                <ng-container *ngIf="control.hasError('required')">Обязательное поле</ng-container>
+                <ng-container *ngIf="control.hasError('max')">Максимально 50 фотографий</ng-container>
+            </ng-template>
         </nz-form-control>
     </nz-form-item>
     <nz-form-item>

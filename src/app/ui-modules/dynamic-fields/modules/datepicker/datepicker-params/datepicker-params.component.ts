@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AbstractFieldParamsComponent } from '../../../models/abstract-field-params.component';
 import { DatepickerParamsDto } from '../dto/datepicker-params.dto';
 import { Field } from '../../../../../modules/field/models/field';
@@ -20,7 +20,7 @@ export class DatepickerParamsComponent extends AbstractFieldParamsComponent<Date
 
     ngOnInit(): void {
         this.formField = this.fb.group({
-            title: [this.field.title || ''],
+            title: [this.field.title || '', Validators.required],
             filterable: [this.field.filterable || false],
             required: [this.field.required || false],
             range: [this.field?.params?.range || false],
@@ -36,5 +36,9 @@ export class DatepickerParamsComponent extends AbstractFieldParamsComponent<Date
         };
 
         return this.field;
+    }
+
+    isValid(): boolean {
+        return this.formField.valid;
     }
 }

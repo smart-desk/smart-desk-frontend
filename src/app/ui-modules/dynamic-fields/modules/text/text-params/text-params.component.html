@@ -1,1 +1,11 @@
-<quill-editor class="editor" [(ngModel)]="content"></quill-editor>
+<form nz-form nzLayout="vertical" [formGroup]="form">
+    <nz-form-item>
+        <nz-form-control [nzErrorTip]="errorRef">
+            <quill-editor class="editor" formControlName="content"></quill-editor>
+            <ng-template #errorRef let-control>
+                <ng-container *ngIf="control.hasError('required')">Обязательное поле</ng-container>
+                <ng-container *ngIf="control.hasError('maxlength')">Заголовок должен быть меньше 10000 символов</ng-container>
+            </ng-template>
+        </nz-form-control>
+    </nz-form-item>
+</form>

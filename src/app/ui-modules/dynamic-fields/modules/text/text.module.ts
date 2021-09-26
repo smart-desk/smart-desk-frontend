@@ -4,7 +4,7 @@ import { TextFormComponent } from './text-form/text-form.component';
 import { TextParamsComponent } from './text-params/text-params.component';
 import { TextService } from './text.service';
 import { QuillModule } from 'ngx-quill';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
@@ -24,6 +24,7 @@ import { editorSettings } from '../../../../app.config';
         NzButtonModule,
         QuillModule.forRoot(editorSettings),
         FormsModule,
+        ReactiveFormsModule,
     ],
     providers: [TextService],
     declarations: [TextFormComponent, TextParamsComponent],

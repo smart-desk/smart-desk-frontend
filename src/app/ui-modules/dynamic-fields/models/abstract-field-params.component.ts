@@ -11,6 +11,8 @@ export abstract class AbstractFieldParamsComponent<TParams> implements OnDestroy
 
     abstract getField(): Field<unknown, TParams>;
 
+    abstract isValid(): boolean;
+
     ngOnDestroy() {
         this.delete$.complete();
     }

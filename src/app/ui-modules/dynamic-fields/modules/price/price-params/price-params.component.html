@@ -1,7 +1,13 @@
 <form nz-form nzLayout="vertical" [formGroup]="form">
     <nz-form-item>
-        <nz-form-label>Заголовок</nz-form-label>
-        <input nz-input required formControlName="title" />
+        <nz-form-control [nzErrorTip]="errorRef">
+            <nz-form-label nzRequired>Заголовок</nz-form-label>
+            <input nz-input required formControlName="title" />
+            <ng-template #errorRef let-control>
+                <ng-container *ngIf="control.hasError('required')">Обязательное поле</ng-container>
+                <ng-container *ngIf="control.hasError('maxlength')">Заголовок должен быть меньше 255 символов</ng-container>
+            </ng-template>
+        </nz-form-control>
     </nz-form-item>
     <nz-form-item>
         <nz-form-label>Валюта</nz-form-label>

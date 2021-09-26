@@ -24,7 +24,7 @@ export class CheckboxParamsComponent extends AbstractFieldParamsComponent<Checkb
             : [this.createCheckboxControl()];
 
         this.form = this.fb.group({
-            title: [this.field.title || '', [Validators.required]],
+            title: [this.field.title || ''],
             required: [this.field.required || false],
             filterable: [this.field.filterable || false],
             checkboxes: this.fb.array(checkboxes),
@@ -54,9 +54,13 @@ export class CheckboxParamsComponent extends AbstractFieldParamsComponent<Checkb
         this.checkboxes.removeAt(i);
     }
 
+    isValid(): boolean {
+        return this.form.valid;
+    }
+
     private createCheckboxControl(checkbox?: CheckboxItem): FormGroup {
         return this.fb.group({
-            label: (checkbox && checkbox.label) || '',
+            label: [(checkbox && checkbox.label) || '', [Validators.required, Validators.maxLength(255)]],
             value: (checkbox && checkbox.value) || '',
         });
     }

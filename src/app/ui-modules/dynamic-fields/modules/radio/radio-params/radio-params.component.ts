@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AbstractFieldParamsComponent } from '../../../models/abstract-field-params.component';
 import { RadioItem, RadioParamsDto } from '../dto/radio-params.dto';
 import { Field } from '../../../../../modules/field/models/field';
@@ -52,9 +52,13 @@ export class RadioParamsComponent extends AbstractFieldParamsComponent<RadioPara
         this.radios.removeAt(i);
     }
 
+    isValid(): boolean {
+        return this.form.valid;
+    }
+
     private createRadioControl(radio?: RadioItem): FormGroup {
         return this.fb.group({
-            label: (radio && radio.label) || '',
+            label: [(radio && radio.label) || '', [Validators.required, Validators.maxLength(255)]],
             value: (radio && radio.value) || '',
         });
     }

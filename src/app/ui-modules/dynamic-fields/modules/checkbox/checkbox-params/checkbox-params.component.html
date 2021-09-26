@@ -9,12 +9,15 @@
 
         <ng-container formArrayName="checkboxes" *ngFor="let checkbox of checkboxes.controls; let i = index">
             <nz-form-item class="checkbox__item" [formGroupName]="i">
-                <nz-form-control>
+                <nz-form-control [nzErrorTip]="errorRef">
                     <nz-input-group [nzSuffix]="delete">
                         <input nz-input placeholder="Введите значение" name="label" formControlName="label" />
                     </nz-input-group>
                     <ng-template #delete>
                         <i nz-icon nzType="delete" nzTheme="outline" (click)="deleteCheckbox(i)"></i>
+                    </ng-template>
+                    <ng-template #errorRef let-control>
+                        <ng-container *ngIf="control.hasError('required')">Обязательное поле</ng-container>
                     </ng-template>
                 </nz-form-control>
             </nz-form-item>

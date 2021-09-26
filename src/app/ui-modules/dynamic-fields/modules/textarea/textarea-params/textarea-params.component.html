@@ -1,7 +1,11 @@
 <form nz-form nzLayout="vertical" [formGroup]="form">
     <nz-form-item>
-        <nz-form-control nzErrorTip="Обязательное поле">
+        <nz-form-control [nzErrorTip]="errorRef">
+            <nz-form-label nzRequired>Заголовок</nz-form-label>
             <input nz-input formControlName="title" name="title" required placeholder="Заголовок" />
+            <ng-template #errorRef let-control>
+                <ng-container *ngIf="control.hasError('required')">Обязательное поле</ng-container>
+            </ng-template>
         </nz-form-control>
     </nz-form-item>
     <nz-form-item>
