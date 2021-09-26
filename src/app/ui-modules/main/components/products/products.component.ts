@@ -10,7 +10,6 @@ import {
     TrackByFunction,
 } from '@angular/core';
 import { ExtraActions } from '../product-card/product-card.component';
-import { cloneDeep } from 'lodash';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { GetProductsResponseDto } from '../../../../modules/product/models/product.dto';
@@ -31,7 +30,7 @@ export class ProductsComponent implements OnChanges, OnInit, OnDestroy {
     @Input() productsResponse: GetProductsResponseDto | null;
     @Input() adCampaign: AdCampaignCurrentDto;
     @Input() promoProducts: Product[];
-
+    @Input() showPagination = true;
     bookmarks: Bookmark[];
     destroy$ = new Subject();
 

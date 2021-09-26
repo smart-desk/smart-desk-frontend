@@ -3,9 +3,9 @@
 <ng-template #main>
     <div class="meta"><i nz-icon nzType="eye" nzTheme="outline"></i> {{ product?.views }}</div>
     <ng-container #params></ng-container>
-    <section class="similar">
+    <section *ngIf="similarProducts?.totalCount" class="similar">
         <h1>Похожие объявления</h1>
-        <app-products [productsResponse]="similarProducts"></app-products>
+        <app-products [productsResponse]="similarProducts" [showPagination]="false"></app-products>
     </section>
 </ng-template>
 
