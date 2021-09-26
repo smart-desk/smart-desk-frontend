@@ -9,7 +9,7 @@ export interface FilterObject<T> {
 }
 
 export class Filter<T> {
-    constructor(private fieldId: string, private params: T) {}
+    constructor(private fieldId: string, public params: T) {}
 
     getFieldId(): string {
         return this.fieldId;

@@ -57,7 +57,7 @@ export class FiltersComponent implements AfterViewInit, OnChanges {
     apply(): void {
         const filters = this.filterComponents
             .map(c => c.instance.getFilterValue())
-            .filter(f => !!f)
+            .filter(f => !!f && f?.params.length)
             .reduce((prev, cur) => ({ ...prev, ...cur?.getFilterObject() }), {});
 
         this.productDataService.applyFilters(filters);
