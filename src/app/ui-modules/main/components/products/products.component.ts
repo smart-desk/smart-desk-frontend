@@ -31,6 +31,7 @@ export class ProductsComponent implements OnChanges, OnInit, OnDestroy {
     @Input() productsResponse: GetProductsResponseDto | null;
     @Input() adCampaign: AdCampaignCurrentDto;
     @Input() promoProducts: Product[];
+    @Input() showPagination = true;
     destroy$ = new Subject();
 
     constructor(
