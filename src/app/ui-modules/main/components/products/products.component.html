@@ -23,7 +23,7 @@
 </div>
 <app-pagination
     class="pagination"
-    *ngIf="productsResponse?.totalCount > productsResponse?.limit"
+    *ngIf="productsResponse?.totalCount > productsResponse?.limit && showPagination"
     [pageIndex]="productsResponse?.page"
     [totalItems]="productsResponse?.totalCount"
     [pageSize]="productsResponse?.limit"
