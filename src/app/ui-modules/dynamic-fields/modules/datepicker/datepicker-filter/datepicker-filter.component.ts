@@ -23,9 +23,12 @@ export class DatepickerFilterComponent extends AbstractFieldFilterComponent<Date
     }
 
     ngOnInit(): void {
-        this.form = this.fb.group({
-            dateRange: [],
-        });
+        // :TODO Переписать компоненту
+        const from = this.filter?.getFilterParams()?.from;
+        const to = this.filter?.getFilterParams()?.to;
+        const dateRange = !!from && !!to ? [[from, to]] : [];
+
+        this.form = this.fb.group({ dateRange });
 
         this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => this.onFormChange$.next());
     }
@@ -33,10 +36,6 @@ export class DatepickerFilterComponent extends AbstractFieldFilterComponent<Date
     ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
-    }
-
-    setFormValue(): void {
-        this.form.get('dateRange')?.setValue([this.filter?.getFilterParams()?.from, this.filter?.getFilterParams()?.to]);
     }
 
     getActiveFilters(): number {
@@ -66,7 +65,7 @@ export class DatepickerFilterComponent extends AbstractFieldFilterComponent<Date
     private updateFormValues(): void {
         this.form.patchValue(
             {
-                dateRange: [[this.filter?.getFilterParams()?.from, this.filter?.getFilterParams()?.to]],
+                dateRange: [],
             },
             { onlySelf: true }
         );

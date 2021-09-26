@@ -21,7 +21,7 @@ export class RadioFilterComponent extends AbstractFieldFilterComponent<RadioPara
 
     ngOnInit(): void {
         this.form = this.fb.group({
-            radios: this.fb.array([]),
+            radios: this.fb.array(this.field.params.radios.map(radio => this.fb.control(this.getCheckboxState(radio)))),
         });
 
         this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => this.onFormChange$.next());
@@ -29,10 +29,6 @@ export class RadioFilterComponent extends AbstractFieldFilterComponent<RadioPara
 
     getActiveFilters(): number {
         return this.form.getRawValue().radios.filter((value: boolean) => value).length;
-    }
-
-    setFormValue(): void {
-        this.form.get('radios')?.setValue(this.field.params.radios.map(radio => this.fb.control(this.getCheckboxState(radio))));
     }
 
     get radios(): FormArray {

@@ -12,7 +12,6 @@ export abstract class AbstractFieldFilterComponent<TParams, TFilter> {
     destroy$ = new Subject();
     onFormChange$ = new Subject();
     form: FormGroup;
-    abstract setFormValue(): void;
     abstract getFilterValue(): Filter<TFilter> | null;
     abstract dropFilters(): void;
     abstract getActiveFilters(): number;
