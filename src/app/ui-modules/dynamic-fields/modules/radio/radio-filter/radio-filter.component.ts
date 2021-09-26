@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnChanges, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AbstractFieldFilterComponent } from '../../../models/abstract-field-filter.component';
 import { RadioItem, RadioParamsDto } from '../dto/radio-params.dto';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Filter } from '../../../../../modules/product/models/filter';
 import { RadioFilterDto } from '../dto/radio-filter.dto';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-radio-filter',
@@ -22,6 +23,12 @@ export class RadioFilterComponent extends AbstractFieldFilterComponent<RadioPara
         this.form = this.fb.group({
             radios: this.fb.array(this.field.params.radios.map(radio => this.fb.control(this.getCheckboxState(radio)))),
         });
+
+        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => this.onFormChange$.next());
+    }
+
+    getActiveFilters(): number {
+        return this.form.getRawValue().radios.filter((value: boolean) => value).length;
     }
 
     get radios(): FormArray {

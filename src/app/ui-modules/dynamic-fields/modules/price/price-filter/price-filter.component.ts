@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { omitBy, isNull } from 'lodash';
 import { AbstractFieldFilterComponent } from '../../../models/abstract-field-filter.component';
 import { PriceParamsDto } from '../dto/price-params.dto';
 import { Filter } from '../../../../../modules/product/models/filter';
 import { PriceFilterDto } from '../dto/price-filter.dto';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-price-filter',
@@ -24,6 +25,13 @@ export class PriceFilterComponent extends AbstractFieldFilterComponent<PricePara
             from: [this.filter?.getFilterParams()?.from],
             to: [this.filter?.getFilterParams()?.to],
         });
+
+        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => this.onFormChange$.next());
+    }
+
+    getActiveFilters(): number {
+        const { from, to } = this.form.getRawValue();
+        return from || to ? 1 : 0;
     }
 
     getFilterValue(): Filter<PriceFilterDto> | null {
