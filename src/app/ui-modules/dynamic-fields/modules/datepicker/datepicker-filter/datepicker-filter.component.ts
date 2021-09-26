@@ -14,8 +14,7 @@ import { takeUntil } from 'rxjs/operators';
     styleUrls: ['./datepicker-filter.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DatepickerFilterComponent extends AbstractFieldFilterComponent<DatepickerParamsDto, DatepickerFilterDto>
-    implements OnInit, OnDestroy {
+export class DatepickerFilterComponent extends AbstractFieldFilterComponent<DatepickerParamsDto, DatepickerFilterDto> implements OnInit {
     form: FormGroup;
 
     constructor(private fb: FormBuilder) {
@@ -31,11 +30,6 @@ export class DatepickerFilterComponent extends AbstractFieldFilterComponent<Date
         this.form = this.fb.group({ dateRange });
 
         this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => this.onFormChange$.next());
-    }
-
-    ngOnDestroy(): void {
-        this.destroy$.next();
-        this.destroy$.complete();
     }
 
     getActiveFilters(): number {
