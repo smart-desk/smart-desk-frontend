@@ -10,7 +10,6 @@ import {
     TrackByFunction,
 } from '@angular/core';
 import { ExtraActions } from '../product-card/product-card.component';
-import { cloneDeep } from 'lodash';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { GetProductsResponseDto } from '../../../../modules/product/models/product.dto';
@@ -32,28 +31,29 @@ export class ProductsComponent implements OnChanges, OnInit, OnDestroy {
     @Input() adCampaign: AdCampaignCurrentDto;
     @Input() promoProducts: Product[];
     @Input() showPagination = true;
+    bookmarks: Bookmark[];
     destroy$ = new Subject();
 
     constructor(
         private productDataService: ProductDataService,
         private bookmarksStoreService: BookmarksStoreService,
         private cd: ChangeDetectorRef
-    ) {}
+    ) {
+        this.bookmarksStoreService.loadBookmarks();
+    }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.productsResponse?.currentValue) {
-            this.productsResponse = this.updateProductsWithBookmarks(changes.productsResponse?.currentValue);
+            this.updateProductsWithBookmarks();
             this.cd.detectChanges();
-            this.bookmarksStoreService.loadBookmarks();
         }
     }
 
     ngOnInit(): void {
         this.bookmarksStoreService.bookmarks$.pipe(takeUntil(this.destroy$)).subscribe(bookmarks => {
-            if (this.productsResponse) {
-                this.productsResponse = this.updateProductsWithBookmarks(this.productsResponse, bookmarks);
-                this.cd.detectChanges();
-            }
+            this.bookmarks = bookmarks;
+            this.updateProductsWithBookmarks();
+            this.cd.detectChanges();
         });
     }
 
@@ -76,13 +76,13 @@ export class ProductsComponent implements OnChanges, OnInit, OnDestroy {
         this.bookmarksStoreService.deleteBookmark(productId);
     }
 
-    private updateProductsWithBookmarks(productsResponse: GetProductsResponseDto, bookmarks?: Bookmark[]): GetProductsResponseDto {
-        if (bookmarks) {
-            productsResponse.products.forEach(product => {
-                const bookmarkProduct = bookmarks.find(bookmark => bookmark.product.id === product.id);
+    private updateProductsWithBookmarks(): void {
+        if (this.bookmarks && this.productsResponse) {
+            this.productsResponse?.products.forEach(product => {
+                const bookmarkProduct = this.bookmarks.find(bookmark => bookmark.product.id === product.id);
                 product.isBookmark = !!bookmarkProduct;
             });
         }
-        return cloneDeep(productsResponse);
+        this.cd.detectChanges();
     }
 }

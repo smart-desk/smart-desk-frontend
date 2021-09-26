@@ -1,4 +1,4 @@
-<div class="sort-box">
+<div class="sort-box" *ngIf="getPriceField()?.length">
     <div>Сортировать</div>
     <nz-select class="sort-box__select" (ngModelChange)="changeSelect($event)" [ngModel]="selectedField">
         <nz-option [nzValue]="" nzLabel="По умолчанию"></nz-option>

@@ -50,6 +50,13 @@ export class LocationFilterComponent extends AbstractFieldFilterComponent<Locati
         this.cd.detectChanges();
     }
 
+    getActiveFilters(): number {
+        if (this.area) {
+            return 1;
+        }
+        return 0;
+    }
+
     getFilterValue(): Filter<LocationFilterDto> | null {
         if (!this.area) {
             return null;

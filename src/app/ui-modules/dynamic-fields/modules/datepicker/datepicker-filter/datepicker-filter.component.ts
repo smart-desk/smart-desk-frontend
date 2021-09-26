@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Filter } from '../../../../../modules/product/models/filter';
 import { isNull } from 'lodash';
@@ -6,6 +6,7 @@ import { AbstractFieldFilterComponent } from '../../../models/abstract-field-fil
 import { DatepickerParamsDto } from '../dto/datepicker-params.dto';
 import { DatepickerFilterDto } from '../dto/datepicker-filter.dto';
 import * as dayjs from 'dayjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-datepicker-filter',
@@ -21,9 +22,19 @@ export class DatepickerFilterComponent extends AbstractFieldFilterComponent<Date
     }
 
     ngOnInit(): void {
-        this.form = this.fb.group({
-            dateRange: [[this.filter?.getFilterParams()?.from, this.filter?.getFilterParams()?.to]],
-        });
+        // :TODO Переписать компоненту
+        const from = this.filter?.getFilterParams()?.from;
+        const to = this.filter?.getFilterParams()?.to;
+        const dateRange = !!from && !!to ? [[from, to]] : [];
+
+        this.form = this.fb.group({ dateRange });
+
+        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => this.onFormChange$.next());
+    }
+
+    getActiveFilters(): number {
+        const [from, to] = this.form.getRawValue().dateRange ? this.form.getRawValue().dateRange : [undefined, undefined];
+        return from || to ? 1 : 0;
     }
 
     getFilterValue(): Filter<DatepickerFilterDto> | null {
@@ -48,7 +59,7 @@ export class DatepickerFilterComponent extends AbstractFieldFilterComponent<Date
     private updateFormValues(): void {
         this.form.patchValue(
             {
-                dateRange: [[this.filter?.getFilterParams()?.from, this.filter?.getFilterParams()?.to]],
+                dateRange: [],
             },
             { onlySelf: true }
         );
