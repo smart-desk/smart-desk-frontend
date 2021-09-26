@@ -50,10 +50,6 @@ export class LocationFilterComponent extends AbstractFieldFilterComponent<Locati
         this.cd.detectChanges();
     }
 
-    setFormValue(): void {
-        // todo: обсудить и реализовать логику компоненты и функции в частности
-    }
-
     getActiveFilters(): number {
         if (this.area) {
             return 1;

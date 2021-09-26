@@ -35,10 +35,6 @@ export class DatepickerFilterComponent extends AbstractFieldFilterComponent<Date
         this.destroy$.complete();
     }
 
-    setFormValue(): void {
-        this.form.get('dateRange')?.setValue([this.filter?.getFilterParams()?.from, this.filter?.getFilterParams()?.to]);
-    }
-
     getActiveFilters(): number {
         const [from, to] = this.form.getRawValue().dateRange ? this.form.getRawValue().dateRange : [undefined, undefined];
         return from || to ? 1 : 0;

@@ -64,7 +64,7 @@ export class FiltersComponent implements AfterViewInit, OnDestroy {
     ngAfterViewInit(): void {
         this.updateFilters();
         this.setFilterListener();
-        this.setFilterValues();
+        this.recountFilters();
     }
 
     ngOnDestroy(): void {
@@ -170,14 +170,6 @@ export class FiltersComponent implements AfterViewInit, OnDestroy {
         );
     }
 
-    private setFilterValues(): void {
-        this.filterComponents.forEach(component => {
-            if (component.instance.form) {
-                component.instance.setFormValue();
-            }
-        });
-    }
-
     private setFilterListener(): void {
         this.filterComponents.forEach(component => {
             component.instance.onFormChange$.pipe(takeUntil(this.destroy$)).subscribe(() => this.recountFilters());
@@ -187,5 +179,6 @@ export class FiltersComponent implements AfterViewInit, OnDestroy {
     private recountFilters(): void {
         this.activeFilters = 0;
         this.filterComponents.forEach(component => (this.activeFilters += component.instance.getActiveFilters()));
+        this.cdr.detectChanges();
     }
 }

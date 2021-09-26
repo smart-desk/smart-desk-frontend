@@ -21,14 +21,10 @@ export class CheckboxFilterComponent extends AbstractFieldFilterComponent<Checkb
 
     ngOnInit(): void {
         this.form = this.fb.group({
-            checkboxes: this.fb.array([]),
+            checkboxes: this.fb.array(this.field.params.checkboxes.map(cb => this.fb.control(this.getCheckboxState(cb)))),
         });
 
         this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => this.onFormChange$.next());
-    }
-
-    setFormValue(): void {
-        this.form.get('checkbox')?.setValue(this.field.params.checkboxes.map(cb => this.fb.control(this.getCheckboxState(cb))));
     }
 
     getActiveFilters(): number {
