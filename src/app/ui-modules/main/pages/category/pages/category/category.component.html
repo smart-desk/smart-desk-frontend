@@ -6,6 +6,13 @@
 
 <ng-template #main>
     <app-products [productsResponse]="productsResponse" [adCampaign]="sidebarAdCampaign" [promoProducts]="promoProducts"></app-products>
+    <div *ngIf="options?.filters && productsResponse?.totalCount === 0">
+        <h2>Ничего не нашли по заданным фильтрам</h2>
+        <button nz-button nzType="default" nzSize="large" (click)="dropFilters()">
+            <i nz-icon nzType="clear" nzTheme="outline"></i>
+            Сбросить все фильтры
+        </button>
+    </div>
 </ng-template>
 
 <ng-template #right>

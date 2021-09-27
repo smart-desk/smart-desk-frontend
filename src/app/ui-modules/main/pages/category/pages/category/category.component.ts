@@ -86,6 +86,10 @@ export class CategoryComponent implements OnInit, OnDestroy {
         this.destroy$.complete();
     }
 
+    dropFilters(): void {
+        this.productDataService.dropFilters();
+    }
+
     private getPromoProducts(categoryId: string): void {
         this.promoService.getPromoProducts(categoryId).subscribe(res => {
             this.promoProducts = res;
