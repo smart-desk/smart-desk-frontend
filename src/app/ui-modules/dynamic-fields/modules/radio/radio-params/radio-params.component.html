@@ -9,12 +9,16 @@
 
         <ng-container formArrayName="radios" *ngFor="let radio of radios.controls; let i = index">
             <nz-form-item class="radio__item" [formGroupName]="i">
-                <nz-form-control>
+                <nz-form-control [nzErrorTip]="errorRef">
                     <nz-input-group [nzSuffix]="delete">
                         <input nz-input placeholder="Введите значение" name="label" formControlName="label" />
                     </nz-input-group>
                     <ng-template #delete>
                         <i nz-icon nzType="delete" nzTheme="outline" (click)="deleteRadio(i)"></i>
+                    </ng-template>
+                    <ng-template #errorRef let-control>
+                        <ng-container *ngIf="control.hasError('required')">Обязательное поле</ng-container>
+                        <ng-container *ngIf="control.hasError('maxlength')">Заголовок должен быть меньше 255 символов</ng-container>
                     </ng-template>
                 </nz-form-control>
             </nz-form-item>

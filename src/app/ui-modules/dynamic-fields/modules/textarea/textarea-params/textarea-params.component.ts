@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AbstractFieldParamsComponent } from '../../../models/abstract-field-params.component';
 import { TextareaParamsDto } from '../dto/textarea-params.dto';
 import { Field } from '../../../../../modules/field/models/field';
@@ -21,7 +21,7 @@ export class TextareaParamsComponent extends AbstractFieldParamsComponent<Textar
         const params = this.field.params;
 
         this.form = this.fb.group({
-            title: [this.field.title, false],
+            title: [this.field.title, [Validators.required]],
             required: [this.field.required || false],
             placeholder: [params?.placeholder || ''],
             richTextEditor: [params?.richTextEditor || false],
@@ -36,5 +36,9 @@ export class TextareaParamsComponent extends AbstractFieldParamsComponent<Textar
             richTextEditor: this.form.get('richTextEditor')?.value,
         };
         return this.field;
+    }
+
+    isValid(): boolean {
+        return this.form.valid;
     }
 }

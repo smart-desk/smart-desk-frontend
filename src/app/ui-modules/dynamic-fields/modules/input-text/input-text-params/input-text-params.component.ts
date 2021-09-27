@@ -19,7 +19,7 @@ export class InputTextParamsComponent extends AbstractFieldParamsComponent<Input
 
     ngOnInit(): void {
         this.form = this.fb.group({
-            title: [this.field?.title || '', [Validators.required]],
+            title: [this.field?.title || '', [Validators.required, Validators.maxLength(255)]],
             required: [this.field?.required || false],
             placeholder: [this.field?.params?.placeholder || ''],
         });
@@ -34,5 +34,9 @@ export class InputTextParamsComponent extends AbstractFieldParamsComponent<Input
         };
 
         return this.field;
+    }
+
+    isValid(): boolean {
+        return this.form.valid;
     }
 }

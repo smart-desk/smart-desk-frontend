@@ -24,7 +24,7 @@ export class PriceParamsComponent extends AbstractFieldParamsComponent<PricePara
         this.form = this.fb.group({
             filterable: [this.field.filterable || false],
             required: [this.field.required || false],
-            title: [this.field.title || 'Цена', Validators.required],
+            title: [this.field.title || 'Цена', [Validators.required, Validators.maxLength(255)]],
             currency: [params?.currency || '', Validators.required],
         });
     }
@@ -38,5 +38,9 @@ export class PriceParamsComponent extends AbstractFieldParamsComponent<PricePara
         };
 
         return this.field;
+    }
+
+    isValid(): boolean {
+        return this.form.valid;
     }
 }

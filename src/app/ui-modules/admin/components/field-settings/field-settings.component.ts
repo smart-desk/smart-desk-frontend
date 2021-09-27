@@ -15,6 +15,7 @@ import { OperationState } from '../../../../modules/field/models/operation-state
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
 import { AbstractFieldParamsComponent } from '../../../dynamic-fields/models/abstract-field-params.component';
 import { FieldService } from '../../../../modules/field/field.service';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
     selector: 'app-field-settings',
@@ -36,7 +37,12 @@ export class FieldSettingsComponent implements AfterViewInit {
     private paramsFormContainer: ViewContainerRef;
     private component: ComponentRef<AbstractFieldParamsComponent<any>>;
 
-    constructor(private dynamicFieldsService: DynamicFieldsService, private cdr: ChangeDetectorRef, private fieldService: FieldService) {}
+    constructor(
+        private dynamicFieldsService: DynamicFieldsService,
+        private cdr: ChangeDetectorRef,
+        private fieldService: FieldService,
+        private notificationService: NzNotificationService
+    ) {}
 
     ngAfterViewInit() {
         const service = this.dynamicFieldsService.getService(this.field.type);
@@ -55,6 +61,11 @@ export class FieldSettingsComponent implements AfterViewInit {
 
     onSave(): void {
         this.updateState(OperationState.LOADING);
+        const isValid = this.component.instance.isValid();
+        if (!isValid) {
+            this.updateState(OperationState.ERROR);
+            return;
+        }
         const field = this.component.instance.getField();
         const request = field.id ? this.fieldService.updateField(field.id, field) : this.fieldService.createField(field);
 
@@ -62,7 +73,12 @@ export class FieldSettingsComponent implements AfterViewInit {
             () => {
                 this.updateState(OperationState.SUCCESS);
             },
-            () => {
+            err => {
+                if (err?.error?.statusCode === 400) {
+                    this.notificationService.error('Проверьте правильность заполнения формы', err?.error?.message?.join(', '));
+                } else {
+                    this.notificationService.error('Что-то пошло не так', 'Попробуйте перезагрузить страницу');
+                }
                 this.updateState(OperationState.ERROR);
             }
         );

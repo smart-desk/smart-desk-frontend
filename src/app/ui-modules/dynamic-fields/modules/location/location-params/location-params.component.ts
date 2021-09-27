@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AbstractFieldParamsComponent } from '../../../models/abstract-field-params.component';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LocationParamsDto } from '../dto/location-params.dto';
 import { Field } from '../../../../../modules/field/models/field';
 
@@ -19,7 +19,7 @@ export class LocationParamsComponent extends AbstractFieldParamsComponent<Locati
 
     ngOnInit() {
         this.form = this.fb.group({
-            title: [this.field.title || ''],
+            title: [this.field.title || '', [Validators.required, Validators.maxLength(255)]],
             required: [this.field.required || false],
             filterable: [this.field.filterable || false],
         });
@@ -31,5 +31,9 @@ export class LocationParamsComponent extends AbstractFieldParamsComponent<Locati
         this.field.filterable = this.form.get('filterable')?.value;
 
         return this.field;
+    }
+
+    isValid(): boolean {
+        return this.form.valid;
     }
 }

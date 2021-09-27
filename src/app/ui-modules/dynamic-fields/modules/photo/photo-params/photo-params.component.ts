@@ -20,7 +20,7 @@ export class PhotoParamsComponent extends AbstractFieldParamsComponent<PhotoPara
     ngOnInit(): void {
         const params = this.field.params;
         this.form = this.fb.group({
-            max: [params?.max || 10, Validators.required],
+            max: [params?.max || 10, [Validators.required, Validators.max(50)]],
             min: [params?.min || 1],
         });
     }
@@ -31,5 +31,9 @@ export class PhotoParamsComponent extends AbstractFieldParamsComponent<PhotoPara
             min: this.form.get('min')?.value,
         };
         return this.field;
+    }
+
+    isValid(): boolean {
+        return this.form.valid;
     }
 }
