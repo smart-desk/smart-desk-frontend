@@ -22,7 +22,8 @@
             nzTheme="outline"
             nz-dropdown
             [nzDropdownMenu]="menu"
-            nzTrigger="hover"
+            nzTrigger="click"
+            (click)="$event.stopPropagation()"
         ></i>
         <nz-dropdown-menu #menu="nzDropdownMenu">
             <ul nz-menu nzSelectable>
