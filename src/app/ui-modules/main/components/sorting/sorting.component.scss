@@ -1,10 +1,6 @@
 @import '../../../../../assets/styles/variables';
 
 .sort-box {
-    font-size: $font-16;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
     border: 1px solid $border-color;
     border-radius: $border-radius;
     padding: $base-unit * 1.5 $base-unit * 2;
@@ -13,14 +9,11 @@
     .ant-select-selector,
     .ant-select-selection-item {
         font-size: $font-16;
-        width: $base-unit * 18;
         margin-top: $base-unit;
     }
 
     ::ng-deep .ant-select-selector {
-        border: none;
         background-color: $background;
-        padding: 0;
     }
 
     ::ng-deep .ant-select-arrow {
