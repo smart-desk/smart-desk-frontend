@@ -15,7 +15,7 @@ import { Filter, Filters } from '../../../../modules/product/models/filter';
 import { AbstractFieldFilterComponent } from '../../../dynamic-fields/models/abstract-field-filter.component';
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
 import { SectionType } from '../../../../modules/field/models/field.entity';
-import { ProductDataService } from '../../../../modules/product/product-data.service';
+import { ProductDataEvents, ProductDataService } from '../../../../modules/product/product-data.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
@@ -59,7 +59,18 @@ export class FiltersComponent implements AfterViewInit, OnDestroy {
         private dynamicFieldService: DynamicFieldsService,
         private cdr: ChangeDetectorRef,
         private productDataService: ProductDataService
-    ) {}
+    ) {
+        this.productDataService.events$.pipe(takeUntil(this.destroy$)).subscribe(event => {
+            if (event === ProductDataEvents.DROP_FILTERS) {
+                this.filters = {};
+                this.filterComponents.forEach(component => {
+                    component.instance.dropFilters();
+                    component.changeDetectorRef.detectChanges();
+                });
+                this.cdr.detectChanges();
+            }
+        });
+    }
 
     ngAfterViewInit(): void {
         this.updateFilters();
@@ -83,7 +94,7 @@ export class FiltersComponent implements AfterViewInit, OnDestroy {
 
     dropFilters(): void {
         this.filters = {};
-        this.productDataService.applyFilters(this.filters);
+        this.productDataService.dropFilters();
         this.filterComponents.forEach(component => {
             component.instance.dropFilters();
             component.changeDetectorRef.detectChanges();

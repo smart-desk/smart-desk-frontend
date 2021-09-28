@@ -6,11 +6,21 @@ import { Sorting } from './models/sorting.interface';
 import { GetProductsDto, GetProductsResponseDto } from './models/product.dto';
 import { Filters } from './models/filter';
 
+export enum ProductDataEvents {
+    DROP_FILTERS,
+    APPLY_FILTERS,
+    SEARCH,
+    CHANGE_PAGE,
+    SORT,
+    LOAD,
+}
+
 @Injectable({
     providedIn: 'root',
 })
 export class ProductDataService {
     products$ = new Subject<GetProductsResponseDto>();
+    events$ = new Subject<ProductDataEvents>();
     private categoryId: string | null;
     private options: GetProductsDto = new GetProductsDto();
 
@@ -21,30 +31,42 @@ export class ProductDataService {
         this.options = options ? options : this.options;
         this.requestProducts();
         this.updateQueryParams();
+        this.events$.next(ProductDataEvents.LOAD);
     }
 
     changeSorting(sorting: Sorting | null): void {
         this.options.sorting = sorting;
         this.requestProducts();
         this.updateQueryParams();
+        this.events$.next(ProductDataEvents.SORT);
     }
 
     changePage(page: number): void {
         this.options.page = page;
         this.requestProducts();
         this.updateQueryParams();
+        this.events$.next(ProductDataEvents.CHANGE_PAGE);
     }
 
     search(phrase: string): void {
         this.options.search = phrase;
         this.requestProducts();
         this.updateQueryParams();
+        this.events$.next(ProductDataEvents.SEARCH);
     }
 
     applyFilters(filters: Filters): void {
         this.options.filters = filters;
         this.requestProducts();
         this.updateQueryParams();
+        this.events$.next(ProductDataEvents.APPLY_FILTERS);
+    }
+
+    dropFilters(): void {
+        this.options.filters = {};
+        this.requestProducts();
+        this.updateQueryParams();
+        this.events$.next(ProductDataEvents.DROP_FILTERS);
     }
 
     parseQueryParams(queryParams: ParamMap): GetProductsDto {

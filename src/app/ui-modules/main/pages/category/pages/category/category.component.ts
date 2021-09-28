@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { ActivatedRoute, NavigationEnd, ParamMap, Router, RouterEvent } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, pairwise, startWith, switchMap, takeUntil } from 'rxjs/operators';
+import { isEmpty } from 'lodash';
 import { GetProductsDto, GetProductsResponseDto } from '../../../../../../modules/product/models/product.dto';
 import { Category } from '../../../../../../modules/category/models/category.entity';
 import { Model } from '../../../../../../modules/model/models/model.entity';
@@ -84,6 +85,14 @@ export class CategoryComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.destroy$.next();
         this.destroy$.complete();
+    }
+
+    dropFilters(): void {
+        this.productDataService.dropFilters();
+    }
+
+    isEmptyObject(obj: object): boolean {
+        return isEmpty(obj);
     }
 
     private getPromoProducts(categoryId: string): void {

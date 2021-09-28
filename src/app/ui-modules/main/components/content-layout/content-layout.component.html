@@ -1,5 +1,5 @@
 <ng-container *ngTemplateOutlet="advert"></ng-container>
-<h1 *ngIf="title">{{ title }}</h1>
+<h1 *ngIf="title" class="content-layout__title">{{ title }}</h1>
 <nz-row [nzGutter]="16">
     <nz-col [nzSpan]="6" *ngIf="left">
         <ng-container *ngTemplateOutlet="left"></ng-container>
