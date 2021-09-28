@@ -10,10 +10,17 @@
 }
 
 .products {
+    &__promo-section-title {
+        &--colored {
+            color: $primary-red;
+        }
+    }
+
     &__promo-section {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         grid-column-gap: $base-unit * 2;
         grid-row-gap: $base-unit * 3;
+        margin-bottom: $base-unit * 3;
     }
 }
