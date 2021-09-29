@@ -15,7 +15,7 @@ export class CreateModelComponent {
 
     // todo вывести ошибки сервера
     modelForm = new FormGroup({
-        name: new FormControl(this.model?.name || '', Validators.required),
+        name: new FormControl('', Validators.required),
     });
 
     constructor(private modelsService: ModelService, private router: Router) {}

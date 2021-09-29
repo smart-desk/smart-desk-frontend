@@ -19,7 +19,7 @@ export class VkRedirectComponent {
 
         this.authService.vkLogin(code).subscribe(res => {
             setTimeout(() => {
-                window.opener.postMessage('vkAuthRes:' + String(res), environment.host);
+                window.opener?.postMessage('vkAuthRes:' + String(res), environment.host);
             }, 1000);
         });
     }

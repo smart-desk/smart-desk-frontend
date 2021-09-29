@@ -147,7 +147,16 @@
   dependencies:
     tslib "^2.2.0"
 
-"@angular/cdk@^10.2.4", "@angular/cdk@~10.2.7":
+"@angular/cdk@^12.1.0":
+  version "12.2.7"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-12.2.7.tgz#df8636bc81cbe2f8ceaa69feed46fbb99a2b7183"
+  integrity sha512-OMPewaE1VxCSFkLDZQLFMkGQCQEvbizuVRzArZBB5xfxl98YMjntNQjlWH4rGbRhF+eZlpOrC+UAVnzTX2BzAw==
+  dependencies:
+    tslib "^2.2.0"
+  optionalDependencies:
+    parse5 "^5.0.0"
+
+"@angular/cdk@~10.2.7":
   version "10.2.7"
   resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-10.2.7.tgz#0ff82eb91b2653ea26909c57a460d4593b44f186"
   integrity sha512-ZQjDfTRTn7JuAKsf3jiIdU2XBaxxGBi/ZWYv5Pb3HCl6B4PISsIE5VWRhkoUogoAB0MiFHpjnWeIqknJEm11YQ==
@@ -283,10 +292,10 @@
   dependencies:
     "@ctrl/tinycolor" "^3.1.6"
 
-"@ant-design/icons-angular@^10.0.0":
-  version "10.2.0"
-  resolved "https://registry.yarnpkg.com/@ant-design/icons-angular/-/icons-angular-10.2.0.tgz#cf13a6a33b1415934b7331b58cc38fa0653fa374"
-  integrity sha512-c5g31hD9otf0DAmHMlvijyOcq1sXpdqKbMFZHxXAUG2sTi+cgixqI8LNePCc9MxBy0N48gAmp0CfhGiByxZJnQ==
+"@ant-design/icons-angular@^12.0.3":
+  version "12.0.3"
+  resolved "https://registry.yarnpkg.com/@ant-design/icons-angular/-/icons-angular-12.0.3.tgz#3e99aa99ceebb978384a2926d06da19c043fc4bd"
+  integrity sha512-Jl/O7fQiFGsFHuesOp7Oo/TKTPSlWAqMa2DBQdgQbNzv2c3v1ijQWd54ymDC6ftIHMsKD30nJ6bekCiqdbfZuA==
   dependencies:
     "@ant-design/colors" "^5.0.0"
     tslib "^2.0.0"
@@ -6346,16 +6355,15 @@ ng-gallery@^5.0.0:
   dependencies:
     tslib "^2.0.0"
 
-ng-zorro-antd@^10.1.2:
-  version "10.1.2"
-  resolved "https://registry.yarnpkg.com/ng-zorro-antd/-/ng-zorro-antd-10.1.2.tgz#43ff5359a2a9a89f97f1344cece4f6b279ae2953"
-  integrity sha512-T6ph9ITeTS0ohX+VsyZaVrls53fgyTMJ0RFddJCK2WyQgg+BTznlSw24fJWgdTcocoIuPSBuVO27ecyZwN6Hhw==
+ng-zorro-antd@^12.0.1:
+  version "12.0.1"
+  resolved "https://registry.yarnpkg.com/ng-zorro-antd/-/ng-zorro-antd-12.0.1.tgz#7f06e2f538f02aefc17ff307e9e19045997f066f"
+  integrity sha512-3TDqKlLD3bYuBVF4cncfyGfWWHmEmN+I2Kr6RbLfIfyNHZL3VJbtKM9rWaXD3PTrPnGoSYnOwHbOCWvSN9kocw==
   dependencies:
-    "@angular/cdk" "^10.2.4"
-    "@ant-design/icons-angular" "^10.0.0"
+    "@angular/cdk" "^12.1.0"
+    "@ant-design/icons-angular" "^12.0.3"
     date-fns "^2.10.0"
-    resize-observer-polyfill "^1.5.1"
-    tslib "^2.0.0"
+    tslib "^2.2.0"
 
 ngx-mask@^11.1.4:
   version "11.1.4"
@@ -8057,11 +8065,6 @@ requires-port@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
   integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
-
-resize-observer-polyfill@^1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
-  integrity sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==
 
 resolve-cwd@^2.0.0:
   version "2.0.0"

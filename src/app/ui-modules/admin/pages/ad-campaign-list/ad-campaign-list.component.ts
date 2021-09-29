@@ -70,7 +70,7 @@ export class AdCampaignListComponent implements OnInit, OnDestroy {
             nzFooter: [
                 {
                     label: 'Да',
-                    type: 'danger',
+                    type: 'primary',
                     danger: true,
                     disabled: modal => !modal?.form?.valid,
                     onClick: () => {
