@@ -89,7 +89,7 @@ export class FiltersComponent implements AfterViewInit, OnDestroy, OnChanges {
     apply(): void {
         const filters = this.filterComponents
             .map(c => c.instance.getFilterValue())
-            .filter(f => !!f && f?.getFilterParams().length)
+            .filter(f => f && f?.getFilterParams())
             .reduce((prev, cur) => ({ ...prev, ...cur?.getFilterObject() }), {});
 
         this.productDataService.applyFilters(filters);
