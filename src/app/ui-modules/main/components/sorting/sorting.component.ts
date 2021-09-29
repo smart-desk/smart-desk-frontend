@@ -17,7 +17,8 @@ import { ProductDataService } from '../../../../modules/product/product-data.ser
 export class SortingComponent implements OnInit {
     @Input() model: Model;
     @Input() sorting: Sorting;
-    selectedField = '';
+    DEFAULT_SORTING = 'DEFAULT_SORTING';
+    selectedField = this.DEFAULT_SORTING;
     sortDirection = Direction;
 
     constructor(
@@ -35,7 +36,7 @@ export class SortingComponent implements OnInit {
     }
 
     changeSelect(sortValue: string): void {
-        if (sortValue) {
+        if (sortValue !== this.DEFAULT_SORTING) {
             const [fieldId, direction] = sortValue.split(':');
             return this.productDataService.changeSorting({
                 field: fieldId,

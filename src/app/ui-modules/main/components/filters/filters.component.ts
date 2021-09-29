@@ -17,7 +17,7 @@ import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.ser
 import { SectionType } from '../../../../modules/field/models/field.entity';
 import { ProductDataEvents, ProductDataService } from '../../../../modules/product/product-data.service';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-filters',
@@ -25,7 +25,7 @@ import { Subject } from 'rxjs';
     styleUrls: ['./filters.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FiltersComponent implements AfterViewInit, OnDestroy {
+export class FiltersComponent implements AfterViewInit, OnDestroy, OnChanges {
     @Input()
     model: Model;
 
@@ -36,7 +36,7 @@ export class FiltersComponent implements AfterViewInit, OnDestroy {
 
     showSection: Record<SectionType, boolean> = {
         params: true,
-        contacts: true,
+        contacts: false,
         location: true,
         price: true,
     };
@@ -54,6 +54,7 @@ export class FiltersComponent implements AfterViewInit, OnDestroy {
 
     private filterComponents: ComponentRef<AbstractFieldFilterComponent<any, any>>[] = [];
     private destroy$ = new Subject();
+    private filterSubscriptions: Subscription[] = [];
 
     constructor(
         private dynamicFieldService: DynamicFieldsService,
@@ -72,10 +73,12 @@ export class FiltersComponent implements AfterViewInit, OnDestroy {
         });
     }
 
+    ngOnChanges(): void {
+        this.updateFilters();
+    }
+
     ngAfterViewInit(): void {
         this.updateFilters();
-        this.setFilterListener();
-        this.recountFilters();
     }
 
     ngOnDestroy(): void {
@@ -119,6 +122,8 @@ export class FiltersComponent implements AfterViewInit, OnDestroy {
         containerTypeMap.set(SectionType.LOCATION, this.locationContainerRef);
 
         containerTypeMap.forEach((container, type) => this.populateContainerWithFields(container, type));
+        this.setFilterListener();
+        this.recountFilters();
     }
 
     private populateContainerWithFields(
@@ -182,8 +187,9 @@ export class FiltersComponent implements AfterViewInit, OnDestroy {
     }
 
     private setFilterListener(): void {
-        this.filterComponents.forEach(component => {
-            component.instance.onFormChange$.pipe(takeUntil(this.destroy$)).subscribe(() => this.recountFilters());
+        this.filterSubscriptions.forEach(s => s.unsubscribe());
+        this.filterSubscriptions = this.filterComponents.map(component => {
+            return component.instance.onFormChange$.pipe(takeUntil(this.destroy$)).subscribe(() => this.recountFilters());
         });
     }
 
