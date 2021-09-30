@@ -1,3 +1,4 @@
+@use "sass:math";
 @import 'src/assets/styles/variables';
 
 .product-card {
@@ -24,7 +25,7 @@
     &__title {
         display: flex;
         justify-content: space-between;
-        margin-bottom: $base-unit / 2;
+        margin-bottom: math.div($base-unit, 2);
         font-size: $font-18;
     }
 }
