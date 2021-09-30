@@ -82,6 +82,6 @@ export class ProductCardComponent implements OnInit {
             return '';
         }
 
-        return roundPrice(price) + getCurrencySymbolByCode(currency);
+        return roundPrice(price as number) + getCurrencySymbolByCode(currency as string);
     }
 }

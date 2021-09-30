@@ -1,3 +1,4 @@
+@use "sass:math";
 @import '~src/assets/styles/variables';
 @import '~src/assets/styles/mixins';
 
@@ -13,7 +14,7 @@
 
     &__input {
         font-size: $font-16;
-        padding-left: $base-unit / 2 !important;
+        padding-left: math.div($base-unit, 2) !important;
         line-height: 1.65;
     }
 
