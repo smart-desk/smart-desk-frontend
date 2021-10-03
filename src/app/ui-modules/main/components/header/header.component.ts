@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    HostListener,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+} from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, EMPTY, of, Subject } from 'rxjs';
 import { filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
@@ -22,6 +31,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     selectedCategoriesIds: string[] = [];
     searchPhrase = '';
     isHeaderSticky = false;
+    isMenuOpen = false;
+
+    @ViewChild('categoryMenu')
+    menuElement: ElementRef;
+
+    @ViewChild('categoryButton', { read: ElementRef })
+    buttonElement: ElementRef;
 
     private destroy$ = new Subject();
     private user: User | undefined;
@@ -34,6 +50,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private loginService: LoginService
     ) {}
+
+    @HostListener('document:click', ['$event'])
+    clickOutsideCategoryMenu(event: MouseEvent) {
+        if (!this.menuElement.nativeElement.contains(event.target) && !this.buttonElement.nativeElement.contains(event.target)) {
+            this.isMenuOpen = false;
+            this.cd.detectChanges();
+        }
+    }
 
     ngOnInit(): void {
         if (this.route.snapshot.queryParamMap.has('search')) {
@@ -110,6 +134,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     onHeaderSticky(isSticky: boolean) {
         this.isHeaderSticky = isSticky;
+        this.cd.detectChanges();
+    }
+
+    toggleMenu() {
+        this.isMenuOpen = !this.isMenuOpen;
         this.cd.detectChanges();
     }
 

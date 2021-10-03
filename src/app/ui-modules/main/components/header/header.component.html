@@ -6,22 +6,13 @@
                     <img [src]="'../../../../../assets/images/smart-desk-logo.svg'" alt="Smart Desk" />
                 </a>
             </div>
-            <nz-cascader
-                class="category-selector"
-                [nzShowInput]="false"
-                [nzAllowClear]="false"
-                [nzOptions]="categoryTree$ | async"
-                [(ngModel)]="selectedCategoriesIds"
-                [nzPlaceHolder]="'Выберите категорию'"
-                (ngModelChange)="onCategorySelect($event)"
-                [nzExpandTrigger]="'hover'"
-                nzChangeOnSelect
-            >
-                <button nz-button class="header__category-button">
-                    <i nz-icon nzType="align-right" nzTheme="outline"></i>
-                    Категория
-                </button>
-            </nz-cascader>
+            <button #categoryButton nz-button class="header__category-button" (click)="toggleMenu()">
+                <i nz-icon nzType="align-right" nzTheme="outline"></i>
+                Категория
+            </button>
+            <div class="header__category-menu" [hidden]="!isMenuOpen" #categoryMenu>
+                <p>Test</p>
+            </div>
             <app-search [searchPhrase]="searchPhrase" [placeholder]="getSearchPlaceholder()" (searchChange)="search($event)"></app-search>
             <button class="header__new-button" (click)="navigateToProductCreate()" nz-button>
                 <i nz-icon nzType="plus"></i>

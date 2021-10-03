@@ -3,6 +3,7 @@
 
 .header-wrapper {
     display: block;
+    position: relative;
 
     &--sticky {
         box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.05);
@@ -25,6 +26,17 @@
         @include sd-btn;
         background-color: $primary-blue;
         color: #fff;
+    }
+
+    &__category-menu {
+        position: absolute;
+        height: 300px;
+        left: 0;
+        right: 0;
+        background: $background;
+        z-index: 10;
+        top: $base-unit * 9;
+        box-shadow: -7px 4px 5px rgb(0 0 0 / 5%);
     }
 
     &__new-button {
