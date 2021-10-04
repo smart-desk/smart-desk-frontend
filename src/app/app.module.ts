@@ -19,6 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared.module';
 import { ImagekitioAngularModule } from 'imagekitio-angular';
 import { LoginService } from './modules/login/login.service';
+import { ProductDataService } from './modules/product/product-data.service';
 
 // todo move to service
 const token = localStorage.getItem('token');
@@ -60,7 +61,7 @@ const socialProviders = {
 };
 
 @NgModule({
-    providers: [{ provide: NZ_I18N, useValue: ru_RU }, socialProviders, LoginService],
+    providers: [{ provide: NZ_I18N, useValue: ru_RU }, socialProviders, LoginService, ProductDataService],
     declarations: [AppComponent],
     imports: [
         BrowserModule,
