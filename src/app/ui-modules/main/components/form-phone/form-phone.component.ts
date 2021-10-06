@@ -10,7 +10,7 @@ import {
     Output,
     ViewChild,
 } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { User } from '../../../../modules/user/models/user.entity';
 import { ProfileFormEnum } from '../../pages/profile/pages/profile/profile-form.enum';
 import intlTelInput from 'intl-tel-input';
