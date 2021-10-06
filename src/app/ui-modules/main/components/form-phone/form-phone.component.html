@@ -1,10 +1,9 @@
-<form nz-form [formGroup]="formPhone">
+<form nz-form [formGroup]="formPhone" [nzLayout]="'vertical'">
     <nz-form-item>
-        <nz-form-label for="phone">
-            Изменить номер телефона
-        </nz-form-label>
+        <nz-form-label>Изменить номер телефона</nz-form-label>
         <nz-form-control [nzSpan]="14">
-            <input nz-input name="phone" id="phone" type="text" mask="+0 (000) 000 00 00" formControlName="phone" />
+            <input nz-input name="phone" id="phone" type="text" #phone [value]="profile?.phone" />
         </nz-form-control>
+        <p nz-typography nzType="danger" *ngIf="showErrorMessage">{{ getValidationError() }}</p>
     </nz-form-item>
 </form>

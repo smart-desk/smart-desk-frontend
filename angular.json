@@ -38,6 +38,7 @@
                             "./node_modules/quill/dist/quill.core.css",
                             "./node_modules/quill/dist/quill.snow.css",
                             "./node_modules/@angular/cdk/overlay-prebuilt.css",
+                            "./node_modules/intl-tel-input/build/css/intlTelInput.css",
                             "src/styles.scss"
                         ],
                         "scripts": [],
