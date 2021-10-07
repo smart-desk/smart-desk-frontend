@@ -27,7 +27,6 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzInputModule } from 'ng-zorro-antd/input';
-import { NgxMaskModule } from 'ngx-mask';
 import { NzCascaderModule } from 'ng-zorro-antd/cascader';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzCardModule } from 'ng-zorro-antd/card';
@@ -41,6 +40,7 @@ import { PromoSetChooserComponent } from './components/promo-set-chooser/promo-s
 import { ImagekitioAngularModule } from 'imagekitio-angular';
 import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { FooterComponent } from './components/footer/footer.component';
+import { NzTypographyModule } from 'ng-zorro-antd/typography';
 
 const components = [
     HeaderComponent,
@@ -79,7 +79,6 @@ const components = [
         NzUploadModule,
         ReactiveFormsModule,
         NzInputModule,
-        NgxMaskModule,
         NzCascaderModule,
         FormsModule,
         NzLayoutModule,
@@ -92,6 +91,7 @@ const components = [
         NzDatePickerModule,
         ImagekitioAngularModule,
         NzAffixModule,
+        NzTypographyModule,
     ],
 })
 export class SharedMainModule {}
