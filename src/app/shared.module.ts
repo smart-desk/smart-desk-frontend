@@ -70,7 +70,6 @@ const services = [
     BookmarksService,
     PhoneService,
     UserService,
-    ProductDataService,
     AdService,
 ];
 

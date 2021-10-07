@@ -56,7 +56,7 @@ export class ProductDataService {
     }
 
     applyFilters(filters: Filters): void {
-        this.options.filters = filters;
+        this.options.filters = { ...filters };
         this.requestProducts();
         this.updateQueryParams();
         this.events$.next(ProductDataEvents.APPLY_FILTERS);

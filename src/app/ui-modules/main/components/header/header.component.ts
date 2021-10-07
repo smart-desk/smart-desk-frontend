@@ -17,7 +17,7 @@ import { CategoryService } from '../../../../modules/category/category.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-    currentCategory: Category;
+    currentCategory: Category | null;
     categoryTree$ = new BehaviorSubject<NzCascaderOption[]>([]);
     selectedCategoriesIds: string[] = [];
     searchPhrase = '';
@@ -50,6 +50,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 switchMap(paramMap => {
                     if (paramMap.has('category_id')) {
                         return this.categoryService.getCategory(paramMap.get('category_id'));
+                    } else {
+                        this.currentCategory = null;
                     }
                     return EMPTY;
                 })
