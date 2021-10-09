@@ -6,22 +6,41 @@
                     <img [src]="'../../../../../assets/images/smart-desk-logo.svg'" alt="Smart Desk" />
                 </a>
             </div>
-            <nz-cascader
-                class="category-selector"
-                [nzShowInput]="false"
-                [nzAllowClear]="false"
-                [nzOptions]="categoryTree$ | async"
-                [(ngModel)]="selectedCategoriesIds"
-                [nzPlaceHolder]="'Выберите категорию'"
-                (ngModelChange)="onCategorySelect($event)"
-                [nzExpandTrigger]="'hover'"
-                nzChangeOnSelect
-            >
-                <button nz-button class="header__category-button">
-                    <i nz-icon nzType="align-right" nzTheme="outline"></i>
-                    Категория
-                </button>
-            </nz-cascader>
+            <button #categoryButton nz-button class="header__category-button" (click)="toggleMenu()">
+                <i nz-icon nzType="align-right" nzTheme="outline"></i>
+                Категория
+            </button>
+            <div #categoryMenu class="header__category-menu-wrap" [hidden]="!isMenuOpen">
+                <div class="header__category-menu">
+                    <ul class="category__column category__column--parent">
+                        <li
+                            class="category__item"
+                            *ngFor="let category of categoryTree$ | async"
+                            (mouseenter)="category.active = true"
+                            (mouseleave)="category.active = false"
+                            (click)="onCategorySelect(category.value)"
+                        >
+                            {{ category.label }}
+                            <ul class="category__column category__column--child">
+                                <ng-container *ngIf="category.active">
+                                    <h3 class="category__title">
+                                        <b>{{ category.label }}</b>
+                                    </h3>
+                                    <li
+                                        class="category__item category__item--child"
+                                        *ngFor="let child of category.children"
+                                        (click)="onCategorySelect(child.value)"
+                                    >
+                                        {{ child.label }}
+                                    </li>
+                                </ng-container>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <nz-avatar class="category__item category__item--image" [nzSrc]="img" nzIcon="file-image" nz-dropdown></nz-avatar>
+                </div>
+            </div>
             <app-search [searchPhrase]="searchPhrase" [placeholder]="getSearchPlaceholder()" (searchChange)="search($event)"></app-search>
             <button class="header__new-button" (click)="navigateToProductCreate()" nz-button>
                 <i nz-icon nzType="plus"></i>
