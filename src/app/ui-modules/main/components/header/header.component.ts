@@ -59,6 +59,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
     }
 
+    @HostListener('window:keydown', ['$event'])
+    hideMenu(event: KeyboardEvent) {
+        if (event.key === 'Escape' && this.isMenuOpen) {
+            this.isMenuOpen = false;
+            this.cd.detectChanges();
+        }
+    }
+
     ngOnInit(): void {
         if (this.route.snapshot.queryParamMap.has('search')) {
             this.searchPhrase = this.route.snapshot.queryParamMap.get('search') || '';
