@@ -12,9 +12,10 @@ import { FormVerifyComponent } from '../../../../components/form-verify/form-ver
 import { FormPhoneComponent } from '../../../../components/form-phone/form-phone.component';
 import { ContentComponent } from '../../../../interfaces/content-component.interface';
 import { NotificationsComponent } from '../../components/notifications/notifications.component';
-import { takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { UserService } from '../../../../../../modules/user/user.service';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
     selector: 'app-user-settings',
@@ -33,7 +34,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
         private fb: FormBuilder,
         private cd: ChangeDetectorRef,
         private loginService: LoginService,
-        private phoneService: PhoneService
+        private phoneService: PhoneService,
+        private notificationService: NzNotificationService
     ) {}
 
     ngOnInit(): void {
@@ -68,7 +70,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
 
     updatePhone(profile: UpdateUserDto): void {
-        this.userService.updateProfile(profile).subscribe(() => {
+        this.userService.updateProfile(profile).subscribe(user => {
+            this.profile = user;
             this.cd.detectChanges();
         });
     }
@@ -116,7 +119,20 @@ export class ProfileComponent implements OnInit, OnDestroy {
         const verificationDto = new PhoneVerifyCheckDto();
         verificationDto.requestId = this.verificationRequestId;
         verificationDto.code = (modal.getContentComponent().formConfirm.get('code') as AbstractControl).value.toString();
-        this.phoneService.checkVerification(verificationDto).subscribe();
+        this.phoneService
+            .checkVerification(verificationDto)
+            .pipe(
+                switchMap(res => {
+                    if (res !== '0') {
+                        this.notificationService.error('Подтверждение номера телефона', 'Что-то пошло не так');
+                    }
+                    return this.userService.getCurrentUser(true);
+                })
+            )
+            .subscribe(user => {
+                this.profile = user;
+                this.cd.detectChanges();
+            });
     }
 
     setUpNotifications(): void {

@@ -1,6 +1,8 @@
 <ng-container *ngIf="model">
     <nz-page-header>
-        <nz-page-header-title>{{ model.name }}</nz-page-header-title>
+        <nz-page-header-title>
+            <h4 nz-typography nzEditable [(nzContent)]="model.name" (nzContentChange)="editModelName($event)"></h4>
+        </nz-page-header-title>
         <nz-page-header-subtitle>
             Редактирование модели
         </nz-page-header-subtitle>
