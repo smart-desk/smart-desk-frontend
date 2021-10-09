@@ -11,7 +11,7 @@
             <span nz-typography nzType="secondary">{{ getModelName(node) }}</span>
             <button
                 nz-popover
-                nzPopoverTitle="Edit category"
+                nzPopoverTitle="Редактировать категорию"
                 [nzPopoverContent]="editForm"
                 nzPopoverTrigger="click"
                 nz-button
@@ -37,7 +37,7 @@
             </button>
             <button
                 nz-popover
-                nzPopoverTitle="Add category"
+                nzPopoverTitle="Добавить категорию"
                 [nzPopoverContent]="addForm"
                 nzPopoverTrigger="click"
                 nz-button
@@ -63,7 +63,14 @@
         </ng-template>
     </div>
 
-    <button nz-popover nzPopoverTitle="Add category" [nzPopoverContent]="addRootForm" nzPopoverTrigger="click" nz-button nzType="dashed">
+    <button
+        nz-popover
+        nzPopoverTitle="Добавить категорию"
+        [nzPopoverContent]="addRootForm"
+        nzPopoverTrigger="click"
+        nz-button
+        nzType="dashed"
+    >
         <i nz-icon nzType="plus"></i>
         Добавить категорию
     </button>
