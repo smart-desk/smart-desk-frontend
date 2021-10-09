@@ -46,6 +46,7 @@ import { PromoSetFormComponent } from './components/promo-set-form/promo-set-for
 import { SitePagesComponent } from './pages/site-pages/site-pages.component';
 import { PageFormComponent } from './components/page-form/page-form.component';
 import { QuillModule } from 'ngx-quill';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
 
 const components = [
     AdCampaignReasonFormComponent,
@@ -103,6 +104,7 @@ const pages = [
         DragDropModule,
         NzRadioModule,
         QuillModule,
+        NzUploadModule,
     ],
     declarations: [...pages, ...components],
 })
