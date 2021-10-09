@@ -10,6 +10,17 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+ul[class],
+ol[class] {
+    list-style: none;
+    padding: 0;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
 .container {
     max-width: 1170px;
     width: 100%;

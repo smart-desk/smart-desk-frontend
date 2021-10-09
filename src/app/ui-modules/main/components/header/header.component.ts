@@ -32,6 +32,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     searchPhrase = '';
     isHeaderSticky = false;
     isMenuOpen = false;
+    img: string;
 
     @ViewChild('categoryMenu')
     menuElement: ElementRef;
@@ -41,7 +42,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     private destroy$ = new Subject();
     private user: User | undefined;
-
     constructor(
         private cd: ChangeDetectorRef,
         private productDataService: ProductDataService,
@@ -100,14 +100,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.destroy$.complete();
     }
 
-    onCategorySelect($event: string[]): void {
-        const selectedCat = $event[$event.length - 1];
-        if (this.currentCategory && this.currentCategory.id === selectedCat) {
+    onCategorySelect(id: string): void {
+        this.isMenuOpen = false;
+        if (this.currentCategory && this.currentCategory.id === id) {
             return;
         }
 
         this.searchPhrase = '';
-        this.router.navigate([`category/${selectedCat}`]);
+        this.router.navigate([`category/${id}`]);
     }
 
     search(searchPhrase: string): void {
