@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Category } from '../../../../modules/category/models/category.entity';
 import { Model } from '../../../../modules/model/models/model.entity';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
     selector: 'app-category-form',
@@ -20,13 +21,13 @@ export class CategoryFormComponent implements OnInit {
     file: NzUploadFile[] = [];
     form: FormGroup;
 
-    constructor(private fb: FormBuilder, private cd: ChangeDetectorRef) {}
+    constructor(private fb: FormBuilder, private cd: ChangeDetectorRef, private notificationService: NzNotificationService) {}
 
     ngOnInit() {
         this.form = this.fb.group({
-            name: [this.category?.name],
-            model: [this.getModelByCategory(this.category)],
-            image: this.category?.img,
+            name: [this.category?.name, [Validators.required]],
+            model: [this.getModelByCategory(this.category), [Validators.required]],
+            image: [this.category?.img, [Validators.required]],
         });
 
         const img = this.category?.img;
@@ -35,6 +36,10 @@ export class CategoryFormComponent implements OnInit {
     }
 
     submit(): void {
+        if (!this.form.valid) {
+            this.notificationService.error('Ошибка формы', 'Заполните обязательные поля формы');
+            return;
+        }
         if (this.category) {
             this.category.name = this.form.get('name')?.value;
             // todo: что лежит в modelId
@@ -59,7 +64,7 @@ export class CategoryFormComponent implements OnInit {
             this.file = [event.file];
             const fileUrl = this.file[0].response.url;
             this.category.img = fileUrl;
-            (this.form.get('img') as AbstractControl).setValue(fileUrl);
+            (this.form.get('image') as AbstractControl).setValue(fileUrl);
         }
     }
 
