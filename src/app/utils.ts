@@ -47,6 +47,7 @@ export function transformCategoryArrayToNZCascade(categories: Category[]): NzCas
             value: category.id,
             children: category.children,
             isLeaf: category.isLeaf,
+            img: category.img,
         };
     };
 

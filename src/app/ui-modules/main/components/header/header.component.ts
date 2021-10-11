@@ -152,6 +152,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.cd.detectChanges();
     }
 
+    onHoverCategory(category: Pick<NzCascaderOption, 'active' | 'img'>): void {
+        category.active = true;
+        this.img = category.img;
+        this.cd.detectChanges();
+    }
+
     private navigateToGlobalSearchPage(searchPhrase: string) {
         this.router.navigate(['/', 'search'], { queryParams: { search: searchPhrase } });
     }

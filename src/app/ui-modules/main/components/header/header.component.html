@@ -16,7 +16,7 @@
                         <li
                             class="category__item"
                             *ngFor="let category of categoryTree$ | async"
-                            (mouseenter)="category.active = true"
+                            (mouseenter)="onHoverCategory(category)"
                             (mouseleave)="category.active = false"
                             (click)="onCategorySelect(category.value)"
                         >
