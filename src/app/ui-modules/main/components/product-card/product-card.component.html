@@ -5,6 +5,7 @@
             <span>{{ title }}</span>
             <span class="product-card__title-icon" [class.product-card__title-icon--active]="product?.isBookmark">
                 <i
+                    *ngIf="isShowBookmarksIcon"
                     nz-icon
                     (click)="toggleBookmark(product.id, $event)"
                     nzType="heart"
