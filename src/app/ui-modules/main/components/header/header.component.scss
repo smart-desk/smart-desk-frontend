@@ -1,3 +1,4 @@
+@use "sass:math";
 @import 'src/assets/styles/variables';
 @import 'src/assets/styles/mixins';
 
@@ -56,7 +57,7 @@
 
     .category {
         &__title {
-            padding: $base-unit / 4 $base-unit * 2;
+            padding: math.div($base-unit, 4) $base-unit * 2;
         }
 
         &__column {
@@ -77,6 +78,17 @@
             }
         }
 
+        &__image {
+            padding: $base-unit $base-unit * 2;
+            border-radius: 50%;
+            height: 250px;
+            margin-left: 35%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: default;
+        }
+
         &__item {
             padding: $base-unit $base-unit * 2;
             cursor: pointer;
@@ -85,18 +97,16 @@
                 color: $primary-blue;
             }
 
-            &--image {
-                width: 250px;
-                height: 250px;
-                margin-left: 35%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
+            > ul {
+                display: none;
             }
         }
 
         &__item:hover {
             background-color: $grey-light;
+            > ul {
+                display: block;
+            }
         }
     }
 }

@@ -17,12 +17,11 @@
                             class="category__item"
                             *ngFor="let category of categoryTree$ | async"
                             (mouseenter)="onHoverCategory(category)"
-                            (mouseleave)="category.active = false"
                             (click)="onCategorySelect(category.value)"
                         >
                             {{ category.label }}
                             <ul class="category__column category__column--child">
-                                <ng-container *ngIf="category.active">
+                                <ng-container>
                                     <h3 class="category__title">
                                         <b>{{ category.label }}</b>
                                     </h3>
@@ -37,8 +36,7 @@
                             </ul>
                         </li>
                     </ul>
-
-                    <nz-avatar class="category__item category__item--image" [nzSrc]="img" nzIcon="file-image" nz-dropdown></nz-avatar>
+                    <ik-image *ngIf="!!img" class="category__image" [src]="img"></ik-image>
                 </div>
             </div>
             <app-search [searchPhrase]="searchPhrase" [placeholder]="getSearchPlaceholder()" (searchChange)="search($event)"></app-search>
