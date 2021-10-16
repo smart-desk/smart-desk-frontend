@@ -21,6 +21,7 @@ export class ProductCardComponent implements OnInit {
     @Input() product: Product;
     @Input() extraActions: ExtraActions[];
     @Input() promo: boolean;
+    @Input() showBookmarksIcon: boolean;
     @Output() createBookmark = new EventEmitter<string>();
     @Output() deleteBookmark = new EventEmitter<string>();
     title = '';
@@ -29,7 +30,7 @@ export class ProductCardComponent implements OnInit {
 
     constructor(private cd: ChangeDetectorRef) {}
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.title = this.getTitle();
         this.description = this.getDescription();
         this.thumb = this.getThumbSrc();
