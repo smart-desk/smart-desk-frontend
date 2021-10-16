@@ -11,6 +11,23 @@
             <nz-option *ngFor="let m of models" [nzValue]="m" [nzLabel]="m?.name"></nz-option>
         </nz-select>
     </nz-form-item>
+
+    <nz-form-item class="category-form__item">
+        <nz-form-label class="category-form__label">Изображение категории</nz-form-label>
+        <nz-upload
+            nzAction="/s3/image"
+            nzListType="picture-card"
+            [nzFileList]="file"
+            nzAccept="image/png, image/jpeg"
+            [nzLimit]="1"
+            (nzChange)="fileChanged($event)"
+        >
+            <div>
+                <i nz-icon nzType="plus"></i>
+                <div style="margin-top: 8px;">Upload</div>
+            </div>
+        </nz-upload>
+    </nz-form-item>
     <nz-row class="category-form__item" nzAlign="middle">
         <nz-col nzSpan="12">
             <button nz-button type="button" nzType="link" (click)="onCancel()">Отмена</button>

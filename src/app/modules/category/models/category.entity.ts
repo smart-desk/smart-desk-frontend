@@ -3,6 +3,7 @@ export class Category {
     modelId: string;
     parentId: string;
     name: string;
+    img: string;
     createdAt: string;
     updatedAt: string;
 }

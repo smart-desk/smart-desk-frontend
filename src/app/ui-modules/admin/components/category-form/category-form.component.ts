@@ -1,7 +1,9 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Category } from '../../../../modules/category/models/category.entity';
 import { Model } from '../../../../modules/model/models/model.entity';
+import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
     selector: 'app-category-form',
@@ -16,26 +18,40 @@ export class CategoryFormComponent implements OnInit {
     @Output() save = new EventEmitter<Category>();
     @Output() cancel = new EventEmitter<void>();
 
+    file: NzUploadFile[] = [];
     form: FormGroup;
 
-    constructor(private fb: FormBuilder) {}
+    constructor(private fb: FormBuilder, private cd: ChangeDetectorRef, private notificationService: NzNotificationService) {}
 
     ngOnInit() {
         this.form = this.fb.group({
-            name: [this.category?.name],
-            model: [this.getModelByCategory(this.category)],
+            name: [this.category?.name, [Validators.required]],
+            model: [this.getModelByCategory(this.category), [Validators.required]],
+            image: [this.category?.img, [Validators.required]],
         });
+
+        const img = this.category?.img;
+        if (img) {
+            this.file = [{ uid: '-1', name: 'image.png', url: img }];
+        }
+        this.cd.detectChanges();
     }
 
     submit(): void {
+        if (!this.form.valid) {
+            this.notificationService.error('Ошибка формы', 'Заполните обязательные поля формы');
+            return;
+        }
         if (this.category) {
             this.category.name = this.form.get('name')?.value;
             // todo: что лежит в modelId
             this.category.modelId = this.form.get('model')?.value?.id;
+            this.category.img = this.form.get('image')?.value;
         } else {
             this.category = new Category();
             this.category.name = this.form.get('name')?.value;
             this.category.modelId = this.form.get('model')?.value.id;
+            this.category.img = this.form.get('image')?.value;
         }
 
         this.save.emit(this.category);
@@ -43,6 +59,14 @@ export class CategoryFormComponent implements OnInit {
 
     onCancel(): void {
         this.cancel.emit();
+    }
+
+    fileChanged(event: NzUploadChangeParam): void {
+        if (event.type === 'success') {
+            this.file = [event.file];
+            const fileUrl = this.file[0].response.key;
+            (this.form.get('image') as AbstractControl).setValue(fileUrl);
+        }
     }
 
     private getModelByCategory(category: Category): Model {
