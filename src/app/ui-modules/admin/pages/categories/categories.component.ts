@@ -10,7 +10,7 @@ import { ModelService } from '../../../../modules/model/model.service';
 import { CategoryService } from '../../../../modules/category/category.service';
 
 @Component({
-    selector: 'app-models',
+    selector: 'app-categories',
     templateUrl: './categories.component.html',
     styleUrls: ['./categories.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,

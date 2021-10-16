@@ -3,6 +3,7 @@
 
 .header-wrapper {
     display: block;
+    position: relative;
 
     &--sticky {
         box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.05);
@@ -21,6 +22,26 @@
         margin-right: $base-unit;
     }
 
+    &__category-menu-wrap {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: $base-unit * 9;
+
+        height: 300px;
+        background: $background;
+        z-index: 10;
+        box-shadow: -7px 4px 5px rgb(0 0 0 / 5%);
+    }
+
+    &__category-menu {
+        display: flex;
+        height: 100%;
+        max-width: 1020px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
     &__category-button {
         @include sd-btn;
         background-color: $primary-blue;
@@ -31,5 +52,51 @@
         @include sd-btn;
         background-color: $primary-green;
         color: #fff;
+    }
+
+    .category {
+        &__title {
+            padding: $base-unit / 4 $base-unit * 2;
+        }
+
+        &__column {
+            width: 30%;
+            border-right: 1px solid $grey-light;
+
+            &--parent {
+                position: relative;
+            }
+
+            &--child {
+                overflow: auto;
+                max-height: 300px;
+                width: 100%;
+                position: absolute;
+                top: 0;
+                left: 100%;
+            }
+        }
+
+        &__item {
+            padding: $base-unit $base-unit * 2;
+            cursor: pointer;
+
+            &--child {
+                color: $primary-blue;
+            }
+
+            &--image {
+                width: 250px;
+                height: 250px;
+                margin-left: 35%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
+        &__item:hover {
+            background-color: $grey-light;
+        }
     }
 }
