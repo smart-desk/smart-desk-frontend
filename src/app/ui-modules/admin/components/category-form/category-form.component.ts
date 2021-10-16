@@ -31,7 +31,9 @@ export class CategoryFormComponent implements OnInit {
         });
 
         const img = this.category?.img;
-        this.file = [{ uid: '-1', name: 'image.png', url: img }];
+        if (img) {
+            this.file = [{ uid: '-1', name: 'image.png', url: img }];
+        }
         this.cd.detectChanges();
     }
 
@@ -63,7 +65,6 @@ export class CategoryFormComponent implements OnInit {
         if (event.type === 'success') {
             this.file = [event.file];
             const fileUrl = this.file[0].response.key;
-            this.category.img = fileUrl;
             (this.form.get('image') as AbstractControl).setValue(fileUrl);
         }
     }

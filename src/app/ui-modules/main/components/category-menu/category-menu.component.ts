@@ -12,16 +12,27 @@ export class CategoryMenuComponent {
     @Output() selectCategory = new EventEmitter<string>(true);
 
     category: NzCascaderOption | null;
+    parentCategory: NzCascaderOption;
+    lastCategory: NzCascaderOption | null;
     constructor(private cd: ChangeDetectorRef) {}
 
     categoryHover(category?: NzCascaderOption): void {
+        // todo: костальное решение, можно придумать лучше или найти компоненту
         if (category) {
+            if (category.children?.length) {
+                this.parentCategory = { ...category };
+            }
             this.category = null;
             this.cd.detectChanges();
             this.category = { ...category };
         } else {
-            this.category = null;
+            if (!this.lastCategory?.children?.length) {
+                this.category = null;
+                this.cd.detectChanges();
+                this.category = this.parentCategory;
+            }
         }
+        this.lastCategory = this.category;
         this.cd.detectChanges();
     }
 
