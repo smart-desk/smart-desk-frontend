@@ -18,7 +18,7 @@ import { Bookmark } from '../../../../modules/bookmarks/models/bookmark.entity';
 import { Product } from '../../../../modules/product/models/product.entity';
 import { ProductDataService } from '../../../../modules/product/product-data.service';
 import { AdCampaignCurrentDto } from '../../../../modules/ad/models/ad-campaign-current.dto';
-import { UserService } from '../../../../modules/user/user.service';
+import { LoginService } from '../../../../modules/login/login.service';
 
 @Component({
     selector: 'app-products',
@@ -34,25 +34,27 @@ export class ProductsComponent implements OnChanges, OnInit, OnDestroy {
     @Input() showPagination = true;
     bookmarks: Bookmark[];
     destroy$ = new Subject();
-    isShowBookmarksIcon: boolean;
+    showBookmarksIcon: boolean;
 
     constructor(
         private readonly productDataService: ProductDataService,
         private readonly bookmarksStoreService: BookmarksStoreService,
         private readonly cd: ChangeDetectorRef,
-        private readonly userService: UserService
+        private readonly loginService: LoginService
     ) {
         this.bookmarksStoreService.loadBookmarks();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        this.userService
-            .getCurrentUser()
-            .pipe(takeUntil(this.destroy$))
-            .subscribe(user => {
-                this.isShowBookmarksIcon = !!user;
-                this.cd.detectChanges();
-            });
+    ngOnChanges(changes: SimpleChanges): void {
+        this.loginService.login$.pipe(takeUntil(this.destroy$)).subscribe(user => {
+            if (user) {
+                this.showBookmarksIcon = true;
+                this.bookmarksStoreService.loadBookmarks();
+            } else {
+                this.showBookmarksIcon = false;
+            }
+            this.cd.detectChanges();
+        });
 
         if (changes.productsResponse?.currentValue) {
             this.updateProductsWithBookmarks();

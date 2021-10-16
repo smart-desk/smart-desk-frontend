@@ -21,7 +21,7 @@ export class ProductCardComponent implements OnInit {
     @Input() product: Product;
     @Input() extraActions: ExtraActions[];
     @Input() promo: boolean;
-    @Input() isShowBookmarksIcon: boolean;
+    @Input() showBookmarksIcon: boolean;
     @Output() createBookmark = new EventEmitter<string>();
     @Output() deleteBookmark = new EventEmitter<string>();
     title = '';
