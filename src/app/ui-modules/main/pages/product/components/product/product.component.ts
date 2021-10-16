@@ -65,6 +65,8 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
+        window.scrollTo(pageXOffset, 0);
+        this.cd.detectChanges();
         this.route.paramMap
             .pipe(
                 takeUntil(this.destroy$),

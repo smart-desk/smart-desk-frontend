@@ -30,6 +30,8 @@ export class CategoryMenuComponent {
                 this.category = null;
                 this.cd.detectChanges();
                 this.category = this.parentCategory;
+            } else {
+                this.category = null;
             }
         }
         this.lastCategory = this.category;
