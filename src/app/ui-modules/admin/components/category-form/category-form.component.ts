@@ -62,7 +62,7 @@ export class CategoryFormComponent implements OnInit {
     fileChanged(event: NzUploadChangeParam): void {
         if (event.type === 'success') {
             this.file = [event.file];
-            const fileUrl = this.file[0].response.url;
+            const fileUrl = this.file[0].response.key;
             this.category.img = fileUrl;
             (this.form.get('image') as AbstractControl).setValue(fileUrl);
         }

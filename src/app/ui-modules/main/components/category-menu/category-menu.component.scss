@@ -1,0 +1,60 @@
+@use "sass:math";
+@import 'src/assets/styles/variables';
+
+.category {
+    &__menu {
+        display: flex;
+    }
+
+    &__title {
+        padding: math.div($base-unit, 4) $base-unit * 2;
+    }
+
+    &__column {
+        width: 30%;
+        border-right: 1px solid $grey-light;
+
+        &--parent {
+            position: relative;
+        }
+
+        &--child {
+            overflow: auto;
+            max-height: 300px;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 100%;
+        }
+    }
+
+    &__image {
+        padding: $base-unit $base-unit * 2;
+        border-radius: 50%;
+        margin-left: 35%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: default;
+    }
+
+    &__item {
+        padding: $base-unit $base-unit * 2;
+        cursor: pointer;
+
+        &--child {
+            color: $primary-blue;
+        }
+
+        > ul {
+            display: none;
+        }
+    }
+
+    &__item:hover {
+        background-color: $grey-light;
+        > ul {
+            display: block;
+        }
+    }
+}

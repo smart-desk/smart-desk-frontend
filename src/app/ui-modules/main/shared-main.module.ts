@@ -41,6 +41,7 @@ import { ImagekitioAngularModule } from 'imagekitio-angular';
 import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { FooterComponent } from './components/footer/footer.component';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { CategoryMenuComponent } from './components/category-menu/category-menu.component';
 
 const components = [
     HeaderComponent,
@@ -61,6 +62,7 @@ const components = [
     ContentLayoutComponent,
     PromoSetChooserComponent,
     FooterComponent,
+    CategoryMenuComponent,
 ];
 
 @NgModule({
