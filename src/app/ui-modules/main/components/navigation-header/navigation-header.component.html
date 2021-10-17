@@ -3,7 +3,7 @@
         <nz-row [nzJustify]="'space-between'">
             <nz-col></nz-col>
             <nz-col>
-                <nz-row [nzJustify]="'space-between'">
+                <nz-row *ngIf="user" [nzJustify]="'space-between'">
                     <nz-col>
                         <a class="navigation-header__menu-item" *ngIf="isAdmin" [routerLink]="['admin']">
                             <i nz-icon nzType="export" nzTheme="outline"></i>
@@ -11,13 +11,13 @@
                         </a>
                     </nz-col>
                     <nz-col>
-                        <a class="navigation-header__menu-item" *ngIf="user" [routerLink]="['profile', 'bookmarks']">
+                        <a class="navigation-header__menu-item" [routerLink]="['profile', 'bookmarks']">
                             <i nz-icon nzType="heart" nzTheme="outline"></i>
                             Избранное
                         </a>
                     </nz-col>
                     <nz-col>
-                        <a class="navigation-header__menu-item" *ngIf="user" (click)="openChat()">
+                        <a class="navigation-header__menu-item" (click)="openChat()">
                             <i nz-icon nzType="message" nzTheme="outline"></i>
                             Сообщения
                         </a>

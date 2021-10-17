@@ -29,8 +29,8 @@ export class NavigationHeaderComponent implements OnInit, OnDestroy {
             this.user = user;
             if (user?.roles) {
                 this.isAdmin = user?.roles.includes('admin');
-                this.cd.detectChanges();
             }
+            this.cd.detectChanges();
         });
     }
 
