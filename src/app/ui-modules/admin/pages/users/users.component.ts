@@ -19,7 +19,7 @@ export class UsersComponent implements OnInit {
 
     ngOnInit(): void {
         combineLatest([this.userService.getUsers(), this.userService.getCurrentUser()]).subscribe(([users, currentUser]) => {
-            this.users = users.filter(user => user.id !== currentUser.id);
+            this.users = users;
             this.cdr.detectChanges();
         });
     }
