@@ -12,10 +12,11 @@ import { FormVerifyComponent } from '../../../../components/form-verify/form-ver
 import { FormPhoneComponent } from '../../../../components/form-phone/form-phone.component';
 import { ContentComponent } from '../../../../interfaces/content-component.interface';
 import { NotificationsComponent } from '../../components/notifications/notifications.component';
-import { switchMap, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { catchError, switchMap, takeUntil } from 'rxjs/operators';
+import { EMPTY, Subject } from 'rxjs';
 import { UserService } from '../../../../../../modules/user/user.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-user-settings',
@@ -122,12 +123,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.phoneService
             .checkVerification(verificationDto)
             .pipe(
-                switchMap(res => {
-                    if (res !== '0') {
+                catchError((res: HttpErrorResponse) => {
+                    const errorInfo = JSON.parse(res.error);
+                    if (errorInfo.message === 'Code is not correct') {
+                        this.notificationService.error('Подтверждение номера телефона', 'Вы ввели неверный код');
+                    } else {
                         this.notificationService.error('Подтверждение номера телефона', 'Что-то пошло не так');
                     }
-                    return this.userService.getCurrentUser(true);
-                })
+                    return EMPTY;
+                }),
+                switchMap(res => this.userService.getCurrentUser(true))
             )
             .subscribe(user => {
                 this.profile = user;
