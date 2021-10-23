@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { GetProductsResponseDto } from '../../../../../../modules/product/models/product.dto';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { GetProductsDto, GetProductsResponseDto } from '../../../../../../modules/product/models/product.dto';
 import { User } from '../../../../../../modules/user/models/user.entity';
 import { ExtraActions } from '../../../../components/product-card/product-card.component';
 import { Product } from '../../../../../../modules/product/models/product.entity';
@@ -7,8 +7,8 @@ import { Router } from '@angular/router';
 import { ProductService } from '../../../../../../modules/product/product.service';
 import { UserService } from '../../../../../../modules/user/user.service';
 import { StripeService } from '../../../../../../modules/stripe/stripe.service';
-import { from } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { from, Subject } from 'rxjs';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { PromoSetChooserComponent } from '../../../../components/promo-set-chooser/promo-set-chooser.component';
 
@@ -18,12 +18,13 @@ import { PromoSetChooserComponent } from '../../../../components/promo-set-choos
     styleUrls: ['./my-products.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MyProductsComponent implements OnInit {
+export class MyProductsComponent implements OnInit, OnDestroy {
     activeProductsResponse: GetProductsResponseDto;
     blockedProductsResponse: GetProductsResponseDto;
     pendingProductsResponse: GetProductsResponseDto;
     completedProductsResponse: GetProductsResponseDto;
     user: User;
+    destroy$ = new Subject();
 
     activeProductsActions: ExtraActions[] = [
         {
@@ -86,6 +87,11 @@ export class MyProductsComponent implements OnInit {
         this.getProducts();
     }
 
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
+
     getProducts(): void {
         this.getActiveProducts();
         this.getPendingProducts();
@@ -101,24 +107,39 @@ export class MyProductsComponent implements OnInit {
     }
 
     private getPendingProducts(): void {
-        this.productService.getPending().subscribe(res => {
-            this.pendingProductsResponse = res;
-            this.cdr.detectChanges();
-        });
+        const options = new GetProductsDto();
+        options.user = this.user.id;
+        this.productService
+            .getPending(options)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(res => {
+                this.pendingProductsResponse = res;
+                this.cdr.detectChanges();
+            });
     }
 
     private getBlockedProducts(): void {
-        this.productService.getBlocked().subscribe(res => {
-            this.blockedProductsResponse = res;
-            this.cdr.detectChanges();
-        });
+        const options = new GetProductsDto();
+        options.user = this.user.id;
+        this.productService
+            .getBlocked(options)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(res => {
+                this.blockedProductsResponse = res;
+                this.cdr.detectChanges();
+            });
     }
 
     private getCompletedProducts(): void {
-        this.productService.getCompleted().subscribe(res => {
-            this.completedProductsResponse = res;
-            this.cdr.detectChanges();
-        });
+        const options = new GetProductsDto();
+        options.user = this.user.id;
+        this.productService
+            .getCompleted(options)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(res => {
+                this.completedProductsResponse = res;
+                this.cdr.detectChanges();
+            });
     }
 
     private completeProduct(product: Product): void {
