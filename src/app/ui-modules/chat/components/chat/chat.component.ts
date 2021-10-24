@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { filter, take, takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ChatService } from '../../services/chat.service';
 import { Chat } from '../../models/chat.entity';
@@ -17,6 +17,7 @@ import { LoginService } from '../../../../modules/login/login.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatComponent implements OnDestroy, OnInit {
+    loading: boolean;
     chats: Chat[];
     messages: ChatMessage[] = [];
     activeChat: Chat;
@@ -117,6 +118,8 @@ export class ChatComponent implements OnDestroy, OnInit {
     }
 
     private getInitialChats(): void {
+        this.loading = true;
+        this.cdr.markForCheck();
         this.chatService
             .getProfileChats()
             .pipe(take(1))
@@ -138,6 +141,7 @@ export class ChatComponent implements OnDestroy, OnInit {
                 if (activeChat) {
                     this.setActiveChat(activeChat);
                 }
+                this.loading = false;
                 this.cdr.detectChanges();
             });
     }
