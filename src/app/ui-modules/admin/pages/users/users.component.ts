@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { User } from '../../../../modules/user/models/user.entity';
-import { combineLatest } from 'rxjs';
+import { combineLatest, timer } from 'rxjs';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { RolesFormComponent } from '../../components/roles-form/roles-form.component';
 import { UserStatus } from '../../../../modules/user/models/user-status.enum';
 import { UserService } from '../../../../modules/user/user.service';
+import { debounce } from 'rxjs/operators';
 
 @Component({
     selector: 'app-users',
@@ -15,11 +16,16 @@ import { UserService } from '../../../../modules/user/user.service';
 export class UsersComponent implements OnInit {
     userStatus = UserStatus;
     users: User[];
+    currentUserId: string;
+    searchValue = '';
+    visibleFilter = false;
+
     constructor(private userService: UserService, private cdr: ChangeDetectorRef, private modalService: NzModalService) {}
 
     ngOnInit(): void {
         combineLatest([this.userService.getUsers(), this.userService.getCurrentUser()]).subscribe(([users, currentUser]) => {
             this.users = users.filter(user => user.id !== currentUser.id);
+            this.currentUserId = currentUser.id;
             this.cdr.detectChanges();
         });
     }
@@ -39,5 +45,26 @@ export class UsersComponent implements OnInit {
             user.roles = res.roles;
             this.cdr.detectChanges();
         });
+    }
+
+    reset(): void {
+        this.searchValue = '';
+        this.search();
+    }
+
+    search(): void {
+        this.visibleFilter = false;
+        this.userService.getUsers().subscribe(users => {
+            if (this.searchValue) {
+                this.users = users.filter(user => user.id !== this.currentUserId && this.includes(user));
+            } else {
+                this.users = users.filter(user => user.id !== this.currentUserId);
+            }
+            this.cdr.detectChanges();
+        });
+    }
+
+    private includes(user: User): boolean {
+        return `${user.firstName} ${user.lastName}`.includes(this.searchValue);
     }
 }

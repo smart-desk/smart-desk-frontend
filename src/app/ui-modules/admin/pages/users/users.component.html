@@ -7,7 +7,12 @@
     <nz-table nzTemplateMode>
         <thead>
             <tr>
-                <th>Имя</th>
+                <th nzCustomFilter>
+                    Имя
+                    <nz-filter-trigger [(nzVisible)]="visibleFilter" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
+                        <i nz-icon nzType="search"></i>
+                    </nz-filter-trigger>
+                </th>
                 <th>Email</th>
                 <th>Роли</th>
                 <th>Действия</th>
@@ -35,3 +40,13 @@
         </tbody>
     </nz-table>
 </div>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+            <input type="text" nz-input placeholder="Поиск по имени" [(ngModel)]="searchValue" />
+            <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">Поиск</button>
+            <button nz-button nzSize="small" (click)="reset()">Сбросить</button>
+        </div>
+    </div>
+</nz-dropdown-menu>

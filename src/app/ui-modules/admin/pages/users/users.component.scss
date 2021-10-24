@@ -5,3 +5,21 @@
         padding: $base-unit * 3;
     }
 }
+
+.search-box {
+    padding: $base-unit * 2;
+}
+
+.search-box input {
+    width: $base-unit * 22;
+    margin-bottom: $base-unit * 2;
+    display: block;
+}
+
+.search-box button {
+    width: $base-unit * 10;
+}
+
+.search-button {
+    margin-right: $base-unit * 2;
+}
