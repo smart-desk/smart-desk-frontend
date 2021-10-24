@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { User } from '../../../../modules/user/models/user.entity';
-import { combineLatest, timer } from 'rxjs';
+import { combineLatest } from 'rxjs';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { RolesFormComponent } from '../../components/roles-form/roles-form.component';
 import { UserStatus } from '../../../../modules/user/models/user-status.enum';
 import { UserService } from '../../../../modules/user/user.service';
-import { debounce } from 'rxjs/operators';
 
 @Component({
     selector: 'app-users',
@@ -24,7 +23,7 @@ export class UsersComponent implements OnInit {
 
     ngOnInit(): void {
         combineLatest([this.userService.getUsers(), this.userService.getCurrentUser()]).subscribe(([users, currentUser]) => {
-            this.users = users.filter(user => user.id !== currentUser.id);
+            this.users = users;
             this.currentUserId = currentUser.id;
             this.cdr.detectChanges();
         });
@@ -56,9 +55,9 @@ export class UsersComponent implements OnInit {
         this.visibleFilter = false;
         this.userService.getUsers().subscribe(users => {
             if (this.searchValue) {
-                this.users = users.filter(user => user.id !== this.currentUserId && this.includes(user));
+                this.users = users.filter(user => this.includes(user));
             } else {
-                this.users = users.filter(user => user.id !== this.currentUserId);
+                this.users = users;
             }
             this.cdr.detectChanges();
         });

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { filter, map, take, takeUntil } from 'rxjs/operators';
+import { filter, take, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ChatService } from '../../services/chat.service';
 import { Chat } from '../../models/chat.entity';
@@ -35,7 +35,7 @@ export class ChatComponent implements OnDestroy, OnInit {
                 takeUntil(this.destroy$),
                 filter(res => res)
             )
-            .subscribe(res => this.getInitialChats());
+            .subscribe(() => this.getInitialChats());
 
         this.chatService.newChat$.pipe(takeUntil(this.destroy$)).subscribe(chat => {
             chat.unreadMessagesCount = 0;
@@ -63,7 +63,7 @@ export class ChatComponent implements OnDestroy, OnInit {
         });
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.userService
             .getCurrentUser()
             .pipe(take(1))
@@ -129,7 +129,9 @@ export class ChatComponent implements OnDestroy, OnInit {
                 }
 
                 this.chats = chats;
-                this.setActiveChat(activeChat);
+                if (activeChat) {
+                    this.setActiveChat(activeChat);
+                }
                 this.cdr.detectChanges();
             });
     }
