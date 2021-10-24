@@ -17,11 +17,6 @@ export class ProductService {
         return this.http.get<GetProductsResponseDto>(path);
     }
 
-    getMyProducts(options?: GetProductsDto): Observable<GetProductsResponseDto> {
-        const path = options ? `/products/my${this.buildQueryParams(options)}` : '/products/my';
-        return this.http.get<GetProductsResponseDto>(path);
-    }
-
     getProducts(options?: GetProductsDto): Observable<GetProductsResponseDto> {
         const path = options ? `/products${this.buildQueryParams(options)}` : '/products';
         return this.http.get<GetProductsResponseDto>(path);
@@ -29,21 +24,6 @@ export class ProductService {
 
     getRecommendedByProductId(id: string): Observable<GetProductsResponseDto> {
         const path = `/products/${id}/recommended`;
-        return this.http.get<GetProductsResponseDto>(path);
-    }
-
-    getBlocked(options?: GetProductsDto): Observable<GetProductsResponseDto> {
-        const path = options ? `/products/blocked${this.buildQueryParams(options)}` : '/products/blocked';
-        return this.http.get<GetProductsResponseDto>(path);
-    }
-
-    getPending(options?: GetProductsDto): Observable<GetProductsResponseDto> {
-        const path = options ? `/products/pending${this.buildQueryParams(options)}` : '/products/pending';
-        return this.http.get<GetProductsResponseDto>(path);
-    }
-
-    getCompleted(options?: GetProductsDto): Observable<GetProductsResponseDto> {
-        const path = options ? `/products/completed${this.buildQueryParams(options)}` : '/products/completed';
         return this.http.get<GetProductsResponseDto>(path);
     }
 
@@ -105,12 +85,16 @@ export class ProductService {
             optionsList.push(`user=${options.user}`);
         }
 
-        if (options.filters) {
+        if (options.filters && Object.keys(options.filters).length) {
             optionsList.push(this.buildFiltersQuery(options.filters));
         }
 
         if (options.sorting?.field && options.sorting?.direction) {
             optionsList.push(`sorting[${options.sorting.field}]=${options.sorting.direction}`);
+        }
+
+        if (options.status) {
+            optionsList.push(`status=${options.status}`);
         }
 
         return optionsList.length ? `?${optionsList.join('&')}` : '';

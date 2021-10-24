@@ -3,7 +3,7 @@
 </nz-page-header>
 <nz-radio-group [(ngModel)]="status" nzButtonStyle="solid" (ngModelChange)="changeStatus()" class="top-actions">
     <label nz-radio-button [nzValue]="productStatus.PENDING">В ожидании</label>
-    <label nz-radio-button [nzValue]="null">Активные</label>
+    <label nz-radio-button [nzValue]="productStatus.ACTIVE">Активные</label>
     <label nz-radio-button [nzValue]="productStatus.BLOCKED">Отклонённые</label>
     <label nz-radio-button [nzValue]="productStatus.COMPLETED">Завершенные</label>
 </nz-radio-group>
