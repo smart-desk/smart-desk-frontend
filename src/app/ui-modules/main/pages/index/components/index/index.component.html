@@ -1,5 +1,9 @@
-<app-content-layout [advert]="advert" [title]="'Добро пожаловать в Смарт Деск'"></app-content-layout>
+<app-content-layout [advert]="advert" [title]="'Добро пожаловать в Смарт Деск'" [main]="main"></app-content-layout>
 
 <ng-template #advert>
     <app-main-advert *ngIf="mainAdCampaign" [adCampaign]="mainAdCampaign"></app-main-advert>
+</ng-template>
+
+<ng-template #main>
+    <app-category-buttons [category]="null"></app-category-buttons>
 </ng-template>

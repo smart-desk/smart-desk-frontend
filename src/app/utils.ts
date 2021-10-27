@@ -67,5 +67,8 @@ export function transformCategoryArrayToNZCascade(categories: Category[]): NzCas
 }
 
 export function findChildren(target: Category, categories: Category[]): Category[] {
+    if (!target) {
+        return categories.filter(cat => !cat.parentId);
+    }
     return categories.filter(cat => cat.parentId === target.id);
 }
