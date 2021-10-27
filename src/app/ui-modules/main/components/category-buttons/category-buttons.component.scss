@@ -1,0 +1,18 @@
+@import 'src/assets/styles/variables';
+
+:host {
+    display: block;
+    margin-bottom: $base-unit * 3;
+}
+
+.category-buttons {
+    &__item {
+        margin-right: $base-unit;
+        border: none;
+        box-shadow: $shadow;
+
+        :last-child {
+            margin-right: 0;
+        }
+    }
+}

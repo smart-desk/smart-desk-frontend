@@ -65,3 +65,7 @@ export function transformCategoryArrayToNZCascade(categories: Category[]): NzCas
     const childCategories = categories.filter(cat => cat.parentId !== null);
     return createCascadesTree(arrayToTree(rootCategories), arrayToTree(childCategories));
 }
+
+export function findChildren(target: Category, categories: Category[]): Category[] {
+    return categories.filter(cat => cat.parentId === target.id);
+}
