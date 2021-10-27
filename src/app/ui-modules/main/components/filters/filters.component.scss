@@ -4,7 +4,7 @@
 ::ng-deep .ant-collapse-header {
     padding: $base-unit $base-unit * 2;
     background: white;
-    border-radius: $border-radius;
+    border-radius: $border-radius !important;
 }
 
 ::ng-deep .ant-collapse-content {
@@ -16,7 +16,7 @@
         background: white;
         box-shadow: $shadow;
         margin-bottom: $base-unit * 2;
-        border-radius: $border-radius;
+        border-radius: $border-radius !important;
     }
 }
 

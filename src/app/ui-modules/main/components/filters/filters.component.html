@@ -1,8 +1,13 @@
 <nz-collapse class="filters" nzGhost>
-    <div class="filters__panel" [hidden]="!showSection[sectionType.PRICE]">
-        <div class="container__title">Цена, ₽</div>
+    <nz-collapse-panel
+        class="filters__panel"
+        [hidden]="!showSection[sectionType.PRICE]"
+        nzExpandedIcon="caret-right"
+        nzHeader="Цена"
+        [nzActive]="true"
+    >
         <ng-container #price></ng-container>
-    </div>
+    </nz-collapse-panel>
 
     <nz-collapse-panel
         class="filters__panel"
