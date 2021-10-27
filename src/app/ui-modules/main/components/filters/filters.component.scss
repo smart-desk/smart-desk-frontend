@@ -1,47 +1,22 @@
 @import '~src/assets/styles/variables';
 @import '~src/assets/styles/mixins';
 
-:host ::ng-deep .ant-collapse-content > .ant-collapse-content-box {
-    padding-top: $base-unit * 1.5;
+::ng-deep .ant-collapse-header {
+    padding: $base-unit $base-unit * 2;
+    background: white;
+    border-radius: $border-radius;
 }
 
-:host ::ng-deep .ant-collapse-content {
+::ng-deep .ant-collapse-content {
     border: none;
 }
 
-::ng-deep .filter-list__item {
-    position: relative;
-    border: 1px solid $border-color;
-    font-size: $font-16;
-    border-radius: $border-radius;
-    background: $background;
-    padding: 0;
-    margin: 20px 0;
-
-    ::ng-deep .ant-collapse-header {
-        padding: $base-unit * 2 $base-unit * 3 $base-unit * 3 $base-unit * 2;
-        background: $background;
-    }
-
-    ::ng-deep .container .ant-collapse-header .anticon.ant-collapse-arrow {
-        margin-right: $base-unit * 1;
-    }
-
-    .anticon {
-        margin-right: $base-unit;
-    }
-
-    .ant-collapse-content-box {
-        background: $background;
-        padding-top: 0;
-    }
-
-    &--price {
-        padding: $base-unit * 2;
-    }
-
-    &__title {
-        margin-bottom: $base-unit * 1;
+.filters {
+    &__panel {
+        background: white;
+        box-shadow: $shadow;
+        margin-bottom: $base-unit * 2;
+        border-radius: $border-radius;
     }
 }
 
