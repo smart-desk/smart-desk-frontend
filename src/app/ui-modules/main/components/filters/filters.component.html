@@ -12,15 +12,10 @@
     >
         <ng-container #params></ng-container>
     </nz-collapse-panel>
-    <nz-collapse-panel
-        class="filters__panel"
-        [hidden]="!showSection[sectionType.LOCATION]"
-        nzExpandedIcon="caret-right"
-        nzHeader="Местоположение"
-        [nzActive]="true"
-    >
+
+    <div [hidden]="!showSection[sectionType.LOCATION]">
         <ng-container #location></ng-container>
-    </nz-collapse-panel>
+    </div>
 </nz-collapse>
 <div class="button">
     <button class="button button--sucsses" nz-button (click)="apply()">Применить {{ activeFilters ? activeFilters : '' }}</button>

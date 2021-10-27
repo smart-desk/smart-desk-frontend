@@ -1,5 +1,20 @@
 @import '~src/assets/styles/variables';
 
-.title {
-    margin-bottom: $base-unit;
+::ng-deep .ant-collapse-header {
+    padding: $base-unit $base-unit * 2;
+    background: white;
+    border-radius: $border-radius !important;
+}
+
+::ng-deep .ant-collapse-content {
+    border: none;
+}
+
+.location-filter {
+    &__panel {
+        background: white;
+        box-shadow: $shadow;
+        margin-bottom: $base-unit * 2;
+        border-radius: $border-radius !important;
+    }
 }

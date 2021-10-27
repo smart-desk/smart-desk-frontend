@@ -16,6 +16,7 @@ import { LocationModalComponent } from './location-modal/location-modal.componen
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 
 @NgModule({
     imports: [
@@ -34,6 +35,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
         NzRadioModule,
         NzTypographyModule,
         NzIconModule,
+        NzCollapseModule,
     ],
     providers: [LocationService],
     declarations: [LocationFormComponent, LocationParamsComponent, LocationViewComponent, LocationFilterComponent, LocationModalComponent],
