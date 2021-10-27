@@ -15,6 +15,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { PriceViewComponent } from './price-view/price-view.component';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { PriceFilterComponent } from './price-filter/price-filter.component';
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 
 @NgModule({
     imports: [
@@ -30,6 +31,7 @@ import { PriceFilterComponent } from './price-filter/price-filter.component';
         NzGridModule,
         NzSelectModule,
         NzCheckboxModule,
+        NzCollapseModule,
     ],
     providers: [PriceService],
     declarations: [PriceFormComponent, PriceParamsComponent, PriceViewComponent, PriceFilterComponent],
