@@ -25,6 +25,7 @@ import { ProductDataService } from './modules/product/product-data.service';
 const token = localStorage.getItem('token');
 const options: any = {
     path: '/socket',
+    autoConnect: false,
 };
 if (token) {
     options.transportOptions = {
