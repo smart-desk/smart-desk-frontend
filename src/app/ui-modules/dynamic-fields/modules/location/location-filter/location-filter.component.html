@@ -1,8 +1,11 @@
-<p class="title">{{ field?.title }}</p>
-<ng-container *ngIf="area">
-    <p>
-        {{ area.title }}<br />
-        Радиус: {{ area.radius }}
-    </p>
-</ng-container>
-<p><a (click)="openLocationModal()">Изменить</a></p>
+<nz-collapse class="location-filter" nzGhost>
+    <nz-collapse-panel class="location-filter__panel" nzExpandedIcon="caret-right" [nzHeader]="field?.title" [nzActive]="true">
+        <ng-container *ngIf="area">
+            <p>
+                {{ area.title }}<br />
+                Радиус: {{ area.radius }}
+            </p>
+        </ng-container>
+        <p><a (click)="openLocationModal()">Изменить</a></p>
+    </nz-collapse-panel>
+</nz-collapse>

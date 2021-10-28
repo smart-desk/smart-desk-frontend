@@ -32,15 +32,6 @@ export class FiltersComponent implements AfterViewInit, OnDestroy, OnChanges {
     @Input()
     filters: Filters;
 
-    sectionType = SectionType;
-
-    showSection: Record<SectionType, boolean> = {
-        params: true,
-        contacts: false,
-        location: true,
-        price: true,
-    };
-
     activeFilters = 0;
 
     @ViewChild('params', { read: ViewContainerRef })
@@ -142,8 +133,6 @@ export class FiltersComponent implements AfterViewInit, OnDestroy, OnChanges {
     ): AbstractFieldFilterComponent<any, any>[] | undefined {
         const fields = this.model.fields.filter(s => s.section === sectionType);
         if (!fields.length) {
-            this.showSection[sectionType] = false;
-            this.cdr.detectChanges();
             return;
         }
 

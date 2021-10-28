@@ -1,19 +1,16 @@
-<form class="sort-box" *ngIf="getPriceField()?.length" nz-form nzLayout="vertical">
-    <nz-form-item>
-        <nz-form-control>
-            <nz-form-label>Сортировать</nz-form-label>
-            <nz-select
-                class="sort-box__select"
-                (ngModelChange)="changeSelect($event)"
-                [ngModel]="selectedField"
-                [ngModelOptions]="{ standalone: true }"
-            >
-                <nz-option [nzValue]="DEFAULT_SORTING" nzLabel="По умолчанию"></nz-option>
-                <ng-container *ngFor="let field of getPriceField()">
-                    <nz-option [nzValue]="field.id + ':' + sortDirection.DESC" [nzLabel]="field.title + ': По убыванию'"></nz-option>
-                    <nz-option [nzValue]="field.id + ':' + sortDirection.ASC" [nzLabel]="field.title + ': По возрастанию'"></nz-option>
-                </ng-container>
-            </nz-select>
-        </nz-form-control>
-    </nz-form-item>
-</form>
+<nz-collapse class="sorting" nzGhost *ngIf="getPriceField()?.length">
+    <nz-collapse-panel class="sorting__panel" nzExpandedIcon="caret-right" nzHeader="Сортировать" [nzActive]="true">
+        <nz-select
+            class="sorting__select"
+            (ngModelChange)="changeSelect($event)"
+            [ngModel]="selectedField"
+            [ngModelOptions]="{ standalone: true }"
+        >
+            <nz-option [nzValue]="DEFAULT_SORTING" nzLabel="По умолчанию"></nz-option>
+            <ng-container *ngFor="let field of getPriceField()">
+                <nz-option [nzValue]="field.id + ':' + sortDirection.DESC" [nzLabel]="field.title + ': По убыванию'"></nz-option>
+                <nz-option [nzValue]="field.id + ':' + sortDirection.ASC" [nzLabel]="field.title + ': По возрастанию'"></nz-option>
+            </ng-container>
+        </nz-select>
+    </nz-collapse-panel>
+</nz-collapse>
