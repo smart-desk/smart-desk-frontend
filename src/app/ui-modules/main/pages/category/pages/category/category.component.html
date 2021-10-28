@@ -5,6 +5,8 @@
 </ng-template>
 
 <ng-template #main>
+    <app-category-buttons *ngIf="category" [category]="category"></app-category-buttons>
+
     <app-products [productsResponse]="productsResponse" [adCampaign]="sidebarAdCampaign" [promoProducts]="promoProducts"></app-products>
 
     <div *ngIf="!isEmptyObject(options?.filters) && productsResponse?.totalCount === 0">

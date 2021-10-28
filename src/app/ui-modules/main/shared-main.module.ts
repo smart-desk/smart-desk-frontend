@@ -42,6 +42,7 @@ import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { FooterComponent } from './components/footer/footer.component';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { CategoryMenuComponent } from './components/category-menu/category-menu.component';
+import { CategoryButtonsComponent } from './components/category-buttons/category-buttons.component';
 
 const components = [
     HeaderComponent,
@@ -63,6 +64,7 @@ const components = [
     PromoSetChooserComponent,
     FooterComponent,
     CategoryMenuComponent,
+    CategoryButtonsComponent,
 ];
 
 @NgModule({
