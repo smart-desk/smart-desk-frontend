@@ -11,7 +11,7 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import { Model } from '../../../../modules/model/models/model.entity';
-import { Filter, Filters } from '../../../../modules/product/models/filter';
+import { Filter } from '../../../../modules/product/models/filter';
 import { AbstractFieldFilterComponent } from '../../../dynamic-fields/models/abstract-field-filter.component';
 import { DynamicFieldsService } from '../../../dynamic-fields/dynamic-fields.service';
 import { SectionType } from '../../../../modules/field/models/field.entity';
@@ -30,7 +30,7 @@ export class FiltersComponent implements AfterViewInit, OnDestroy, OnChanges {
     model: Model;
 
     @Input()
-    filters: Filters;
+    filters: Filter<unknown>[];
 
     activeFilters = 0;
 
@@ -54,7 +54,7 @@ export class FiltersComponent implements AfterViewInit, OnDestroy, OnChanges {
     ) {
         this.productDataService.events$.pipe(takeUntil(this.destroy$)).subscribe(event => {
             if (event === ProductDataEvents.DROP_FILTERS) {
-                this.filters = {};
+                this.filters = [];
                 this.filterComponents.forEach(component => {
                     component.instance.dropFilters();
                     component.changeDetectorRef.detectChanges();
@@ -78,7 +78,7 @@ export class FiltersComponent implements AfterViewInit, OnDestroy, OnChanges {
     }
 
     apply(): void {
-        const filters = this.filterComponents
+        const filters: Filter<unknown>[] = this.filterComponents
             .map(c => c.instance.getFilterValue())
             .filter(f => {
                 if (!f) {
@@ -90,14 +90,13 @@ export class FiltersComponent implements AfterViewInit, OnDestroy, OnChanges {
                 if (f.getFilterParams()) {
                     return true;
                 }
-            })
-            .reduce((prev, cur) => ({ ...prev, ...cur?.getFilterObject() }), {});
+            }) as Filter<unknown>[];
 
         this.productDataService.applyFilters(filters);
     }
 
     dropFilters(): void {
-        this.filters = {};
+        this.filters = [];
         this.productDataService.dropFilters();
         this.filterComponents.forEach(component => {
             component.instance.dropFilters();
@@ -174,15 +173,11 @@ export class FiltersComponent implements AfterViewInit, OnDestroy, OnChanges {
     }
 
     private getFilterForField(fieldId: string): Filter<any> | null {
-        if (!this.filters) {
+        if (!this.filters?.length) {
             return null;
         }
 
-        return (
-            Object.entries(this.filters)
-                .map(([key, params]) => new Filter(key, params))
-                .find(filter => filter?.getFieldId() === fieldId) || null
-        );
+        return this.filters.find(filter => filter?.getFieldId() === fieldId) || null;
     }
 
     private setFilterListener(): void {

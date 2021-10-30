@@ -6,6 +6,7 @@ import { Category } from './modules/category/models/category.entity';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
 import { NzTreeNode } from 'ng-zorro-antd/tree';
 import arrayToTree from 'array-to-tree';
+import { Filter, Filters } from './modules/product/models/filter';
 
 export function createDynamicFieldProvider(type: FieldType, useClass: Type<AbstractFieldService>): Provider {
     DynamicFieldsMap.set(type, new InjectionToken<AbstractFieldService>(type));
@@ -71,4 +72,8 @@ export function findChildren(target: Category, categories: Category[]): Category
         return categories.filter(cat => !cat.parentId);
     }
     return categories.filter(cat => cat.parentId === target.id);
+}
+
+export function convertFiltersToObject(filters: Filter<unknown>[]): Filters {
+    return filters.reduce((prev, cur) => ({ ...prev, ...cur?.getFilterObject() }), {});
 }

@@ -1,8 +1,9 @@
 import { Product } from './product.entity';
 import { DynamicFieldsBaseCreateDto } from '../../field/models/dynamic-fields-base-create.dto';
 import { DynamicFieldsBaseUpdateDto } from '../../field/models/dynamic-fields-base-update.dto';
-import { Filters } from './filter';
+import { Filter } from './filter';
 import { Sorting } from './sorting.interface';
+import { convertFiltersToObject } from '../../../utils';
 
 export class CreateProductDto {
     category_id: string;
@@ -22,7 +23,7 @@ export class GetProductsDto {
     page?: number = GetProductsDto.DEFAULT_PAGE;
     limit?: number = GetProductsDto.DEFAULT_LIMIT;
     search?: string = GetProductsDto.DEFAULT_SEARCH;
-    filters?: Filters = {};
+    filters?: Filter<unknown>[] = [];
     sorting?: Sorting | null;
     user?: string;
 
@@ -43,10 +44,12 @@ export class GetProductsDto {
     }
 
     get queryParamFilters(): string | undefined {
-        if (!this.filters) {
+        const regularFilters = this.filters?.filter(f => !f.isHidden());
+        if (!regularFilters?.length) {
             return;
         }
-        return Object.keys(this.filters).length === 0 ? undefined : JSON.stringify(this.filters);
+        const filtersObject = convertFiltersToObject(regularFilters);
+        return JSON.stringify(filtersObject);
     }
 
     get queryParamSorting(): string | undefined {

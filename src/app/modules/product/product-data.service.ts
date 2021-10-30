@@ -4,7 +4,8 @@ import { ActivatedRoute, NavigationExtras, ParamMap, Router } from '@angular/rou
 import { ProductService } from './product.service';
 import { Sorting } from './models/sorting.interface';
 import { GetProductsDto, GetProductsResponseDto } from './models/product.dto';
-import { Filters } from './models/filter';
+import { Filter, Filters } from './models/filter';
+import { convertFiltersToObject } from '../../utils';
 
 export enum ProductDataEvents {
     DROP_FILTERS,
@@ -30,7 +31,6 @@ export class ProductDataService {
         this.categoryId = categoryId;
         this.options = options ? options : this.options;
         this.requestProducts();
-        this.updateQueryParams();
         this.events$.next(ProductDataEvents.LOAD);
     }
 
@@ -55,21 +55,31 @@ export class ProductDataService {
         this.events$.next(ProductDataEvents.SEARCH);
     }
 
-    applyFilters(filters: Filters): void {
-        this.options.filters = { ...filters };
+    applyFilters(filters: Filter<unknown>[]): void {
+        this.options.filters = [...filters];
         this.requestProducts();
         this.updateQueryParams();
+        this.updateHiddenFiltersStorage();
         this.events$.next(ProductDataEvents.APPLY_FILTERS);
     }
 
     dropFilters(): void {
-        this.options.filters = {};
+        this.options.filters = [];
         this.requestProducts();
         this.updateQueryParams();
+        this.updateHiddenFiltersStorage();
         this.events$.next(ProductDataEvents.DROP_FILTERS);
     }
 
-    parseQueryParams(queryParams: ParamMap): GetProductsDto {
+    getProductOptionsFromQueryAndStorage(queryParams: ParamMap): GetProductsDto {
+        const options = this.getProductOptionsFromQuery(queryParams);
+        const hiddenOptions = this.getProductOptionsFromStorage();
+
+        options.filters = [...(options?.filters || []), ...(hiddenOptions?.filters || [])];
+        return options;
+    }
+
+    private getProductOptionsFromQuery(queryParams: ParamMap): GetProductsDto {
         const resultParams = new GetProductsDto();
 
         if (queryParams.has('page')) {
@@ -90,15 +100,48 @@ export class ProductDataService {
 
         if (queryParams.has('filters')) {
             try {
-                resultParams.filters = JSON.parse(queryParams.get('filters') || '');
+                const queryFilters = JSON.parse(queryParams.get('filters') as string) as Filters;
+                resultParams.filters = this.getFiltersFromObject(queryFilters);
             } catch (e) {}
         }
+
         if (queryParams.has('sorting')) {
             try {
                 resultParams.sorting = JSON.parse(queryParams.get('sorting') || '');
             } catch (e) {}
         }
+
         return resultParams;
+    }
+
+    private getProductOptionsFromStorage(): GetProductsDto {
+        const resultParams = new GetProductsDto();
+
+        const hiddenFilters = this.getHiddenFilters() || {};
+        resultParams.filters = this.getFiltersFromObject(hiddenFilters, true);
+
+        return resultParams;
+    }
+
+    private updateHiddenFiltersStorage(): void {
+        if (this.options?.filters?.length) {
+            const filtersObject = convertFiltersToObject(this.options.filters.filter(f => f.isHidden()));
+            localStorage.setItem('filters', JSON.stringify(filtersObject));
+        } else {
+            localStorage.setItem('filters', '');
+        }
+    }
+
+    private getHiddenFilters(): Filters | null {
+        try {
+            const filters = localStorage.getItem('filters');
+            if (filters) {
+                return JSON.parse(filters) as Filters;
+            }
+            return null;
+        } catch (err) {
+            return null;
+        }
     }
 
     private requestProducts(): void {
@@ -121,5 +164,9 @@ export class ProductDataService {
         };
 
         this.router.navigate([], extras);
+    }
+
+    private getFiltersFromObject(filtersObject: Filters, hidden = false): Filter<unknown>[] {
+        return Object.keys(filtersObject).map(key => new Filter(key, filtersObject[key], hidden));
     }
 }

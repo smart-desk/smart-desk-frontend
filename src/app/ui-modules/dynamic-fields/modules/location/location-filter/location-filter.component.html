@@ -6,6 +6,7 @@
                 Радиус: {{ area.radius }}
             </p>
         </ng-container>
-        <p><a (click)="openLocationModal()">Изменить</a></p>
+        <a nz-button nzType="link" (click)="openLocationModal()">{{ area ? 'Изменить' : 'Указать' }}</a>
+        <a *ngIf="area" nz-button nzType="text" nzDanger (click)="dropFilters()">Сбросить</a>
     </nz-collapse-panel>
 </nz-collapse>
