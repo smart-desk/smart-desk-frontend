@@ -1,11 +1,9 @@
 @import 'src/assets/styles/variables';
 
-:host {
+.category-buttons {
     display: block;
     margin-bottom: $base-unit * 3;
-}
 
-.category-buttons {
     &__item {
         margin-right: $base-unit;
         border: none;
