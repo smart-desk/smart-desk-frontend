@@ -72,7 +72,7 @@ export class FormAdCampaignComponent implements OnInit, OnChanges {
     fileChanged(event: NzUploadChangeParam): void {
         if (event.type === 'success') {
             this.file = [event.file];
-            const fileUrl = this.file[0].response.url;
+            const fileUrl = this.file[0].response.key;
             (this.form.get('img') as AbstractControl).setValue(fileUrl);
         }
     }

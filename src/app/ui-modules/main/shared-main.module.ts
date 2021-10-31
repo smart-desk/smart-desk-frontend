@@ -15,7 +15,7 @@ import { ProductFormComponent } from './components/product-form/product-form.com
 import { SortingComponent } from './components/sorting/sorting.component';
 import { VkRedirectComponent } from './components/vk-redirect/vk-redirect.component';
 import { FormAdCampaignComponent } from './components/form-ad-campaign/form-ad-campaign.component';
-import { AdCampaignCardComponent } from '../../components/ad-campaign-card/ad-campaign-card.component';
+import { AdCardAdvertComponent } from '../../components/ad-card-advert/ad-card-advert.component';
 import { ContentLayoutComponent } from './components/content-layout/content-layout.component';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { RouterModule } from '@angular/router';
@@ -59,7 +59,7 @@ const components = [
     SortingComponent,
     VkRedirectComponent,
     FormAdCampaignComponent,
-    AdCampaignCardComponent,
+    AdCardAdvertComponent,
     ContentLayoutComponent,
     PromoSetChooserComponent,
     FooterComponent,

@@ -6,7 +6,7 @@ import { AdCampaignEntity, AdCampaignStatus } from '../../../../modules/ad/model
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { AdCampaignReasonFormComponent } from '../../components/ad-campaign-reason-form/ad-campaign-reason-form.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdCampaignCardComponent } from '../../../../components/ad-campaign-card/ad-campaign-card.component';
+import { AdCardAdvertComponent } from '../../../../components/ad-card-advert/ad-card-advert.component';
 
 @Component({
     selector: 'app-ad-campaign-list',
@@ -42,8 +42,8 @@ export class AdCampaignListComponent implements OnInit, OnDestroy {
 
     viewAdCampaign(id: string): void {
         const viewedAd = this.adCampaigns.find(ad => ad.id === id);
-        const modalRef: NzModalRef = this.modalService.create<AdCampaignCardComponent>({
-            nzContent: AdCampaignCardComponent,
+        const modalRef: NzModalRef = this.modalService.create<AdCardAdvertComponent>({
+            nzContent: AdCardAdvertComponent,
             nzComponentParams: { campaign: viewedAd },
             nzFooter: [
                 {

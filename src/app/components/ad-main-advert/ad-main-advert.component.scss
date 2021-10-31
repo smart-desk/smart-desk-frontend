@@ -1,0 +1,9 @@
+@import '../../../assets/styles/variables';
+
+.main-advert {
+    height: $base-unit * 14;
+
+    img {
+        height: 100%;
+    }
+}
