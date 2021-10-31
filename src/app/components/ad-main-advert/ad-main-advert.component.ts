@@ -9,5 +9,5 @@ import { AdCampaignCurrentDto } from '../../modules/ad/models/ad-campaign-curren
 })
 export class AdMainAdvertComponent {
     @Input()
-    adCampaign: AdCampaignCurrentDto;
+    campaign: AdCampaignCurrentDto;
 }
