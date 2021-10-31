@@ -7,7 +7,14 @@
 <ng-template #main>
     <app-category-buttons *ngIf="category" [category]="category"></app-category-buttons>
 
-    <app-products [productsResponse]="productsResponse" [adCampaign]="sidebarAdCampaign" [promoProducts]="promoProducts"></app-products>
+    <app-loading *ngIf="loading"></app-loading>
+
+    <app-products
+        *ngIf="!loading"
+        [productsResponse]="productsResponse"
+        [adCampaign]="sidebarAdCampaign"
+        [promoProducts]="promoProducts"
+    ></app-products>
 
     <div *ngIf="!isEmptyObject(options?.filters) && productsResponse?.totalCount === 0">
         <h2>Ничего не нашли по заданным фильтрам</h2>

@@ -43,6 +43,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { CategoryMenuComponent } from './components/category-menu/category-menu.component';
 import { CategoryButtonsComponent } from './components/category-buttons/category-buttons.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 const components = [
     HeaderComponent,
@@ -65,6 +66,7 @@ const components = [
     FooterComponent,
     CategoryMenuComponent,
     CategoryButtonsComponent,
+    LoadingComponent,
 ];
 
 @NgModule({
