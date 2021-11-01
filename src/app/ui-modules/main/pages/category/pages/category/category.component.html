@@ -1,6 +1,7 @@
 <app-content-layout [advert]="advert" [title]="category?.name" [main]="main" [right]="right"></app-content-layout>
 
 <ng-template #advert>
+    <app-breadcrumb [steps]="breadcrumbs"></app-breadcrumb>
     <app-main-advert *ngIf="mainAdCampaign" [adCampaign]="mainAdCampaign"></app-main-advert>
 </ng-template>
 

@@ -1,0 +1,5 @@
+<nz-breadcrumb class="breadcrumb-container">
+    <nz-breadcrumb-item *ngFor="let step of steps">
+        <a [routerLink]="step.navigateUrl">{{ step.name }}</a>
+    </nz-breadcrumb-item>
+</nz-breadcrumb>

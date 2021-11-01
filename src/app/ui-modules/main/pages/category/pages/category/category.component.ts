@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, ParamMap, Router, RouterEvent } from '@angular/router';
-import { Subject } from 'rxjs';
-import { filter, pairwise, startWith, switchMap, takeUntil } from 'rxjs/operators';
+import { of, Subject } from 'rxjs';
+import { filter, pairwise, startWith, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { isEmpty } from 'lodash';
 import { GetProductsDto, GetProductsResponseDto } from '../../../../../../modules/product/models/product.dto';
 import { Category } from '../../../../../../modules/category/models/category.entity';
@@ -14,6 +14,7 @@ import { AdService } from '../../../../../../modules/ad/ad.service';
 import { AdCampaignCurrentDto } from '../../../../../../modules/ad/models/ad-campaign-current.dto';
 import { Product } from '../../../../../../modules/product/models/product.entity';
 import { PromoService } from '../../../../../../modules/promo/promo.service';
+import { BreadcrumbStep } from '../../../../components/breadcrumb/breadcrumbs.component';
 
 @Component({
     selector: 'app-category',
@@ -29,6 +30,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
     category: Category;
     options: GetProductsDto;
     promoProducts: Product[];
+    breadcrumbs: BreadcrumbStep[];
     private destroy$ = new Subject();
     constructor(
         private promoService: PromoService,
@@ -55,6 +57,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
                     this.getPromoProducts(categoryId);
                     this.options = this.productDataService.parseQueryParams(this.route.snapshot.queryParamMap);
                     this.productDataService.loadProducts(categoryId, this.options);
+                    this.formBreadcrumbs(categoryId);
                     return this.categoryService.getCategory(categoryId);
                 }),
                 switchMap(category => {
@@ -100,5 +103,37 @@ export class CategoryComponent implements OnInit, OnDestroy {
             this.promoProducts = res;
             this.cd.detectChanges();
         });
+    }
+
+    private formBreadcrumbs(id: string): void {
+        let parentCat: Category;
+        let childCat: Category;
+        this.categoryService
+            .getCategory(id)
+            .pipe(
+                tap(cat => {
+                    childCat = cat;
+                }),
+                switchMap(cat => {
+                    if (cat.parentId) {
+                        return this.categoryService.getCategory(cat.parentId);
+                    }
+                    return of(null);
+                })
+            )
+            .subscribe(cat => {
+                if (cat) {
+                    parentCat = cat;
+                }
+
+                this.breadcrumbs = [{ name: 'Главная', navigateUrl: ['/'] }];
+                [parentCat, childCat].forEach(step => {
+                    if (step) {
+                        this.breadcrumbs.push({ name: step.name, navigateUrl: ['/', 'category', step.id] });
+                    }
+                });
+                this.breadcrumbs = [...this.breadcrumbs];
+                this.cd.detectChanges();
+            });
     }
 }
