@@ -42,6 +42,8 @@ import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { FooterComponent } from './components/footer/footer.component';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { CategoryMenuComponent } from './components/category-menu/category-menu.component';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 
 const components = [
     HeaderComponent,
@@ -63,6 +65,7 @@ const components = [
     PromoSetChooserComponent,
     FooterComponent,
     CategoryMenuComponent,
+    BreadcrumbComponent,
 ];
 
 @NgModule({
@@ -94,6 +97,7 @@ const components = [
         ImagekitioAngularModule,
         NzAffixModule,
         NzTypographyModule,
+        NzBreadCrumbModule,
     ],
 })
 export class SharedMainModule {}

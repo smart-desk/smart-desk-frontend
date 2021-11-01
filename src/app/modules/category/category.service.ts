@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 // todo we can do it on backend
 import { Category } from './models/category.entity';
 import { CreateCategoryDto } from './models/create-category.dto';
 import { UpdateCategoryDto } from './models/update-category.dto';
+import { map, switchMap, tap } from 'rxjs/operators';
+import { BreadcrumbStep } from '../../ui-modules/main/components/breadcrumb/breadcrumb.component';
 
 @Injectable()
 export class CategoryService {
@@ -43,5 +45,34 @@ export class CategoryService {
      */
     deleteCategory(id: string): Observable<unknown> {
         return this.http.delete<Category>(`/categories/${id}`);
+    }
+
+    getBreadcrumbs(id: string): Observable<BreadcrumbStep[]> {
+        let parentCat: Category;
+        let childCat: Category;
+        return this.getCategory(id).pipe(
+            tap(cat => {
+                childCat = cat;
+            }),
+            switchMap(cat => {
+                if (cat.parentId) {
+                    return this.getCategory(cat.parentId);
+                }
+                return of(null);
+            }),
+            map(cat => {
+                if (cat) {
+                    parentCat = cat;
+                }
+
+                const breadcrumbs = [{ name: 'Главная', navigateUrl: ['/'] }];
+                [parentCat, childCat].forEach(step => {
+                    if (step) {
+                        breadcrumbs.push({ name: step.name, navigateUrl: ['/', 'category', step.id] });
+                    }
+                });
+                return breadcrumbs;
+            })
+        );
     }
 }

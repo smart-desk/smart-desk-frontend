@@ -27,6 +27,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ProfileComponent implements OnInit, OnDestroy {
     profile: User | undefined;
     verificationRequestId: string;
+    breadcrumb = [
+        { name: 'Главная', navigateUrl: '/' },
+        { name: 'Профиль', navigateUrl: '/profile' },
+    ];
     private destroy$ = new Subject();
 
     constructor(
