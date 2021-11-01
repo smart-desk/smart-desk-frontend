@@ -5,7 +5,6 @@ import { ProductService } from './product.service';
 import { Sorting } from './models/sorting.interface';
 import { GetProductsDto, GetProductsResponseDto } from './models/product.dto';
 import { Filter, Filters } from './models/filter';
-import { convertFiltersToObject } from '../../utils';
 
 export enum ProductDataEvents {
     DROP_FILTERS,
@@ -59,7 +58,6 @@ export class ProductDataService {
         this.options.filters = [...filters];
         this.requestProducts();
         this.updateQueryParams();
-        this.updateHiddenFiltersStorage();
         this.events$.next(ProductDataEvents.APPLY_FILTERS);
     }
 
@@ -67,19 +65,10 @@ export class ProductDataService {
         this.options.filters = [];
         this.requestProducts();
         this.updateQueryParams();
-        this.updateHiddenFiltersStorage();
         this.events$.next(ProductDataEvents.DROP_FILTERS);
     }
 
     getProductOptionsFromQueryAndStorage(queryParams: ParamMap): GetProductsDto {
-        const options = this.getProductOptionsFromQuery(queryParams);
-        const hiddenOptions = this.getProductOptionsFromStorage();
-
-        options.filters = [...(options?.filters || []), ...(hiddenOptions?.filters || [])];
-        return options;
-    }
-
-    private getProductOptionsFromQuery(queryParams: ParamMap): GetProductsDto {
         const resultParams = new GetProductsDto();
 
         if (queryParams.has('page')) {
@@ -114,36 +103,6 @@ export class ProductDataService {
         return resultParams;
     }
 
-    private getProductOptionsFromStorage(): GetProductsDto {
-        const resultParams = new GetProductsDto();
-
-        const hiddenFilters = this.getHiddenFilters() || {};
-        resultParams.filters = this.getFiltersFromObject(hiddenFilters, true);
-
-        return resultParams;
-    }
-
-    private updateHiddenFiltersStorage(): void {
-        if (this.options?.filters?.length) {
-            const filtersObject = convertFiltersToObject(this.options.filters.filter(f => f.isHidden()));
-            localStorage.setItem('filters', JSON.stringify(filtersObject));
-        } else {
-            localStorage.setItem('filters', '');
-        }
-    }
-
-    private getHiddenFilters(): Filters | null {
-        try {
-            const filters = localStorage.getItem('filters');
-            if (filters) {
-                return JSON.parse(filters) as Filters;
-            }
-            return null;
-        } catch (err) {
-            return null;
-        }
-    }
-
     private requestProducts(): void {
         const req = this.categoryId
             ? this.productService.getProductsForCategory(this.categoryId, this.options)
@@ -167,6 +126,6 @@ export class ProductDataService {
     }
 
     private getFiltersFromObject(filtersObject: Filters, hidden = false): Filter<unknown>[] {
-        return Object.keys(filtersObject).map(key => new Filter(key, filtersObject[key], hidden));
+        return Object.keys(filtersObject).map(key => new Filter(key, filtersObject[key]));
     }
 }

@@ -9,7 +9,7 @@ export interface FilterObject<T> {
 }
 
 export class Filter<T> {
-    constructor(private fieldId: string, private params: T, private hidden = false) {}
+    constructor(private fieldId: string, private params: T) {}
 
     getFieldId(): string {
         return this.fieldId;
@@ -21,9 +21,5 @@ export class Filter<T> {
 
     getFilterObject(): FilterObject<T> {
         return { [this.fieldId]: this.params };
-    }
-
-    isHidden(): boolean {
-        return this.hidden;
     }
 }

@@ -44,11 +44,10 @@ export class GetProductsDto {
     }
 
     get queryParamFilters(): string | undefined {
-        const regularFilters = this.filters?.filter(f => !f.isHidden());
-        if (!regularFilters?.length) {
+        if (!this.filters?.length) {
             return;
         }
-        const filtersObject = convertFiltersToObject(regularFilters);
+        const filtersObject = convertFiltersToObject(this.filters);
         return JSON.stringify(filtersObject);
     }
 

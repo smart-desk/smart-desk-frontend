@@ -79,7 +79,7 @@ export class LocationFilterComponent extends AbstractFieldFilterComponent<Locati
             lng: this.area.lng,
             radius: this.area.radius,
         };
-        return new Filter(this.field.id, filterParams, true);
+        return new Filter(this.field.id, filterParams);
     }
 
     dropFilters() {
