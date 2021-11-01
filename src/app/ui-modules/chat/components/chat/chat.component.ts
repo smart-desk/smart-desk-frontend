@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { filter, take, takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ChatService } from '../../services/chat.service';
 import { Chat } from '../../models/chat.entity';
@@ -8,6 +8,7 @@ import { CreateChatMessageDto } from '../../models/create-chat-message.dto';
 import { User } from '../../../../modules/user/models/user.entity';
 import { Product } from '../../../../modules/product/models/product.entity';
 import { UserService } from '../../../../modules/user/user.service';
+import { LoginService } from '../../../../modules/login/login.service';
 
 @Component({
     selector: 'app-chat',
@@ -16,6 +17,7 @@ import { UserService } from '../../../../modules/user/user.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatComponent implements OnDestroy, OnInit {
+    loading: boolean;
     chats: Chat[];
     messages: ChatMessage[] = [];
     activeChat: Chat;
@@ -29,13 +31,27 @@ export class ChatComponent implements OnDestroy, OnInit {
 
     private destroy$ = new Subject();
 
-    constructor(private chatService: ChatService, private cdr: ChangeDetectorRef, private userService: UserService) {
-        this.chatService.connection$
-            .pipe(
-                takeUntil(this.destroy$),
-                filter(res => res)
-            )
-            .subscribe(() => this.getInitialChats());
+    constructor(
+        private chatService: ChatService,
+        private cdr: ChangeDetectorRef,
+        private userService: UserService,
+        private loginService: LoginService
+    ) {
+        this.loginService.login$.pipe(takeUntil(this.destroy$)).subscribe(user => {
+            if (user) {
+                this.currentUser = user;
+            }
+        });
+    }
+
+    ngOnInit(): void {
+        this.chatService.updateHeaders();
+        this.chatService.disconnect();
+        this.chatService.connect();
+
+        this.chatService.connection$.pipe(takeUntil(this.destroy$)).subscribe(() => {
+            this.getInitialChats();
+        });
 
         this.chatService.newChat$.pipe(takeUntil(this.destroy$)).subscribe(chat => {
             chat.unreadMessagesCount = 0;
@@ -63,19 +79,10 @@ export class ChatComponent implements OnDestroy, OnInit {
         });
     }
 
-    ngOnInit(): void {
-        this.userService
-            .getCurrentUser()
-            .pipe(take(1))
-            .subscribe(user => {
-                this.currentUser = user;
-                this.cdr.detectChanges();
-            });
-    }
-
     ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
+        this.chatService.disconnect();
     }
 
     setActiveChat(chat: Chat): void {
@@ -111,6 +118,8 @@ export class ChatComponent implements OnDestroy, OnInit {
     }
 
     private getInitialChats(): void {
+        this.loading = true;
+        this.cdr.markForCheck();
         this.chatService
             .getProfileChats()
             .pipe(take(1))
@@ -132,6 +141,7 @@ export class ChatComponent implements OnDestroy, OnInit {
                 if (activeChat) {
                     this.setActiveChat(activeChat);
                 }
+                this.loading = false;
                 this.cdr.detectChanges();
             });
     }
@@ -140,7 +150,7 @@ export class ChatComponent implements OnDestroy, OnInit {
         const chat = new Chat();
         chat.productId = this.product.id;
         chat.productData = this.product;
-        chat.user1 = this.currentUser.id;
+        chat.user1 = this.currentUser?.id;
         chat.user1Data = this.currentUser;
         chat.user2 = this.user.id;
         chat.user2Data = this.user;

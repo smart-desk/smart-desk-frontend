@@ -1,22 +1,24 @@
 @import '../../../../../assets/styles/variables';
 
-.sort-box {
-    border: 1px solid $border-color;
-    border-radius: $border-radius;
-    padding: $base-unit * 1.5 $base-unit * 2;
+::ng-deep .ant-collapse-header {
+    padding: $base-unit $base-unit * 2;
+    background: white;
+    border-radius: $border-radius !important;
+}
 
-    ::ng-deep &__select,
-    .ant-select-selector,
-    .ant-select-selection-item {
-        font-size: $font-16;
-        margin-top: $base-unit;
+::ng-deep .ant-collapse-content {
+    border: none;
+}
+
+.sorting {
+    &__panel {
+        background: white;
+        box-shadow: $shadow;
+        margin-bottom: $base-unit * 2;
+        border-radius: $border-radius !important;
     }
 
-    ::ng-deep .ant-select-selector {
-        background-color: $background;
-    }
-
-    ::ng-deep .ant-select-arrow {
-        color: black;
+    &__select {
+        width: 100%;
     }
 }

@@ -31,15 +31,15 @@ import { AuthService } from './modules/auth/auth.service';
 import { CategoryService } from './modules/category/category.service';
 import { ProductService } from './modules/product/product.service';
 import { UserService } from './modules/user/user.service';
-import { ProductDataService } from './modules/product/product-data.service';
 import { FieldService } from './modules/field/field.service';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzCardModule } from 'ng-zorro-antd/card';
-import { MainAdvertComponent } from './components/main-advert/main-advert.component';
+import { AdMainAdvertComponent } from './components/ad-main-advert/ad-main-advert.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { ImagekitioAngularModule } from 'imagekitio-angular';
 
 const NZModules = [
     NzFormModule,
@@ -79,7 +79,7 @@ const components = [
     LoginComponent,
     ForbiddenComponent,
     UnauthorizedComponent,
-    MainAdvertComponent,
+    AdMainAdvertComponent,
     NotFoundComponent,
 ];
 
@@ -105,7 +105,16 @@ const interceptors = [
 ];
 
 @NgModule({
-    imports: [...NZModules, CommonModule, FormsModule, ReactiveFormsModule, DynamicFieldsModule, RouterModule, ChatModule],
+    imports: [
+        ...NZModules,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        DynamicFieldsModule,
+        RouterModule,
+        ChatModule,
+        ImagekitioAngularModule,
+    ],
     exports: [...components],
     declarations: [...components],
     providers: [...services, ...interceptors],

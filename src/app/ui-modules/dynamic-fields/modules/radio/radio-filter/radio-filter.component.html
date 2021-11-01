@@ -1,6 +1,6 @@
 <form nz-form nzLayout="vertical" [formGroup]="form">
-    <nz-form-label class="label">{{ field?.title }}</nz-form-label>
-    <div class="radio" formArrayName="radios" *ngFor="let radio of radios.controls; let i = index">
+    <nz-form-label>{{ field?.title }}</nz-form-label>
+    <div class="radio-filter__item" formArrayName="radios" *ngFor="let radio of radios.controls; let i = index">
         <label nz-checkbox [formControlName]="i"> {{ field.params.radios[i].label }}</label>
     </div>
 </form>

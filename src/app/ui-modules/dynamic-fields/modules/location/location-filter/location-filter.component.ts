@@ -16,7 +16,7 @@ import { Area } from '../location.class';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LocationFilterComponent extends AbstractFieldFilterComponent<LocationParamsDto, LocationFilterDto> implements OnInit {
-    area: Area;
+    area: Area | undefined;
     private geocoder: google.maps.Geocoder;
 
     constructor(private mapsAPILoader: MapsAPILoader, private modalService: NzModalService, private cd: ChangeDetectorRef) {
@@ -24,21 +24,33 @@ export class LocationFilterComponent extends AbstractFieldFilterComponent<Locati
     }
 
     ngOnInit() {
-        if (!this.filter || !this.filter.getFilterParams()) {
+        const areaFromStorage = localStorage.getItem(this.field.id);
+        if (this.filter?.getFilterParams()) {
+            this.area = new Area();
+            this.area.radius = this.filter.getFilterParams().radius;
+            this.area.lat = this.filter.getFilterParams().lat;
+            this.area.lng = this.filter.getFilterParams().lng;
+        } else if (areaFromStorage) {
+            try {
+                this.area = JSON.parse(areaFromStorage) as Area;
+            } catch (err) {
+                return;
+            }
+        } else {
             return;
         }
 
-        this.area = new Area();
-        this.area.radius = this.filter.getFilterParams().radius;
-        this.area.lat = this.filter.getFilterParams().lat;
-        this.area.lng = this.filter.getFilterParams().lng;
-
         fromPromise(this.mapsAPILoader.load()).subscribe(() => {
+            if (!this.area) {
+                return;
+            }
             this.geocoder = new google.maps.Geocoder();
             this.geocoder.geocode({ location: { lat: this.area.lat, lng: this.area.lng } }, (results, status) => {
                 if (status === 'OK') {
                     const place = results[0];
-                    this.area.title = place?.formatted_address;
+                    if (this.area) {
+                        this.area.title = place?.formatted_address;
+                    }
                 } else {
                     // todo should throw sentry message
                     console.warn(status);
@@ -71,7 +83,7 @@ export class LocationFilterComponent extends AbstractFieldFilterComponent<Locati
     }
 
     dropFilters() {
-        this.area = {} as Area;
+        this.area = undefined;
         this.cd.detectChanges();
     }
 
@@ -84,7 +96,7 @@ export class LocationFilterComponent extends AbstractFieldFilterComponent<Locati
         });
 
         modalRef.afterClose.subscribe((area: Area) => {
-            if (area) {
+            if (area && area.lat && area.lng) {
                 this.area = area;
                 this.cd.detectChanges();
             }

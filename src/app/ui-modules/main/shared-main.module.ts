@@ -15,7 +15,7 @@ import { ProductFormComponent } from './components/product-form/product-form.com
 import { SortingComponent } from './components/sorting/sorting.component';
 import { VkRedirectComponent } from './components/vk-redirect/vk-redirect.component';
 import { FormAdCampaignComponent } from './components/form-ad-campaign/form-ad-campaign.component';
-import { AdCampaignCardComponent } from '../../components/ad-campaign-card/ad-campaign-card.component';
+import { AdCardAdvertComponent } from '../../components/ad-card-advert/ad-card-advert.component';
 import { ContentLayoutComponent } from './components/content-layout/content-layout.component';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { RouterModule } from '@angular/router';
@@ -42,6 +42,8 @@ import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { FooterComponent } from './components/footer/footer.component';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { CategoryMenuComponent } from './components/category-menu/category-menu.component';
+import { CategoryButtonsComponent } from './components/category-buttons/category-buttons.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 const components = [
     HeaderComponent,
@@ -58,11 +60,13 @@ const components = [
     SortingComponent,
     VkRedirectComponent,
     FormAdCampaignComponent,
-    AdCampaignCardComponent,
+    AdCardAdvertComponent,
     ContentLayoutComponent,
     PromoSetChooserComponent,
     FooterComponent,
     CategoryMenuComponent,
+    CategoryButtonsComponent,
+    LoadingComponent,
 ];
 
 @NgModule({

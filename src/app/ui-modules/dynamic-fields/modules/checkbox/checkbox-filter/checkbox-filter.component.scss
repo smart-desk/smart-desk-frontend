@@ -1,0 +1,12 @@
+@import '~src/assets/styles/variables';
+
+:host {
+    display: block;
+    margin-bottom: $base-unit * 3;
+}
+
+.checkbox-filter {
+    &__item {
+        margin-bottom: $base-unit;
+    }
+}

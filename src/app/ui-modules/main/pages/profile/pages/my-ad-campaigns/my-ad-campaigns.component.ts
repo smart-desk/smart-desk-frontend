@@ -5,10 +5,11 @@ import { User } from '../../../../../../modules/user/models/user.entity';
 import { AdService } from '../../../../../../modules/ad/ad.service';
 import { UserService } from '../../../../../../modules/user/user.service';
 import { StripeService } from '../../../../../../modules/stripe/stripe.service';
-import { AdCampaignEntity, AdCampaignStatus } from '../../../../../../modules/ad/models/ad-campaign.entity';
+import { AdCampaignEntity, AdCampaignStatus, AdCampaignType } from '../../../../../../modules/ad/models/ad-campaign.entity';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { Router } from '@angular/router';
-import { AdCampaignCardComponent } from '../../../../../../components/ad-campaign-card/ad-campaign-card.component';
+import { AdCardAdvertComponent } from '../../../../../../components/ad-card-advert/ad-card-advert.component';
+import { AdMainAdvertComponent } from '../../../../../../components/ad-main-advert/ad-main-advert.component';
 
 @Component({
     selector: 'app-ad-campaigns',
@@ -61,11 +62,10 @@ export class MyAdCampaignsComponent implements OnInit {
         this.router.navigate([`./profile/my-ad-campaigns/${id}/update`]);
     }
 
-    showAdCampaign(id: string): void {
-        const viewedAd = this.adCampaigns.find(ad => ad.id === id);
-        const modalRef: NzModalRef = this.modalService.create<AdCampaignCardComponent>({
-            nzContent: AdCampaignCardComponent,
-            nzComponentParams: { campaign: viewedAd },
+    showAdCampaign(campaign: AdCampaignEntity): void {
+        const modalRef: NzModalRef = this.modalService.create<AdCardAdvertComponent>({
+            nzContent: campaign.type === AdCampaignType.MAIN ? AdMainAdvertComponent : AdCardAdvertComponent,
+            nzComponentParams: { campaign },
             nzFooter: null,
         });
     }
