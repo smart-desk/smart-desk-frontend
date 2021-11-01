@@ -9,7 +9,7 @@
             <tr>
                 <th nzCustomFilter>
                     Имя
-                    <nz-filter-trigger [(nzVisible)]="visibleFilter" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
+                    <nz-filter-trigger [(nzVisible)]="isVisibleFilter" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
                         <i nz-icon nzType="search"></i>
                     </nz-filter-trigger>
                 </th>
