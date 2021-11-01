@@ -62,12 +62,14 @@ export class ProductFormComponent implements OnInit, AfterViewInit {
     }
 
     protected populateFormWithInputs(fields: FieldEntity[]): void {
-        fields.forEach(field => {
-            const component = this.resolveFieldComponent(field);
-            if (component) {
-                this.components.push(component);
-            }
-        });
+        fields
+            .sort((a, b) => a.order - b.order)
+            .forEach(field => {
+                const component = this.resolveFieldComponent(field);
+                if (component) {
+                    this.components.push(component);
+                }
+            });
     }
 
     protected resolveFieldComponent(field: FieldEntity): ComponentRef<AbstractFieldFormComponent<any, any>> | null {
