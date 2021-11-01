@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GetProductsDto, GetProductsResponseDto } from '../../../../../../modules/product/models/product.dto';
-import { BookmarksStoreService } from '../../../../../../modules/bookmarks/bookmarks-store.service';
 import { User } from '../../../../../../modules/user/models/user.entity';
 import { UserService } from '../../../../../../modules/user/user.service';
 import { ProductService } from '../../../../../../modules/product/product.service';
+import { ProductStatus } from '../../../../../../modules/product/models/product-status.enum';
+import { forkJoin } from 'rxjs';
 
 @Component({
     selector: 'app-user',
@@ -18,11 +19,10 @@ export class UserComponent implements OnInit {
     completedProducts: GetProductsResponseDto;
 
     constructor(
-        private route: ActivatedRoute,
-        private userService: UserService,
-        private productService: ProductService,
-        private cdr: ChangeDetectorRef,
-        private bookmarkStoreService: BookmarksStoreService
+        private readonly route: ActivatedRoute,
+        private readonly userService: UserService,
+        private readonly productService: ProductService,
+        private readonly cdr: ChangeDetectorRef
     ) {}
 
     ngOnInit(): void {
@@ -33,16 +33,21 @@ export class UserComponent implements OnInit {
                 this.cdr.detectChanges();
             });
 
-            const options = new GetProductsDto();
-            options.user = userId;
+            const activeProductOptions = new GetProductsDto();
+            activeProductOptions.user = userId;
+            activeProductOptions.status = ProductStatus.ACTIVE;
+            const completedProductOptions = new GetProductsDto();
+            completedProductOptions.user = userId;
+            completedProductOptions.status = ProductStatus.COMPLETED;
+
+            forkJoin([
+                this.productService.getProducts(activeProductOptions),
+                this.productService.getProducts(completedProductOptions),
+            ]).subscribe(([activeProduct, completedProduct]) => {
+                this.productResponse = activeProduct;
+                this.completedProducts = completedProduct;
+                this.cdr.detectChanges();
+            });
         }
-    }
-
-    createBookmark(productId: string) {
-        this.bookmarkStoreService.createBookmark(productId);
-    }
-
-    deleteBookmark(productId: string) {
-        this.bookmarkStoreService.deleteBookmark(productId);
     }
 }

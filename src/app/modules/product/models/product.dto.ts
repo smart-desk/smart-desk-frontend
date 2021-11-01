@@ -4,6 +4,7 @@ import { DynamicFieldsBaseUpdateDto } from '../../field/models/dynamic-fields-ba
 import { Filter } from './filter';
 import { Sorting } from './sorting.interface';
 import { convertFiltersToObject } from '../../../utils';
+import { ProductStatus } from './product-status.enum';
 
 export class CreateProductDto {
     category_id: string;
@@ -26,6 +27,7 @@ export class GetProductsDto {
     filters?: Filter<unknown>[] = [];
     sorting?: Sorting | null;
     user?: string;
+    status?: ProductStatus;
 
     static DEFAULT_PAGE = 1;
     static DEFAULT_LIMIT = 20;

@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as dayjs from 'dayjs';
-import { Observable, Subject, zip } from 'rxjs';
+import { Subject, zip } from 'rxjs';
 import { Category } from '../../../../modules/category/models/category.entity';
 import { GetProductsDto, GetProductsResponseDto } from '../../../../modules/product/models/product.dto';
 import { ProductService } from '../../../../modules/product/product.service';
 import { CategoryService } from '../../../../modules/category/category.service';
 import { ProductStatus } from '../../../../modules/product/models/product-status.enum';
-import { takeUntil, tap } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-product-list',
@@ -33,24 +33,20 @@ export class ProductListComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        this.route.queryParamMap
-            .pipe(
-                takeUntil(this.destroy$),
-                tap(paramMap => {
-                    this.status = paramMap.get('status') as ProductStatus;
-                    this.cd.detectChanges();
-                })
-            )
-            .subscribe(paramMap => {
-                const options = new GetProductsDto();
-                if (paramMap.get('page')) {
-                    options.page = Number(paramMap.get('page'));
-                }
-                this.cd.detectChanges();
-                this.getProducts(options);
-            });
+        this.route.queryParamMap.pipe(takeUntil(this.destroy$)).subscribe(paramMap => {
+            this.status = paramMap.get('status') as ProductStatus;
+            const options = new GetProductsDto();
+            if (paramMap.get('page')) {
+                options.page = Number(paramMap.get('page'));
+            }
+            options.status = this.status;
+            this.getProducts(options);
+        });
 
-        this.categoryService.getCategories().subscribe(categories => (this.categories = categories));
+        this.categoryService.getCategories().subscribe(categories => {
+            this.categories = categories;
+            this.cd.detectChanges();
+        });
     }
 
     ngOnDestroy() {
@@ -75,7 +71,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
         zip(...requests).subscribe(() => {
             this.selectedItems.clear();
             this.cd.detectChanges();
-            this.getProducts();
+            this.getProducts(this.getQueryStatusOptions());
         });
     }
 
@@ -88,13 +84,13 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
     block(id: string): void {
         this.productService.blockProduct(id).subscribe(() => {
-            this.getProducts();
+            this.getProducts(this.getQueryStatusOptions());
         });
     }
 
     publish(id: string): void {
         this.productService.publishProduct(id).subscribe(() => {
-            this.getProducts();
+            this.getProducts(this.getQueryStatusOptions());
         });
     }
 
@@ -123,30 +119,19 @@ export class ProductListComponent implements OnInit, OnDestroy {
     }
 
     changeStatus(): void {
+        // todo: add debounce
         this.selectedItems.clear();
-        this.cd.detectChanges();
         this.router.navigate([], { queryParams: { status: this.status } });
     }
 
-    private getProducts(options?: GetProductsDto): void {
-        let req: Observable<GetProductsResponseDto>;
-        switch (this.status) {
-            case ProductStatus.PENDING:
-                req = this.productService.getPending(options);
-                break;
-            case ProductStatus.BLOCKED:
-                req = this.productService.getBlocked(options);
-                break;
-            case ProductStatus.COMPLETED:
-                req = this.productService.getCompleted(options);
-                break;
-            case ProductStatus.ACTIVE:
-            default:
-                req = this.productService.getProducts(options);
-                break;
-        }
+    private getQueryStatusOptions(): GetProductsDto {
+        const options = new GetProductsDto();
+        options.status = this.status;
+        return options;
+    }
 
-        req.subscribe(res => {
+    private getProducts(options: GetProductsDto): void {
+        this.productService.getProducts(options).subscribe(res => {
             this.productResponse = res;
             this.cd.detectChanges();
         });
