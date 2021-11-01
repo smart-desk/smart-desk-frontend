@@ -34,3 +34,8 @@ img {
     height: calc(100vh - 64px);
     padding-bottom: 0;
 }
+
+// workaround for google autocomplete issue
+.cdk-global-scrollblock {
+    position: static;
+}

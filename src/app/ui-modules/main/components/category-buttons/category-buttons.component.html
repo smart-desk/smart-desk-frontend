@@ -1,10 +1,12 @@
-<button
-    class="category-buttons__item"
-    nz-button
-    nzType="default"
-    nzShape="round"
-    *ngFor="let cat of children"
-    (click)="categorySelect(cat)"
->
-    {{ cat.name }}
-</button>
+<div *ngIf="children?.length" class="category-buttons">
+    <button
+        class="category-buttons__item"
+        nz-button
+        nzType="default"
+        nzShape="round"
+        *ngFor="let cat of children"
+        (click)="categorySelect(cat)"
+    >
+        {{ cat.name }}
+    </button>
+</div>
