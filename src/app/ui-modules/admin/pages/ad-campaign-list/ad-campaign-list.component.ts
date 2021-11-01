@@ -2,11 +2,12 @@ import { AdService } from '../../../../modules/ad/ad.service';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { AdCampaignEntity, AdCampaignStatus } from '../../../../modules/ad/models/ad-campaign.entity';
+import { AdCampaignEntity, AdCampaignStatus, AdCampaignType } from '../../../../modules/ad/models/ad-campaign.entity';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { AdCampaignReasonFormComponent } from '../../components/ad-campaign-reason-form/ad-campaign-reason-form.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdCampaignCardComponent } from '../../../../components/ad-campaign-card/ad-campaign-card.component';
+import { AdCardAdvertComponent } from '../../../../components/ad-card-advert/ad-card-advert.component';
+import { AdMainAdvertComponent } from '../../../../components/ad-main-advert/ad-main-advert.component';
 
 @Component({
     selector: 'app-ad-campaign-list',
@@ -40,23 +41,22 @@ export class AdCampaignListComponent implements OnInit, OnDestroy {
         this.destroy$.complete();
     }
 
-    viewAdCampaign(id: string): void {
-        const viewedAd = this.adCampaigns.find(ad => ad.id === id);
-        const modalRef: NzModalRef = this.modalService.create<AdCampaignCardComponent>({
-            nzContent: AdCampaignCardComponent,
-            nzComponentParams: { campaign: viewedAd },
+    viewAdCampaign(campaign: AdCampaignEntity): void {
+        const modalRef: NzModalRef = this.modalService.create<AdCardAdvertComponent>({
+            nzContent: campaign.type === AdCampaignType.MAIN ? AdMainAdvertComponent : AdCardAdvertComponent,
+            nzComponentParams: { campaign },
             nzFooter: [
                 {
-                    show: this.status !== AdCampaignStatus.APPROVED,
+                    show: this.status !== AdCampaignStatus.APPROVED && this.status !== AdCampaignStatus.PAID,
                     label: 'Одобрить',
-                    onClick: () => this.approveCampaign(id, modalRef),
+                    onClick: () => this.approveCampaign(campaign.id, modalRef),
                 },
                 {
                     show: this.status !== AdCampaignStatus.REJECTED,
                     label: 'Отклонить',
                     onClick: () => {
                         modalRef.close();
-                        this.openRejectModal(id);
+                        this.openRejectModal(campaign.id);
                     },
                 },
             ],
