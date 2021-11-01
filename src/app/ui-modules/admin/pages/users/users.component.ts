@@ -17,7 +17,7 @@ export class UsersComponent implements OnInit {
     users: User[];
     currentUserId: string;
     searchValue = '';
-    visibleFilter = false;
+    isVisibleFilter = false;
 
     constructor(private userService: UserService, private cdr: ChangeDetectorRef, private modalService: NzModalService) {}
 
@@ -52,7 +52,7 @@ export class UsersComponent implements OnInit {
     }
 
     search(): void {
-        this.visibleFilter = false;
+        this.isVisibleFilter = false;
         this.userService.getUsers().subscribe(users => {
             if (this.searchValue) {
                 this.users = users.filter(user => this.searchInUser(user));
