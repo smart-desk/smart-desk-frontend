@@ -13,6 +13,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { CheckboxViewComponent } from './checkbox-view/checkbox-view.component';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { CheckboxFilterComponent } from './checkbox-filter/checkbox-filter.component';
+import { SharedModule } from '../../../../shared.module';
 
 @NgModule({
     imports: [
@@ -26,6 +27,7 @@ import { CheckboxFilterComponent } from './checkbox-filter/checkbox-filter.compo
         NzInputModule,
         ReactiveFormsModule,
         NzCheckboxModule,
+        SharedModule,
     ],
     providers: [CheckboxService],
     declarations: [CheckboxFormComponent, CheckboxParamsComponent, CheckboxViewComponent, CheckboxFilterComponent],

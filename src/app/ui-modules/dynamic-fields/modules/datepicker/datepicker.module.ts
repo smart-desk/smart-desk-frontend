@@ -12,6 +12,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { DatepickerService } from './datepicker.service';
 import { DatepickerViewComponent } from './datepicker-view/datepicker-view.component';
 import { DatepickerFilterComponent } from './datepicker-filter/datepicker-filter.component';
+import { SharedModule } from '../../../../shared.module';
 
 @NgModule({
     declarations: [DatepickerParamsComponent, DatepickerFormComponent, DatepickerViewComponent, DatepickerFilterComponent],
@@ -25,6 +26,7 @@ import { DatepickerFilterComponent } from './datepicker-filter/datepicker-filter
         NzCheckboxModule,
         NzButtonModule,
         ReactiveFormsModule,
+        SharedModule,
     ],
     providers: [DatepickerService],
 })
