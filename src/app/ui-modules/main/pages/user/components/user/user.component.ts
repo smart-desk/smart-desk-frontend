@@ -6,6 +6,7 @@ import { UserService } from '../../../../../../modules/user/user.service';
 import { ProductService } from '../../../../../../modules/product/product.service';
 import { ProductStatus } from '../../../../../../modules/product/models/product-status.enum';
 import { forkJoin } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Component({
     selector: 'app-user',
@@ -14,6 +15,7 @@ import { forkJoin } from 'rxjs';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserComponent implements OnInit {
+    loading = false;
     user: User;
     productResponse: GetProductsResponseDto;
     completedProducts: GetProductsResponseDto;
@@ -28,10 +30,16 @@ export class UserComponent implements OnInit {
     ngOnInit(): void {
         if (this.route.snapshot.paramMap.has('id')) {
             const userId = this.route.snapshot.paramMap.get('id') || '';
-            this.userService.getUser(userId).subscribe(res => {
-                this.user = res;
-                this.cdr.detectChanges();
-            });
+            this.userService
+                .getUser(userId)
+                .pipe(take(1))
+                .subscribe(res => {
+                    this.user = res;
+                    this.cdr.detectChanges();
+                });
+
+            this.loading = true;
+            this.cdr.markForCheck();
 
             const activeProductOptions = new GetProductsDto();
             activeProductOptions.user = userId;
@@ -44,6 +52,7 @@ export class UserComponent implements OnInit {
                 this.productService.getProducts(activeProductOptions),
                 this.productService.getProducts(completedProductOptions),
             ]).subscribe(([activeProduct, completedProduct]) => {
+                this.loading = false;
                 this.productResponse = activeProduct;
                 this.completedProducts = completedProduct;
                 this.cdr.detectChanges();
