@@ -40,6 +40,7 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { AdMainAdvertComponent } from './components/ad-main-advert/ad-main-advert.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ImagekitioAngularModule } from 'imagekitio-angular';
+import { KeyValueComponent } from './components/key-value/key-value.component';
 
 const NZModules = [
     NzFormModule,
@@ -81,6 +82,7 @@ const components = [
     UnauthorizedComponent,
     AdMainAdvertComponent,
     NotFoundComponent,
+    KeyValueComponent,
 ];
 
 /**
@@ -105,16 +107,7 @@ const interceptors = [
 ];
 
 @NgModule({
-    imports: [
-        ...NZModules,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        DynamicFieldsModule,
-        RouterModule,
-        ChatModule,
-        ImagekitioAngularModule,
-    ],
+    imports: [...NZModules, CommonModule, FormsModule, ReactiveFormsModule, RouterModule, ChatModule, ImagekitioAngularModule],
     exports: [...components],
     declarations: [...components],
     providers: [...services, ...interceptors],

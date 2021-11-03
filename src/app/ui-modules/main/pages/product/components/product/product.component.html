@@ -1,25 +1,18 @@
 <app-content-layout [title]="product?.title" [main]="main" [right]="right"></app-content-layout>
 
 <ng-template #main>
-    <div class="meta"><i nz-icon nzType="eye" nzTheme="outline"></i> {{ product?.views }}</div>
     <ng-container #params></ng-container>
     <section *ngIf="similarProducts?.totalCount" class="similar">
-        <h1>Похожие объявления</h1>
+        <h2>Похожие объявления</h2>
         <app-products [productsResponse]="similarProducts" [showPagination]="false"></app-products>
     </section>
 </ng-template>
 
 <ng-template #right>
-    <div>
-        <ng-container #price></ng-container>
-    </div>
+    <ng-container #price></ng-container>
     <div class="user" *ngIf="user" [routerLink]="['/', 'user', user.id]">
         <nz-avatar [nzSrc]="user?.avatar" nzIcon="user" nzSize="large"></nz-avatar>
         <h3>{{ user?.firstName }} {{ user?.lastName }}</h3>
-    </div>
-    <div>
-        <h2>Местоположение</h2>
-        <ng-container #location></ng-container>
     </div>
     <div class="contacts">
         <div class="contacts__phone" *ngIf="isContactAvailable(preferContact.PHONE) && this.user?.isPhoneVerified">
@@ -35,5 +28,11 @@
                 Написать сообщение
             </button>
         </div>
+    </div>
+    <ng-container #location></ng-container>
+
+    <div class="meta">
+        <div class="meta__item">Опубликовано {{ product?.createdAt | date: 'dd.MM.YYYY' }}</div>
+        <div class="meta__item"><i nz-icon nzType="eye" nzTheme="outline"></i> {{ product?.views }} просмотров</div>
     </div>
 </ng-template>

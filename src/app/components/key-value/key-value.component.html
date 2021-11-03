@@ -1,0 +1,8 @@
+<div class="key-value">
+    <div class="key-value__key-wrapper">
+        <div class="key-value__key">{{ key }}</div>
+        <div class="key-value__line"></div>
+    </div>
+    <div *ngIf="safeValue" class="key-value__value" [innerHTML]="value"></div>
+    <div *ngIf="!safeValue" class="key-value__value">{{ value }}</div>
+</div>
