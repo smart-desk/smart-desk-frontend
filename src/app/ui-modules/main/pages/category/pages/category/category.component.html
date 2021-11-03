@@ -7,10 +7,8 @@
 <ng-template #main>
     <app-category-buttons *ngIf="category" [category]="category"></app-category-buttons>
 
-    <app-loading *ngIf="loading"></app-loading>
-
     <app-products
-        *ngIf="!loading"
+        [loading]="loading"
         [productsResponse]="productsResponse"
         [adCampaign]="sidebarAdCampaign"
         [promoProducts]="promoProducts"

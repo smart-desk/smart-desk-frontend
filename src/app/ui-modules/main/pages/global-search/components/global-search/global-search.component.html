@@ -1,11 +1,9 @@
 <app-content-layout [title]="'Поиск по объявлениям'" [main]="main" [right]="right"></app-content-layout>
 
 <ng-template #main>
-    <app-loading *ngIf="loading"></app-loading>
+    <app-products [loading]="loading" [productsResponse]="productsResponse"></app-products>
 
-    <app-products *ngIf="!loading" [productsResponse]="productsResponse"></app-products>
-
-    <h2>Ничего не нашли по вашему запросу</h2>
+    <h2 *ngIf="!productsResponse?.totalCount">Ничего не нашли по вашему запросу</h2>
 </ng-template>
 
 <ng-template #right>
