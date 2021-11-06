@@ -5,29 +5,10 @@
 </ng-template>
 
 <ng-template #main>
-    <nz-tabset [nzAnimated]="false">
-        <nz-tab nzTitle="Активные" (nzClick)="getProducts(productStatus.ACTIVE)">
+    <nz-tabset [nzAnimated]="false" [nzSelectedIndex]="getSelectedTabIndex()">
+        <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab.title" (nzClick)="changeStatus(tab.status)">
             <ng-template nz-tab>
-                <app-products [loading]="loading" [productsResponse]="productResponse" [cardActions]="activeProductsActions">
-                </app-products>
-            </ng-template>
-        </nz-tab>
-        <nz-tab nzTitle="На модерации" (nzClick)="getProducts(productStatus.PENDING)">
-            <ng-template nz-tab>
-                <app-products [loading]="loading" [productsResponse]="productResponse" [cardActions]="pendingProductsActions">
-                </app-products>
-            </ng-template>
-        </nz-tab>
-        <nz-tab nzTitle="Заблокированные" (nzClick)="getProducts(productStatus.BLOCKED)">
-            <ng-template nz-tab>
-                <app-products [loading]="loading" [productsResponse]="productResponse" [cardActions]="blockedProductsActions">
-                </app-products>
-            </ng-template>
-        </nz-tab>
-        <nz-tab nzTitle="Завершенные" (nzClick)="getProducts(productStatus.COMPLETED)">
-            <ng-template nz-tab>
-                <app-products [loading]="loading" [productsResponse]="productResponse" [cardActions]="completedProductsActions">
-                </app-products>
+                <app-products [loading]="loading" [productsResponse]="productResponse" [cardActions]="tab.actions"> </app-products>
             </ng-template>
         </nz-tab>
     </nz-tabset>

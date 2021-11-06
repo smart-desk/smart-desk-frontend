@@ -5,14 +5,17 @@ import { ProductService } from './product.service';
 import { Sorting } from './models/sorting.interface';
 import { GetProductsDto, GetProductsResponseDto } from './models/product.dto';
 import { Filter, Filters } from './models/filter';
+import { ProductStatus } from './models/product-status.enum';
 
 export enum ProductDataEvents {
     DROP_FILTERS,
     APPLY_FILTERS,
     SEARCH,
     CHANGE_PAGE,
+    CHANGE_STATUS,
     SORT,
     LOAD,
+    RELOAD,
 }
 
 @Injectable({
@@ -47,6 +50,14 @@ export class ProductDataService {
         this.events$.next(ProductDataEvents.CHANGE_PAGE);
     }
 
+    changeStatus(status: ProductStatus): void {
+        this.options.page = 1;
+        this.options.status = status;
+        this.requestProducts();
+        this.updateQueryParams();
+        this.events$.next(ProductDataEvents.CHANGE_STATUS);
+    }
+
     search(phrase: string): void {
         this.options.search = phrase;
         this.requestProducts();
@@ -68,7 +79,12 @@ export class ProductDataService {
         this.events$.next(ProductDataEvents.DROP_FILTERS);
     }
 
-    getProductOptionsFromQueryAndStorage(queryParams: ParamMap): GetProductsDto {
+    reloadProducts(): void {
+        this.requestProducts();
+        this.events$.next(ProductDataEvents.RELOAD);
+    }
+
+    getProductOptionsFromQuery(queryParams: ParamMap): GetProductsDto {
         const resultParams = new GetProductsDto();
 
         if (queryParams.has('page')) {
@@ -100,6 +116,12 @@ export class ProductDataService {
             } catch (e) {}
         }
 
+        if (queryParams.has('status')) {
+            try {
+                resultParams.status = (queryParams.get('status') as ProductStatus) || ProductStatus.ACTIVE;
+            } catch (e) {}
+        }
+
         return resultParams;
     }
 
@@ -119,6 +141,7 @@ export class ProductDataService {
                 search: this.options.queryParamSearch,
                 filters: this.options.queryParamFilters,
                 sorting: this.options.queryParamSorting,
+                status: this.options.queryParamStatus,
             },
         };
 

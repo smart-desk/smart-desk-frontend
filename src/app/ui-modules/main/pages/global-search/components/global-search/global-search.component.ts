@@ -46,7 +46,7 @@ export class GlobalSearchComponent implements OnInit, OnDestroy {
                 takeUntil(this.destroy$)
             )
             .subscribe(() => {
-                const options = this.productDataService.getProductOptionsFromQueryAndStorage(this.route.snapshot.queryParamMap);
+                const options = this.productDataService.getProductOptionsFromQuery(this.route.snapshot.queryParamMap);
                 this.productDataService.loadProducts(null, options);
                 this.cd.detectChanges();
             });
