@@ -47,6 +47,12 @@ export class ProductsComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
+        if (changes.productsResponse?.currentValue || changes.promoProducts?.currentValue) {
+            this.updateProductsWithBookmarks();
+        }
+    }
+
+    ngOnInit(): void {
         this.loginService.login$.pipe(takeUntil(this.destroy$)).subscribe(user => {
             if (user) {
                 this.showBookmarksIcon = true;
@@ -57,17 +63,9 @@ export class ProductsComponent implements OnChanges, OnInit, OnDestroy {
             this.cd.detectChanges();
         });
 
-        if (changes.productsResponse?.currentValue) {
-            this.updateProductsWithBookmarks();
-            this.cd.detectChanges();
-        }
-    }
-
-    ngOnInit(): void {
         this.bookmarksStoreService.bookmarks$.pipe(takeUntil(this.destroy$)).subscribe(bookmarks => {
             this.bookmarks = bookmarks;
             this.updateProductsWithBookmarks();
-            this.cd.detectChanges();
         });
     }
 
@@ -93,6 +91,13 @@ export class ProductsComponent implements OnChanges, OnInit, OnDestroy {
     private updateProductsWithBookmarks(): void {
         if (this.bookmarks && this.productsResponse) {
             this.productsResponse?.products.forEach(product => {
+                const bookmarkProduct = this.bookmarks.find(bookmark => bookmark.product.id === product.id);
+                product.isBookmark = !!bookmarkProduct;
+            });
+        }
+
+        if (this.bookmarks && this.promoProducts) {
+            this.promoProducts?.forEach(product => {
                 const bookmarkProduct = this.bookmarks.find(bookmark => bookmark.product.id === product.id);
                 product.isBookmark = !!bookmarkProduct;
             });

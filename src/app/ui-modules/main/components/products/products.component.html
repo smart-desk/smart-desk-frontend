@@ -4,6 +4,7 @@
         <div class="products__promo-section">
             <app-product-card
                 *ngFor="let promoProduct of promoProducts"
+                [showBookmarksIcon]="showBookmarksIcon"
                 [product]="promoProduct"
                 [promo]="true"
                 [extraActions]="cardActions"
