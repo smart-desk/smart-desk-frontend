@@ -42,12 +42,13 @@ export class ProductsComponent implements OnChanges, OnInit, OnDestroy {
         private readonly bookmarksStoreService: BookmarksStoreService,
         private readonly cd: ChangeDetectorRef,
         private readonly loginService: LoginService
-    ) {
-        this.bookmarksStoreService.loadBookmarks();
-    }
+    ) {}
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes.productsResponse?.currentValue || changes.promoProducts?.currentValue) {
+        if (
+            changes.productsResponse?.currentValue !== changes.productsResponse?.previousValue ||
+            changes.promoProducts?.currentValue !== changes.promoProducts?.previousValue
+        ) {
             this.updateProductsWithBookmarks();
         }
     }
@@ -74,7 +75,7 @@ export class ProductsComponent implements OnChanges, OnInit, OnDestroy {
         this.destroy$.complete();
     }
 
-    trackByFn: TrackByFunction<Product> = (index: number, item: Product) => item.id;
+    trackByFn: TrackByFunction<Product> = (index: number, item: Product) => item.id + item.isBookmark;
 
     changePage(page: number) {
         this.productDataService.changePage(page);
@@ -102,6 +103,7 @@ export class ProductsComponent implements OnChanges, OnInit, OnDestroy {
                 product.isBookmark = !!bookmarkProduct;
             });
         }
-        this.cd.detectChanges();
+
+        this.cd.markForCheck();
     }
 }
