@@ -11,7 +11,7 @@
         ></app-product-card>
     </div>
 </ng-container>
-<div class="box__products">
+<div class="products__list">
     <ng-container *ngFor="let product of productsResponse?.products; index as i; trackBy: trackByFn">
         <app-product-card
             [showBookmarksIcon]="showBookmarksIcon"
@@ -25,7 +25,6 @@
     </ng-container>
 </div>
 <app-pagination
-    class="pagination"
     *ngIf="productsResponse?.totalCount > productsResponse?.limit && showPagination"
     [pageIndex]="productsResponse?.page"
     [totalItems]="productsResponse?.totalCount"
