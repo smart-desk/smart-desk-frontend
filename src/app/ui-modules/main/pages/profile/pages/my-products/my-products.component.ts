@@ -20,14 +20,12 @@ import { ProductStatus } from '../../../../../../modules/product/models/product-
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MyProductsComponent implements OnInit, OnDestroy {
-    activeProductsResponse: GetProductsResponseDto;
-    blockedProductsResponse: GetProductsResponseDto;
-    pendingProductsResponse: GetProductsResponseDto;
-    completedProductsResponse: GetProductsResponseDto;
+    productResponse: GetProductsResponseDto;
     user: User;
     destroy$ = new Subject();
     productStatus = ProductStatus;
     status: ProductStatus;
+    loading = false;
 
     activeProductsActions: ExtraActions[] = [
         {
@@ -97,12 +95,16 @@ export class MyProductsComponent implements OnInit, OnDestroy {
 
     getProducts(status: ProductStatus): void {
         this.setRouterParam(status);
+        this.loading = true;
+        this.cdr.markForCheck();
 
         const options = new GetProductsDto();
         options.user = this.user?.id;
         options.status = status;
+
         this.productService.getProducts(options).subscribe(res => {
-            this.activeProductsResponse = res;
+            this.productResponse = res;
+            this.loading = false;
             this.cdr.detectChanges();
         });
     }

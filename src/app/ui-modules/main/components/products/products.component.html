@@ -1,33 +1,40 @@
-<ng-container *ngIf="promoProducts?.length">
-    <h2><span class="products__promo-section-title--colored">Специальные</span> предложения</h2>
-    <div class="products__promo-section">
-        <app-product-card
-            *ngFor="let promoProduct of promoProducts"
-            [product]="promoProduct"
-            [promo]="true"
-            [extraActions]="cardActions"
-            (createBookmark)="addBookmarkEvent($event)"
-            (deleteBookmark)="removeBookmarkEvent($event)"
-        ></app-product-card>
-    </div>
-</ng-container>
-<div class="products__list">
-    <ng-container *ngFor="let product of productsResponse?.products; index as i; trackBy: trackByFn">
-        <app-product-card
-            [showBookmarksIcon]="showBookmarksIcon"
-            [product]="product"
-            [extraActions]="cardActions"
-            (createBookmark)="addBookmarkEvent($event)"
-            (deleteBookmark)="removeBookmarkEvent($event)"
-        ></app-product-card>
-        <app-ad-campaign-card *ngIf="i === 4 && adCampaign && productsResponse?.products.length >= 7" [campaign]="adCampaign">
-        </app-ad-campaign-card>
+<ng-container *ngIf="!loading; else loadingTmp">
+    <ng-container *ngIf="promoProducts?.length">
+        <h2><span class="products__promo-section-title--colored">Специальные</span> предложения</h2>
+        <div class="products__promo-section">
+            <app-product-card
+                *ngFor="let promoProduct of promoProducts"
+                [product]="promoProduct"
+                [promo]="true"
+                [extraActions]="cardActions"
+                (createBookmark)="addBookmarkEvent($event)"
+                (deleteBookmark)="removeBookmarkEvent($event)"
+            ></app-product-card>
+        </div>
     </ng-container>
-</div>
-<app-pagination
-    *ngIf="productsResponse?.totalCount > productsResponse?.limit && showPagination"
-    [pageIndex]="productsResponse?.page"
-    [totalItems]="productsResponse?.totalCount"
-    [pageSize]="productsResponse?.limit"
-    (changePage)="changePage($event)"
-></app-pagination>
+    <div class="box__products">
+        <ng-container *ngFor="let product of productsResponse?.products; index as i; trackBy: trackByFn">
+            <app-product-card
+                [showBookmarksIcon]="showBookmarksIcon"
+                [product]="product"
+                [extraActions]="cardActions"
+                (createBookmark)="addBookmarkEvent($event)"
+                (deleteBookmark)="removeBookmarkEvent($event)"
+            ></app-product-card>
+            <app-ad-campaign-card *ngIf="i === 4 && adCampaign && productsResponse?.products.length >= 7" [campaign]="adCampaign">
+            </app-ad-campaign-card>
+        </ng-container>
+    </div>
+    <app-pagination
+        class="pagination"
+        *ngIf="productsResponse?.totalCount > productsResponse?.limit && showPagination"
+        [pageIndex]="productsResponse?.page"
+        [totalItems]="productsResponse?.totalCount"
+        [pageSize]="productsResponse?.limit"
+        (changePage)="changePage($event)"
+    ></app-pagination>
+</ng-container>
+
+<ng-template #loadingTmp>
+    <app-loading></app-loading>
+</ng-template>

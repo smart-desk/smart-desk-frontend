@@ -16,6 +16,7 @@ import { takeUntil } from 'rxjs/operators';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductListComponent implements OnInit, OnDestroy {
+    loading = false;
     productResponse: GetProductsResponseDto;
     selectedItems = new Set<string>();
     categories: Category[] = [];
@@ -119,7 +120,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
     }
 
     changeStatus(): void {
-        // todo: add debounce
         this.selectedItems.clear();
         this.router.navigate([], { queryParams: { status: this.status } });
     }
@@ -131,8 +131,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
     }
 
     private getProducts(options: GetProductsDto): void {
+        this.loading = true;
+        this.cd.markForCheck();
         this.productService.getProducts(options).subscribe(res => {
             this.productResponse = res;
+            this.loading = false;
             this.cd.detectChanges();
         });
     }
