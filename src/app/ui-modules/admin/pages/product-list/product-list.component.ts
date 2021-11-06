@@ -2,12 +2,26 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { ActivatedRoute, Router } from '@angular/router';
 import * as dayjs from 'dayjs';
 import { Subject, zip } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Category } from '../../../../modules/category/models/category.entity';
-import { GetProductsDto, GetProductsResponseDto } from '../../../../modules/product/models/product.dto';
+import { GetProductsResponseDto } from '../../../../modules/product/models/product.dto';
 import { ProductService } from '../../../../modules/product/product.service';
 import { CategoryService } from '../../../../modules/category/category.service';
 import { ProductStatus } from '../../../../modules/product/models/product-status.enum';
-import { takeUntil } from 'rxjs/operators';
+import { ProductDataService } from '../../../../modules/product/product-data.service';
+
+interface AdminActionData {
+    title: string;
+    action: (id: string) => {};
+    icon: string;
+    actionName: AdminAction;
+}
+
+enum AdminAction {
+    DELETE = 'delete',
+    BLOCK = 'block',
+    PUBLISH = 'publish',
+}
 
 @Component({
     selector: 'app-product-list',
@@ -24,30 +38,58 @@ export class ProductListComponent implements OnInit, OnDestroy {
     productStatus = ProductStatus;
 
     private destroy$ = new Subject();
+    private actions: Map<AdminAction, AdminActionData> = new Map([
+        [AdminAction.DELETE, { title: 'Удалить', action: this.deleteProduct.bind(this), icon: 'delete', actionName: AdminAction.DELETE }],
+        [
+            AdminAction.BLOCK,
+            {
+                title: 'Заблокировать',
+                action: this.blockProduct.bind(this),
+                icon: 'dislike',
+                actionName: AdminAction.BLOCK,
+            },
+        ],
+        [
+            AdminAction.PUBLISH,
+            {
+                title: 'Опубликовать',
+                action: this.publishProduct.bind(this),
+                icon: 'like',
+                actionName: AdminAction.PUBLISH,
+            },
+        ],
+    ]);
 
     constructor(
         private productService: ProductService,
         private router: Router,
         private categoryService: CategoryService,
-        private cd: ChangeDetectorRef,
-        private route: ActivatedRoute
+        private cdr: ChangeDetectorRef,
+        private route: ActivatedRoute,
+        private productDataService: ProductDataService
     ) {}
 
     ngOnInit(): void {
-        this.route.queryParamMap.pipe(takeUntil(this.destroy$)).subscribe(paramMap => {
-            this.status = paramMap.get('status') as ProductStatus;
-            const options = new GetProductsDto();
-            if (paramMap.get('page')) {
-                options.page = Number(paramMap.get('page'));
-            }
-            options.status = this.status;
-            this.getProducts(options);
+        this.productDataService.events$.pipe(takeUntil(this.destroy$)).subscribe(event => {
+            this.loading = true;
+            this.cdr.detectChanges();
+        });
+
+        this.productDataService.products$.pipe(takeUntil(this.destroy$)).subscribe(res => {
+            this.productResponse = res;
+            this.loading = false;
+            this.cdr.detectChanges();
         });
 
         this.categoryService.getCategories().subscribe(categories => {
             this.categories = categories;
-            this.cd.detectChanges();
+            this.cdr.detectChanges();
         });
+
+        const options = this.productDataService.getProductOptionsFromQuery(this.route.snapshot.queryParamMap);
+        this.productDataService.loadProducts(null, options);
+        this.status = options.status || ProductStatus.ACTIVE;
+        this.cdr.markForCheck();
     }
 
     ngOnDestroy() {
@@ -55,43 +97,56 @@ export class ProductListComponent implements OnInit, OnDestroy {
         this.destroy$.complete();
     }
 
-    bulkAction(action: 'delete' | 'block' | 'publish'): void {
+    getPossibleActions(status: ProductStatus): (AdminActionData | undefined)[] {
+        switch (status) {
+            case ProductStatus.ACTIVE:
+                return [this.actions.get(AdminAction.BLOCK), this.actions.get(AdminAction.DELETE)];
+            case ProductStatus.PENDING:
+                return [this.actions.get(AdminAction.PUBLISH), this.actions.get(AdminAction.BLOCK), this.actions.get(AdminAction.DELETE)];
+            case ProductStatus.BLOCKED:
+                return [this.actions.get(AdminAction.PUBLISH), this.actions.get(AdminAction.DELETE)];
+            case ProductStatus.COMPLETED:
+                return [this.actions.get(AdminAction.PUBLISH), this.actions.get(AdminAction.BLOCK), this.actions.get(AdminAction.DELETE)];
+        }
+    }
+
+    bulkAction(action: AdminAction): void {
         let requests = [];
         switch (action) {
-            case 'delete':
+            case AdminAction.DELETE:
                 requests = [...this.selectedItems.values()].map(id => this.productService.deleteProduct(id));
                 break;
-            case 'block':
+            case AdminAction.BLOCK:
                 requests = [...this.selectedItems.values()].map(id => this.productService.blockProduct(id));
                 break;
-            case 'publish':
+            case AdminAction.PUBLISH:
                 requests = [...this.selectedItems.values()].map(id => this.productService.publishProduct(id));
                 break;
         }
 
         zip(...requests).subscribe(() => {
             this.selectedItems.clear();
-            this.cd.detectChanges();
-            this.getProducts(this.getQueryStatusOptions());
+            this.cdr.markForCheck();
+            this.productDataService.reloadProducts();
         });
     }
 
-    delete(id: string): void {
+    deleteProduct(id: string): void {
         this.productService.deleteProduct(id).subscribe(() => {
             this.productResponse.products = this.productResponse.products.filter(item => item.id !== id);
-            this.cd.detectChanges();
+            this.cdr.detectChanges();
         });
     }
 
-    block(id: string): void {
+    blockProduct(id: string): void {
         this.productService.blockProduct(id).subscribe(() => {
-            this.getProducts(this.getQueryStatusOptions());
+            this.productDataService.reloadProducts();
         });
     }
 
-    publish(id: string): void {
+    publishProduct(id: string): void {
         this.productService.publishProduct(id).subscribe(() => {
-            this.getProducts(this.getQueryStatusOptions());
+            this.productDataService.reloadProducts();
         });
     }
 
@@ -104,9 +159,14 @@ export class ProductListComponent implements OnInit, OnDestroy {
     }
 
     changePage(page: number): void {
-        if (page !== this.productResponse.page) {
-            this.router.navigate([], { queryParams: { page }, queryParamsHandling: 'merge' });
-        }
+        this.productDataService.changePage(page);
+    }
+
+    changeStatus(status: ProductStatus): void {
+        this.selectedItems.clear();
+        this.status = status;
+        this.productDataService.changeStatus(status);
+        this.cdr.markForCheck();
     }
 
     // todo make it as a pipe
@@ -114,29 +174,9 @@ export class ProductListComponent implements OnInit, OnDestroy {
         return dayjs(date).format('DD MMM YYYY HH:mm');
     }
 
+    // todo make it as a pipe
     getCategoryName(id: string): string {
         const categoryProduct = this.categories.find(category => category.id === id);
         return categoryProduct ? categoryProduct.name : 'Категория не определена';
-    }
-
-    changeStatus(): void {
-        this.selectedItems.clear();
-        this.router.navigate([], { queryParams: { status: this.status } });
-    }
-
-    private getQueryStatusOptions(): GetProductsDto {
-        const options = new GetProductsDto();
-        options.status = this.status;
-        return options;
-    }
-
-    private getProducts(options: GetProductsDto): void {
-        this.loading = true;
-        this.cd.markForCheck();
-        this.productService.getProducts(options).subscribe(res => {
-            this.productResponse = res;
-            this.loading = false;
-            this.cd.detectChanges();
-        });
     }
 }
