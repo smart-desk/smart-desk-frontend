@@ -7,6 +7,7 @@ import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import * as dayjs from 'dayjs';
 import * as customParseFormat from 'dayjs/plugin/customParseFormat';
 import { AdCampaignsScheduleDto } from '../../../../modules/ad/models/ad-campaigns-schedule.dto';
+import { environment } from '../../../../../environments/environment';
 
 dayjs.extend(customParseFormat);
 
@@ -65,7 +66,7 @@ export class FormAdCampaignComponent implements OnInit, OnChanges {
             this.form
                 .get('timeRange')
                 ?.setValue([dayjs(value.startDate, SHORT_DATE_FORMAT).toDate(), dayjs(value.endDate, SHORT_DATE_FORMAT).toDate()]);
-            this.file = [{ uid: '-1', name: 'ad-image.png', url: this.adData?.img }];
+            this.file = [{ uid: '-1', name: 'ad-image.png', url: environment.s3path + this.adData?.img }];
         }
     }
 

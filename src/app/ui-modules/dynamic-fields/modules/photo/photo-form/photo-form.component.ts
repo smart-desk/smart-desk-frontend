@@ -4,6 +4,7 @@ import { PhotoEntity } from '../dto/photo.entity';
 import { PhotoParamsDto } from '../dto/photo-params.dto';
 import { UploadImageResponse } from '../dto/upload-image-response';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
+import { environment } from '../../../../../../environments/environment';
 
 @Component({
     selector: 'app-photo',
@@ -25,7 +26,7 @@ export class PhotoFormComponent extends AbstractFieldFormComponent<PhotoEntity, 
                 uid: path,
                 name: path,
                 status: 'done',
-                url: path,
+                url: environment.s3path + path,
             }));
         }
     }
@@ -38,7 +39,7 @@ export class PhotoFormComponent extends AbstractFieldFormComponent<PhotoEntity, 
 
     getFieldData(): PhotoEntity {
         const value = this.fileList.map(file => {
-            return file.response ? (file.response as UploadImageResponse).key : file.url || '';
+            return file.response ? (file.response as UploadImageResponse).key : file.url?.replace(environment.s3path, '') || '';
         });
 
         if (this.field.data) {

@@ -1,1 +1,14 @@
 @import '~src/assets/styles/variables';
+
+.photo-form {
+    &__uploader {
+        display: block;
+        max-width: $base-unit * 42;
+
+        ::ng-deep {
+            .ant-upload.ant-upload-drag {
+                margin-bottom: $base-unit;
+            }
+        }
+    }
+}

@@ -4,6 +4,7 @@ import { Category } from '../../../../modules/category/models/category.entity';
 import { Model } from '../../../../modules/model/models/model.entity';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
     selector: 'app-category-form',
@@ -32,7 +33,7 @@ export class CategoryFormComponent implements OnInit {
 
         const img = this.category?.img;
         if (img) {
-            this.file = [{ uid: '-1', name: 'image.png', url: img }];
+            this.file = [{ uid: '-1', name: 'image.png', url: environment.s3path + img }];
         }
         this.cd.detectChanges();
     }
@@ -44,7 +45,6 @@ export class CategoryFormComponent implements OnInit {
         }
         if (this.category) {
             this.category.name = this.form.get('name')?.value;
-            // todo: что лежит в modelId
             this.category.modelId = this.form.get('model')?.value?.id;
             this.category.img = this.form.get('image')?.value;
         } else {

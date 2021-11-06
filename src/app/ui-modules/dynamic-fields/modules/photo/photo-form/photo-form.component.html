@@ -3,6 +3,8 @@
         <nz-form-control>
             <nz-form-label>Выберите фотографии</nz-form-label>
             <nz-upload
+                class="photo-form__uploader"
+                nzType="drag"
                 nzAction="/s3/image"
                 nzListType="picture-card"
                 nzAccept="image/png, image/jpeg"
