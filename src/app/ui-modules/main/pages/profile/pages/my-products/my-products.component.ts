@@ -24,7 +24,6 @@ export class MyProductsComponent implements OnInit, OnDestroy {
     productResponse: GetProductsResponseDto;
     user: User;
     destroy$ = new Subject();
-    productStatus = ProductStatus;
     status: ProductStatus;
     loading = false;
 
@@ -121,22 +120,17 @@ export class MyProductsComponent implements OnInit, OnDestroy {
 
         this.userService
             .getCurrentUser()
-            .pipe(
-                tap(user => {
-                    this.user = user;
-                    this.cdr.markForCheck();
-                }),
-                switchMap(() => this.route.queryParamMap),
-                take(1)
-            )
-            .subscribe(queryParamMap => {
-                const options = this.productDataService.getProductOptionsFromQuery(queryParamMap);
-                options.user = this.user.id;
-
-                this.status = options.status || ProductStatus.ACTIVE;
-                this.cdr.markForCheck();
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(user => {
+                const options = this.productDataService.getProductOptionsFromQuery(this.route.snapshot.queryParamMap);
+                options.user = user.id;
 
                 this.productDataService.loadProducts(null, options);
+
+                this.status = options.status || ProductStatus.ACTIVE;
+                this.user = user;
+
+                this.cdr.markForCheck();
             });
     }
 
@@ -152,8 +146,7 @@ export class MyProductsComponent implements OnInit, OnDestroy {
     }
 
     getSelectedTabIndex(): number {
-        const tabIndex = this.tabs.findIndex(tab => tab.isActive(this.status));
-        return tabIndex;
+        return this.tabs.findIndex(tab => tab.isActive(this.status));
     }
 
     private completeProduct(product: Product): void {
