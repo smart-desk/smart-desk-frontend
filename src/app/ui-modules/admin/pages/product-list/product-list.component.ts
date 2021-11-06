@@ -36,6 +36,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     categories: Category[] = [];
     status: ProductStatus;
     productStatus = ProductStatus;
+    searchValue = '';
 
     private destroy$ = new Subject();
     private actions: Map<AdminAction, AdminActionData> = new Map([
@@ -89,6 +90,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
         const options = this.productDataService.getProductOptionsFromQuery(this.route.snapshot.queryParamMap);
         this.productDataService.loadProducts(null, options);
         this.status = options.status || ProductStatus.ACTIVE;
+        this.searchValue = options.search || '';
         this.cdr.markForCheck();
     }
 
@@ -156,6 +158,15 @@ export class ProductListComponent implements OnInit, OnDestroy {
         } else {
             this.selectedItems.delete(id);
         }
+    }
+
+    search(): void {
+        this.productDataService.search(this.searchValue);
+    }
+
+    resetSearch(): void {
+        this.searchValue = '';
+        this.productDataService.search('');
     }
 
     changePage(page: number): void {

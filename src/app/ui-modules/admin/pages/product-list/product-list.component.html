@@ -21,7 +21,12 @@
     <thead>
         <tr>
             <th class="column-checkbox"></th>
-            <th>Заголовок</th>
+            <th nzCustomFilter>
+                Заголовок
+                <nz-filter-trigger [nzDropdownMenu]="menu" [nzActive]="searchValue.length > 0">
+                    <i nz-icon nzType="search"></i>
+                </nz-filter-trigger>
+            </th>
             <th>Статус</th>
             <th>Дата создания</th>
             <th>Категория</th>
@@ -54,3 +59,30 @@
     [pageSize]="productResponse?.limit"
     (changePage)="changePage($event)"
 ></app-pagination>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+    <form (ngSubmit)="search()">
+        <nz-input-group nzSearch [nzSuffix]="textAreaClearTpl" [nzAddOnAfter]="suffixIconButton">
+            <input
+                type="text"
+                nz-input
+                placeholder="Поиск по заголовку"
+                [(ngModel)]="searchValue"
+                [ngModelOptions]="{ standalone: true }"
+            />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+            <button nz-button type="submit" nzType="primary" nzSearch (click)="search()"><i nz-icon nzType="search"></i></button>
+        </ng-template>
+        <ng-template #textAreaClearTpl>
+            <i
+                *ngIf="searchValue.length"
+                nz-icon
+                class="ant-input-textarea-clear-icon"
+                nzTheme="fill"
+                nzType="close-circle"
+                (click)="resetSearch()"
+            ></i>
+        </ng-template>
+    </form>
+</nz-dropdown-menu>
