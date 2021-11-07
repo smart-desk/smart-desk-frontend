@@ -32,6 +32,7 @@ export class GetProductsDto {
     static DEFAULT_PAGE = 1;
     static DEFAULT_LIMIT = 20;
     static DEFAULT_SEARCH = '';
+    static DEFAULT_STATUS = ProductStatus.ACTIVE;
 
     get queryParamPage(): number | undefined {
         return this.page === GetProductsDto.DEFAULT_PAGE ? undefined : this.page;
@@ -58,6 +59,10 @@ export class GetProductsDto {
             return;
         }
         return Object.keys(this.sorting).length === 0 ? undefined : JSON.stringify(this.sorting);
+    }
+
+    get queryParamStatus(): string | undefined {
+        return this.status === GetProductsDto.DEFAULT_STATUS ? undefined : this.status;
     }
 }
 

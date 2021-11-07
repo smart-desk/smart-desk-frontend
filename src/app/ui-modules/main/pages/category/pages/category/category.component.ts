@@ -59,7 +59,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
                 switchMap((paramMap: ParamMap) => {
                     const categoryId = paramMap.get('category_id') || '';
                     this.getPromoProducts(categoryId);
-                    this.options = this.productDataService.getProductOptionsFromQueryAndStorage(this.route.snapshot.queryParamMap);
+                    this.options = this.productDataService.getProductOptionsFromQuery(this.route.snapshot.queryParamMap);
                     this.productDataService.loadProducts(categoryId, this.options);
                     return this.categoryService.getCategory(categoryId);
                 }),

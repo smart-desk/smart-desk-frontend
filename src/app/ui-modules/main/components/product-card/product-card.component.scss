@@ -42,11 +42,11 @@
         margin: 0;
     }
 
-    &__action-icon {
-        color: #fff;
+    &__action-btn {
+        border: none;
+        box-shadow: $shadow;
         position: absolute;
         top: $base-unit;
         right: $base-unit;
-        font-size: $base-unit * 3;
     }
 }
