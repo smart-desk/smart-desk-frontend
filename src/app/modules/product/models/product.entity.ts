@@ -16,4 +16,5 @@ export class Product {
     isBookmark: boolean;
     views: number;
     status: ProductStatus;
+    reason: string;
 }

@@ -47,6 +47,7 @@ import { SitePagesComponent } from './pages/site-pages/site-pages.component';
 import { PageFormComponent } from './components/page-form/page-form.component';
 import { QuillModule } from 'ngx-quill';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { ProductBlockReasonFormComponent } from './components/product-block-reason-form/product-block-reason-form.component';
 
 const components = [
     AdCampaignReasonFormComponent,
@@ -59,6 +60,7 @@ const components = [
     RolesFormComponent,
     PromoSetFormComponent,
     PageFormComponent,
+    ProductBlockReasonFormComponent,
 ];
 
 const pages = [
