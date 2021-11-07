@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { User } from '../../../../modules/user/models/user.entity';
 import { ChatModalService } from '../../../chat/services/chat-modal.service';
 import { AuthService } from '../../../../modules/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-navigation-header',
@@ -15,21 +16,22 @@ import { AuthService } from '../../../../modules/auth/auth.service';
 export class NavigationHeaderComponent implements OnInit, OnDestroy {
     user: User | undefined;
     destroy$ = new Subject();
-    isAdmin: boolean;
 
     constructor(
         private authService: AuthService,
         private loginService: LoginService,
         private cd: ChangeDetectorRef,
-        private chatModalService: ChatModalService
+        private chatModalService: ChatModalService,
+        private router: Router
     ) {}
+
+    get isAdmin(): boolean | undefined {
+        return this.user?.roles.includes('admin');
+    }
 
     ngOnInit() {
         this.loginService.login$.pipe(takeUntil(this.destroy$)).subscribe(user => {
             this.user = user;
-            if (user?.roles) {
-                this.isAdmin = user?.roles.includes('admin');
-            }
             this.cd.detectChanges();
         });
     }
@@ -40,6 +42,26 @@ export class NavigationHeaderComponent implements OnInit, OnDestroy {
     }
 
     openChat(): void {
+        if (this.user) {
+            this.chatModalService.open();
+        } else {
+            this.loginService.openLoginModal(this.openChatAfterRedirect.bind(this));
+        }
+    }
+
+    openChatAfterRedirect() {
         this.chatModalService.open();
+    }
+
+    openBookmarks() {
+        if (this.user) {
+            this.navigateToBookmarks();
+        } else {
+            this.loginService.openLoginModal(this.navigateToBookmarks.bind(this));
+        }
+    }
+
+    navigateToBookmarks(): void {
+        this.router.navigate(['profile', 'bookmarks']);
     }
 }

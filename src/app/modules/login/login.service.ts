@@ -15,8 +15,13 @@ export class LoginService {
         this.userService.getCurrentUser().subscribe(user => this.login.next(user));
     }
 
-    openLoginModal(): void {
-        this.openModal().subscribe(user => this.login.next(user));
+    openLoginModal(cb?: () => {}): void {
+        this.openModal().subscribe(user => {
+            this.login.next(user);
+            if (cb) {
+                cb();
+            }
+        });
     }
 
     updateLoginInfo(): void {
