@@ -1,6 +1,14 @@
 <app-content-layout [title]="product?.title" [main]="main" [right]="right"></app-content-layout>
 
 <ng-template #main>
+    <nz-alert
+        *ngIf="product?.status === 'blocked' && product?.reason"
+        class="product__alert"
+        nzType="warning"
+        nzMessage="Объявление было заблокировано администратором"
+        [nzDescription]="product?.reason"
+        nzShowIcon
+    ></nz-alert>
     <ng-container #params></ng-container>
     <section *ngIf="similarProducts?.totalCount" class="similar">
         <h2>Похожие объявления</h2>
