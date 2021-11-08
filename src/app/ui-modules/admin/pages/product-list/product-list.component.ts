@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as dayjs from 'dayjs';
-import { Subject, zip } from 'rxjs';
+import { Observable, Subject, zip } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Category } from '../../../../modules/category/models/category.entity';
 import { GetProductsResponseDto } from '../../../../modules/product/models/product.dto';
@@ -9,12 +9,17 @@ import { ProductService } from '../../../../modules/product/product.service';
 import { CategoryService } from '../../../../modules/category/category.service';
 import { ProductStatus } from '../../../../modules/product/models/product-status.enum';
 import { ProductDataService } from '../../../../modules/product/product-data.service';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { ProductBlockReasonFormComponent } from '../../components/product-block-reason-form/product-block-reason-form.component';
+import { BlockProductDto } from '../../../../modules/product/models/block-product.dto';
+import { Product } from '../../../../modules/product/models/product.entity';
 
 interface AdminActionData {
     title: string;
     action: (id: string) => {};
     icon: string;
     actionName: AdminAction;
+    bulk: boolean;
 }
 
 enum AdminAction {
@@ -40,14 +45,18 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
     private destroy$ = new Subject();
     private actions: Map<AdminAction, AdminActionData> = new Map([
-        [AdminAction.DELETE, { title: 'Удалить', action: this.deleteProduct.bind(this), icon: 'delete', actionName: AdminAction.DELETE }],
+        [
+            AdminAction.DELETE,
+            { title: 'Удалить', action: this.deleteProduct.bind(this), icon: 'delete', actionName: AdminAction.DELETE, bulk: true },
+        ],
         [
             AdminAction.BLOCK,
             {
                 title: 'Заблокировать',
-                action: this.blockProduct.bind(this),
+                action: this.openBlockProductReasonModal.bind(this),
                 icon: 'dislike',
                 actionName: AdminAction.BLOCK,
+                bulk: false,
             },
         ],
         [
@@ -57,6 +66,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
                 action: this.publishProduct.bind(this),
                 icon: 'like',
                 actionName: AdminAction.PUBLISH,
+                bulk: true,
             },
         ],
     ]);
@@ -67,7 +77,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
         private categoryService: CategoryService,
         private cdr: ChangeDetectorRef,
         private route: ActivatedRoute,
-        private productDataService: ProductDataService
+        private productDataService: ProductDataService,
+        private modalService: NzModalService
     ) {}
 
     ngOnInit(): void {
@@ -113,13 +124,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
     }
 
     bulkAction(action: AdminAction): void {
-        let requests = [];
+        let requests: Observable<Product>[] = [];
         switch (action) {
             case AdminAction.DELETE:
                 requests = [...this.selectedItems.values()].map(id => this.productService.deleteProduct(id));
-                break;
-            case AdminAction.BLOCK:
-                requests = [...this.selectedItems.values()].map(id => this.productService.blockProduct(id));
                 break;
             case AdminAction.PUBLISH:
                 requests = [...this.selectedItems.values()].map(id => this.productService.publishProduct(id));
@@ -140,9 +148,14 @@ export class ProductListComponent implements OnInit, OnDestroy {
         });
     }
 
-    blockProduct(id: string): void {
-        this.productService.blockProduct(id).subscribe(() => {
+    blockProduct(id: string, reason: string, modalRef?: NzModalRef): void {
+        const blockProductDto = new BlockProductDto();
+        blockProductDto.reason = reason;
+        this.productService.blockProduct(id, blockProductDto).subscribe(() => {
             this.productDataService.reloadProducts();
+            if (modalRef) {
+                modalRef.close();
+            }
         });
     }
 
@@ -189,5 +202,28 @@ export class ProductListComponent implements OnInit, OnDestroy {
     getCategoryName(id: string): string {
         const categoryProduct = this.categories.find(category => category.id === id);
         return categoryProduct ? categoryProduct.name : 'Категория не определена';
+    }
+
+    openBlockProductReasonModal(id: string): void {
+        const modalReasonRef: NzModalRef = this.modalService.create<ProductBlockReasonFormComponent>({
+            nzTitle: 'Укажите причину блокировки',
+            nzContent: ProductBlockReasonFormComponent,
+            nzFooter: [
+                {
+                    label: 'Отмена',
+                    onClick: () => modalReasonRef.close(),
+                },
+                {
+                    label: 'Заблокировать',
+                    type: 'primary',
+                    danger: true,
+                    disabled: modal => !modal?.form?.valid,
+                    onClick: () => {
+                        const reason = modalReasonRef.getContentComponent().form.get('reason')?.value;
+                        this.blockProduct(id, reason, modalReasonRef);
+                    },
+                },
+            ],
+        });
     }
 }

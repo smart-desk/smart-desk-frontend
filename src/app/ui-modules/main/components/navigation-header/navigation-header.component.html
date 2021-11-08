@@ -3,7 +3,7 @@
         <nz-row [nzJustify]="'space-between'">
             <nz-col></nz-col>
             <nz-col>
-                <nz-row *ngIf="user" [nzJustify]="'space-between'">
+                <nz-row [nzJustify]="'space-between'">
                     <nz-col>
                         <a class="navigation-header__menu-item" *ngIf="isAdmin" [routerLink]="['admin']">
                             <i nz-icon nzType="export" nzTheme="outline"></i>
@@ -11,7 +11,7 @@
                         </a>
                     </nz-col>
                     <nz-col>
-                        <a class="navigation-header__menu-item" [routerLink]="['profile', 'bookmarks']">
+                        <a class="navigation-header__menu-item" (click)="openBookmarks()">
                             <i nz-icon nzType="heart" nzTheme="outline"></i>
                             Избранное
                         </a>

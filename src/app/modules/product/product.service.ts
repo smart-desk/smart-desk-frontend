@@ -7,6 +7,7 @@ import { objectToQueryString } from '../../helpers/object-to-query-string.helper
 import { Filter } from './models/filter';
 import { StripeSession } from '../stripe/models/stripe-session.interface';
 import { convertFiltersToObject } from '../../utils';
+import { BlockProductDto } from './models/block-product.dto';
 
 @Injectable()
 export class ProductService {
@@ -44,8 +45,8 @@ export class ProductService {
         return this.http.post<Product>(`/products/${id}/view`, null);
     }
 
-    blockProduct(id: string): Observable<Product> {
-        return this.http.patch<Product>(`/products/${id}/block`, null);
+    blockProduct(id: string, blockDto: BlockProductDto): Observable<Product> {
+        return this.http.patch<Product>(`/products/${id}/block`, blockDto);
     }
 
     publishProduct(id: string): Observable<Product> {

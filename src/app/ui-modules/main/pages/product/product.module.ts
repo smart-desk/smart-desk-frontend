@@ -6,10 +6,11 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { ProductRoutingModule } from './product-routing.module';
 import { SharedMainModule } from '../../shared-main.module';
 import { ProductComponent } from './components/product/product.component';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
 
 @NgModule({
     declarations: [ProductComponent],
     exports: [ProductComponent],
-    imports: [SharedMainModule, CommonModule, NzAvatarModule, ProductRoutingModule, NzIconModule, NzButtonModule],
+    imports: [SharedMainModule, CommonModule, NzAvatarModule, ProductRoutingModule, NzIconModule, NzButtonModule, NzAlertModule],
 })
 export class ProductModule {}
