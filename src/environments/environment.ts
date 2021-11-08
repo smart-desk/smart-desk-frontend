@@ -16,6 +16,7 @@ export const environment = {
     imageKitPublicKey: 'public_iuBTsj8LfA8eT1yeQj4BUJ70O/8=',
     imageKitUrlEndpoint: 'https://ik.imagekit.io/nq6norqqrwz',
     imageKitAuthenticationEndpoint: 'http://localhost:3001/api/s3/imagekit/auth',
+    s3path: 'https://smart-desk-advert.s3.eu-central-1.amazonaws.com/',
 };
 
 /*
