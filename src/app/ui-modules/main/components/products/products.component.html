@@ -3,7 +3,8 @@
         <h2><span class="products__promo-section-title--colored">Специальные</span> предложения</h2>
         <div class="products__promo-section">
             <app-product-card
-                *ngFor="let promoProduct of promoProducts"
+                *ngFor="let promoProduct of promoProducts; trackBy: trackByFn"
+                [showBookmarksIcon]="showBookmarksIcon"
                 [product]="promoProduct"
                 [promo]="true"
                 [extraActions]="cardActions"

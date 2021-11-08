@@ -42,11 +42,18 @@ export class ProductsComponent implements OnChanges, OnInit, OnDestroy {
         private readonly bookmarksStoreService: BookmarksStoreService,
         private readonly cd: ChangeDetectorRef,
         private readonly loginService: LoginService
-    ) {
-        this.bookmarksStoreService.loadBookmarks();
-    }
+    ) {}
 
     ngOnChanges(changes: SimpleChanges): void {
+        if (
+            changes.productsResponse?.currentValue !== changes.productsResponse?.previousValue ||
+            changes.promoProducts?.currentValue !== changes.promoProducts?.previousValue
+        ) {
+            this.updateProductsWithBookmarks();
+        }
+    }
+
+    ngOnInit(): void {
         this.loginService.login$.pipe(takeUntil(this.destroy$)).subscribe(user => {
             if (user) {
                 this.showBookmarksIcon = true;
@@ -57,17 +64,9 @@ export class ProductsComponent implements OnChanges, OnInit, OnDestroy {
             this.cd.detectChanges();
         });
 
-        if (changes.productsResponse?.currentValue) {
-            this.updateProductsWithBookmarks();
-            this.cd.detectChanges();
-        }
-    }
-
-    ngOnInit(): void {
         this.bookmarksStoreService.bookmarks$.pipe(takeUntil(this.destroy$)).subscribe(bookmarks => {
             this.bookmarks = bookmarks;
             this.updateProductsWithBookmarks();
-            this.cd.detectChanges();
         });
     }
 
@@ -76,7 +75,7 @@ export class ProductsComponent implements OnChanges, OnInit, OnDestroy {
         this.destroy$.complete();
     }
 
-    trackByFn: TrackByFunction<Product> = (index: number, item: Product) => item.id;
+    trackByFn: TrackByFunction<Product> = (index: number, item: Product) => item.id + item.isBookmark;
 
     changePage(page: number) {
         this.productDataService.changePage(page);
@@ -97,6 +96,14 @@ export class ProductsComponent implements OnChanges, OnInit, OnDestroy {
                 product.isBookmark = !!bookmarkProduct;
             });
         }
-        this.cd.detectChanges();
+
+        if (this.bookmarks && this.promoProducts) {
+            this.promoProducts?.forEach(product => {
+                const bookmarkProduct = this.bookmarks.find(bookmark => bookmark.product.id === product.id);
+                product.isBookmark = !!bookmarkProduct;
+            });
+        }
+
+        this.cd.markForCheck();
     }
 }
