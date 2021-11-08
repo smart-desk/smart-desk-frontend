@@ -2,11 +2,18 @@
 
 <ng-template #advert>
     <app-breadcrumb [steps]="breadcrumbs"></app-breadcrumb>
-    <app-main-advert *ngIf="mainAdCampaign" [adCampaign]="mainAdCampaign"></app-main-advert>
+    <app-main-advert *ngIf="mainAdCampaign" [campaign]="mainAdCampaign"></app-main-advert>
 </ng-template>
 
 <ng-template #main>
-    <app-products [productsResponse]="productsResponse" [adCampaign]="sidebarAdCampaign" [promoProducts]="promoProducts"></app-products>
+    <app-category-buttons *ngIf="category" [category]="category"></app-category-buttons>
+
+    <app-products
+        [loading]="loading"
+        [productsResponse]="productsResponse"
+        [adCampaign]="sidebarAdCampaign"
+        [promoProducts]="promoProducts"
+    ></app-products>
 
     <div *ngIf="!isEmptyObject(options?.filters) && productsResponse?.totalCount === 0">
         <h2>Ничего не нашли по заданным фильтрам</h2>

@@ -20,11 +20,13 @@ import { SharedModule } from './shared.module';
 import { ImagekitioAngularModule } from 'imagekitio-angular';
 import { LoginService } from './modules/login/login.service';
 import { ProductDataService } from './modules/product/product-data.service';
+import { DynamicFieldsModule } from './ui-modules/dynamic-fields/dynamic-fields.module';
 
 // todo move to service
 const token = localStorage.getItem('token');
 const options: any = {
     path: '/socket',
+    autoConnect: false,
 };
 if (token) {
     options.transportOptions = {
@@ -64,6 +66,7 @@ const socialProviders = {
     providers: [{ provide: NZ_I18N, useValue: ru_RU }, socialProviders, LoginService, ProductDataService],
     declarations: [AppComponent],
     imports: [
+        DynamicFieldsModule,
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,

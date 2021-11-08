@@ -4,15 +4,18 @@ import { ActivatedRoute, NavigationExtras, ParamMap, Router } from '@angular/rou
 import { ProductService } from './product.service';
 import { Sorting } from './models/sorting.interface';
 import { GetProductsDto, GetProductsResponseDto } from './models/product.dto';
-import { Filters } from './models/filter';
+import { Filter, Filters } from './models/filter';
+import { ProductStatus } from './models/product-status.enum';
 
 export enum ProductDataEvents {
     DROP_FILTERS,
     APPLY_FILTERS,
     SEARCH,
     CHANGE_PAGE,
+    CHANGE_STATUS,
     SORT,
     LOAD,
+    RELOAD,
 }
 
 @Injectable({
@@ -30,7 +33,6 @@ export class ProductDataService {
         this.categoryId = categoryId;
         this.options = options ? options : this.options;
         this.requestProducts();
-        this.updateQueryParams();
         this.events$.next(ProductDataEvents.LOAD);
     }
 
@@ -48,6 +50,14 @@ export class ProductDataService {
         this.events$.next(ProductDataEvents.CHANGE_PAGE);
     }
 
+    changeStatus(status: ProductStatus): void {
+        this.options.page = 1;
+        this.options.status = status;
+        this.requestProducts();
+        this.updateQueryParams();
+        this.events$.next(ProductDataEvents.CHANGE_STATUS);
+    }
+
     search(phrase: string): void {
         this.options.search = phrase;
         this.requestProducts();
@@ -55,21 +65,26 @@ export class ProductDataService {
         this.events$.next(ProductDataEvents.SEARCH);
     }
 
-    applyFilters(filters: Filters): void {
-        this.options.filters = { ...filters };
+    applyFilters(filters: Filter<unknown>[]): void {
+        this.options.filters = [...filters];
         this.requestProducts();
         this.updateQueryParams();
         this.events$.next(ProductDataEvents.APPLY_FILTERS);
     }
 
     dropFilters(): void {
-        this.options.filters = {};
+        this.options.filters = [];
         this.requestProducts();
         this.updateQueryParams();
         this.events$.next(ProductDataEvents.DROP_FILTERS);
     }
 
-    parseQueryParams(queryParams: ParamMap): GetProductsDto {
+    reloadProducts(): void {
+        this.requestProducts();
+        this.events$.next(ProductDataEvents.RELOAD);
+    }
+
+    getProductOptionsFromQuery(queryParams: ParamMap): GetProductsDto {
         const resultParams = new GetProductsDto();
 
         if (queryParams.has('page')) {
@@ -90,14 +105,23 @@ export class ProductDataService {
 
         if (queryParams.has('filters')) {
             try {
-                resultParams.filters = JSON.parse(queryParams.get('filters') || '');
+                const queryFilters = JSON.parse(queryParams.get('filters') as string) as Filters;
+                resultParams.filters = this.getFiltersFromObject(queryFilters);
             } catch (e) {}
         }
+
         if (queryParams.has('sorting')) {
             try {
                 resultParams.sorting = JSON.parse(queryParams.get('sorting') || '');
             } catch (e) {}
         }
+
+        if (queryParams.has('status')) {
+            try {
+                resultParams.status = (queryParams.get('status') as ProductStatus) || ProductStatus.ACTIVE;
+            } catch (e) {}
+        }
+
         return resultParams;
     }
 
@@ -117,9 +141,14 @@ export class ProductDataService {
                 search: this.options.queryParamSearch,
                 filters: this.options.queryParamFilters,
                 sorting: this.options.queryParamSorting,
+                status: this.options.queryParamStatus,
             },
         };
 
         this.router.navigate([], extras);
+    }
+
+    private getFiltersFromObject(filtersObject: Filters, hidden = false): Filter<unknown>[] {
+        return Object.keys(filtersObject).map(key => new Filter(key, filtersObject[key]));
     }
 }

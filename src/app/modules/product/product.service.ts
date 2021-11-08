@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { GetProductsDto, GetProductsResponseDto, CreateProductDto, UpdateProductDto } from './models/product.dto';
+import { CreateProductDto, GetProductsDto, GetProductsResponseDto, UpdateProductDto } from './models/product.dto';
 import { Product } from './models/product.entity';
 import { objectToQueryString } from '../../helpers/object-to-query-string.helper';
-import { Filters } from './models/filter';
+import { Filter } from './models/filter';
 import { StripeSession } from '../stripe/models/stripe-session.interface';
+import { convertFiltersToObject } from '../../utils';
 
 @Injectable()
 export class ProductService {
@@ -100,8 +101,8 @@ export class ProductService {
         return optionsList.length ? `?${optionsList.join('&')}` : '';
     }
 
-    private buildFiltersQuery(filters: Filters): string {
-        const resultObject = { filters };
-        return objectToQueryString(resultObject);
+    private buildFiltersQuery(filters: Filter<unknown>[]): string {
+        const resultObject = convertFiltersToObject(filters);
+        return objectToQueryString({ filters: resultObject });
     }
 }

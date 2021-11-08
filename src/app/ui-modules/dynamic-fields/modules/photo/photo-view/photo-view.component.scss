@@ -1,3 +1,9 @@
+@import 'src/assets/styles/variables';
+
+.photo-view {
+    margin-bottom: $base-unit * 2;
+}
+
 ::ng-deep {
     gallery-image {
         background: #fafafa;

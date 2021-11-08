@@ -1,4 +1,6 @@
 <nz-pagination
+    class="pagination"
+    [nzResponsive]="true"
     [nzPageIndex]="pageIndex"
     [nzTotal]="totalItems"
     (nzPageIndexChange)="changePage.emit($event)"

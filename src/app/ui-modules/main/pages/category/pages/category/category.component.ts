@@ -23,6 +23,7 @@ import { BreadcrumbStep } from '../../../../components/breadcrumb/breadcrumbs.co
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryComponent implements OnInit, OnDestroy {
+    loading = false;
     productsResponse: GetProductsResponseDto;
     sidebarAdCampaign: AdCampaignCurrentDto;
     mainAdCampaign: AdCampaignCurrentDto;
@@ -44,6 +45,11 @@ export class CategoryComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
+        this.productDataService.events$.pipe(takeUntil(this.destroy$)).subscribe(event => {
+            this.loading = true;
+            this.cd.detectChanges();
+        });
+
         this.router.events
             .pipe(
                 filter((event: RouterEvent) => event instanceof NavigationEnd),
@@ -55,7 +61,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
                 switchMap((paramMap: ParamMap) => {
                     const categoryId = paramMap.get('category_id') || '';
                     this.getPromoProducts(categoryId);
-                    this.options = this.productDataService.parseQueryParams(this.route.snapshot.queryParamMap);
+                    this.options = this.productDataService.getProductOptionsFromQuery(this.route.snapshot.queryParamMap);
                     this.productDataService.loadProducts(categoryId, this.options);
                     this.formBreadcrumbs(categoryId);
                     return this.categoryService.getCategory(categoryId);
@@ -72,8 +78,10 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
         this.productDataService.products$.pipe(takeUntil(this.destroy$)).subscribe(res => {
             this.productsResponse = res;
+            this.loading = false;
             this.cd.detectChanges();
         });
+
         this.adService.getAdCampaignsCurrent(AdCampaignType.SIDEBAR).subscribe(campaign => {
             this.sidebarAdCampaign = campaign;
             this.cd.detectChanges();

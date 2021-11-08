@@ -1,11 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { GetProductsDto, GetProductsResponseDto } from '../../../../../../modules/product/models/product.dto';
+import { GetProductsResponseDto } from '../../../../../../modules/product/models/product.dto';
 import { User } from '../../../../../../modules/user/models/user.entity';
 import { UserService } from '../../../../../../modules/user/user.service';
-import { ProductService } from '../../../../../../modules/product/product.service';
 import { ProductStatus } from '../../../../../../modules/product/models/product-status.enum';
-import { forkJoin } from 'rxjs';
+import { ProductDataService } from '../../../../../../modules/product/product-data.service';
 
 @Component({
     selector: 'app-user',
@@ -13,41 +14,74 @@ import { forkJoin } from 'rxjs';
     styleUrls: ['./user.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserComponent implements OnInit {
+export class UserComponent implements OnInit, OnDestroy {
+    loading = false;
     user: User;
     productResponse: GetProductsResponseDto;
-    completedProducts: GetProductsResponseDto;
+    status: ProductStatus;
+    destroy$ = new Subject();
+
+    tabs = [
+        {
+            title: 'Активные',
+            status: ProductStatus.ACTIVE,
+            isActive: (currentStatus: ProductStatus) => currentStatus === ProductStatus.ACTIVE,
+        },
+        {
+            title: 'Завершенные',
+            status: ProductStatus.COMPLETED,
+            isActive: (currentStatus: ProductStatus) => currentStatus === ProductStatus.COMPLETED,
+        },
+    ];
 
     constructor(
         private readonly route: ActivatedRoute,
         private readonly userService: UserService,
-        private readonly productService: ProductService,
-        private readonly cdr: ChangeDetectorRef
+        private readonly cdr: ChangeDetectorRef,
+        private readonly productDataService: ProductDataService
     ) {}
 
     ngOnInit(): void {
-        if (this.route.snapshot.paramMap.has('id')) {
-            const userId = this.route.snapshot.paramMap.get('id') || '';
-            this.userService.getUser(userId).subscribe(res => {
-                this.user = res;
-                this.cdr.detectChanges();
-            });
+        this.productDataService.events$.pipe(takeUntil(this.destroy$)).subscribe(res => {
+            this.loading = true;
+            this.cdr.markForCheck();
+        });
 
-            const activeProductOptions = new GetProductsDto();
-            activeProductOptions.user = userId;
-            activeProductOptions.status = ProductStatus.ACTIVE;
-            const completedProductOptions = new GetProductsDto();
-            completedProductOptions.user = userId;
-            completedProductOptions.status = ProductStatus.COMPLETED;
+        this.productDataService.products$.pipe(takeUntil(this.destroy$)).subscribe(res => {
+            this.productResponse = res;
+            this.loading = false;
+            this.cdr.markForCheck();
+        });
 
-            forkJoin([
-                this.productService.getProducts(activeProductOptions),
-                this.productService.getProducts(completedProductOptions),
-            ]).subscribe(([activeProduct, completedProduct]) => {
-                this.productResponse = activeProduct;
-                this.completedProducts = completedProduct;
-                this.cdr.detectChanges();
-            });
+        if (!this.route.snapshot.paramMap.has('id')) {
+            return;
         }
+
+        this.userService.getUser(this.route.snapshot.paramMap.get('id') as string).subscribe(user => {
+            const options = this.productDataService.getProductOptionsFromQuery(this.route.snapshot.queryParamMap);
+            options.user = user.id;
+
+            this.productDataService.loadProducts(null, options);
+
+            this.status = options.status || ProductStatus.ACTIVE;
+            this.user = user;
+
+            this.cdr.markForCheck();
+        });
+    }
+
+    changeStatus(status: ProductStatus): void {
+        this.status = status;
+        this.cdr.markForCheck();
+        this.productDataService.changeStatus(this.status);
+    }
+
+    getSelectedTabIndex(): number {
+        return this.tabs.findIndex(tab => tab.isActive(this.status));
+    }
+
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 }

@@ -1,18 +1,12 @@
 @import '~src/assets/styles/variables';
 
-::ng-deep .ant-form-item-label > label,
-.ant-form label {
-    font-size: $font-16;
+:host {
+    display: block;
+    margin-bottom: $base-unit * 3;
 }
 
-.radio {
-    margin: $base-unit * 2 0;
-}
-
-::ng-deep .label {
-    padding: 0;
-}
-
-::ng-deep .ant-form-vertical .ant-form-item-label {
-    padding: 0;
+.radio-filter {
+    &__item {
+        margin-bottom: $base-unit;
+    }
 }

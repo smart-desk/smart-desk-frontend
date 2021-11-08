@@ -14,6 +14,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { TextareaViewComponent } from './textarea-view/textarea-view.component';
+import { SharedModule } from '../../../../shared.module';
 
 @NgModule({
     imports: [
@@ -29,6 +30,7 @@ import { TextareaViewComponent } from './textarea-view/textarea-view.component';
         NzIconModule,
         NzGridModule,
         QuillModule,
+        SharedModule,
     ],
     providers: [TextareaService],
     declarations: [TextareaFormComponent, TextareaParamsComponent, TextareaViewComponent],

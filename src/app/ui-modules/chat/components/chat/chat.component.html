@@ -1,22 +1,21 @@
-<ng-container *ngIf="!chats || !chats.length; else result">
-    <nz-result nzIcon="smile-twotone" nzTitle="Пока что у вас нет сообщений"></nz-result>
-</ng-container>
+<nz-result *ngIf="loading" [nzIcon]="iconTmp" nzTitle="Загружаем сообщения">
+    <ng-template #iconTmp>
+        <i nz-icon [nzType]="'loading'"></i>
+    </ng-template>
+</nz-result>
+<nz-result *ngIf="!loading && chats && !chats.length" nzIcon="smile-twotone" nzTitle="Пока что у вас нет сообщений"></nz-result>
 
-<ng-template #result>
-    <div class="chat">
-        <app-chat-list
-            class="chat__list"
-            [currentUser]="currentUser"
-            [chats]="chats"
-            [activeChat]="activeChat"
-            (changeChat)="setActiveChat($event)"
-        ></app-chat-list>
-        <app-chat-messages
-            class="chat__messages"
-            [currentUser]="currentUser"
-            [chat]="activeChat"
-            [messages]="messages"
-            (newMessage)="sendMessage($event)"
-        ></app-chat-messages>
-    </div>
-</ng-template>
+<div class="chat" *ngIf="chats?.length">
+    <app-chat-list
+        [currentUser]="currentUser"
+        [chats]="chats"
+        [activeChat]="activeChat"
+        (changeChat)="setActiveChat($event)"
+    ></app-chat-list>
+    <app-chat-messages
+        [currentUser]="currentUser"
+        [chat]="activeChat"
+        [messages]="messages"
+        (newMessage)="sendMessage($event)"
+    ></app-chat-messages>
+</div>

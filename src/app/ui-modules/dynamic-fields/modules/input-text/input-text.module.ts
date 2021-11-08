@@ -12,6 +12,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { InputTextViewComponent } from './input-text-view/input-text-view.component';
+import { SharedModule } from '../../../../shared.module';
 
 @NgModule({
     imports: [
@@ -24,6 +25,7 @@ import { InputTextViewComponent } from './input-text-view/input-text-view.compon
         NzButtonModule,
         NzIconModule,
         NzPopconfirmModule,
+        SharedModule,
     ],
     providers: [InputTextService],
     declarations: [InputTextFormComponent, InputTextParamsComponent, InputTextViewComponent],

@@ -1,12 +1,11 @@
 <app-content-layout [main]="main" [left]="left"></app-content-layout>
 
 <ng-template #main>
-    <nz-tabset [nzAnimated]="false">
-        <nz-tab nzTitle="Активные">
-            <app-products [productsResponse]="productResponse"></app-products>
-        </nz-tab>
-        <nz-tab nzTitle="Завершенные">
-            <app-products [productsResponse]="completedProducts"></app-products>
+    <nz-tabset [nzAnimated]="false" [nzSelectedIndex]="getSelectedTabIndex()">
+        <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab.title" (nzClick)="changeStatus(tab.status)">
+            <ng-template nz-tab>
+                <app-products [loading]="loading" [productsResponse]="productResponse"></app-products>
+            </ng-template>
         </nz-tab>
     </nz-tabset>
 </ng-template>

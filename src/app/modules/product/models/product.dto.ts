@@ -1,8 +1,9 @@
 import { Product } from './product.entity';
 import { DynamicFieldsBaseCreateDto } from '../../field/models/dynamic-fields-base-create.dto';
 import { DynamicFieldsBaseUpdateDto } from '../../field/models/dynamic-fields-base-update.dto';
-import { Filters } from './filter';
+import { Filter } from './filter';
 import { Sorting } from './sorting.interface';
+import { convertFiltersToObject } from '../../../utils';
 import { ProductStatus } from './product-status.enum';
 
 export class CreateProductDto {
@@ -23,7 +24,7 @@ export class GetProductsDto {
     page?: number = GetProductsDto.DEFAULT_PAGE;
     limit?: number = GetProductsDto.DEFAULT_LIMIT;
     search?: string = GetProductsDto.DEFAULT_SEARCH;
-    filters?: Filters = {};
+    filters?: Filter<unknown>[] = [];
     sorting?: Sorting | null;
     user?: string;
     status?: ProductStatus;
@@ -31,6 +32,7 @@ export class GetProductsDto {
     static DEFAULT_PAGE = 1;
     static DEFAULT_LIMIT = 20;
     static DEFAULT_SEARCH = '';
+    static DEFAULT_STATUS = ProductStatus.ACTIVE;
 
     get queryParamPage(): number | undefined {
         return this.page === GetProductsDto.DEFAULT_PAGE ? undefined : this.page;
@@ -45,10 +47,11 @@ export class GetProductsDto {
     }
 
     get queryParamFilters(): string | undefined {
-        if (!this.filters) {
+        if (!this.filters?.length) {
             return;
         }
-        return Object.keys(this.filters).length === 0 ? undefined : JSON.stringify(this.filters);
+        const filtersObject = convertFiltersToObject(this.filters);
+        return JSON.stringify(filtersObject);
     }
 
     get queryParamSorting(): string | undefined {
@@ -56,6 +59,10 @@ export class GetProductsDto {
             return;
         }
         return Object.keys(this.sorting).length === 0 ? undefined : JSON.stringify(this.sorting);
+    }
+
+    get queryParamStatus(): string | undefined {
+        return this.status === GetProductsDto.DEFAULT_STATUS ? undefined : this.status;
     }
 }
 

@@ -1,0 +1,17 @@
+@import 'src/assets/styles/variables';
+
+.pagination {
+    ::ng-deep {
+        .ant-pagination-item,
+        .ant-pagination-next .ant-pagination-item-link,
+        .ant-pagination-prev .ant-pagination-item-link {
+            border: none;
+            background: transparent;
+
+            &:hover {
+                background: white;
+                border-radius: $border-radius;
+            }
+        }
+    }
+}

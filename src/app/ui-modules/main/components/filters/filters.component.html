@@ -1,21 +1,11 @@
-<nz-collapse class="filter-list" nzGhost>
-    <div class="filter-list__item filter-list__item--price" [hidden]="!showSection[sectionType.PRICE]">
-        <div>
-            <div class="container__title">Цена, ₽</div>
-            <ng-container #price></ng-container>
-        </div>
-    </div>
+<nz-collapse class="filters" nzGhost>
+    <ng-container #price></ng-container>
 
-    <div class="filter-list__item" [hidden]="!showSection[sectionType.PARAMS]">
-        <nz-collapse-panel nzExpandedIcon="caret-right" nzHeader="Параметры" [nzActive]="true">
-            <ng-container #params></ng-container>
-        </nz-collapse-panel>
-    </div>
-    <div class="filter-list__item" [hidden]="!showSection[sectionType.LOCATION]">
-        <nz-collapse-panel nzExpandedIcon="caret-right" nzHeader="Местоположение" [nzActive]="true">
-            <ng-container #location></ng-container>
-        </nz-collapse-panel>
-    </div>
+    <nz-collapse-panel class="filters__panel" nzExpandedIcon="caret-right" nzHeader="Параметры" [nzActive]="true">
+        <ng-container #params></ng-container>
+    </nz-collapse-panel>
+
+    <ng-container #location></ng-container>
 </nz-collapse>
 <div class="button">
     <button class="button button--sucsses" nz-button (click)="apply()">Применить {{ activeFilters ? activeFilters : '' }}</button>

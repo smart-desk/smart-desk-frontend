@@ -1,0 +1,16 @@
+@import 'src/assets/styles/variables';
+
+.category-buttons {
+    display: block;
+    margin-bottom: $base-unit * 3;
+
+    &__item {
+        margin-right: $base-unit;
+        border: none;
+        box-shadow: $shadow;
+
+        :last-child {
+            margin-right: 0;
+        }
+    }
+}

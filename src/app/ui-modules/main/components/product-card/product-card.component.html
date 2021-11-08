@@ -16,16 +16,18 @@
         <p class="product-card__desc">{{ description }}</p>
     </div>
     <div *ngIf="extraActions?.length" class="product-card__actions">
-        <i
-            class="product-card__action-icon"
-            nz-icon
-            nzType="ellipsis"
-            nzTheme="outline"
+        <button
+            class="product-card__action-btn"
+            nz-button
             nz-dropdown
+            nzType="default"
+            nzSize="small"
             [nzDropdownMenu]="menu"
             nzTrigger="click"
             (click)="$event.stopPropagation()"
-        ></i>
+        >
+            <i nz-icon nzTheme="outline" nzType="ellipsis"></i>
+        </button>
         <nz-dropdown-menu #menu="nzDropdownMenu">
             <ul nz-menu nzSelectable>
                 <li nz-menu-item *ngFor="let action of extraActions" (click)="action.action(product)">{{ action.title }}</li>

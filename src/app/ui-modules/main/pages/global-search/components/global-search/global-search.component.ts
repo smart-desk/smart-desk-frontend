@@ -14,6 +14,7 @@ import { ProductDataService } from '../../../../../../modules/product/product-da
 })
 export class GlobalSearchComponent implements OnInit, OnDestroy {
     productsResponse: GetProductsResponseDto;
+    loading = false;
     private destroy$ = new Subject();
 
     constructor(
@@ -25,8 +26,14 @@ export class GlobalSearchComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
+        this.productDataService.events$.pipe(takeUntil(this.destroy$)).subscribe(event => {
+            this.loading = true;
+            this.cd.detectChanges();
+        });
+
         this.productDataService.products$.pipe(takeUntil(this.destroy$)).subscribe(products => {
             this.productsResponse = products;
+            this.loading = false;
             this.cd.detectChanges();
         });
 
@@ -39,7 +46,7 @@ export class GlobalSearchComponent implements OnInit, OnDestroy {
                 takeUntil(this.destroy$)
             )
             .subscribe(() => {
-                const options = this.productDataService.parseQueryParams(this.route.snapshot.queryParamMap);
+                const options = this.productDataService.getProductOptionsFromQuery(this.route.snapshot.queryParamMap);
                 this.productDataService.loadProducts(null, options);
                 this.cd.detectChanges();
             });

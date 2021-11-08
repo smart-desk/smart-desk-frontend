@@ -7,6 +7,7 @@
     gap: $base-unit;
     grid-auto-flow: column;
     cursor: pointer;
+    margin-bottom: $base-unit * 2;
 }
 
 .similar {
@@ -14,10 +15,17 @@
 }
 
 .meta {
+    color: $font-color-gray;
     margin-bottom: $base-unit * 2;
+
+    &__item {
+        margin-bottom: $base-unit;
+    }
 }
 
 .contacts {
+    margin-bottom: $base-unit * 2;
+
     &__phone {
         margin-bottom: $base-unit * 2;
     }

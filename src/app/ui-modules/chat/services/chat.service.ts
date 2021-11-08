@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { v4 } from 'uuid';
 import { CreateChatMessageDto } from '../models/create-chat-message.dto';
 import { ChatId } from '../models/chat-id';
 import { CreateChatDto } from '../models/create-chat.dto';
 import { Chat } from '../models/chat.entity';
 import { ChatMessage } from '../models/chat-message.entity';
-import { filter, map, take } from 'rxjs/operators';
+import { filter, map, take, tap } from 'rxjs/operators';
 
 export enum ChatEvent {
     GET_CHATS = 'getChats',
@@ -29,20 +29,37 @@ interface ChatGatewayResponse {
     providedIn: 'root',
 })
 export class ChatService {
-    private connection = new BehaviorSubject<boolean>(false);
+    constructor(private socket: Socket) {}
 
-    constructor(private socket: Socket) {
-        this.socket
-            .fromEvent('connect')
-            .pipe(take(1))
-            .subscribe(() => {
-                this.connection.next(true);
-                this.socket.emit(ChatEvent.INIT_CHATS, {});
-            });
+    updateHeaders(): void {
+        const token = localStorage.getItem('token');
+        this.socket.ioSocket.io.opts.transportOptions = {
+            polling: {
+                extraHeaders: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        };
+    }
+
+    connect(): void {
+        this.socket.connect();
+    }
+
+    disconnect(): void {
+        this.socket.disconnect();
+    }
+
+    get error$(): Observable<any> {
+        return this.socket.fromEvent('error');
+    }
+
+    get connectionFailed$(): Observable<any> {
+        return this.socket.fromEvent('connection_failed');
     }
 
     get connection$(): Observable<any> {
-        return this.connection.asObservable();
+        return this.socket.fromEvent('connect');
     }
 
     sendMessage(message: CreateChatMessageDto) {

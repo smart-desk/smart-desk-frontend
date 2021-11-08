@@ -25,10 +25,10 @@
                 <td>{{ adCampaign.startDate }} - {{ adCampaign.endDate }}</td>
                 <td>{{ adCampaign.reason }}</td>
                 <td>
-                    <a (click)="showAdCampaign(adCampaign.id)">Просмотр</a>
+                    <a (click)="showAdCampaign(adCampaign)">Просмотр</a>
                     <ng-container *ngIf="adCampaign.status !== this.adsStatus.PAID">
                         <nz-divider [nzType]="'vertical'"></nz-divider>
-                        <a (click)="navigateToCampaignPage(adCampaign.id)">Редатировать</a>
+                        <a (click)="navigateToCampaignPage(adCampaign.id)">Редактировать</a>
                     </ng-container>
                     <ng-container *ngIf="adCampaign.status === this.adsStatus.APPROVED">
                         <nz-divider [nzType]="'vertical'"></nz-divider>
