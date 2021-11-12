@@ -48,6 +48,7 @@ import { PageFormComponent } from './components/page-form/page-form.component';
 import { QuillModule } from 'ngx-quill';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { ProductBlockReasonFormComponent } from './components/product-block-reason-form/product-block-reason-form.component';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
 
 const components = [
     AdCampaignReasonFormComponent,
@@ -107,6 +108,7 @@ const pages = [
         NzRadioModule,
         QuillModule,
         NzUploadModule,
+        NzAlertModule,
     ],
     declarations: [...pages, ...components],
 })

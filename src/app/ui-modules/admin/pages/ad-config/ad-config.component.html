@@ -24,6 +24,18 @@
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
+            <nz-form-label>Google Adsense Скрипт</nz-form-label>
+            <nz-alert
+                class="ad-config__adsense-warn"
+                nzType="warning"
+                nzMessage="Добавляйте скрипт только с официального сайта Google Adsense"
+                nzShowIcon
+            ></nz-alert>
+            <nz-form-control>
+                <textarea nz-input formControlName="adsense" [nzAutosize]="{ minRows: 4 }"></textarea>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
             <nz-form-control>
                 <button (click)="submitForm()" nz-button nzType="primary">Сохранить</button>
             </nz-form-control>

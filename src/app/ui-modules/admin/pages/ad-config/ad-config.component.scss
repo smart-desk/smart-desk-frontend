@@ -6,11 +6,15 @@
 }
 
 .form {
-    width: $base-unit * 30;
+    width: $base-unit * 60;
 }
 
 .ad-config {
     &__promo-set-list {
+        margin-bottom: $base-unit * 2;
+    }
+
+    &__adsense-warn {
         margin-bottom: $base-unit * 2;
     }
 }
