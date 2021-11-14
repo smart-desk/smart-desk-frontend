@@ -11,7 +11,6 @@ import { AuthGuard } from './modules/auth/auth.guard';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { DynamicFieldsModule } from './ui-modules/dynamic-fields/dynamic-fields.module';
 import { NzResultModule } from 'ng-zorro-antd/result';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { ChatModule } from './ui-modules/chat/chat.module';
@@ -41,6 +40,7 @@ import { AdMainAdvertComponent } from './components/ad-main-advert/ad-main-adver
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ImagekitioAngularModule } from 'imagekitio-angular';
 import { KeyValueComponent } from './components/key-value/key-value.component';
+import { AppConfigService } from './modules/app-config/app-config.service';
 
 const NZModules = [
     NzFormModule,
@@ -72,6 +72,7 @@ const services = [
     PhoneService,
     UserService,
     AdService,
+    AppConfigService,
 ];
 
 const components = [

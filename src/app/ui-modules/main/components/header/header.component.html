@@ -3,7 +3,8 @@
         <div class="container header">
             <div class="header__logo">
                 <a (click)="navigateToMain()">
-                    <img [src]="'../../../../../assets/images/smart-desk-logo.svg'" alt="Smart Desk" />
+                    <img *ngIf="!logo" [src]="'../../../../../assets/images/smart-desk-logo.svg'" alt="На главную" />
+                    <ik-image *ngIf="logo" [path]="logo" [transformation]="[{ height: 60 }]"></ik-image>
                 </a>
             </div>
             <button #categoryButton nz-button class="header__category-button" (click)="toggleMenu()">
