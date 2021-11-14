@@ -77,3 +77,11 @@ export function findChildren(target: Category, categories: Category[]): Category
 export function convertFiltersToObject(filters: Filter<unknown>[]): Filters {
     return filters.reduce((prev, cur) => ({ ...prev, ...cur?.getFilterObject() }), {});
 }
+
+export function createGoogleAdsenseElement(src: string): HTMLScriptElement {
+    const elem = document.createElement('script');
+    elem.src = src;
+    elem.crossOrigin = 'anonymous';
+    elem.async = true;
+    return elem;
+}

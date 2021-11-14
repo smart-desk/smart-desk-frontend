@@ -9,6 +9,7 @@ import { PromoSet } from '../../../../modules/promo/models/promo-set.entity';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { PromoSetFormComponent } from '../../components/promo-set-form/promo-set-form.component';
 import { NzModalRef } from 'ng-zorro-antd/modal/modal-ref';
+import { createGoogleAdsenseElement } from '../../../../utils';
 
 @Component({
     selector: 'app-ad-setup',
@@ -48,8 +49,14 @@ export class AdConfigComponent implements OnInit {
             mainHourlyRate: [],
             sidebarHourlyRate: [],
             liftRate: [],
+            adsense: [],
         });
-        this.adService.getAdConfig().subscribe(data => this.form.patchValue(data));
+        this.adService.getAdConfig().subscribe(data =>
+            this.form.patchValue({
+                ...data,
+                adsense: data?.adsense ? createGoogleAdsenseElement(data.adsense).outerHTML : '',
+            })
+        );
     }
 
     getPromoSets(): void {
