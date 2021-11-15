@@ -6,5 +6,7 @@
 
 <ng-template #main>
     <h2>Выберите категорию</h2>
-    <app-category-buttons size="lg" [category]="null"></app-category-buttons>
+    <app-category-buttons class="index__category-buttons" size="lg" [category]="null"></app-category-buttons>
+    <h2>Недавно добавленные</h2>
+    <app-products [productsResponse]="recentProducts" [showPagination]="false"></app-products>
 </ng-template>
