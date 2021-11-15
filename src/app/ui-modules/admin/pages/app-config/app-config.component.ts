@@ -27,7 +27,9 @@ export class AppConfigComponent implements OnInit {
     }
 
     fileChanged(event: NzUploadChangeParam): void {
-        if (event.type === 'success') {
+        if (event.type === 'removed') {
+            this.appConfigService.updateAppConfig({ ...this.appConfig, logo: '' }).subscribe();
+        } else if (event.type === 'success') {
             this.file = [event.file];
             const fileUrl = this.file[0].response.key;
             this.appConfigService.updateAppConfig({ ...this.appConfig, logo: fileUrl }).subscribe();
