@@ -1,5 +1,11 @@
 <ng-container *ngTemplateOutlet="advert"></ng-container>
-<h1 *ngIf="title" class="content-layout__title">{{ title }}</h1>
+<ng-container *ngIf="isTemplate(title); else titleStringTmp">
+    <ng-container *ngTemplateOutlet="title"></ng-container>
+</ng-container>
+<ng-template #titleStringTmp>
+    <h1 class="content-layout__title">{{ title }}</h1>
+</ng-template>
+
 <nz-row [nzGutter]="16">
     <nz-col [nzSpan]="6" *ngIf="left">
         <ng-container *ngTemplateOutlet="left"></ng-container>
