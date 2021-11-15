@@ -1,12 +1,8 @@
 @import '~src/assets/styles/variables';
 
-.categories {
+.app-config {
     &__content {
         background: white;
         padding: $base-unit * 3;
-    }
-
-    &__tree {
-        margin-bottom: $base-unit;
     }
 }

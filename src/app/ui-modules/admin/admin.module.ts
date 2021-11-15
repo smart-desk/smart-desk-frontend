@@ -49,6 +49,7 @@ import { QuillModule } from 'ngx-quill';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { ProductBlockReasonFormComponent } from './components/product-block-reason-form/product-block-reason-form.component';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { AppConfigComponent } from './pages/app-config/app-config.component';
 
 const components = [
     AdCampaignReasonFormComponent,
@@ -75,6 +76,7 @@ const pages = [
     AdConfigComponent,
     AdCampaignListComponent,
     SitePagesComponent,
+    AppConfigComponent,
 ];
 
 @NgModule({

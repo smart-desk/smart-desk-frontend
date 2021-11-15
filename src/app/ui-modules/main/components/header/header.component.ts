@@ -4,6 +4,7 @@ import {
     Component,
     ElementRef,
     HostListener,
+    Input,
     OnDestroy,
     OnInit,
     ViewChild,
@@ -26,9 +27,11 @@ import { CategoryService } from '../../../../modules/category/category.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+    @Input()
+    logo: string;
+
     currentCategory: Category | null;
     categoryTree$ = new BehaviorSubject<NzCascaderOption[]>([]);
-    selectedCategoriesIds: string[] = [];
     searchPhrase = '';
     isHeaderSticky = false;
     isMenuOpen = false;
