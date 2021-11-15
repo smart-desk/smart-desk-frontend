@@ -9,8 +9,28 @@
         border: none;
         box-shadow: $shadow;
 
-        :last-child {
+        &:last-child {
             margin-right: 0;
         }
+    }
+}
+
+.category-large-buttons {
+    display: flex;
+
+    &__item {
+        cursor: pointer;
+        text-align: center;
+        margin-right: $base-unit * 2;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+
+    &__image {
+        border-radius: 50%;
+        box-shadow: $shadow;
+        margin-bottom: $base-unit;
     }
 }
