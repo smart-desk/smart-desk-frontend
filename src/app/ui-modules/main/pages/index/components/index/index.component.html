@@ -1,9 +1,12 @@
-<app-content-layout [advert]="advert" [title]="'Добро пожаловать в Смарт Деск'" [main]="main"></app-content-layout>
+<app-content-layout [advert]="advert" [main]="main"></app-content-layout>
 
 <ng-template #advert>
     <app-main-advert *ngIf="mainAdCampaign" [campaign]="mainAdCampaign"></app-main-advert>
 </ng-template>
 
 <ng-template #main>
-    <app-category-buttons [category]="null"></app-category-buttons>
+    <h2>Выберите категорию</h2>
+    <app-category-buttons class="index__category-buttons" size="lg" [category]="null"></app-category-buttons>
+    <h2>Недавно добавленные</h2>
+    <app-products [productsResponse]="recentProducts" [showPagination]="false"></app-products>
 </ng-template>

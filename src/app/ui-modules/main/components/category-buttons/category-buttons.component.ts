@@ -15,6 +15,9 @@ export class CategoryButtonsComponent implements OnInit, OnChanges {
     @Input()
     category: Category;
 
+    @Input()
+    size: 'sm' | 'lg' = 'sm';
+
     children: Category[];
 
     constructor(private categoryService: CategoryService, private cdr: ChangeDetectorRef, private router: Router) {}
