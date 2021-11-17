@@ -1,6 +1,6 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, OnChanges } from '@angular/core';
 
-export interface BreadcrumbStep {
+export interface BreadcrumbsStep {
     name: string;
     navigateUrl: string[];
 }
@@ -11,6 +11,12 @@ export interface BreadcrumbStep {
     styleUrls: ['./breadcrumbs.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BreadcrumbsComponent {
-    @Input() steps: BreadcrumbStep[] = [{ name: 'Главная', navigateUrl: ['/'] }];
+export class BreadcrumbsComponent implements OnChanges {
+    startStep: BreadcrumbsStep = { name: 'Главная', navigateUrl: ['/'] };
+    resultSteps: BreadcrumbsStep[];
+    @Input() steps: BreadcrumbsStep[] = [];
+
+    ngOnChanges(): void {
+        this.resultSteps = [this.startStep, ...this.steps];
+    }
 }

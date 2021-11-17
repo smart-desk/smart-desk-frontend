@@ -17,6 +17,7 @@ import { EMPTY, Subject } from 'rxjs';
 import { UserService } from '../../../../../../modules/user/user.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { HttpErrorResponse } from '@angular/common/http';
+import { BreadcrumbsStep } from '../../../../components/breadcrumb/breadcrumbs.component';
 
 @Component({
     selector: 'app-user-settings',
@@ -27,10 +28,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ProfileComponent implements OnInit, OnDestroy {
     profile: User | undefined;
     verificationRequestId: string;
-    breadcrumb = [
-        { name: 'Главная', navigateUrl: '/' },
-        { name: 'Профиль', navigateUrl: '/profile' },
-    ];
+    breadcrumbs: BreadcrumbsStep[] = [{ name: 'Профиль', navigateUrl: ['/profile'] }];
     private destroy$ = new Subject();
 
     constructor(
@@ -136,7 +134,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
                     }
                     return EMPTY;
                 }),
-                switchMap(res => this.userService.getCurrentUser(true))
+                switchMap(() => this.userService.getCurrentUser(true))
             )
             .subscribe(user => {
                 this.profile = user;

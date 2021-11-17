@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, ParamMap, Router, RouterEvent } from '@angular/router';
-import { of, Subject } from 'rxjs';
-import { filter, pairwise, startWith, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { filter, pairwise, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { isEmpty } from 'lodash';
 import { GetProductsDto, GetProductsResponseDto } from '../../../../../../modules/product/models/product.dto';
 import { Category } from '../../../../../../modules/category/models/category.entity';
@@ -14,7 +14,7 @@ import { AdService } from '../../../../../../modules/ad/ad.service';
 import { AdCampaignCurrentDto } from '../../../../../../modules/ad/models/ad-campaign-current.dto';
 import { Product } from '../../../../../../modules/product/models/product.entity';
 import { PromoService } from '../../../../../../modules/promo/promo.service';
-import { BreadcrumbStep } from '../../../../components/breadcrumb/breadcrumbs.component';
+import { BreadcrumbsStep } from '../../../../components/breadcrumb/breadcrumbs.component';
 
 @Component({
     selector: 'app-category',
@@ -31,8 +31,10 @@ export class CategoryComponent implements OnInit, OnDestroy {
     category: Category;
     options: GetProductsDto;
     promoProducts: Product[];
-    breadcrumbs: BreadcrumbStep[];
+    breadcrumbs: BreadcrumbsStep[] = [];
+    categoryId: string;
     private destroy$ = new Subject();
+
     constructor(
         private promoService: PromoService,
         private categoryService: CategoryService,
@@ -45,7 +47,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        this.productDataService.events$.pipe(takeUntil(this.destroy$)).subscribe(event => {
+        this.productDataService.events$.pipe(takeUntil(this.destroy$)).subscribe(() => {
             this.loading = true;
             this.cd.detectChanges();
         });
@@ -59,12 +61,12 @@ export class CategoryComponent implements OnInit, OnDestroy {
                 takeUntil(this.destroy$),
                 switchMap(() => this.route.paramMap),
                 switchMap((paramMap: ParamMap) => {
-                    const categoryId = paramMap.get('category_id') || '';
-                    this.getPromoProducts(categoryId);
+                    this.categoryId = paramMap.get('category_id') || '';
+                    this.getPromoProducts(this.categoryId);
                     this.options = this.productDataService.getProductOptionsFromQuery(this.route.snapshot.queryParamMap);
-                    this.productDataService.loadProducts(categoryId, this.options);
-                    this.formBreadcrumbs(categoryId);
-                    return this.categoryService.getCategory(categoryId);
+                    this.productDataService.loadProducts(this.categoryId, this.options);
+
+                    return this.categoryService.getCategory(this.categoryId);
                 }),
                 switchMap(category => {
                     this.category = category;
@@ -73,6 +75,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
             )
             .subscribe(model => {
                 this.model = model;
+                this.formBreadcrumbs(this.categoryId);
                 this.cd.detectChanges();
             });
 
@@ -114,34 +117,18 @@ export class CategoryComponent implements OnInit, OnDestroy {
     }
 
     private formBreadcrumbs(id: string): void {
-        let parentCat: Category;
-        let childCat: Category;
-        this.categoryService
-            .getCategory(id)
-            .pipe(
-                tap(cat => {
-                    childCat = cat;
-                }),
-                switchMap(cat => {
-                    if (cat.parentId) {
-                        return this.categoryService.getCategory(cat.parentId);
-                    }
-                    return of(null);
-                })
-            )
-            .subscribe(cat => {
-                if (cat) {
-                    parentCat = cat;
-                }
+        this.breadcrumbs = [];
+        this.recursivePushBreadcrumb(id);
+    }
 
-                this.breadcrumbs = [{ name: 'Главная', navigateUrl: ['/'] }];
-                [parentCat, childCat].forEach(step => {
-                    if (step) {
-                        this.breadcrumbs.push({ name: step.name, navigateUrl: ['/', 'category', step.id] });
-                    }
-                });
-                this.breadcrumbs = [...this.breadcrumbs];
-                this.cd.detectChanges();
-            });
+    private recursivePushBreadcrumb(id: string): void {
+        this.categoryService.getCategory(id).subscribe(cat => {
+            const step = { name: cat.name, navigateUrl: ['/', 'category', cat.id] };
+            this.breadcrumbs.unshift(step);
+            this.breadcrumbs = [...this.breadcrumbs];
+            if (cat.parentId) {
+                this.recursivePushBreadcrumb(cat.parentId);
+            }
+        });
     }
 }
