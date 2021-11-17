@@ -1,4 +1,36 @@
-<app-content-layout [title]="product?.title" [main]="main" [right]="right"></app-content-layout>
+<app-content-layout [title]="titleTmp" [main]="main" [right]="right"></app-content-layout>
+
+<ng-template #titleTmp>
+    <nz-row [nzGutter]="16">
+        <nz-col [nzSpan]="18">
+            <div class="product__title-wrapper">
+                <h1 class="product__title">{{ product?.title }}</h1>
+                <button
+                    *ngIf="product?.isBookmark"
+                    class="product__title-button product__title-button--active"
+                    nz-button
+                    nzType="default"
+                    nzShape="round"
+                    (click)="removeFromBookmarks()"
+                >
+                    Убрать из закладок
+                    <i nz-icon nzType="heart" nzTheme="fill"></i>
+                </button>
+                <button
+                    *ngIf="!product?.isBookmark"
+                    class="product__title-button"
+                    nz-button
+                    nzType="default"
+                    nzShape="round"
+                    (click)="addToBookmarks()"
+                >
+                    В закладки
+                    <i nz-icon nzType="heart" nzTheme="outline"></i>
+                </button>
+            </div>
+        </nz-col>
+    </nz-row>
+</ng-template>
 
 <ng-template #main>
     <nz-alert

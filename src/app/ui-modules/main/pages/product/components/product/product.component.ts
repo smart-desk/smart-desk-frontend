@@ -62,7 +62,9 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
         private chatModalService: ChatModalService,
         private loginService: LoginService,
         private phoneService: PhoneService
-    ) {}
+    ) {
+        this.bookmarksStoreService.loadBookmarks();
+    }
 
     ngOnInit(): void {
         window.scrollTo(pageXOffset, 0);
@@ -87,6 +89,10 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
             this.currentUser = currentUser;
             this.cd.detectChanges();
         });
+
+        this.bookmarksStoreService.bookmarks$.subscribe(() => {
+            this.setBookmarkFlag();
+        });
     }
 
     ngAfterViewInit(): void {
@@ -101,6 +107,7 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
                 }),
                 tap(product => {
                     this.product = product;
+                    this.setBookmarkFlag();
                     this.countView();
                 }),
                 switchMap(product => {
@@ -161,6 +168,22 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
         return productPreferContact === contact;
+    }
+
+    addToBookmarks(): void {
+        this.bookmarksStoreService.createBookmark(this.product.id);
+    }
+
+    removeFromBookmarks(): void {
+        this.bookmarksStoreService.deleteBookmark(this.product.id);
+    }
+
+    private setBookmarkFlag(): void {
+        const bms = this.bookmarksStoreService.bookmarks$.getValue();
+        if (this.product) {
+            this.product.isBookmark = bms.findIndex(bm => bm.product.id === this.product.id) > -1;
+            this.cd.markForCheck();
+        }
     }
 
     private addParamsFields(): void {

@@ -35,4 +35,25 @@
     &__alert {
         margin-bottom: $base-unit * 2;
     }
+
+    &__title {
+        font-size: $font-32;
+        margin-bottom: 0;
+    }
+
+    &__title-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: $base-unit * 2;
+    }
+
+    &__title-button {
+        border: none;
+        box-shadow: $shadow;
+
+        &--active i {
+            color: $primary-red;
+        }
+    }
 }

@@ -8,7 +8,7 @@ import { ChangeDetectionStrategy, Component, Input, TemplateRef } from '@angular
 })
 export class ContentLayoutComponent {
     @Input()
-    title: string;
+    title: string | TemplateRef<any>;
 
     @Input()
     advert: TemplateRef<any>;
@@ -21,4 +21,8 @@ export class ContentLayoutComponent {
 
     @Input()
     right: TemplateRef<any>;
+
+    isTemplate(value: string | TemplateRef<any>): boolean {
+        return value instanceof TemplateRef;
+    }
 }
