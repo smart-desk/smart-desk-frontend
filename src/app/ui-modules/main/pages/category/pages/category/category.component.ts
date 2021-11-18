@@ -32,7 +32,6 @@ export class CategoryComponent implements OnInit, OnDestroy {
     options: GetProductsDto;
     promoProducts: Product[];
     breadcrumbs: BreadcrumbsStep[] = [];
-    categoryId: string;
     private destroy$ = new Subject();
 
     constructor(
@@ -61,12 +60,12 @@ export class CategoryComponent implements OnInit, OnDestroy {
                 takeUntil(this.destroy$),
                 switchMap(() => this.route.paramMap),
                 switchMap((paramMap: ParamMap) => {
-                    this.categoryId = paramMap.get('category_id') || '';
-                    this.getPromoProducts(this.categoryId);
+                    const categoryId = paramMap.get('category_id') || '';
+                    this.getPromoProducts(categoryId);
                     this.options = this.productDataService.getProductOptionsFromQuery(this.route.snapshot.queryParamMap);
-                    this.productDataService.loadProducts(this.categoryId, this.options);
+                    this.productDataService.loadProducts(categoryId, this.options);
 
-                    return this.categoryService.getCategory(this.categoryId);
+                    return this.categoryService.getCategory(categoryId);
                 }),
                 switchMap(category => {
                     this.category = category;
@@ -75,7 +74,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
             )
             .subscribe(model => {
                 this.model = model;
-                this.formBreadcrumbs(this.categoryId);
+                this.buildBreadcrumbs();
                 this.cd.detectChanges();
             });
 
@@ -116,19 +115,19 @@ export class CategoryComponent implements OnInit, OnDestroy {
         });
     }
 
-    private formBreadcrumbs(id: string): void {
+    private buildBreadcrumbs(): void {
         this.breadcrumbs = [];
-        this.recursivePushBreadcrumb(id);
+        this.categoryService.getCategories().subscribe(cats => this.addBreadcrumb(this.category, cats));
     }
-
-    private recursivePushBreadcrumb(id: string): void {
-        this.categoryService.getCategory(id).subscribe(cat => {
-            const step = { name: cat.name, navigateUrl: ['/', 'category', cat.id] };
-            this.breadcrumbs.unshift(step);
-            this.breadcrumbs = [...this.breadcrumbs];
-            if (cat.parentId) {
-                this.recursivePushBreadcrumb(cat.parentId);
+    private addBreadcrumb(category: Category, cats: Category[]): void {
+        const step = { name: category.name, navigateUrl: ['/', 'category', category.id] };
+        this.breadcrumbs.unshift(step);
+        this.breadcrumbs = [...this.breadcrumbs];
+        if (category.parentId) {
+            const parentCat = cats.find(cat => cat.id === category.parentId);
+            if (parentCat) {
+                this.addBreadcrumb(parentCat, cats);
             }
-        });
+        }
     }
 }
