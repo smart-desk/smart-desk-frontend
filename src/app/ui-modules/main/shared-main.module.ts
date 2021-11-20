@@ -44,6 +44,8 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { CategoryMenuComponent } from './components/category-menu/category-menu.component';
 import { CategoryButtonsComponent } from './components/category-buttons/category-buttons.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { BreadcrumbsComponent } from './components/breadcrumb/breadcrumbs.component';
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 
 const components = [
     HeaderComponent,
@@ -67,6 +69,7 @@ const components = [
     CategoryMenuComponent,
     CategoryButtonsComponent,
     LoadingComponent,
+    BreadcrumbsComponent,
 ];
 
 @NgModule({
@@ -98,6 +101,7 @@ const components = [
         ImagekitioAngularModule,
         NzAffixModule,
         NzTypographyModule,
+        NzBreadCrumbModule,
     ],
 })
 export class SharedMainModule {}

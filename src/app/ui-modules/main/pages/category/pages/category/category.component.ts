@@ -14,6 +14,7 @@ import { AdService } from '../../../../../../modules/ad/ad.service';
 import { AdCampaignCurrentDto } from '../../../../../../modules/ad/models/ad-campaign-current.dto';
 import { Product } from '../../../../../../modules/product/models/product.entity';
 import { PromoService } from '../../../../../../modules/promo/promo.service';
+import { BreadcrumbsStep } from '../../../../components/breadcrumb/breadcrumbs.component';
 
 @Component({
     selector: 'app-category',
@@ -30,7 +31,9 @@ export class CategoryComponent implements OnInit, OnDestroy {
     category: Category;
     options: GetProductsDto;
     promoProducts: Product[];
+    breadcrumbs: BreadcrumbsStep[] = [];
     private destroy$ = new Subject();
+
     constructor(
         private promoService: PromoService,
         private categoryService: CategoryService,
@@ -43,7 +46,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        this.productDataService.events$.pipe(takeUntil(this.destroy$)).subscribe(event => {
+        this.productDataService.events$.pipe(takeUntil(this.destroy$)).subscribe(() => {
             this.loading = true;
             this.cd.detectChanges();
         });
@@ -61,6 +64,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
                     this.getPromoProducts(categoryId);
                     this.options = this.productDataService.getProductOptionsFromQuery(this.route.snapshot.queryParamMap);
                     this.productDataService.loadProducts(categoryId, this.options);
+
                     return this.categoryService.getCategory(categoryId);
                 }),
                 switchMap(category => {
@@ -70,6 +74,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
             )
             .subscribe(model => {
                 this.model = model;
+                this.buildBreadcrumbs();
                 this.cd.detectChanges();
             });
 
@@ -108,5 +113,21 @@ export class CategoryComponent implements OnInit, OnDestroy {
             this.promoProducts = res;
             this.cd.detectChanges();
         });
+    }
+
+    private buildBreadcrumbs(): void {
+        this.breadcrumbs = [];
+        this.categoryService.getCategories().subscribe(cats => this.addBreadcrumb(this.category, cats));
+    }
+    private addBreadcrumb(category: Category, cats: Category[]): void {
+        const step = { name: category.name, navigateUrl: ['/', 'category', category.id] };
+        this.breadcrumbs.unshift(step);
+        this.breadcrumbs = [...this.breadcrumbs];
+        if (category.parentId) {
+            const parentCat = cats.find(cat => cat.id === category.parentId);
+            if (parentCat) {
+                this.addBreadcrumb(parentCat, cats);
+            }
+        }
     }
 }

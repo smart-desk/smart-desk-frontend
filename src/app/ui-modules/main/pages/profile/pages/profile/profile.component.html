@@ -1,11 +1,12 @@
-<app-content-layout title="Ваш профиль" [left]="left" [main]="main"></app-content-layout>
+<app-content-layout [left]="left" [main]="main"></app-content-layout>
 
 <ng-template #left>
+    <app-breadcrumbs [steps]="breadcrumbs"></app-breadcrumbs>
     <app-user-info [user]="profile"></app-user-info>
 </ng-template>
 
 <ng-template #main>
-    <nz-table nzTemplateMode>
+    <nz-table class="profile-table" nzTemplateMode>
         <tbody>
             <tr>
                 <td>Профиль</td>
