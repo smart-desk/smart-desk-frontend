@@ -17,7 +17,7 @@ import { EMPTY, Subject } from 'rxjs';
 import { UserService } from '../../../../../../modules/user/user.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { HttpErrorResponse } from '@angular/common/http';
-import { BreadcrumbsStep } from '../../../../components/breadcrumb/breadcrumbs.component';
+import { BreadcrumbsStep } from '../../../../components/breadcrumbs/breadcrumbs.component';
 
 @Component({
     selector: 'app-user-settings',
