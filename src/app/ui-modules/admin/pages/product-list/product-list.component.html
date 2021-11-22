@@ -17,7 +17,7 @@
 <nz-table [nzTemplateMode]="true" nzSize="middle" class="table" [nzLoading]="loading">
     <thead>
         <tr>
-            <th class="column-checkbox"></th>
+            <th class="column-checkbox" [nzChecked]="false" (nzCheckedChange)="onAllChecked($event)"></th>
             <th nzCustomFilter>
                 Заголовок
                 <nz-filter-trigger [nzDropdownMenu]="menu" [nzActive]="searchValue.length > 0">
