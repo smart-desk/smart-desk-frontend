@@ -123,6 +123,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
         const step = { name: category.name, navigateUrl: ['/', 'category', category.id] };
         this.breadcrumbs.unshift(step);
         this.breadcrumbs = [...this.breadcrumbs];
+        this.cd.detectChanges();
         if (category.parentId) {
             const parentCat = cats.find(cat => cat.id === category.parentId);
             if (parentCat) {
