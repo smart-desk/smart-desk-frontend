@@ -39,3 +39,8 @@ img {
 .cdk-global-scrollblock {
     position: static;
 }
+
+lightbox gallery-image,
+lightbox gallery-thumbs {
+    background: $dark-gray;
+}

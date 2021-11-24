@@ -8,7 +8,7 @@ import {
     ViewChild,
     ViewContainerRef,
 } from '@angular/core';
-import { EMPTY, Observable, of, Subject } from 'rxjs';
+import { EMPTY, from, Observable, of, Subject } from 'rxjs';
 import { switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Product } from '../../../../../../modules/product/models/product.entity';
@@ -24,6 +24,10 @@ import { PreferContact } from '../../../../enums/contact-values.enum';
 import { ProductService } from '../../../../../../modules/product/product.service';
 import { UserService } from '../../../../../../modules/user/user.service';
 import { ProductDataService } from '../../../../../../modules/product/product-data.service';
+import { StripeService } from '../../../../../../modules/stripe/stripe.service';
+import { PromoSetChooserComponent } from '../../../../components/promo-set-chooser/promo-set-chooser.component';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { ProductStatus } from '../../../../../../modules/product/models/product-status.enum';
 
 @Component({
     selector: 'app-product',
@@ -39,6 +43,7 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
     isPhoneVisible = false;
     userPhone: string;
     preferContact = PreferContact;
+    productStatus = ProductStatus;
     private destroy$ = new Subject();
 
     @ViewChild('params', { read: ViewContainerRef })
@@ -51,6 +56,8 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
     private priceContainerRef: ViewContainerRef;
 
     constructor(
+        private modalService: NzModalService,
+        private stripeService: StripeService,
         private productService: ProductService,
         private route: ActivatedRoute,
         private router: Router,
@@ -176,6 +183,38 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
 
     removeFromBookmarks(): void {
         this.bookmarksStoreService.deleteBookmark(this.product.id);
+    }
+
+    liftProduct(product: Product): void {
+        if (this.stripeService.stripe) {
+            this.productService
+                .liftProduct(product.id)
+                .pipe(switchMap(res => from(this.stripeService.stripe.redirectToCheckout({ sessionId: res.id }))))
+                .subscribe(res => {
+                    console.log(res);
+                });
+        }
+    }
+
+    promoteProduct(product: Product): void {
+        this.modalService.create({
+            nzTitle: `Продвинуть ${product.title}`,
+            nzContent: PromoSetChooserComponent,
+            nzComponentParams: { product },
+            nzFooter: null,
+        });
+    }
+
+    completeProduct(product: Product): void {
+        this.productService.completeProduct(product.id).subscribe(() => {
+            location.reload();
+        });
+    }
+
+    deleteProduct(product: Product): void {
+        this.productService.deleteProduct(product.id).subscribe(() => {
+            this.router.navigate(['/', 'profile', 'my-products']);
+        });
     }
 
     private setBookmarkFlag(): void {

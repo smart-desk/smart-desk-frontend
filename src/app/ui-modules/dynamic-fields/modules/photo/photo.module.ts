@@ -33,7 +33,9 @@ import { ImagekitioAngularModule } from 'imagekitio-angular';
         NzGridModule,
         NzUploadModule,
         GalleryModule,
-        LightboxModule,
+        LightboxModule.withConfig({
+            panelClass: 'fullscreen',
+        }),
         ImagekitioAngularModule,
     ],
     providers: [PhotoService],

@@ -165,6 +165,15 @@ export class ProductListComponent implements OnInit, OnDestroy {
         });
     }
 
+    onAllChecked(checked: boolean): void {
+        if (checked) {
+            this.productResponse?.products?.forEach(p => this.selectedItems.add(p.id));
+        } else {
+            this.selectedItems.clear();
+        }
+        this.cdr.detectChanges();
+    }
+
     updateSelectedItems(id: string, checked: boolean): void {
         if (checked) {
             this.selectedItems.add(id);
