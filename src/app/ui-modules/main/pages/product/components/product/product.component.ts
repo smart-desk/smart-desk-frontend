@@ -227,7 +227,8 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
 
     private addParamsFields(): void {
         this.paramsContainerRef?.clear();
-        const fields = this.product.fields.filter(s => s.section === SectionType.PARAMS);
+        const fields = this.product.fields.filter(s => s.section === SectionType.PARAMS).sort((a, b) => a.order - b.order);
+
         if (fields.length) {
             this.populateContainerWithFields(this.paramsContainerRef, fields);
         }
