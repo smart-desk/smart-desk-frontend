@@ -75,4 +75,58 @@
         <div class="meta__item">Опубликовано {{ product?.createdAt | date: 'dd.MM.YYYY' }}</div>
         <div class="meta__item"><i nz-icon nzType="eye" nzTheme="outline"></i> {{ product?.views }} просмотров</div>
     </div>
+
+    <nz-alert
+        *ngIf="currentUser?.id === product?.userId"
+        nzType="success"
+        nzMessage="Дополнительные действия"
+        [nzDescription]="ownerButtons"
+    ></nz-alert>
+    <ng-template #ownerButtons>
+        <div *ngIf="product" class="product__owner-buttons">
+            <button
+                *ngIf="product.status !== productStatus.COMPLETED && product.status !== productStatus.BLOCKED"
+                class="product__owner-buttons-item"
+                nz-button
+                nzBlock
+                nzType="primary"
+                (click)="completeProduct(product)"
+            >
+                Завершить
+            </button>
+            <button
+                class="product__owner-buttons-item"
+                nz-button
+                nzBlock
+                nzType="default"
+                [routerLink]="['/', 'products', product?.id, 'edit']"
+            >
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+                Редактировать
+            </button>
+            <button
+                *ngIf="product.status === productStatus.ACTIVE"
+                class="product__owner-buttons-item"
+                nz-button
+                nzBlock
+                nzType="default"
+                (click)="liftProduct(product)"
+            >
+                Поднять
+            </button>
+            <button
+                *ngIf="product.status === productStatus.ACTIVE"
+                class="product__owner-buttons-item"
+                nz-button
+                nzBlock
+                nzType="default"
+                (click)="promoteProduct(product)"
+            >
+                Продвинуть
+            </button>
+            <button class="product__owner-buttons-item" nzDanger nz-button nzBlock nzType="default" (click)="deleteProduct(product)">
+                Удалить
+            </button>
+        </div>
+    </ng-template>
 </ng-template>

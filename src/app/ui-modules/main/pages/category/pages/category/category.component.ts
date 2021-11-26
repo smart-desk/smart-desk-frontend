@@ -14,7 +14,7 @@ import { AdService } from '../../../../../../modules/ad/ad.service';
 import { AdCampaignCurrentDto } from '../../../../../../modules/ad/models/ad-campaign-current.dto';
 import { Product } from '../../../../../../modules/product/models/product.entity';
 import { PromoService } from '../../../../../../modules/promo/promo.service';
-import { BreadcrumbsStep } from '../../../../components/breadcrumb/breadcrumbs.component';
+import { BreadcrumbsStep } from '../../../../components/breadcrumbs/breadcrumbs.component';
 
 @Component({
     selector: 'app-category',

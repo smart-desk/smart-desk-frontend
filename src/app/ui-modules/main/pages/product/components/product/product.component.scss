@@ -56,4 +56,16 @@
             color: $primary-red;
         }
     }
+
+    &__owner-buttons {
+        margin: $base-unit 0;
+    }
+
+    &__owner-buttons-item {
+        margin-bottom: $base-unit * 2;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
 }

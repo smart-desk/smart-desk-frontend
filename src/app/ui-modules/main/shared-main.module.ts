@@ -44,7 +44,7 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { CategoryMenuComponent } from './components/category-menu/category-menu.component';
 import { CategoryButtonsComponent } from './components/category-buttons/category-buttons.component';
 import { LoadingComponent } from './components/loading/loading.component';
-import { BreadcrumbsComponent } from './components/breadcrumb/breadcrumbs.component';
+import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 
 const components = [
