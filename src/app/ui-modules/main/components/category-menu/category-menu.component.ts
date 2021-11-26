@@ -38,7 +38,8 @@ export class CategoryMenuComponent {
         this.cd.detectChanges();
     }
 
-    categorySelect(value: string): void {
+    categorySelect(value: string, e: Event): void {
+        e.stopPropagation();
         this.selectCategory.emit(value);
     }
 }

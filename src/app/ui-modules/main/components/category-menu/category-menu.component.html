@@ -5,7 +5,7 @@
             *ngFor="let category of categoryTree"
             (mouseenter)="categoryHover(category)"
             (mouseleave)="categoryHover()"
-            (click)="categorySelect(category.value)"
+            (click)="categorySelect(category.value, $event)"
         >
             {{ category.label }}
             <ul class="category__column category__column--child">
@@ -18,7 +18,7 @@
                         *ngFor="let child of category.children"
                         (mouseenter)="categoryHover(child)"
                         (mouseleave)="categoryHover()"
-                        (click)="categorySelect(child.value)"
+                        (click)="categorySelect(child.value, $event)"
                     >
                         {{ child.label }}
                     </li>
