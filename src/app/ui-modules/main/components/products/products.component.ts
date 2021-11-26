@@ -78,7 +78,7 @@ export class ProductsComponent implements OnChanges, OnInit, OnDestroy {
     trackByFn: TrackByFunction<Product> = (index: number, item: Product) => item.id + item.isBookmark;
 
     changePage(page: number) {
-        window.scrollTo(pageXOffset, 0);
+        window.scrollTo(window.pageXOffset, 0);
         this.productDataService.changePage(page);
     }
 

@@ -87,7 +87,7 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
                 })
             )
             .subscribe(res => {
-                window.scrollTo(pageXOffset, 0);
+                window.scrollTo(window.pageXOffset, 0);
                 this.similarProducts = res;
                 this.cd.detectChanges();
             });
