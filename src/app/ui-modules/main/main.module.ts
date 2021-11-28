@@ -6,6 +6,7 @@ import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { SharedMainModule } from './shared-main.module';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
 
 @NgModule({
     declarations: [MainComponent],
@@ -20,6 +21,7 @@ import { SharedMainModule } from './shared-main.module';
         }),
         NzLayoutModule,
         SharedMainModule,
+        NzAlertModule,
     ],
 })
 export class MainModule {}
