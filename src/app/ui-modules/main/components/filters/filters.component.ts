@@ -93,6 +93,7 @@ export class FiltersComponent implements AfterViewInit, OnDestroy, OnChanges {
             }) as Filter<unknown>[];
 
         this.productDataService.applyFilters(filters);
+        window.scrollTo(window.pageXOffset, 0);
     }
 
     dropFilters(): void {
