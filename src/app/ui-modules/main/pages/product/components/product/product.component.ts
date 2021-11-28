@@ -227,7 +227,8 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
 
     private addParamsFields(): void {
         this.paramsContainerRef?.clear();
-        const fields = this.product.fields.filter(s => s.section === SectionType.PARAMS);
+        const fields = this.product.fields.filter(s => s.section === SectionType.PARAMS).sort((a, b) => a.order - b.order);
+
         if (fields.length) {
             this.populateContainerWithFields(this.paramsContainerRef, fields);
         }
@@ -239,7 +240,7 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
 
     private addPriceFields(): void {
         this.priceContainerRef?.clear();
-        const fieldsPrice = this.product.fields.filter(s => s.section === SectionType.PRICE);
+        const fieldsPrice = this.product.fields.filter(s => s.section === SectionType.PRICE).sort((a, b) => a.order - b.order);
         if (fieldsPrice.length) {
             this.populateContainerWithFields(this.priceContainerRef, fieldsPrice);
         }
@@ -247,7 +248,7 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
 
     private addLocationFields(): void {
         this.locationContainerRef?.clear();
-        const fieldsLocations = this.product.fields.filter(s => s.section === SectionType.LOCATION);
+        const fieldsLocations = this.product.fields.filter(s => s.section === SectionType.LOCATION).sort((a, b) => a.order - b.order);
         if (fieldsLocations.length) {
             this.populateContainerWithFields(this.locationContainerRef, fieldsLocations);
         }
