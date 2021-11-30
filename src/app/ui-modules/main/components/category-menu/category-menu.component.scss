@@ -51,7 +51,7 @@
         }
     }
 
-    &__item:hover {
+    &__item.active {
         background-color: $grey-light;
         > ul {
             display: block;
