@@ -11,6 +11,7 @@ export class CategoryMenuComponent {
     @Input() categoryTree: NzCascaderOption[];
     @Output() selectCategory = new EventEmitter<string>(true);
 
+    categoryActive: string;
     category: NzCascaderOption | null;
     parentCategory: NzCascaderOption;
     lastCategory: NzCascaderOption | null;
@@ -38,8 +39,17 @@ export class CategoryMenuComponent {
         this.cd.detectChanges();
     }
 
-    categorySelect(value: string, e: Event): void {
+    selectParent(cat: NzCascaderOption, e: Event): void {
         e.stopPropagation();
-        this.selectCategory.emit(value);
+        if (this.categoryActive === cat.value) {
+            this.selectCategory.emit(cat.value);
+        }
+        this.categoryActive = cat.value;
+    }
+
+    selectChild(cat: NzCascaderOption, e: Event): void {
+        e.stopPropagation();
+        this.selectCategory.emit(cat.value);
+        this.categoryActive = cat.value;
     }
 }
