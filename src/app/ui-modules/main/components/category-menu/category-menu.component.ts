@@ -1,5 +1,7 @@
-import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
-import { NzCascaderOption } from 'ng-zorro-antd/cascader';
+import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
+import { Category } from '../../../../modules/category/models/category.entity';
+import { CategoryService } from '../../../../modules/category/category.service';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'app-category-menu',
@@ -7,49 +9,63 @@ import { NzCascaderOption } from 'ng-zorro-antd/cascader';
     styleUrls: ['./category-menu.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CategoryMenuComponent {
-    @Input() categoryTree: NzCascaderOption[];
+export class CategoryMenuComponent implements OnInit, OnDestroy {
+    @Input() categoryActive: Category;
     @Output() selectCategory = new EventEmitter<string>(true);
+    categories: Category[] = [];
+    parentCategories$ = new Subject<Category[]>();
+    childCategories$ = new Subject<Category[]>();
+    hoverImg: string;
+    private changeRootCategory$ = new Subject<Category>();
+    private destroy$ = new Subject();
+    constructor(private cd: ChangeDetectorRef, private categoryService: CategoryService) {}
 
-    categoryActive: string;
-    category: NzCascaderOption | null;
-    parentCategory: NzCascaderOption;
-    lastCategory: NzCascaderOption | null;
-    constructor(private cd: ChangeDetectorRef) {}
-
-    categoryHover(category?: NzCascaderOption): void {
-        // todo: костальное решение, можно придумать лучше или найти компоненту
-        if (category) {
-            if (category.children?.length) {
-                this.parentCategory = { ...category };
-            }
-            this.category = null;
+    ngOnInit(): void {
+        this.categoryService.getCategories().subscribe(cats => {
+            this.categories = cats;
+            this.parentCategories$.next(cats.filter(cat => !cat.parentId));
             this.cd.detectChanges();
-            this.category = { ...category };
-        } else {
-            if (!this.lastCategory?.children?.length) {
-                this.category = null;
+        });
+
+        this.parentCategories$.pipe().subscribe(cats => this.childCategories$.next(cats.filter(cat => !!cat.parentId)));
+
+        this.changeRootCategory$.subscribe(cat => {
+            this.categoryActive = cat;
+            if (!cat.parentId) {
+                this.childCategories$.next(this.categories.filter(childCat => childCat.parentId === cat.id));
                 this.cd.detectChanges();
-                this.category = this.parentCategory;
-            } else {
-                this.category = null;
             }
+        });
+
+        if (this.categoryActive) {
+            this.changeRootCategory$.next(this.categoryActive);
         }
-        this.lastCategory = this.category;
+    }
+
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
+
+    categoryHover(category?: Category): void {
+        if (category) {
+            this.hoverImg = category.img;
+        } else {
+            this.hoverImg = '';
+        }
         this.cd.detectChanges();
     }
 
-    selectParent(cat: NzCascaderOption, e: Event): void {
+    selectRoot(cat: Category, e: Event): void {
         e.stopPropagation();
-        if (this.categoryActive === cat.value) {
-            this.selectCategory.emit(cat.value);
+        if (this.categoryActive?.id === cat.id) {
+            this.selectCategory.emit(cat.id);
         }
-        this.categoryActive = cat.value;
+        this.changeRootCategory$.next(cat);
     }
 
-    selectChild(cat: NzCascaderOption, e: Event): void {
+    selectChild(cat: Category, e: Event): void {
         e.stopPropagation();
-        this.selectCategory.emit(cat.value);
-        this.categoryActive = cat.value;
+        this.selectCategory.emit(cat.id);
     }
 }

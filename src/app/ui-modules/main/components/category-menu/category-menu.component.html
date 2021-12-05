@@ -2,35 +2,31 @@
     <ul class="category__column category__column--parent">
         <li
             class="category__item"
-            [class.category__item--active]="category.value === categoryActive"
-            *ngFor="let category of categoryTree"
+            *ngFor="let category of parentCategories$ | async"
+            [class.category__item--active]="category?.id === categoryActive?.id || category?.id === categoryActive?.parentId"
             (mouseenter)="categoryHover(category)"
             (mouseleave)="categoryHover()"
-            (click)="selectParent(category, $event)"
+            (click)="selectRoot(category, $event)"
         >
-            {{ category.label }}
-            <ul class="category__column category__column--child">
-                <ng-container>
-                    <h3 class="category__title">
-                        <b>{{ category.label }}</b>
-                    </h3>
-                    <li
-                        class="category__item category__item--child"
-                        *ngFor="let child of category.children"
-                        (mouseenter)="categoryHover(child)"
-                        (mouseleave)="categoryHover()"
-                        (click)="selectChild(child, $event)"
-                    >
-                        {{ child.label }}
-                    </li>
-                </ng-container>
-            </ul>
+            {{ category.name }}
         </li>
     </ul>
-    <ik-image
-        *ngIf="!!category?.img"
-        class="category__image"
-        [path]="category?.img"
-        [transformation]="[{ width: 250, height: 250 }]"
-    ></ik-image>
+    <ul class="category__column category__column--child">
+        <ng-container>
+            <h3 class="category__title">
+                <b>{{ categoryActive?.name }}</b>
+            </h3>
+            <li
+                class="category__item category__item--child"
+                *ngFor="let child of childCategories$ | async"
+                [class.category__item--active]="categoryActive?.id === child.id"
+                (mouseenter)="categoryHover(child)"
+                (mouseleave)="categoryHover()"
+                (click)="selectChild(child, $event)"
+            >
+                {{ child.name }}
+            </li>
+        </ng-container>
+    </ul>
+    <ik-image *ngIf="!!hoverImg" class="category__image" [path]="hoverImg" [transformation]="[{ width: 250, height: 250 }]"></ik-image>
 </div>
