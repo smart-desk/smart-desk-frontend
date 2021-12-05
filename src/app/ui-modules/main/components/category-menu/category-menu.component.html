@@ -1,32 +1,23 @@
 <div class="category__menu">
-    <ul class="category__column category__column--parent">
-        <li
-            class="category__item"
-            *ngFor="let category of parentCategories$ | async"
-            [class.category__item--active]="category?.id === categoryActive?.id || category?.id === categoryActive?.parentId"
-            (mouseenter)="categoryHover(category)"
-            (mouseleave)="categoryHover()"
-            (click)="selectRoot(category, $event)"
-        >
-            {{ category.name }}
-        </li>
-    </ul>
-    <ul class="category__column category__column--child">
-        <ng-container>
-            <h3 class="category__title">
-                <b>{{ categoryActive?.name }}</b>
-            </h3>
+    <ng-container *ngIf="categories">
+        <ul class="category__column" *ngFor="let level of showCategoryLevels">
             <li
-                class="category__item category__item--child"
-                *ngFor="let child of childCategories$ | async"
-                [class.category__item--active]="categoryActive?.id === child.id"
-                (mouseenter)="categoryHover(child)"
-                (mouseleave)="categoryHover()"
-                (click)="selectChild(child, $event)"
+                class="category__item"
+                *ngFor="let category of getCategoriesByLevel(level)"
+                [class.category__item--active]="isSelected(category.id)"
+                [class.category__item--parent]="isParentCategory(category.id)"
+                (mouseenter)="onCategoryHover(category)"
+                (mouseleave)="onCategoryHover()"
+                (click)="onSelectCategory(category, $event, level)"
             >
-                {{ child.name }}
+                {{ category.name }}
             </li>
-        </ng-container>
-    </ul>
-    <ik-image *ngIf="!!hoverImg" class="category__image" [path]="hoverImg" [transformation]="[{ width: 250, height: 250 }]"></ik-image>
+        </ul>
+        <ik-image
+            *ngIf="!!hoveredCategory"
+            class="category__image"
+            [path]="hoveredCategory.img"
+            [transformation]="[{ width: 250, height: 250 }]"
+        ></ik-image>
+    </ng-container>
 </div>

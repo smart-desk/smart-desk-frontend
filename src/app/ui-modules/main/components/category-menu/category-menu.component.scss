@@ -6,10 +6,6 @@
         display: flex;
     }
 
-    &__title {
-        padding: math.div($base-unit, 4) $base-unit * 2;
-    }
-
     &__column {
         width: 33%;
         border-right: 1px solid $grey-light;
@@ -27,13 +23,22 @@
     &__item {
         padding: $base-unit $base-unit * 2;
         cursor: pointer;
+        position: relative;
 
-        &--child {
-            color: $primary-blue;
+        &--parent {
+            &:after {
+                content: '>';
+                position: absolute;
+                right: $base-unit * 2;
+            }
         }
-    }
 
-    &__item--active {
-        background-color: $grey-light;
+        &--active {
+            background-color: $grey-light;
+        }
+
+        &:hover {
+            background-color: $grey-light;
+        }
     }
 }

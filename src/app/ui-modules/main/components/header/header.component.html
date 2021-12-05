@@ -13,7 +13,11 @@
             </button>
             <div #categoryMenu class="header__category-shadow-wrap" [hidden]="!isMenuOpen">
                 <div class="header__category-menu-wrap">
-                    <app-category-menu [categoryActive]="currentCategory" (selectCategory)="onCategorySelect($event)"></app-category-menu>
+                    <app-category-menu
+                        [activeCategory]="currentCategory"
+                        [categories]="categories"
+                        (selectCategory)="onCategorySelect($event)"
+                    ></app-category-menu>
                 </div>
             </div>
             <app-search [searchPhrase]="searchPhrase" [placeholder]="getSearchPlaceholder()" (searchChange)="search($event)"></app-search>

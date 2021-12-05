@@ -1,7 +1,5 @@
-import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { Category } from '../../../../modules/category/models/category.entity';
-import { CategoryService } from '../../../../modules/category/category.service';
-import { Subject } from 'rxjs';
 
 @Component({
     selector: 'app-category-menu',
@@ -9,63 +7,80 @@ import { Subject } from 'rxjs';
     styleUrls: ['./category-menu.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CategoryMenuComponent implements OnInit, OnDestroy {
-    @Input() categoryActive: Category;
-    @Output() selectCategory = new EventEmitter<string>(true);
-    categories: Category[] = [];
-    parentCategories$ = new Subject<Category[]>();
-    childCategories$ = new Subject<Category[]>();
-    hoverImg: string;
-    private changeRootCategory$ = new Subject<Category>();
-    private destroy$ = new Subject();
-    constructor(private cd: ChangeDetectorRef, private categoryService: CategoryService) {}
+export class CategoryMenuComponent implements OnChanges {
+    @Input()
+    activeCategory: Category;
 
-    ngOnInit(): void {
-        this.categoryService.getCategories().subscribe(cats => {
-            this.categories = cats;
-            this.parentCategories$.next(cats.filter(cat => !cat.parentId));
-            this.cd.detectChanges();
-        });
+    @Input()
+    categories: Category[];
 
-        this.parentCategories$.pipe().subscribe(cats => this.childCategories$.next(cats.filter(cat => !!cat.parentId)));
+    @Output()
+    selectCategory = new EventEmitter<string>(true);
 
-        this.changeRootCategory$.subscribe(cat => {
-            this.categoryActive = cat;
-            if (!cat.parentId) {
-                this.childCategories$.next(this.categories.filter(childCat => childCat.parentId === cat.id));
-                this.cd.detectChanges();
-            }
-        });
+    hoveredCategory: Category | null;
+    selectedCategories: string[] = [];
+    showCategoryLevels = [0, 1];
 
-        if (this.categoryActive) {
-            this.changeRootCategory$.next(this.categoryActive);
+    constructor(private cd: ChangeDetectorRef) {}
+
+    ngOnChanges() {
+        if (this.activeCategory && this.categories) {
+            this.selectedCategories = this.getCategoryIdChain(this.activeCategory.id);
+            this.cd.markForCheck();
         }
     }
 
-    ngOnDestroy(): void {
-        this.destroy$.next();
-        this.destroy$.complete();
-    }
-
-    categoryHover(category?: Category): void {
-        if (category) {
-            this.hoverImg = category.img;
+    getCategoriesByLevel(level: number): Category[] {
+        if (level === 0) {
+            return this.categories?.filter(category => !category.parentId);
         } else {
-            this.hoverImg = '';
+            const parentCategoryId = this.selectedCategories[level - 1];
+            return this.categories.filter(category => category.parentId === parentCategoryId);
         }
-        this.cd.detectChanges();
     }
 
-    selectRoot(cat: Category, e: Event): void {
-        e.stopPropagation();
-        if (this.categoryActive?.id === cat.id) {
-            this.selectCategory.emit(cat.id);
-        }
-        this.changeRootCategory$.next(cat);
+    isSelected(categoryId: string): boolean {
+        return this.selectedCategories.includes(categoryId);
     }
 
-    selectChild(cat: Category, e: Event): void {
+    onCategoryHover(category?: Category | undefined): void {
+        if (category) {
+            this.hoveredCategory = category;
+        } else {
+            this.hoveredCategory = null;
+        }
+        this.cd.markForCheck();
+    }
+
+    onSelectCategory(category: Category, e: Event, categoryLevel: number): void {
         e.stopPropagation();
-        this.selectCategory.emit(cat.id);
+
+        if (this.isLeafCategory(category.id) || this.isSelected(category.id) || categoryLevel >= Math.max(...this.showCategoryLevels)) {
+            this.selectCategory.emit(category.id);
+        } else {
+            this.selectedCategories = this.getCategoryIdChain(category.id);
+            this.cd.markForCheck();
+        }
+    }
+
+    isParentCategory(categoryId: string): boolean {
+        return this.categories.some(category => category.parentId === categoryId);
+    }
+
+    private getCategoryIdChain(targetCategoryId: string): string[] {
+        const targetCategory = this.categories.find(category => category.id === targetCategoryId);
+        if (!targetCategory) {
+            return [];
+        }
+
+        if (targetCategory.parentId) {
+            return [...this.getCategoryIdChain(targetCategory.parentId), targetCategory.id];
+        }
+
+        return [targetCategory.id];
+    }
+
+    private isLeafCategory(categoryId: string): boolean {
+        return !this.categories.some(category => category.parentId === categoryId);
     }
 }

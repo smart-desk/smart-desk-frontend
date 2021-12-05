@@ -28,6 +28,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     @Input()
     logo: string;
 
+    categories: Category[];
     currentCategory: Category | null;
     searchPhrase = '';
     isHeaderSticky = false;
@@ -91,6 +92,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 this.currentCategory = category;
                 this.cd.detectChanges();
             });
+
+        this.categoryService.getCategories().subscribe(categories => {
+            this.categories = categories;
+            this.cd.markForCheck();
+        });
 
         this.loginService.login$.pipe(takeUntil(this.destroy$)).subscribe(user => (this.user = user));
     }
