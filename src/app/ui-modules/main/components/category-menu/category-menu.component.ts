@@ -19,7 +19,7 @@ export class CategoryMenuComponent implements OnChanges {
 
     hoveredCategory: Category | null;
     selectedCategories: string[] = [];
-    showCategoryLevels = [0, 1];
+    showCategoryLevels = [0, 1, 2];
 
     constructor(private cd: ChangeDetectorRef) {}
 
