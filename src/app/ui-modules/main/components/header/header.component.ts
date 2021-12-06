@@ -10,13 +10,11 @@ import {
     ViewChild,
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { BehaviorSubject, EMPTY, of, Subject } from 'rxjs';
-import { filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
-import { NzCascaderOption } from 'ng-zorro-antd/cascader';
+import { EMPTY, of, Subject } from 'rxjs';
+import { filter, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { Category } from '../../../../modules/category/models/category.entity';
 import { LoginService } from '../../../../modules/login/login.service';
 import { User } from '../../../../modules/user/models/user.entity';
-import { transformCategoryArrayToNZCascade } from '../../../../utils';
 import { ProductDataService } from '../../../../modules/product/product-data.service';
 import { CategoryService } from '../../../../modules/category/category.service';
 
@@ -30,12 +28,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     @Input()
     logo: string;
 
+    categories: Category[];
     currentCategory: Category | null;
-    categoryTree$ = new BehaviorSubject<NzCascaderOption[]>([]);
     searchPhrase = '';
     isHeaderSticky = false;
     isMenuOpen = false;
-    img: string;
 
     @ViewChild('categoryMenu')
     menuElement: ElementRef;
@@ -96,12 +93,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 this.cd.detectChanges();
             });
 
-        this.categoryService
-            .getCategories()
-            .pipe(map(categories => transformCategoryArrayToNZCascade(categories)))
-            .subscribe(tree => {
-                this.categoryTree$.next(tree);
-            });
+        this.categoryService.getCategories().subscribe(categories => {
+            this.categories = categories;
+            this.cd.markForCheck();
+        });
 
         this.loginService.login$.pipe(takeUntil(this.destroy$)).subscribe(user => (this.user = user));
     }

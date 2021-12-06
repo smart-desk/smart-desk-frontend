@@ -14,7 +14,8 @@
             <div #categoryMenu class="header__category-shadow-wrap" [hidden]="!isMenuOpen">
                 <div class="header__category-menu-wrap">
                     <app-category-menu
-                        [categoryTree]="categoryTree$ | async"
+                        [activeCategory]="currentCategory"
+                        [categories]="categories"
                         (selectCategory)="onCategorySelect($event)"
                     ></app-category-menu>
                 </div>
