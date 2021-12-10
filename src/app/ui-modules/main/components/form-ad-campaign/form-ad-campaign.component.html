@@ -26,6 +26,7 @@
             nzListType="picture-card"
             [nzFileList]="file"
             nzAccept="image/png, image/jpeg"
+            [nzSize]="10000"
             [nzLimit]="1"
             (nzChange)="fileChanged($event)"
         >

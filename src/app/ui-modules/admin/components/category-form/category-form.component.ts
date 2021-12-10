@@ -21,6 +21,8 @@ export class CategoryFormComponent implements OnInit {
 
     file: NzUploadFile[] = [];
     form: FormGroup;
+    sizeLimit = 10000;
+    bitInMb = 1024;
 
     constructor(private fb: FormBuilder, private cd: ChangeDetectorRef, private notificationService: NzNotificationService) {}
 
@@ -43,16 +45,12 @@ export class CategoryFormComponent implements OnInit {
             this.notificationService.error('Ошибка формы', 'Заполните обязательные поля формы');
             return;
         }
-        if (this.category) {
-            this.category.name = this.form.get('name')?.value;
-            this.category.modelId = this.form.get('model')?.value?.id;
-            this.category.img = this.form.get('image')?.value;
-        } else {
+        if (!this.category) {
             this.category = new Category();
-            this.category.name = this.form.get('name')?.value;
-            this.category.modelId = this.form.get('model')?.value.id;
-            this.category.img = this.form.get('image')?.value;
         }
+        this.category.name = this.form.get('name')?.value;
+        this.category.modelId = this.form.get('model')?.value.id;
+        this.category.img = this.form.get('image')?.value;
 
         this.save.emit(this.category);
     }

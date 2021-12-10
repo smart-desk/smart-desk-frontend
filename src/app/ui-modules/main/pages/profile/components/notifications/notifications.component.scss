@@ -2,7 +2,7 @@
 
 .form {
     &__input {
-        display: block;
+        display: flex;
         margin: $base-unit $base-unit * 2;
     }
 }
