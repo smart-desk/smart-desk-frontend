@@ -5,6 +5,8 @@ import { Model } from '../../../../modules/model/models/model.entity';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { environment } from '../../../../../environments/environment';
+import { Observable } from 'rxjs';
+import { FileSizeControlService } from '../../../../services/file-size-control.service';
 
 @Component({
     selector: 'app-category-form',
@@ -21,8 +23,14 @@ export class CategoryFormComponent implements OnInit {
 
     file: NzUploadFile[] = [];
     form: FormGroup;
+    private sizeLimit = 10;
 
-    constructor(private fb: FormBuilder, private cd: ChangeDetectorRef, private notificationService: NzNotificationService) {}
+    constructor(
+        private fb: FormBuilder,
+        private cd: ChangeDetectorRef,
+        private notificationService: NzNotificationService,
+        private fileSizeControlService: FileSizeControlService
+    ) {}
 
     ngOnInit() {
         this.form = this.fb.group({
@@ -43,16 +51,12 @@ export class CategoryFormComponent implements OnInit {
             this.notificationService.error('Ошибка формы', 'Заполните обязательные поля формы');
             return;
         }
-        if (this.category) {
-            this.category.name = this.form.get('name')?.value;
-            this.category.modelId = this.form.get('model')?.value?.id;
-            this.category.img = this.form.get('image')?.value;
-        } else {
+        if (!this.category) {
             this.category = new Category();
-            this.category.name = this.form.get('name')?.value;
-            this.category.modelId = this.form.get('model')?.value.id;
-            this.category.img = this.form.get('image')?.value;
         }
+        this.category.name = this.form.get('name')?.value;
+        this.category.modelId = this.form.get('model')?.value?.id;
+        this.category.img = this.form.get('image')?.value;
 
         this.save.emit(this.category);
     }
@@ -68,6 +72,8 @@ export class CategoryFormComponent implements OnInit {
             (this.form.get('image') as AbstractControl).setValue(fileUrl);
         }
     }
+
+    beforeUpload = (file: NzUploadFile): Observable<boolean> => this.fileSizeControlService.beforeUpload(file, this.sizeLimit);
 
     private getModelByCategory(category: Category): Model {
         return !this.category ? this.models[0] : (this.models.find(model => model.id === category.modelId) as Model);
