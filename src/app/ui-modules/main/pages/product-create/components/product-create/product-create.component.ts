@@ -12,6 +12,7 @@ import { ProductService } from '../../../../../../modules/product/product.servic
 import { CategoryService } from '../../../../../../modules/category/category.service';
 import { ModelService } from '../../../../../../modules/model/model.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { ProductStatus } from '../../../../../../modules/product/models/product-status.enum';
 
 // todo check subscriptions
 @Component({
@@ -83,8 +84,9 @@ export class ProductCreateComponent implements OnInit {
         product.model_id = this.selectedCategory.modelId;
 
         this.productService.createProduct(product).subscribe(
-            res => {
-                this.router.navigate(['products', res.id]);
+            () => {
+                this.router.navigate(['profile', 'my-products'], { queryParams: { status: ProductStatus.PENDING } });
+                this.notificationService.success('Объявление создано', 'Идет модерация, это займет некоторое время');
             },
             err => {
                 if (err?.error?.statusCode === 400) {
