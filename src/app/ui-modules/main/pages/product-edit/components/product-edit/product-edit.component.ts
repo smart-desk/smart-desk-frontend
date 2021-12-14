@@ -9,6 +9,8 @@ import { Model } from '../../../../../../modules/model/models/model.entity';
 import { UpdateProductDto } from '../../../../../../modules/product/models/product.dto';
 import { ProductService } from '../../../../../../modules/product/product.service';
 import { ModelService } from '../../../../../../modules/model/model.service';
+import { ProductStatus } from '../../../../../../modules/product/models/product-status.enum';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
     selector: 'app-product-edit',
@@ -27,7 +29,8 @@ export class ProductEditComponent implements OnInit {
         private componentFactoryResolver: ComponentFactoryResolver,
         private router: Router,
         private route: ActivatedRoute,
-        private cd: ChangeDetectorRef
+        private cd: ChangeDetectorRef,
+        private notificationService: NzNotificationService
     ) {}
 
     ngOnInit(): void {
@@ -51,6 +54,18 @@ export class ProductEditComponent implements OnInit {
     }
 
     save(product: UpdateProductDto): void {
-        this.productService.updateProduct(this.product.id, product).subscribe(() => this.router.navigate(['products', this.product.id]));
+        this.productService.updateProduct(this.product.id, product).subscribe(
+            () => {
+                this.router.navigate(['profile', 'my-products'], { queryParams: { status: ProductStatus.PENDING } });
+                this.notificationService.success('Объявление обновлено', 'Идет модерация, это займет некоторое время');
+            },
+            err => {
+                if (err?.error?.statusCode === 400) {
+                    this.notificationService.error('Проверьте правильность заполнения формы', err?.error?.message?.join(', '));
+                } else {
+                    this.notificationService.error('Что-то пошло не так', 'Попробуйте перезагрузить страницу');
+                }
+            }
+        );
     }
 }
