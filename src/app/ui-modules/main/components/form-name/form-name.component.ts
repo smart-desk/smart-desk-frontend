@@ -3,8 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import { User } from '../../../../modules/user/models/user.entity';
 import { ProfileFormEnum } from '../../pages/profile/pages/profile/profile-form.enum';
-import { Observable } from 'rxjs';
-import { FileSizeControlService } from '../../../../services/file-size-control.service';
+import { FileUploaderService } from '../../../../services/file-uploader.service';
 
 @Component({
     selector: 'app-modal-name',
@@ -18,7 +17,7 @@ export class FormNameComponent implements OnInit {
     formName: FormGroup;
     private sizeLimit = 10;
 
-    constructor(private fb: FormBuilder, private cd: ChangeDetectorRef, private fileSizeControlService: FileSizeControlService) {}
+    constructor(private fb: FormBuilder, private cd: ChangeDetectorRef, private fileSizeControlService: FileUploaderService) {}
 
     ngOnInit(): void {
         this.formName = this.fb.group({
@@ -52,5 +51,5 @@ export class FormNameComponent implements OnInit {
         this.profile.avatar = (this.formName.get('avatar') as AbstractControl).value;
     }
 
-    beforeUpload = (file: NzUploadFile): Observable<boolean> => this.fileSizeControlService.beforeUpload(file, this.sizeLimit);
+    beforeUpload = (file: NzUploadFile): boolean => this.fileSizeControlService.beforeUpload(file, this.sizeLimit);
 }

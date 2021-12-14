@@ -3,8 +3,7 @@ import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import { AppConfigService } from '../../../../modules/app-config/app-config.service';
 import { environment } from '../../../../../environments/environment';
 import { AppConfigEntity } from '../../../../modules/app-config/models/app-config.entity';
-import { Observable } from 'rxjs';
-import { FileSizeControlService } from '../../../../services/file-size-control.service';
+import { FileUploaderService } from '../../../../services/file-uploader.service';
 
 @Component({
     selector: 'app-app-config',
@@ -19,7 +18,7 @@ export class AppConfigComponent implements OnInit {
     constructor(
         private appConfigService: AppConfigService,
         private cd: ChangeDetectorRef,
-        private fileSizeControlService: FileSizeControlService
+        private fileSizeControlService: FileUploaderService
     ) {}
 
     ngOnInit(): void {
@@ -43,5 +42,5 @@ export class AppConfigComponent implements OnInit {
         }
     }
 
-    beforeUpload = (file: NzUploadFile): Observable<boolean> => this.fileSizeControlService.beforeUpload(file, this.sizeLimit);
+    beforeUpload = (file: NzUploadFile): boolean => this.fileSizeControlService.beforeUpload(file, this.sizeLimit);
 }

@@ -5,8 +5,7 @@ import { Model } from '../../../../modules/model/models/model.entity';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { environment } from '../../../../../environments/environment';
-import { Observable } from 'rxjs';
-import { FileSizeControlService } from '../../../../services/file-size-control.service';
+import { FileUploaderService } from '../../../../services/file-uploader.service';
 
 @Component({
     selector: 'app-category-form',
@@ -29,7 +28,7 @@ export class CategoryFormComponent implements OnInit {
         private fb: FormBuilder,
         private cd: ChangeDetectorRef,
         private notificationService: NzNotificationService,
-        private fileSizeControlService: FileSizeControlService
+        private fileSizeControlService: FileUploaderService
     ) {}
 
     ngOnInit() {
@@ -73,7 +72,7 @@ export class CategoryFormComponent implements OnInit {
         }
     }
 
-    beforeUpload = (file: NzUploadFile): Observable<boolean> => this.fileSizeControlService.beforeUpload(file, this.sizeLimit);
+    beforeUpload = (file: NzUploadFile): boolean => this.fileSizeControlService.beforeUpload(file, this.sizeLimit);
 
     private getModelByCategory(category: Category): Model {
         return !this.category ? this.models[0] : (this.models.find(model => model.id === category.modelId) as Model);

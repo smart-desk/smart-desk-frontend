@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AdCampaignEntity, AdCampaignType, SHORT_DATE_FORMAT } from '../../../../modules/ad/models/ad-campaign.entity';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import * as dayjs from 'dayjs';
 import * as customParseFormat from 'dayjs/plugin/customParseFormat';
 import { AdCampaignsScheduleDto } from '../../../../modules/ad/models/ad-campaigns-schedule.dto';
 import { environment } from '../../../../../environments/environment';
-import { FileSizeControlService } from '../../../../services/file-size-control.service';
+import { FileUploaderService } from '../../../../services/file-uploader.service';
 
 dayjs.extend(customParseFormat);
 
@@ -32,7 +32,7 @@ export class FormAdCampaignComponent implements OnInit, OnChanges {
     private destroy$ = new Subject();
     private sizeLimit = 10;
 
-    constructor(private fb: FormBuilder, private fileSizeControlService: FileSizeControlService) {}
+    constructor(private fb: FormBuilder, private fileSizeControlService: FileUploaderService) {}
 
     ngOnInit(): void {
         this.form = this.fb.group({
@@ -94,7 +94,7 @@ export class FormAdCampaignComponent implements OnInit, OnChanges {
         // tslint:disable-next-line
     };
 
-    beforeUpload = (file: NzUploadFile): Observable<boolean> => this.fileSizeControlService.beforeUpload(file, this.sizeLimit);
+    beforeUpload = (file: NzUploadFile): boolean => this.fileSizeControlService.beforeUpload(file, this.sizeLimit);
 
     private buildAdCampaign(): AdCampaignEntity {
         const campaignOptions = new AdCampaignEntity();
