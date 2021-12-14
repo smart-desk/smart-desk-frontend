@@ -10,10 +10,10 @@ export class FileUploaderService {
 
     constructor(private msg: NzMessageService) {}
 
-    beforeUpload(file: NzUploadFile, sizelimit: number): boolean {
-        const isLessLimit = !!(file.size && file.size / this.bitInMb < sizelimit);
+    beforeUpload(file: NzUploadFile, sizelimitMb: number): boolean {
+        const isLessLimit = !!(file.size && file.size / this.bitInMb < sizelimitMb);
         if (!isLessLimit) {
-            this.msg.error(`Изображение не должно превышать ${sizelimit}MB!`);
+            this.msg.error(`Изображение не должно превышать ${sizelimitMb}MB!`);
         }
         return isLessLimit;
     }
