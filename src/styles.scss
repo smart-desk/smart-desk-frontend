@@ -16,16 +16,15 @@ ol[class] {
     padding: 0;
 }
 
-img {
-    max-width: 100%;
-    display: block;
-}
-
 .container {
     max-width: 1170px;
     width: 100%;
     margin: 0 auto;
     padding: 0 $base-unit * 2;
+
+    @media screen and (max-width: $bp-phone) {
+        padding: 0 $base-unit;
+    }
 }
 
 .chat-body {

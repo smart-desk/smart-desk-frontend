@@ -136,10 +136,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.user ? this.router.navigate(['/products/create']) : this.loginService.openLoginModal();
     }
 
-    navigateToMain(): void {
-        this.router.navigate(['/']);
-    }
-
     onHeaderSticky(isSticky: boolean) {
         this.isHeaderSticky = isSticky;
         this.cd.detectChanges();

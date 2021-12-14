@@ -18,8 +18,22 @@
     grid-column-gap: $base-unit * 2;
     align-items: center;
 
+    @media screen and (max-width: $bp-phone) {
+        grid-template-columns: auto 1fr auto;
+        padding: $base-unit;
+    }
+
+    &__profile-menu {
+        @media screen and (max-width: $bp-phone) {
+            display: none;
+        }
+    }
+
     &__logo {
         margin-right: $base-unit;
+        @media screen and (max-width: $bp-phone) {
+            display: none;
+        }
     }
 
     &__category-shadow-wrap {
@@ -51,5 +65,17 @@
         @include sd-btn;
         background-color: $primary-green;
         color: #fff;
+    }
+
+    &__new-button-title {
+        @media screen and (max-width: $bp-phone) {
+            display: none;
+        }
+    }
+
+    &__category-button-title {
+        @media screen and (max-width: $bp-phone) {
+            display: none;
+        }
     }
 }

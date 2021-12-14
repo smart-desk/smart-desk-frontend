@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { User } from '../../../../modules/user/models/user.entity';
 import { LoginService } from '../../../../modules/login/login.service';
@@ -14,6 +14,9 @@ import { AdService } from '../../../../modules/ad/ad.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileMenuComponent implements OnInit, OnDestroy {
+    @Input()
+    size: 'sm' | 'lg' = 'lg';
+
     user: User | undefined;
     destroy$ = new Subject();
     hasAdConfig: boolean;

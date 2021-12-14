@@ -10,6 +10,10 @@
     overflow: hidden;
     transition: box-shadow 0.4s;
 
+    img {
+        max-width: 100%;
+    }
+
     &:hover {
         box-shadow: $shadow-hover;
     }
