@@ -28,6 +28,7 @@ import { StripeService } from '../../../../../../modules/stripe/stripe.service';
 import { PromoSetChooserComponent } from '../../../../components/promo-set-chooser/promo-set-chooser.component';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ProductStatus } from '../../../../../../modules/product/models/product-status.enum';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
     selector: 'app-product',
@@ -68,7 +69,8 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
         private bookmarksStoreService: BookmarksStoreService,
         private chatModalService: ChatModalService,
         private loginService: LoginService,
-        private phoneService: PhoneService
+        private phoneService: PhoneService,
+        private notification: NzNotificationService
     ) {
         this.bookmarksStoreService.loadBookmarks();
     }
@@ -118,6 +120,9 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.countView();
                 }),
                 switchMap(product => {
+                    if (product.status !== ProductStatus.ACTIVE) {
+                        this.pushNotification(product);
+                    }
                     return product.userId ? this.userService.getUser(product.userId) : EMPTY;
                 })
             )
@@ -283,5 +288,19 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
                 take(1)
             )
             .subscribe();
+    }
+
+    private pushNotification(product: Product): void {
+        switch (product.status) {
+            case ProductStatus.PENDING:
+                this.notification.info('Статус объявления', 'Идет модерация, это займет некоторое время');
+                break;
+            case ProductStatus.COMPLETED:
+                this.notification.info('Статус объявления', 'Завершенно автором');
+                break;
+            case ProductStatus.BLOCKED:
+                this.notification.info('Статус объявления', 'Заблокировано администратором');
+                break;
+        }
     }
 }
