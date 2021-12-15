@@ -24,4 +24,16 @@
         background-color: $border-color;
         color: $font-color-gray;
     }
+
+    &__button-title {
+        @media screen and (max-width: $bp-phone) {
+            display: none;
+        }
+    }
+
+    &__button-icon {
+        @media screen and (min-width: $bp-phone) {
+            display: none;
+        }
+    }
 }

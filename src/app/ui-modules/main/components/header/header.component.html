@@ -1,15 +1,10 @@
 <nz-affix [nzOffsetTop]="0" (nzChange)="onHeaderSticky($event)">
     <div class="header-wrapper" [class.header-wrapper--sticky]="isHeaderSticky">
         <div class="container header">
-            <div class="header__logo">
-                <a (click)="navigateToMain()">
-                    <img *ngIf="!logo" [src]="'../../../../../assets/images/smart-desk-logo.svg'" alt="На главную" />
-                    <ik-image *ngIf="logo" [path]="logo" [transformation]="[{ height: 60 }]"></ik-image>
-                </a>
-            </div>
+            <app-logo class="header__logo"></app-logo>
             <button #categoryButton nz-button class="header__category-button" (click)="toggleMenu()">
                 <i nz-icon nzType="align-right" nzTheme="outline"></i>
-                Категория
+                <span class="header__category-button-title">Категория</span>
             </button>
             <div #categoryMenu class="header__category-shadow-wrap" [hidden]="!isMenuOpen">
                 <div class="header__category-menu-wrap">
@@ -23,9 +18,9 @@
             <app-search [searchPhrase]="searchPhrase" [placeholder]="getSearchPlaceholder()" (searchChange)="search($event)"></app-search>
             <button class="header__new-button" (click)="navigateToProductCreate()" nz-button>
                 <i nz-icon nzType="plus"></i>
-                Разместить объявление
+                <span class="header__new-button-title">Разместить объявление</span>
             </button>
-            <app-profile-menu></app-profile-menu>
+            <app-profile-menu class="header__profile-menu"></app-profile-menu>
         </div>
     </div>
 </nz-affix>

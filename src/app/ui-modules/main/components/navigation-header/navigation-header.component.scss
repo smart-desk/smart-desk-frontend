@@ -2,10 +2,41 @@
 
 .navigation-header {
     margin: $base-unit * 2 0 0;
+    display: flex;
+    justify-content: space-between;
 
-    &__menu-item {
-        display: inline-block;
+    @media screen and (max-width: $bp-phone) {
+        margin: $base-unit 0 0;
+        align-items: center;
+    }
+
+    &__action {
         color: $font-color;
-        margin-left: $base-unit * 3;
+        margin-left: $base-unit;
+
+        @media screen and (max-width: $bp-phone) {
+            font-size: $base-unit * 2;
+            padding: $base-unit $base-unit * 2;
+            height: $base-unit * 5;
+            margin-left: 0;
+        }
+    }
+
+    &__action-title {
+        @media screen and (max-width: $bp-phone) {
+            display: none;
+        }
+    }
+
+    &__logo {
+        @media screen and (min-width: $bp-phone) {
+            display: none;
+        }
+    }
+
+    &__profile {
+        @media screen and (min-width: $bp-phone) {
+            display: none;
+        }
     }
 }

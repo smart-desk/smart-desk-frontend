@@ -6,6 +6,8 @@ import { User } from '../../../../modules/user/models/user.entity';
 import { ChatModalService } from '../../../chat/services/chat-modal.service';
 import { AuthService } from '../../../../modules/auth/auth.service';
 import { Router } from '@angular/router';
+import { AppConfigService } from '../../../../modules/app-config/app-config.service';
+import { AppConfigEntity } from '../../../../modules/app-config/models/app-config.entity';
 
 @Component({
     selector: 'app-navigation-header',
@@ -16,13 +18,15 @@ import { Router } from '@angular/router';
 export class NavigationHeaderComponent implements OnInit, OnDestroy {
     user: User | undefined;
     destroy$ = new Subject();
+    config: AppConfigEntity;
 
     constructor(
         private authService: AuthService,
         private loginService: LoginService,
         private cd: ChangeDetectorRef,
         private chatModalService: ChatModalService,
-        private router: Router
+        private router: Router,
+        private appConfigService: AppConfigService
     ) {}
 
     get isAdmin(): boolean | undefined {
@@ -32,7 +36,12 @@ export class NavigationHeaderComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.loginService.login$.pipe(takeUntil(this.destroy$)).subscribe(user => {
             this.user = user;
-            this.cd.detectChanges();
+            this.cd.markForCheck();
+        });
+
+        this.appConfigService.getAppConfig().subscribe(res => {
+            this.config = res;
+            this.cd.markForCheck();
         });
     }
 
