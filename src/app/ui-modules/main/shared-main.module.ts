@@ -46,6 +46,7 @@ import { CategoryButtonsComponent } from './components/category-buttons/category
 import { LoadingComponent } from './components/loading/loading.component';
 import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { LogoComponent } from './components/logo/logo.component';
 
 const components = [
     HeaderComponent,
@@ -70,6 +71,7 @@ const components = [
     CategoryButtonsComponent,
     LoadingComponent,
     BreadcrumbsComponent,
+    LogoComponent,
 ];
 
 @NgModule({

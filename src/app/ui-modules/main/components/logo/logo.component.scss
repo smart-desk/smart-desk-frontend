@@ -1,0 +1,13 @@
+@import 'src/assets/styles/variables';
+
+.logo {
+    img {
+        height: $base-unit * 5;
+    }
+
+    &--sm {
+        img {
+            height: $base-unit * 4;
+        }
+    }
+}

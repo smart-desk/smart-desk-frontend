@@ -9,6 +9,10 @@
 .main,
 .footer {
     padding: 0 $base-unit * 2 $base-unit * 3;
+
+    @media screen and (max-width: $bp-phone) {
+        padding: 0 $base-unit $base-unit * 3;
+    }
 }
 
 .footer {

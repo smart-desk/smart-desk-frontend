@@ -3,7 +3,7 @@ $grey-light: #f0f0f0;
 $grey-light-bg: rgba(0, 0, 0, 0.02);
 $blue-border: #1890ff;
 $blue-background: #e6f7ff;
-$background: #FCFDFF;
+$background: #fcfdff;
 $dark-gray: #131313;
 
 $shadow: 0px 2px 25px rgba(0, 0, 0, 0.05);
@@ -28,3 +28,8 @@ $font-32: 32px;
 // border
 $border-radius: 4px;
 $border-color: #d7d7d7;
+
+// media breakpoints
+$bp-phone: 640px;
+$bp-tablet: 768px;
+$bp-desktop: 1024px;

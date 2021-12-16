@@ -10,7 +10,10 @@
         />
     </nz-input-group>
     <ng-template #suffixButton>
-        <button class="search__button" nz-button nzSearch (click)="search()">Найти</button>
+        <button class="search__button" nz-button nzSearch (click)="search()">
+            <span class="search__button-title">Найти</span>
+            <i nz-icon nzType="search" class="search__button-icon"></i>
+        </button>
     </ng-template>
     <ng-template #prefix>
         <i nz-icon nzType="search" style="font-size: 18px;"></i>
