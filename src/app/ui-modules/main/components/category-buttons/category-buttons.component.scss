@@ -33,6 +33,7 @@
         box-shadow: $shadow;
         margin-bottom: $base-unit;
         transition: box-shadow 0.4s;
+        width: 100px;
 
         &:hover {
             box-shadow: $shadow-hover;
