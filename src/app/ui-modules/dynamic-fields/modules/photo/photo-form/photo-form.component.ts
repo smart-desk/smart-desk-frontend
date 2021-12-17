@@ -5,6 +5,7 @@ import { PhotoParamsDto } from '../dto/photo-params.dto';
 import { UploadImageResponse } from '../dto/upload-image-response';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import { environment } from '../../../../../../environments/environment';
+import { FileUploaderService } from '../../../../../services/file-uploader.service';
 
 @Component({
     selector: 'app-photo',
@@ -15,14 +16,15 @@ import { environment } from '../../../../../../environments/environment';
 export class PhotoFormComponent extends AbstractFieldFormComponent<PhotoEntity, PhotoParamsDto> implements OnInit {
     fileList: NzUploadFile[] = [];
     showValidationErrors = false;
+    private sizeLimit = 10;
 
-    constructor(private cd: ChangeDetectorRef) {
+    constructor(private cd: ChangeDetectorRef, private fileSizeControlService: FileUploaderService) {
         super();
     }
 
     ngOnInit() {
         if (this?.field?.data?.value) {
-            this.fileList = this.field.data.value.map((path, i) => ({
+            this.fileList = this.field.data.value.map(path => ({
                 uid: path,
                 name: path,
                 status: 'done',
@@ -59,4 +61,6 @@ export class PhotoFormComponent extends AbstractFieldFormComponent<PhotoEntity, 
         this.cd.detectChanges();
         return this.fileList.length >= this.field.params.min && this.fileList.length <= this.field.params.max;
     }
+
+    beforeUpload = (file: NzUploadFile): boolean => this.fileSizeControlService.beforeUpload(file, this.sizeLimit);
 }

@@ -8,6 +8,7 @@ import * as dayjs from 'dayjs';
 import * as customParseFormat from 'dayjs/plugin/customParseFormat';
 import { AdCampaignsScheduleDto } from '../../../../modules/ad/models/ad-campaigns-schedule.dto';
 import { environment } from '../../../../../environments/environment';
+import { FileUploaderService } from '../../../../services/file-uploader.service';
 
 dayjs.extend(customParseFormat);
 
@@ -29,8 +30,9 @@ export class FormAdCampaignComponent implements OnInit, OnChanges {
     ];
     file: NzUploadFile[] = [];
     private destroy$ = new Subject();
+    private sizeLimit = 10;
 
-    constructor(private fb: FormBuilder) {}
+    constructor(private fb: FormBuilder, private fileSizeControlService: FileUploaderService) {}
 
     ngOnInit(): void {
         this.form = this.fb.group({
@@ -91,6 +93,8 @@ export class FormAdCampaignComponent implements OnInit, OnChanges {
         });
         // tslint:disable-next-line
     };
+
+    beforeUpload = (file: NzUploadFile): boolean => this.fileSizeControlService.beforeUpload(file, this.sizeLimit);
 
     private buildAdCampaign(): AdCampaignEntity {
         const campaignOptions = new AdCampaignEntity();

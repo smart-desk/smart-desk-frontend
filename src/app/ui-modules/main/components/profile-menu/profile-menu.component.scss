@@ -10,4 +10,10 @@
         @include sd-btn;
         color: $font-color;
     }
+
+    &__login-btn-title {
+        @media screen and (max-width: $bp-phone) {
+            display: none;
+        }
+    }
 }

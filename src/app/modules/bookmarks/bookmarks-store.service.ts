@@ -9,7 +9,9 @@ import { Bookmark } from './models/bookmark.entity';
 export class BookmarksStoreService {
     bookmarks$ = new BehaviorSubject<Bookmark[]>([]);
 
-    constructor(private bookmarksService: BookmarksService) {}
+    constructor(private bookmarksService: BookmarksService) {
+        this.loadBookmarks();
+    }
 
     loadBookmarks() {
         this.bookmarksService.getUserBookmarks().subscribe(bookmarks => {

@@ -20,6 +20,7 @@
             [nzFileList]="file"
             nzAccept="image/png, image/jpeg"
             [nzLimit]="1"
+            [nzBeforeUpload]="beforeUpload"
             (nzChange)="fileChanged($event)"
         >
             <div>

@@ -1,0 +1,6 @@
+<div class="logo" [ngClass]="{ 'logo--sm': size === 'sm' }">
+    <a (click)="navigateToMain()">
+        <img *ngIf="!path" [src]="'../../../../../assets/images/smart-desk-logo.svg'" alt="На главную" />
+        <ik-image *ngIf="path" [path]="path" [transformation]="[{ height: 60 }]"></ik-image>
+    </a>
+</div>

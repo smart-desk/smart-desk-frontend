@@ -1,29 +1,39 @@
 <div class="container">
     <div class="navigation-header">
-        <nz-row [nzJustify]="'space-between'">
-            <nz-col></nz-col>
-            <nz-col>
-                <nz-row [nzJustify]="'space-between'">
-                    <nz-col>
-                        <a class="navigation-header__menu-item" *ngIf="isAdmin" [routerLink]="['admin']">
-                            <i nz-icon nzType="export" nzTheme="outline"></i>
-                            Управление сайтом
-                        </a>
-                    </nz-col>
-                    <nz-col>
-                        <a class="navigation-header__menu-item" (click)="openBookmarks()">
-                            <i nz-icon nzType="heart" nzTheme="outline"></i>
-                            Избранное
-                        </a>
-                    </nz-col>
-                    <nz-col>
-                        <a class="navigation-header__menu-item" (click)="openChat()">
-                            <i nz-icon nzType="message" nzTheme="outline"></i>
-                            Сообщения
-                        </a>
-                    </nz-col>
-                </nz-row>
-            </nz-col>
-        </nz-row>
+        <div>
+            <app-logo class="navigation-header__logo" size="sm" [path]="config?.logo"></app-logo>
+        </div>
+        <div>
+            <nz-row [nzJustify]="'space-between'">
+                <nz-col>
+                    <button
+                        class="navigation-header__action"
+                        nz-button
+                        nzType="link"
+                        [routerLink]="['admin']"
+                        nzSize="small"
+                        *ngIf="isAdmin"
+                    >
+                        <i nz-icon nzType="export" nzTheme="outline"></i>
+                        <span class="navigation-header__action-title">Управление сайтом</span>
+                    </button>
+                </nz-col>
+                <nz-col>
+                    <button class="navigation-header__action" nz-button nzType="link" (click)="openBookmarks()" nzSize="small">
+                        <i nz-icon nzType="heart" nzTheme="outline"></i>
+                        <span class="navigation-header__action-title">Избранное</span>
+                    </button>
+                </nz-col>
+                <nz-col>
+                    <button class="navigation-header__action" nz-button nzType="link" (click)="openChat()" nzSize="small">
+                        <i nz-icon nzType="message" nzTheme="outline"></i>
+                        <span class="navigation-header__action-title">Сообщения</span>
+                    </button>
+                </nz-col>
+                <nz-col class="navigation-header__profile">
+                    <app-profile-menu size="sm"></app-profile-menu>
+                </nz-col>
+            </nz-row>
+        </div>
     </div>
 </div>

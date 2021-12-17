@@ -34,11 +34,25 @@
 
 <ng-template #main>
     <nz-alert
-        *ngIf="product?.status === 'blocked' && product?.reason"
+        *ngIf="product?.status === productStatus.BLOCKED && product?.reason"
         class="product__alert"
-        nzType="warning"
+        nzType="error"
         nzMessage="Объявление было заблокировано администратором"
         [nzDescription]="product?.reason"
+        nzShowIcon
+    ></nz-alert>
+    <nz-alert
+        *ngIf="product?.status === productStatus.PENDING"
+        class="product__alert"
+        nzType="warning"
+        nzMessage="Идет модерация объявления, это займет некоторое время"
+        nzShowIcon
+    ></nz-alert>
+    <nz-alert
+        *ngIf="product?.status === productStatus.COMPLETED"
+        class="product__alert"
+        nzType="warning"
+        nzMessage="Объявление завершено автором"
         nzShowIcon
     ></nz-alert>
     <ng-container #params></ng-container>

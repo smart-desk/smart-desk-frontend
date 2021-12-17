@@ -28,7 +28,6 @@ import { StripeService } from '../../../../../../modules/stripe/stripe.service';
 import { PromoSetChooserComponent } from '../../../../components/promo-set-chooser/promo-set-chooser.component';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ProductStatus } from '../../../../../../modules/product/models/product-status.enum';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
     selector: 'app-product',
@@ -69,11 +68,8 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
         private bookmarksStoreService: BookmarksStoreService,
         private chatModalService: ChatModalService,
         private loginService: LoginService,
-        private phoneService: PhoneService,
-        private notification: NzNotificationService
-    ) {
-        this.bookmarksStoreService.loadBookmarks();
-    }
+        private phoneService: PhoneService
+    ) {}
 
     ngOnInit(): void {
         this.cd.detectChanges();
@@ -82,10 +78,7 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
                 takeUntil(this.destroy$),
                 switchMap((param: ParamMap) => {
                     const productId = param.get('product_id');
-                    if (productId) {
-                        return this.productService.getRecommendedByProductId(productId);
-                    }
-                    return EMPTY;
+                    return productId ? this.productService.getRecommendedByProductId(productId) : EMPTY;
                 })
             )
             .subscribe(res => {
@@ -109,22 +102,14 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
             .pipe(
                 switchMap((param: ParamMap) => {
                     const productId = param.get('product_id');
-                    if (productId) {
-                        return this.productService.getProduct(productId);
-                    }
-                    return EMPTY;
+                    return productId ? this.productService.getProduct(productId) : EMPTY;
                 }),
                 tap(product => {
                     this.product = product;
                     this.setBookmarkFlag();
                     this.countView();
                 }),
-                switchMap(product => {
-                    if (product.status !== ProductStatus.ACTIVE) {
-                        this.pushNotification(product);
-                    }
-                    return product.userId ? this.userService.getUser(product.userId) : EMPTY;
-                })
+                switchMap(product => (product.userId ? this.userService.getUser(product.userId) : EMPTY))
             )
             .subscribe(
                 user => {
@@ -288,19 +273,5 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
                 take(1)
             )
             .subscribe();
-    }
-
-    private pushNotification(product: Product): void {
-        switch (product.status) {
-            case ProductStatus.PENDING:
-                this.notification.info('Статус объявления', 'Идет модерация, это займет некоторое время');
-                break;
-            case ProductStatus.COMPLETED:
-                this.notification.info('Статус объявления', 'Завершенно автором');
-                break;
-            case ProductStatus.BLOCKED:
-                this.notification.info('Статус объявления', 'Заблокировано администратором');
-                break;
-        }
     }
 }
