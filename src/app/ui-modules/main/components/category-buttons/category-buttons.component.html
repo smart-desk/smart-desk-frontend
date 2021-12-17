@@ -1,28 +1,29 @@
-<ng-container *ngIf="children?.length">
-    <div class="category-buttons" *ngIf="size === 'sm'; else lgTmp">
-        <button
-            class="category-buttons__item"
-            nz-button
-            nzType="default"
-            nzShape="round"
-            *ngFor="let cat of children"
-            (click)="categorySelect(cat)"
-        >
-            {{ cat.name }}
-        </button>
-    </div>
-    <ng-template #lgTmp>
-        <div class="category-large-buttons">
-            <div *ngFor="let cat of children" class="category-large-buttons__item" (click)="categorySelect(cat)">
-                <ik-image
-                    *ngIf="!!cat?.img"
-                    class="category-large-buttons__image"
-                    [path]="cat?.img"
-                    [transformation]="[{ width: 150, height: 150, quality: 100 }]"
-                ></ik-image>
-
-                <p class="category-large-buttons__link">{{ cat.name }}</p>
-            </div>
+<ng-container *ngIf="children$ | async as children">
+    <ng-container *ngIf="children?.length">
+        <div class="category-buttons" *ngIf="size === 'sm'; else lgTmp">
+            <button
+                class="category-buttons__item"
+                nz-button
+                nzType="default"
+                nzShape="round"
+                *ngFor="let cat of children"
+                (click)="categorySelect(cat)"
+            >
+                {{ cat.name }}
+            </button>
         </div>
-    </ng-template>
+        <ng-template #lgTmp>
+            <div class="category-large-buttons">
+                <div *ngFor="let cat of children" class="category-large-buttons__item" (click)="categorySelect(cat)">
+                    <ik-image
+                        *ngIf="!!cat?.img"
+                        class="category-large-buttons__image"
+                        [path]="cat?.img"
+                        [transformation]="[{ width: 150, height: 150, quality: 100 }]"
+                    ></ik-image>
+                    <p class="category-large-buttons__link">{{ cat.name }}</p>
+                </div>
+            </div>
+        </ng-template>
+    </ng-container>
 </ng-container>

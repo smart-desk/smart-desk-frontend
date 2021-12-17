@@ -2,8 +2,9 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Category } from '../../../../modules/category/models/category.entity';
-import { CategoryService } from '../../../../modules/category/category.service';
+import { CategoryStoreService } from '../../../../modules/category/category-store.service';
 import { findChildren } from '../../../../utils';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-category-buttons',
@@ -18,9 +19,9 @@ export class CategoryButtonsComponent implements OnInit, OnChanges {
     @Input()
     size: 'sm' | 'lg' = 'sm';
 
-    children: Category[];
+    children$: Observable<Category[]>;
 
-    constructor(private categoryService: CategoryService, private cdr: ChangeDetectorRef, private router: Router) {}
+    constructor(private categoryStoreService: CategoryStoreService, private cdr: ChangeDetectorRef, private router: Router) {}
 
     ngOnInit(): void {}
 
@@ -35,12 +36,6 @@ export class CategoryButtonsComponent implements OnInit, OnChanges {
     }
 
     private updateCategories(): void {
-        this.categoryService
-            .getCategories()
-            .pipe(map(categories => findChildren(this.category, categories)))
-            .subscribe(children => {
-                this.children = children;
-                this.cdr.detectChanges();
-            });
+        this.children$ = this.categoryStoreService.categories$.pipe(map(categories => findChildren(this.category, categories)));
     }
 }

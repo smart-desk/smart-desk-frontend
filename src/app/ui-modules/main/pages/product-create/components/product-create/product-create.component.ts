@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ComponentFactoryResolver } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
 import { Category } from '../../../../../../modules/category/models/category.entity';
@@ -9,47 +9,39 @@ import { Product } from '../../../../../../modules/product/models/product.entity
 import { cloneDeep } from 'lodash';
 import { transformCategoryArrayToNZCascade } from '../../../../../../utils';
 import { ProductService } from '../../../../../../modules/product/product.service';
-import { CategoryService } from '../../../../../../modules/category/category.service';
+import { CategoryStoreService } from '../../../../../../modules/category/category-store.service';
 import { ModelService } from '../../../../../../modules/model/model.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ProductStatus } from '../../../../../../modules/product/models/product-status.enum';
 
-// todo check subscriptions
 @Component({
     selector: 'app-product-create',
     templateUrl: './product-create.component.html',
     styleUrls: ['./product-create.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductCreateComponent implements OnInit {
+export class ProductCreateComponent {
     selectedCategoriesIds: string[] = [];
     selectedCategory: Category;
     categories: Category[] = [];
     product: Product;
-    categoryTree$ = new BehaviorSubject<NzCascaderOption[]>([]);
+    categoryTree$: Observable<NzCascaderOption[]>;
     loadingForm$ = new BehaviorSubject<boolean>(false);
     loadingCategories$ = new BehaviorSubject<boolean>(true);
 
     constructor(
         private modelService: ModelService,
         private componentFactoryResolver: ComponentFactoryResolver,
-        private categoryService: CategoryService,
+        private categoryStoreService: CategoryStoreService,
         private productService: ProductService,
         private router: Router,
         private notificationService: NzNotificationService
-    ) {}
-
-    ngOnInit(): void {
-        this.categoryService
-            .getCategories()
-            .pipe(
-                tap(categories => (this.categories = [...categories])),
-                map(categories => transformCategoryArrayToNZCascade(categories))
-            )
-            .subscribe(tree => {
-                this.categoryTree$.next(tree);
-                this.loadingCategories$.next(false);
-            });
+    ) {
+        this.categoryTree$ = this.categoryStoreService.categories$.pipe(
+            tap(categories => (this.categories = [...categories])),
+            map(categories => transformCategoryArrayToNZCascade(categories)),
+            tap(() => this.loadingCategories$.next(false))
+        );
     }
 
     onCategorySelect(selectedCategoriesIds: string[]): void {
