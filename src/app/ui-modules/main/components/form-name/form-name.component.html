@@ -5,6 +5,7 @@
             nzListType="picture-card"
             [nzFileList]="file"
             nzAccept="image/png, image/jpeg"
+            [nzBeforeUpload]="beforeUpload"
             [nzLimit]="1"
             (nzChange)="fileChanged($event)"
         >
