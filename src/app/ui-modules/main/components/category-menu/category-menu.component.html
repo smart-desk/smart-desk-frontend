@@ -11,13 +11,16 @@
                 (click)="onSelectCategory(category, $event, level)"
             >
                 {{ category.name }}
+                <i *ngIf="isParentCategory(category.id)" nz-icon nzType="right" nzTheme="outline"></i>
             </li>
         </ul>
-        <ik-image
-            *ngIf="!!hoveredCategory"
-            class="category__image"
-            [path]="hoveredCategory.img"
-            [transformation]="[{ width: 180, height: 180 }]"
-        ></ik-image>
+        <div class="category__column">
+            <ik-image
+                *ngIf="!!hoveredCategory"
+                class="category__image"
+                [path]="hoveredCategory.img"
+                [transformation]="[{ width: 250, height: 250, quality: 100 }]"
+            ></ik-image>
+        </div>
     </ng-container>
 </div>

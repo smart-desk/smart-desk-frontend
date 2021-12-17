@@ -4,7 +4,6 @@ import { Direction } from '../../../../modules/product/models/direction.enum';
 import { Sorting } from '../../../../modules/product/models/sorting.interface';
 import { Model } from '../../../../modules/model/models/model.entity';
 import { FieldEntity, FieldType } from '../../../../modules/field/models/field.entity';
-import { CategoryService } from '../../../../modules/category/category.service';
 import { ModelService } from '../../../../modules/model/model.service';
 import { ProductDataService } from '../../../../modules/product/product-data.service';
 
@@ -24,7 +23,6 @@ export class SortingComponent implements OnInit {
     constructor(
         private router: Router,
         private route: ActivatedRoute,
-        private categoryService: CategoryService,
         private modelService: ModelService,
         private productDataService: ProductDataService
     ) {}

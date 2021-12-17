@@ -10,7 +10,7 @@
                 nzAccept="image/png, image/jpeg"
                 [(nzFileList)]="fileList"
                 [nzMultiple]="true"
-                [nzSize]="10000"
+                [nzBeforeUpload]="beforeUpload"
                 [nzDisabled]="fileList?.length >= field?.params?.max"
                 (nzChange)="listChanged($event)"
             >

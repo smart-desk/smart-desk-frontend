@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, ParamMap, Router, RouterEvent } from '@angular/router';
-import { Subject } from 'rxjs';
+import { EMPTY, Subject } from 'rxjs';
 import { filter, pairwise, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { isEmpty } from 'lodash';
 import { GetProductsDto, GetProductsResponseDto } from '../../../../../../modules/product/models/product.dto';
 import { Category } from '../../../../../../modules/category/models/category.entity';
 import { Model } from '../../../../../../modules/model/models/model.entity';
-import { CategoryService } from '../../../../../../modules/category/category.service';
+import { CategoryStoreService } from '../../../../../../modules/category/category-store.service';
 import { ProductDataService } from '../../../../../../modules/product/product-data.service';
 import { ModelService } from '../../../../../../modules/model/model.service';
 import { AdCampaignType } from '../../../../../../modules/ad/models/ad-campaign.entity';
@@ -36,7 +36,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
     constructor(
         private promoService: PromoService,
-        private categoryService: CategoryService,
+        private categoryStoreService: CategoryStoreService,
         private productDataService: ProductDataService,
         private modelService: ModelService,
         private cd: ChangeDetectorRef,
@@ -65,9 +65,12 @@ export class CategoryComponent implements OnInit, OnDestroy {
                     this.options = this.productDataService.getProductOptionsFromQuery(this.route.snapshot.queryParamMap);
                     this.productDataService.loadProducts(categoryId, this.options);
 
-                    return this.categoryService.getCategory(categoryId);
+                    return this.categoryStoreService.getCategory(categoryId);
                 }),
                 switchMap(category => {
+                    if (!category) {
+                        return EMPTY;
+                    }
                     this.category = category;
                     return this.modelService.getModel(this.category.modelId);
                 })
@@ -117,7 +120,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
     private buildBreadcrumbs(): void {
         this.breadcrumbs = [];
-        this.categoryService.getCategories().subscribe(cats => this.addBreadcrumb(this.category, cats));
+        this.categoryStoreService.categories$.subscribe(cats => this.addBreadcrumb(this.category, cats));
     }
     private addBreadcrumb(category: Category, cats: Category[]): void {
         const step = { name: category.name, navigateUrl: ['/', 'category', category.id] };

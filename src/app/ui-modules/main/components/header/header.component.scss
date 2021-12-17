@@ -52,7 +52,11 @@
         max-width: 1170px;
         width: 100%;
         margin: 0 auto;
-        padding: 0 $base-unit * 12;
+        height: 100%;
+
+        @media screen and (max-width: $bp-tablet) {
+            padding: 0;
+        }
     }
 
     &__category-button {

@@ -10,7 +10,7 @@
                 <div class="header__category-menu-wrap">
                     <app-category-menu
                         [activeCategory]="currentCategory"
-                        [categories]="categories"
+                        [categories]="categories$ | async"
                         (selectCategory)="onCategorySelect($event)"
                     ></app-category-menu>
                 </div>

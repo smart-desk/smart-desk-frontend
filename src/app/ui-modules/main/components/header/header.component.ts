@@ -10,13 +10,13 @@ import {
     ViewChild,
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { EMPTY, of, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { filter, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { Category } from '../../../../modules/category/models/category.entity';
 import { LoginService } from '../../../../modules/login/login.service';
 import { User } from '../../../../modules/user/models/user.entity';
 import { ProductDataService } from '../../../../modules/product/product-data.service';
-import { CategoryService } from '../../../../modules/category/category.service';
+import { CategoryStoreService } from '../../../../modules/category/category-store.service';
 
 @Component({
     selector: 'app-header',
@@ -28,8 +28,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     @Input()
     logo: string;
 
-    categories: Category[];
-    currentCategory: Category | null;
+    categories$: Observable<Category[]>;
+    currentCategory: Category | undefined;
     searchPhrase = '';
     isHeaderSticky = false;
     isMenuOpen = false;
@@ -45,7 +45,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     constructor(
         private cd: ChangeDetectorRef,
         private productDataService: ProductDataService,
-        private categoryService: CategoryService,
+        private categoryStoreService: CategoryStoreService,
         private router: Router,
         private route: ActivatedRoute,
         private loginService: LoginService
@@ -79,25 +79,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 takeUntil(this.destroy$),
                 filter(event => event instanceof NavigationEnd),
                 switchMap(() => (this.route.firstChild && this.route.firstChild.paramMap) || of(new Map())),
-                switchMap(paramMap => {
-                    if (paramMap.has('category_id')) {
-                        return this.categoryService.getCategory(paramMap.get('category_id'));
-                    } else {
-                        this.currentCategory = null;
-                    }
-                    return EMPTY;
-                })
+                switchMap(paramMap =>
+                    paramMap.has('category_id') ? this.categoryStoreService.getCategory(paramMap.get('category_id')) : of(undefined)
+                )
             )
             .subscribe(category => {
                 this.currentCategory = category;
                 this.cd.detectChanges();
             });
 
-        this.categoryService.getCategories().subscribe(categories => {
-            this.categories = categories;
-            this.cd.markForCheck();
-        });
-
+        this.categories$ = this.categoryStoreService.categories$;
         this.loginService.login$.pipe(takeUntil(this.destroy$)).subscribe(user => (this.user = user));
     }
 

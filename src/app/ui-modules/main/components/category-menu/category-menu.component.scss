@@ -4,34 +4,39 @@
 .category {
     &__menu {
         display: flex;
+        height: 100%;
     }
 
     &__column {
         width: 25%;
         border-right: 1px solid $grey-light;
+        margin-bottom: 0;
+
+        &:last-child {
+            border-right: none;
+        }
     }
 
     &__image {
-        padding: $base-unit $base-unit * 2;
+        padding: $base-unit * 2;
         border-radius: 50%;
         display: flex;
         justify-content: center;
         align-items: center;
         cursor: default;
+
+        img {
+            width: 100%;
+        }
     }
 
     &__item {
         padding: $base-unit $base-unit * 2;
         cursor: pointer;
         position: relative;
-
-        &--parent {
-            &:after {
-                content: '>';
-                position: absolute;
-                right: $base-unit * 2;
-            }
-        }
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
         &--active {
             background-color: $grey-light;
