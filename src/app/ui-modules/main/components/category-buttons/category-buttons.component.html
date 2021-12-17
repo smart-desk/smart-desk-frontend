@@ -19,9 +19,8 @@
                         *ngIf="!!cat?.img"
                         class="category-large-buttons__image"
                         [path]="cat?.img"
-                        [transformation]="[{ width: 100, height: 100 }]"
+                        [transformation]="[{ width: 150, height: 150, quality: 100 }]"
                     ></ik-image>
-
                     <p class="category-large-buttons__link">{{ cat.name }}</p>
                 </div>
             </div>
