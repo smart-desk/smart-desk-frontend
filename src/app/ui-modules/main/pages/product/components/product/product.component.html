@@ -34,7 +34,7 @@
 
 <ng-template #main>
     <nz-alert
-        *ngIf="product?.status === productStatus.BLOCKED && product?.reason"
+        *ngIf="product?.status === productStatus.BLOCKED"
         class="product__alert"
         nzType="error"
         nzMessage="Объявление было заблокировано администратором"
