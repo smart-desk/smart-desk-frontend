@@ -17,6 +17,7 @@
 
 .category-large-buttons {
     display: flex;
+    flex-wrap: wrap;
 
     &__item {
         cursor: pointer;
