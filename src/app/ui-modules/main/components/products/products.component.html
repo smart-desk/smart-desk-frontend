@@ -13,7 +13,7 @@
             ></app-product-card>
         </div>
     </ng-container>
-    <div class="products__list">
+    <div class="products__list" [ngClass]="{ 'products__list--main': isMain }">
         <ng-container *ngFor="let product of productsResponse?.products; index as i; trackBy: trackByFn">
             <app-product-card
                 [showBookmarksIcon]="showBookmarksIcon"
@@ -22,7 +22,7 @@
                 (createBookmark)="addBookmarkEvent($event)"
                 (deleteBookmark)="removeBookmarkEvent($event)"
             ></app-product-card>
-            <app-ad-campaign-card *ngIf="i === 4 && adCampaign && productsResponse?.products.length >= 7" [campaign]="adCampaign">
+            <app-ad-campaign-card *ngIf="i === countColumn && adCampaign && productsResponse?.products.length >= 7" [campaign]="adCampaign">
             </app-ad-campaign-card>
         </ng-container>
     </div>

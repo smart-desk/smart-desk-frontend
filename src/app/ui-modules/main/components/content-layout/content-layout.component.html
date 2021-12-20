@@ -10,7 +10,7 @@
     <nz-col [nzSpan]="6" *ngIf="left">
         <ng-container *ngTemplateOutlet="left"></ng-container>
     </nz-col>
-    <nz-col [nzSpan]="18" *ngIf="main">
+    <nz-col [nzSpan]="right ? 18 : 24" *ngIf="main">
         <ng-container *ngTemplateOutlet="main"></ng-container>
     </nz-col>
     <nz-col [nzSpan]="6" *ngIf="right">

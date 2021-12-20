@@ -33,9 +33,11 @@ export class ProductsComponent implements OnChanges, OnInit, OnDestroy {
     @Input() promoProducts: Product[];
     @Input() showPagination = true;
     @Input() loading = false;
+    @Input() isMain = false;
     bookmarks: Bookmark[];
     destroy$ = new Subject();
     showBookmarksIcon: boolean;
+    countColumn = this.isMain ? 5 : 4;
 
     constructor(
         private readonly productDataService: ProductDataService,
@@ -77,16 +79,16 @@ export class ProductsComponent implements OnChanges, OnInit, OnDestroy {
 
     trackByFn: TrackByFunction<Product> = (index: number, item: Product) => item.id + item.isBookmark;
 
-    changePage(page: number) {
+    changePage(page: number): void {
         window.scrollTo(window.pageXOffset, 0);
         this.productDataService.changePage(page);
     }
 
-    addBookmarkEvent(productId: string) {
+    addBookmarkEvent(productId: string): void {
         this.bookmarksStoreService.createBookmark(productId);
     }
 
-    removeBookmarkEvent(productId: string) {
+    removeBookmarkEvent(productId: string): void {
         this.bookmarksStoreService.deleteBookmark(productId);
     }
 
