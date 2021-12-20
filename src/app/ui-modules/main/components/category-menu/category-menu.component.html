@@ -1,26 +1,52 @@
 <div class="category__menu">
     <ng-container *ngIf="categories">
-        <ul class="category__column" *ngFor="let level of showCategoryLevels">
-            <li
-                class="category__item"
-                *ngFor="let category of getCategoriesByLevel(level)"
-                [class.category__item--active]="isSelected(category.id)"
-                [class.category__item--parent]="isParentCategory(category.id)"
-                (mouseenter)="onCategoryHover(category)"
-                (mouseleave)="onCategoryHover()"
-                (click)="onSelectCategory(category, $event, level)"
-            >
-                {{ category.name }}
-                <i *ngIf="isParentCategory(category.id)" nz-icon nzType="right" nzTheme="outline"></i>
-            </li>
-        </ul>
-        <div class="category__column">
-            <ik-image
-                *ngIf="!!hoveredCategory"
-                class="category__image"
-                [path]="hoveredCategory.img"
-                [transformation]="[{ width: 250, height: 250, quality: 100 }]"
-            ></ik-image>
-        </div>
+        <ng-container *ngIf="!isMobile(); else mobileTmp">
+            <ul class="category__column" *ngFor="let level of showCategoryLevels">
+                <li
+                    class="category__item"
+                    *ngFor="let category of getCategoriesByLevel(level)"
+                    [class.category__item--active]="isSelected(category.id)"
+                    [class.category__item--parent]="isParentCategory(category.id)"
+                    (mouseenter)="onCategoryHover(category)"
+                    (mouseleave)="onCategoryHover()"
+                    (click)="onSelectCategory(category, $event, level)"
+                >
+                    {{ category.name }}
+                    <i *ngIf="isParentCategory(category.id)" nz-icon nzType="right" nzTheme="outline"></i>
+                </li>
+            </ul>
+            <div class="category__column">
+                <ik-image
+                    *ngIf="!!hoveredCategory"
+                    class="category__image"
+                    [path]="hoveredCategory.img"
+                    [transformation]="[{ width: 250, height: 250, quality: 100 }]"
+                ></ik-image>
+            </div>
+        </ng-container>
+        <ng-template #mobileTmp>
+            <ul class="category__column">
+                <li [hidden]="currentCategoryLevelOnMobile === 0" class="category__item" (click)="decCurrentMobileLevel()">
+                    Назад
+                </li>
+                <li
+                    class="category__item"
+                    *ngFor="let category of getCategoriesByLevel(currentCategoryLevelOnMobile)"
+                    [class.category__item--active]="isSelected(category.id)"
+                    [class.category__item--parent]="isParentCategory(category.id)"
+                    (click)="onSelectCategory(category, $event, currentCategoryLevelOnMobile)"
+                >
+                    <div class="category__item-profile">
+                        <ik-image
+                            class="category__image"
+                            [path]="category.img"
+                            [transformation]="[{ width: 20, height: 20, quality: 100 }]"
+                        ></ik-image>
+                        {{ category.name }}
+                    </div>
+                    <i *ngIf="isParentCategory(category.id)" nz-icon nzType="right" nzTheme="outline"></i>
+                </li>
+            </ul>
+        </ng-template>
     </ng-container>
 </div>

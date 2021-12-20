@@ -69,9 +69,7 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
         private chatModalService: ChatModalService,
         private loginService: LoginService,
         private phoneService: PhoneService
-    ) {
-        this.bookmarksStoreService.loadBookmarks();
-    }
+    ) {}
 
     ngOnInit(): void {
         this.cd.detectChanges();
@@ -80,10 +78,7 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
                 takeUntil(this.destroy$),
                 switchMap((param: ParamMap) => {
                     const productId = param.get('product_id');
-                    if (productId) {
-                        return this.productService.getRecommendedByProductId(productId);
-                    }
-                    return EMPTY;
+                    return productId ? this.productService.getRecommendedByProductId(productId) : EMPTY;
                 })
             )
             .subscribe(res => {
@@ -107,19 +102,14 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
             .pipe(
                 switchMap((param: ParamMap) => {
                     const productId = param.get('product_id');
-                    if (productId) {
-                        return this.productService.getProduct(productId);
-                    }
-                    return EMPTY;
+                    return productId ? this.productService.getProduct(productId) : EMPTY;
                 }),
                 tap(product => {
                     this.product = product;
                     this.setBookmarkFlag();
                     this.countView();
                 }),
-                switchMap(product => {
-                    return product.userId ? this.userService.getUser(product.userId) : EMPTY;
-                })
+                switchMap(product => (product.userId ? this.userService.getUser(product.userId) : EMPTY))
             )
             .subscribe(
                 user => {
