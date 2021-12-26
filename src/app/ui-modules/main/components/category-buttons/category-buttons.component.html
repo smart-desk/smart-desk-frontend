@@ -14,15 +14,21 @@
         </div>
         <ng-template #lgTmp>
             <div class="category-large-buttons">
-                <div *ngFor="let cat of children" class="category-large-buttons__item" (click)="categorySelect(cat)">
-                    <ik-image
-                        *ngIf="!!cat?.img"
-                        class="category-large-buttons__image"
-                        [path]="cat?.img"
-                        [transformation]="[{ width: 150, height: 150, quality: 100 }]"
-                    ></ik-image>
-                    <p class="category-large-buttons__link">{{ cat.name }}</p>
-                </div>
+                <cdk-virtual-scroll-viewport class="viewport" itemSize="140" orientation="horizontal">
+                    <div
+                        *cdkVirtualFor="let cat of children"
+                        class="category-large-buttons__item example-item"
+                        (click)="categorySelect(cat)"
+                    >
+                        <ik-image
+                            *ngIf="!!cat?.img"
+                            class="category-large-buttons__image"
+                            [path]="cat?.img"
+                            [transformation]="[{ width: 150, height: 150, quality: 100 }]"
+                        ></ik-image>
+                        <p class="category-large-buttons__link">{{ cat.name }}</p>
+                    </div>
+                </cdk-virtual-scroll-viewport>
             </div>
         </ng-template>
     </ng-container>

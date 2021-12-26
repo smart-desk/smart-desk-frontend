@@ -47,6 +47,7 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { LogoComponent } from './components/logo/logo.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 const components = [
     HeaderComponent,
@@ -104,6 +105,7 @@ const components = [
         NzAffixModule,
         NzTypographyModule,
         NzBreadCrumbModule,
+        ScrollingModule,
     ],
 })
 export class SharedMainModule {}
