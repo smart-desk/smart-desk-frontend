@@ -39,8 +39,6 @@ export class ProductsComponent implements OnChanges, OnInit, OnDestroy {
     bookmarks: Bookmark[];
     destroy$ = new Subject();
     showBookmarksIcon: boolean;
-    @ViewChild('productsList')
-    private productsList: ElementRef;
 
     constructor(
         private readonly productDataService: ProductDataService,

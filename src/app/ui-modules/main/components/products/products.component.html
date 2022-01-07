@@ -13,7 +13,7 @@
             ></app-product-card>
         </div>
     </ng-container>
-    <div #productsList class="products__list">
+    <div class="products__list">
         <ng-container *ngFor="let product of productsResponse?.products; index as i; trackBy: trackByFn">
             <app-product-card
                 [showBookmarksIcon]="showBookmarksIcon"
