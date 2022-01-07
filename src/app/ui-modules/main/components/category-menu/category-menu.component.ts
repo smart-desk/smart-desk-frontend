@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
 import { Category } from '../../../../modules/category/models/category.entity';
 
 @Component({
@@ -20,8 +20,15 @@ export class CategoryMenuComponent implements OnChanges {
     hoveredCategory: Category | null;
     selectedCategories: string[] = [];
     showCategoryLevels = [0, 1, 2];
+    currentCategoryLevelOnMobile = 0;
+    private windowWidth = window.innerWidth;
 
     constructor(private cd: ChangeDetectorRef) {}
+
+    @HostListener('window:resize')
+    onResize() {
+        this.windowWidth = window.innerWidth;
+    }
 
     ngOnChanges() {
         if (this.activeCategory && this.categories) {
@@ -55,9 +62,12 @@ export class CategoryMenuComponent implements OnChanges {
     onSelectCategory(category: Category, e: Event, categoryLevel: number): void {
         e.stopPropagation();
 
-        if (this.isLeafCategory(category.id) || this.isSelected(category.id) || categoryLevel >= Math.max(...this.showCategoryLevels)) {
+        const maxPossibleLevelToShow = this.isMobile() ? 999 : Math.max(...this.showCategoryLevels);
+
+        if (this.isLeafCategory(category.id) || this.isSelected(category.id) || categoryLevel >= maxPossibleLevelToShow) {
             this.selectCategory.emit(category.id);
         } else {
+            this.currentCategoryLevelOnMobile += 1;
             this.selectedCategories = this.getCategoryIdChain(category.id);
             this.cd.markForCheck();
         }
@@ -65,6 +75,15 @@ export class CategoryMenuComponent implements OnChanges {
 
     isParentCategory(categoryId: string): boolean {
         return this.categories.some(category => category.parentId === categoryId);
+    }
+
+    decCurrentMobileLevel() {
+        this.currentCategoryLevelOnMobile -= 1;
+        this.cd.markForCheck();
+    }
+
+    isMobile(): boolean {
+        return this.windowWidth <= 640;
     }
 
     private getCategoryIdChain(targetCategoryId: string): string[] {

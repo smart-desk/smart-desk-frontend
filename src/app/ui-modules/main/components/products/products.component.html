@@ -22,8 +22,6 @@
                 (createBookmark)="addBookmarkEvent($event)"
                 (deleteBookmark)="removeBookmarkEvent($event)"
             ></app-product-card>
-            <app-ad-campaign-card *ngIf="i === 4 && adCampaign && productsResponse?.products.length >= 7" [campaign]="adCampaign">
-            </app-ad-campaign-card>
         </ng-container>
     </div>
     <app-pagination

@@ -2,12 +2,14 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    ElementRef,
     Input,
     OnChanges,
     OnDestroy,
     OnInit,
     SimpleChanges,
     TrackByFunction,
+    ViewChild,
 } from '@angular/core';
 import { ExtraActions } from '../product-card/product-card.component';
 import { takeUntil } from 'rxjs/operators';
@@ -33,6 +35,7 @@ export class ProductsComponent implements OnChanges, OnInit, OnDestroy {
     @Input() promoProducts: Product[];
     @Input() showPagination = true;
     @Input() loading = false;
+
     bookmarks: Bookmark[];
     destroy$ = new Subject();
     showBookmarksIcon: boolean;
@@ -77,16 +80,16 @@ export class ProductsComponent implements OnChanges, OnInit, OnDestroy {
 
     trackByFn: TrackByFunction<Product> = (index: number, item: Product) => item.id + item.isBookmark;
 
-    changePage(page: number) {
+    changePage(page: number): void {
         window.scrollTo(window.pageXOffset, 0);
         this.productDataService.changePage(page);
     }
 
-    addBookmarkEvent(productId: string) {
+    addBookmarkEvent(productId: string): void {
         this.bookmarksStoreService.createBookmark(productId);
     }
 
-    removeBookmarkEvent(productId: string) {
+    removeBookmarkEvent(productId: string): void {
         this.bookmarksStoreService.deleteBookmark(productId);
     }
 

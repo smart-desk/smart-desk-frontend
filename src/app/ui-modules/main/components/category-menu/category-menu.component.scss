@@ -15,6 +15,10 @@
         &:last-child {
             border-right: none;
         }
+
+        @media screen and (max-width: $bp-phone) {
+            width: 100%;
+        }
     }
 
     &__image {
@@ -27,6 +31,16 @@
 
         img {
             width: 100%;
+
+            @media screen and (max-width: $bp-phone) {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        @media screen and (max-width: $bp-phone) {
+            padding: 0;
+            margin-right: $base-unit;
         }
     }
 
@@ -45,5 +59,9 @@
         &:hover {
             background-color: $grey-light;
         }
+    }
+
+    &__item-profile {
+        display: flex;
     }
 }

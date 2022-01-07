@@ -41,11 +41,14 @@
         left: 0;
         right: 0;
         top: $base-unit * 9;
-
         height: 300px;
         background: $background;
         z-index: 10;
         box-shadow: -7px 4px 5px rgb(0 0 0 / 5%);
+
+        @media screen and (max-width: $bp-phone) {
+            top: $base-unit * 7;
+        }
     }
 
     &__category-menu-wrap {
