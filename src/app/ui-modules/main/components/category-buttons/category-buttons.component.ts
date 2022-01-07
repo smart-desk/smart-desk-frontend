@@ -20,7 +20,6 @@ import { Observable } from 'rxjs';
     templateUrl: './category-buttons.component.html',
     styleUrls: ['./category-buttons.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None,
 })
 export class CategoryButtonsComponent implements OnInit, OnChanges {
     @Input()
