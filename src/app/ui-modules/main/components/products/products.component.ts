@@ -1,10 +1,8 @@
 import {
-    AfterViewInit,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     ElementRef,
-    HostListener,
     Input,
     OnChanges,
     OnDestroy,
@@ -30,20 +28,19 @@ import { LoginService } from '../../../../modules/login/login.service';
     styleUrls: ['./products.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductsComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
+export class ProductsComponent implements OnChanges, OnInit, OnDestroy {
     @Input() cardActions: ExtraActions[];
     @Input() productsResponse: GetProductsResponseDto | null;
     @Input() adCampaign: AdCampaignCurrentDto;
     @Input() promoProducts: Product[];
     @Input() showPagination = true;
     @Input() loading = false;
-    countColumn: number;
+
     bookmarks: Bookmark[];
     destroy$ = new Subject();
     showBookmarksIcon: boolean;
     @ViewChild('productsList')
     private productsList: ElementRef;
-    private cardWidth = 200;
 
     constructor(
         private readonly productDataService: ProductDataService,
@@ -51,11 +48,6 @@ export class ProductsComponent implements OnChanges, OnInit, AfterViewInit, OnDe
         private readonly cd: ChangeDetectorRef,
         private readonly loginService: LoginService
     ) {}
-
-    @HostListener('window:resize')
-    onResize() {
-        this.setCountColumn();
-    }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (
@@ -83,10 +75,6 @@ export class ProductsComponent implements OnChanges, OnInit, AfterViewInit, OnDe
         });
     }
 
-    ngAfterViewInit(): void {
-        this.setCountColumn();
-    }
-
     ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
@@ -105,10 +93,6 @@ export class ProductsComponent implements OnChanges, OnInit, AfterViewInit, OnDe
 
     removeBookmarkEvent(productId: string): void {
         this.bookmarksStoreService.deleteBookmark(productId);
-    }
-
-    private setCountColumn(): void {
-        this.countColumn = Math.floor(this.productsList?.nativeElement.clientWidth / this.cardWidth);
     }
 
     private updateProductsWithBookmarks(): void {

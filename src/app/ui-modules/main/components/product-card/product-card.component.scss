@@ -10,12 +10,8 @@
     overflow: hidden;
     transition: box-shadow 0.4s;
 
-    margin: 0 auto;
-    max-width: 250px;
-    min-width: 160px;
-
     img {
-        max-width: 100%;
+        width: 100%;
     }
 
     &:hover {
