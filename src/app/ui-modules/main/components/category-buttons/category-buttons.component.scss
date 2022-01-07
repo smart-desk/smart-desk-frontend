@@ -17,6 +17,9 @@
 
 .category-large-buttons {
     display: flex;
+    width: 100%;
+    overflow: auto;
+    padding-top: $base-unit;
 
     &__item {
         cursor: pointer;
@@ -38,17 +41,7 @@
         width: 100px;
 
         &:hover {
-            box-shadow: $shadow-hover;
-        }
-    }
-
-    .viewport {
-        height: 150px;
-        width: 100%;
-
-        .cdk-virtual-scroll-content-wrapper {
-            display: flex;
-            flex-direction: row;
+            box-shadow: $shadow-hover-small;
         }
     }
 }
