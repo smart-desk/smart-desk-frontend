@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    Input,
+    OnChanges,
+    OnInit,
+    SimpleChanges,
+    ViewEncapsulation,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Category } from '../../../../modules/category/models/category.entity';
@@ -11,6 +20,7 @@ import { Observable } from 'rxjs';
     templateUrl: './category-buttons.component.html',
     styleUrls: ['./category-buttons.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
 })
 export class CategoryButtonsComponent implements OnInit, OnChanges {
     @Input()

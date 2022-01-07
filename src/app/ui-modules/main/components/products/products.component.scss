@@ -1,9 +1,11 @@
-@import 'src/assets/styles/variables';
+@import '~src/assets/styles/variables';
+@import '~src/assets/styles/mixins';
 
 .products {
-    &__list {
+    &__list,
+    &__promo-section {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
         grid-column-gap: $base-unit * 2;
         grid-row-gap: $base-unit * 3;
         margin-bottom: $base-unit * 3;
@@ -13,13 +15,5 @@
         &--colored {
             color: $primary-red;
         }
-    }
-
-    &__promo-section {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-column-gap: $base-unit * 2;
-        grid-row-gap: $base-unit * 3;
-        margin-bottom: $base-unit * 3;
     }
 }
