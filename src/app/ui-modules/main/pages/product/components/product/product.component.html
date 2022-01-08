@@ -68,7 +68,7 @@
         <nz-avatar [nzSrc]="user?.avatar" nzIcon="user" nzSize="large"></nz-avatar>
         <h3>{{ user?.firstName }} {{ user?.lastName }}</h3>
     </div>
-    <div class="contacts">
+    <div class="contacts" *ngIf="isContactAvailable(preferContact.PHONE) || isContactAvailable(preferContact.CHAT)">
         <div class="contacts__phone" *ngIf="isContactAvailable(preferContact.PHONE) && this.user?.isPhoneVerified">
             <button *ngIf="!isPhoneVisible" nzBlock nz-button (click)="showPhone()">
                 <i nz-icon nzType="phone" nzTheme="outline"></i>
