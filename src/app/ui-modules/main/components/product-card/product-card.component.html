@@ -1,5 +1,5 @@
 <div class="product-card" [routerLink]="['/', 'products', product.id]">
-    <ik-image [path]="thumb || '/public/not-found.png'" [transformation]="[{ width: 250, height: 180 }]"></ik-image>
+    <ik-image [path]="thumb || '/public/not-found.png'" [transformation]="[{ width: 300, height: 200, q: 100 }]"></ik-image>
     <div class="product-card__info" [class.product-card__info--promo]="promo">
         <h3 class="product-card__title">
             <span>{{ title }}</span>
