@@ -1,1 +1,1 @@
-<app-key-value [key]="field?.title" [value]="getDateValue()"></app-key-value>
+<app-key-value *ngIf="field?.data?.date1" [key]="field?.title" [value]="getDateValue()"></app-key-value>

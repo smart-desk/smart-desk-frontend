@@ -71,7 +71,7 @@
     &__title-wrapper {
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-end;
         margin-bottom: $base-unit * 2;
 
         @media screen and (max-width: $bp-tablet) {
