@@ -18,6 +18,7 @@ import { UserService } from '../../../../../../modules/user/user.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BreadcrumbsStep } from '../../../../components/breadcrumbs/breadcrumbs.component';
+import { NotificationTypes } from '../../../../../../modules/user/models/notification-types.enum';
 
 @Component({
     selector: 'app-user-settings',
@@ -29,6 +30,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     profile: User | undefined;
     verificationRequestId: string;
     breadcrumbs: BreadcrumbsStep[] = [{ name: 'Профиль', navigateUrl: ['/profile'] }];
+    notificationTypes = NotificationTypes;
     private destroy$ = new Subject();
 
     constructor(
@@ -155,5 +157,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
                     .subscribe(() => this.loginService.updateLoginInfo());
             },
         });
+    }
+
+    notificationEnabled(type: NotificationTypes) {
+        return this?.profile?.emailNotifications?.includes(type);
     }
 }
