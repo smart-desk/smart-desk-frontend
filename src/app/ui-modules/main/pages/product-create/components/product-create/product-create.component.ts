@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, ComponentFactoryResolver } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map, take, tap } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
 import { Category } from '../../../../../../modules/category/models/category.entity';
 import { CreateProductDto } from '../../../../../../modules/product/models/product.dto';
@@ -25,7 +25,7 @@ export class ProductCreateComponent {
     selectedCategory: Category;
     categories: Category[] = [];
     product: Product;
-    categoryTree$: Observable<NzCascaderOption[]>;
+    categoryTree: NzCascaderOption[];
     loadingForm$ = new BehaviorSubject<boolean>(false);
     loadingCategories$ = new BehaviorSubject<boolean>(true);
 
@@ -35,13 +35,15 @@ export class ProductCreateComponent {
         private categoryStoreService: CategoryStoreService,
         private productService: ProductService,
         private router: Router,
-        private notificationService: NzNotificationService
+        private notificationService: NzNotificationService,
+        private cdr: ChangeDetectorRef
     ) {
-        this.categoryTree$ = this.categoryStoreService.categories$.pipe(
-            tap(categories => (this.categories = [...categories])),
-            map(categories => transformCategoryArrayToNZCascade(categories)),
-            tap(() => this.loadingCategories$.next(false))
-        );
+        this.categoryStoreService.categories$.subscribe(categories => {
+            this.categories = [...categories];
+            this.categoryTree = transformCategoryArrayToNZCascade(categories);
+            this.loadingCategories$.next(false);
+            this.cdr.markForCheck();
+        });
     }
 
     onCategorySelect(selectedCategoriesIds: string[]): void {

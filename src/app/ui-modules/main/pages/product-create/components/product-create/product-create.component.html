@@ -13,7 +13,7 @@
         class="category-selector"
         [nzAllowClear]="false"
         [nzSize]="'large'"
-        [nzOptions]="categoryTree$ | async"
+        [nzOptions]="categoryTree"
         [(ngModel)]="selectedCategoriesIds"
         [nzPlaceHolder]="'Выберите категорию'"
         (ngModelChange)="onCategorySelect($event)"
