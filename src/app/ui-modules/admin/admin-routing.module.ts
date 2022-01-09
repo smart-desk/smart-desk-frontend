@@ -41,10 +41,6 @@ const routes: Routes = [
                 component: ProductListComponent,
             },
             {
-                path: 'ad-campaigns',
-                component: AdCampaignListComponent,
-            },
-            {
                 path: 'users',
                 component: UsersComponent,
             },

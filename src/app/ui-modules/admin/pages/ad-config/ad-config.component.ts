@@ -46,8 +46,6 @@ export class AdConfigComponent implements OnInit {
         this.getPromoSets();
 
         this.form = this.fb.group({
-            mainHourlyRate: [],
-            sidebarHourlyRate: [],
             liftRate: [],
             adsense: [],
         });
