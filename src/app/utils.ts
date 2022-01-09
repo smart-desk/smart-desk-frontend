@@ -8,6 +8,9 @@ import { NzTreeNode } from 'ng-zorro-antd/tree';
 import arrayToTree from 'array-to-tree';
 import { Filter, Filters } from './modules/product/models/filter';
 
+export const MOBILE_VIEW_SIZE = 640;
+export const TABLET_VIEW_SIZE = 768;
+
 export function createDynamicFieldProvider(type: FieldType, useClass: Type<AbstractFieldService>): Provider {
     DynamicFieldsMap.set(type, new InjectionToken<AbstractFieldService>(type));
 

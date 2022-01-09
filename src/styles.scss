@@ -32,6 +32,32 @@ ol[class] {
     bottom: 0;
     height: calc(100vh - 64px);
     padding-bottom: 0;
+
+    @media screen and (max-width: $bp-tablet) {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        width: 100vh !important;
+        max-width: 100%;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .ant-modal-close {
+        border-radius: 50%;
+        background: white;
+        box-shadow: $shadow;
+        top: 8px;
+        right: 8px;
+
+        .ant-modal-close-x {
+            width: $base-unit * 5;
+            height: $base-unit * 5;
+            line-height: $base-unit * 5;
+        }
+    }
 }
 
 // workaround for google autocomplete issue

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { ChatMessage } from '../../models/chat-message.entity';
 import { Chat } from '../../models/chat.entity';
 import { User } from '../../../../modules/user/models/user.entity';

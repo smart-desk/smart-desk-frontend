@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
 import { Category } from '../../../../modules/category/models/category.entity';
+import { MOBILE_VIEW_SIZE } from '../../../../utils';
 
 @Component({
     selector: 'app-category-menu',
@@ -83,7 +84,7 @@ export class CategoryMenuComponent implements OnChanges {
     }
 
     isMobile(): boolean {
-        return this.windowWidth <= 640;
+        return this.windowWidth <= MOBILE_VIEW_SIZE;
     }
 
     private getCategoryIdChain(targetCategoryId: string): string[] {

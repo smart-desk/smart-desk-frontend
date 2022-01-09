@@ -6,13 +6,26 @@
 <nz-result *ngIf="!loading && chats && !chats.length" nzIcon="smile-twotone" nzTitle="Пока что у вас нет сообщений"></nz-result>
 
 <div class="chat" *ngIf="chats?.length">
+    <button
+        nz-button
+        nzShape="round"
+        nzType="default"
+        *ngIf="!showChatsOnMobile"
+        class="chat__back-to-list"
+        (click)="switchChatOnMobile(true)"
+    >
+        <i nz-icon nzType="left" nzTheme="outline"></i>
+        К списку чатов
+    </button>
     <app-chat-list
+        *ngIf="!isTablet() || (isTablet() && showChatsOnMobile)"
         [currentUser]="currentUser"
         [chats]="chats"
         [activeChat]="activeChat"
         (changeChat)="setActiveChat($event)"
     ></app-chat-list>
     <app-chat-messages
+        *ngIf="!isTablet() || (isTablet() && !showChatsOnMobile)"
         [currentUser]="currentUser"
         [chat]="activeChat"
         [messages]="messages"
