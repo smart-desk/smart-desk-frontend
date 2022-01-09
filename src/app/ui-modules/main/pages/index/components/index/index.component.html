@@ -1,8 +1,4 @@
-<app-content-layout [advert]="advert" [main]="main"></app-content-layout>
-
-<ng-template #advert>
-    <app-main-advert *ngIf="mainAdCampaign" [campaign]="mainAdCampaign"></app-main-advert>
-</ng-template>
+<app-content-layout [main]="main"></app-content-layout>
 
 <ng-template #main>
     <h2>Выберите категорию</h2>

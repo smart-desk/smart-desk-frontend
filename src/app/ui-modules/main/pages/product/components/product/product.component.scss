@@ -1,15 +1,5 @@
 @import '~src/assets/styles/variables';
 
-.user {
-    display: inline-grid;
-    align-items: start;
-    justify-items: start;
-    gap: $base-unit;
-    grid-auto-flow: column;
-    cursor: pointer;
-    margin-bottom: $base-unit * 2;
-}
-
 .similar {
     padding-top: 20px;
 }
@@ -26,12 +16,45 @@
 .contacts {
     margin-bottom: $base-unit * 2;
 
+    @media screen and (max-width: $bp-tablet) {
+        display: flex;
+        gap: $base-unit;
+    }
+
     &__phone {
-        margin-bottom: $base-unit * 2;
+        @media screen and (max-width: $bp-tablet) {
+            flex-grow: 1;
+        }
+    }
+
+    &__chat {
+        @media screen and (max-width: $bp-tablet) {
+            flex-grow: 1;
+        }
     }
 }
 
 .product {
+    &__user {
+        display: inline-grid;
+        align-items: start;
+        justify-items: start;
+        gap: $base-unit;
+        grid-auto-flow: column;
+        cursor: pointer;
+        margin-bottom: $base-unit * 2;
+
+        @media screen and (max-width: $bp-tablet) {
+            margin-bottom: 0;
+
+            .ant-avatar {
+                width: $base-unit * 3;
+                height: $base-unit * 3;
+                line-height: $base-unit * 3;
+            }
+        }
+    }
+
     &__alert {
         margin-bottom: $base-unit * 2;
     }
@@ -39,13 +62,21 @@
     &__title {
         font-size: $font-32;
         margin-bottom: 0;
+
+        @media screen and (max-width: $bp-tablet) {
+            font-size: $font-18;
+        }
     }
 
     &__title-wrapper {
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-end;
         margin-bottom: $base-unit * 2;
+
+        @media screen and (max-width: $bp-tablet) {
+            margin-top: $base-unit * 2;
+        }
     }
 
     &__title-button {

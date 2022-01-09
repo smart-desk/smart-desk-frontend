@@ -3,5 +3,10 @@
 .content-layout {
     &__title {
         font-size: $font-32;
+
+        @media screen and (max-width: $bp-tablet) {
+            font-size: $font-18;
+            margin-bottom: $base-unit;
+        }
     }
 }

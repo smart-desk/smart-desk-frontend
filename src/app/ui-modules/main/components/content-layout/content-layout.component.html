@@ -1,4 +1,4 @@
-<ng-container *ngTemplateOutlet="advert"></ng-container>
+<ng-container *ngTemplateOutlet="meta"></ng-container>
 <ng-container *ngIf="isTemplate(title); else titleStringTmp">
     <ng-container *ngTemplateOutlet="title"></ng-container>
 </ng-container>
@@ -7,13 +7,13 @@
 </ng-template>
 
 <nz-row [nzGutter]="16">
-    <nz-col [nzSpan]="6" *ngIf="left">
+    <nz-col *ngIf="left" [nzXs]="{ span: 24, order: 1 }" [nzSm]="{ span: 24, order: 1 }" [nzMd]="{ span: 6, order: 1 }">
         <ng-container *ngTemplateOutlet="left"></ng-container>
     </nz-col>
-    <nz-col [nzSpan]="right || left ? 18 : 24" *ngIf="main">
+    <nz-col *ngIf="main" [nzXs]="{ span: 24, order: 2 }" [nzSm]="{ span: 24, order: 2 }" [nzMd]="right || left ? 18 : 24">
         <ng-container *ngTemplateOutlet="main"></ng-container>
     </nz-col>
-    <nz-col [nzSpan]="6" *ngIf="right">
+    <nz-col *ngIf="right" [nzXs]="{ span: 24, order: 1 }" [nzSm]="{ span: 24, order: 1 }" [nzMd]="{ span: 6, order: 2 }">
         <ng-container *ngTemplateOutlet="right"></ng-container>
     </nz-col>
 </nz-row>
