@@ -5,6 +5,10 @@
     font-size: $font-16;
     margin-bottom: $base-unit * 2;
 
+    @media screen and (max-width: $bp-tablet) {
+        flex-direction: column;
+    }
+
     &__key-wrapper {
         min-width: $base-unit * 40;
         display: flex;
@@ -12,6 +16,14 @@
 
     &__key {
         color: $font-color-gray;
+    }
+
+    &__semicolon {
+        display: none;
+
+        @media screen and (max-width: $bp-tablet) {
+            display: inline;
+        }
     }
 
     &__line {
@@ -23,5 +35,9 @@
         background-size: 3px 1px;
         background-repeat: repeat-x;
         margin: 0 3px 6px;
+
+        @media screen and (max-width: $bp-tablet) {
+            display: none;
+        }
     }
 }
