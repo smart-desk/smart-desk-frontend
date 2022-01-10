@@ -9,8 +9,6 @@ import { Model } from '../../../../../../modules/model/models/model.entity';
 import { CategoryStoreService } from '../../../../../../modules/category/category-store.service';
 import { ProductDataService } from '../../../../../../modules/product/product-data.service';
 import { ModelService } from '../../../../../../modules/model/model.service';
-import { AdCampaignType } from '../../../../../../modules/ad/models/ad-campaign.entity';
-import { AdService } from '../../../../../../modules/ad/ad.service';
 import { AdCampaignCurrentDto } from '../../../../../../modules/ad/models/ad-campaign-current.dto';
 import { Product } from '../../../../../../modules/product/models/product.entity';
 import { PromoService } from '../../../../../../modules/promo/promo.service';
@@ -41,8 +39,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
         private modelService: ModelService,
         private cd: ChangeDetectorRef,
         private route: ActivatedRoute,
-        private router: Router,
-        private adService: AdService
+        private router: Router
     ) {}
 
     ngOnInit(): void {
@@ -84,16 +81,6 @@ export class CategoryComponent implements OnInit, OnDestroy {
         this.productDataService.products$.pipe(takeUntil(this.destroy$)).subscribe(res => {
             this.productsResponse = res;
             this.loading = false;
-            this.cd.detectChanges();
-        });
-
-        this.adService.getAdCampaignsCurrent(AdCampaignType.SIDEBAR).subscribe(campaign => {
-            this.sidebarAdCampaign = campaign;
-            this.cd.detectChanges();
-        });
-
-        this.adService.getAdCampaignsCurrent(AdCampaignType.MAIN).subscribe(campaign => {
-            this.mainAdCampaign = campaign;
             this.cd.detectChanges();
         });
     }
