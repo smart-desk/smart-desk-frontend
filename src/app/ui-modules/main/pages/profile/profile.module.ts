@@ -23,6 +23,7 @@ import { AdCampaignFormDirective } from './components/ad-campaign-form/ad-campai
 import { UpdateAdCampaignComponent } from './pages/update-ad-campaign/update-ad-campaign.component';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { SharedMainModule } from '../../shared-main.module';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 
 const components = [
     ProfileComponent,
@@ -55,6 +56,7 @@ const components = [
         NzFormModule,
         NzTypographyModule,
         NzSpaceModule,
+        NzAvatarModule,
     ],
 })
 export class ProfileModule {}

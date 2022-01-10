@@ -18,7 +18,7 @@
                     <ik-image
                         *ngIf="!!cat?.img"
                         class="category-large-buttons__image"
-                        [path]="cat?.img"
+                        [path]="cat?.img || '/public/not-found.png'"
                         [transformation]="[{ width: 150, height: 150, quality: 100 }]"
                     ></ik-image>
                     <p class="category-large-buttons__link">{{ cat.name }}</p>

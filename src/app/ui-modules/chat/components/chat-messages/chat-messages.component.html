@@ -1,4 +1,4 @@
-<div class="chat_messages">
+<div class="chat_messages" *ngIf="chat; else selectChat">
     <div class="chat_messages__list">
         <nz-list nzItemLayout="horizontal" [nzSplit]="false">
             <nz-list-item *ngFor="let message of messages">
@@ -30,3 +30,7 @@
         </button>
     </form>
 </div>
+
+<ng-template #selectChat>
+    <nz-result nzIcon="smile-twotone" nzTitle="Выберите чат из списка"></nz-result>
+</ng-template>
