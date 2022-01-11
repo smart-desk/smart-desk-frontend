@@ -1,18 +1,24 @@
-<app-content-layout [meta]="meta" [title]="category?.name" [main]="main" [right]="right"></app-content-layout>
+<app-content-layout [meta]="meta" [title]="titleTmp" [main]="main" [right]="sortingAndFilters"></app-content-layout>
 
 <ng-template #meta>
     <app-breadcrumbs [steps]="breadcrumbs"></app-breadcrumbs>
 </ng-template>
 
+<ng-template #titleTmp>
+    <div class="category__title-wrapper">
+        <h1 class="category__title">{{ category?.name }}</h1>
+        <button class="category__sorting-and-filters-button" (click)="openFiltersModal()" nz-button nzType="default" nzShape="round">
+            <i nz-icon nzType="filter" [nzTheme]="getAppliedFiltersLength() ? 'fill' : 'outline'"></i>
+            Фильтры
+            <span *ngIf="getAppliedFiltersLength()">&nbsp;({{ getAppliedFiltersLength() }})</span>
+        </button>
+    </div>
+</ng-template>
+
 <ng-template #main>
     <app-category-buttons *ngIf="category" [category]="category"></app-category-buttons>
 
-    <app-products
-        [loading]="loading"
-        [productsResponse]="productsResponse"
-        [adCampaign]="sidebarAdCampaign"
-        [promoProducts]="promoProducts"
-    ></app-products>
+    <app-products [loading]="loading" [productsResponse]="productsResponse" [promoProducts]="promoProducts"></app-products>
 
     <div *ngIf="!isEmptyObject(options?.filters) && productsResponse?.totalCount === 0">
         <h2>Ничего не нашли по заданным фильтрам</h2>
@@ -27,7 +33,9 @@
     </div>
 </ng-template>
 
-<ng-template #right>
-    <app-sorting *ngIf="model" [model]="model" [sorting]="options?.sorting"></app-sorting>
-    <app-filters *ngIf="model" [model]="model" [filters]="options?.filters"></app-filters>
+<ng-template #sortingAndFilters>
+    <div class="category__sorting-and-filters">
+        <app-sorting *ngIf="model" [model]="model" [sorting]="options?.sorting"></app-sorting>
+        <app-filters *ngIf="model" [model]="model" [filters]="options?.filters"></app-filters>
+    </div>
 </ng-template>
