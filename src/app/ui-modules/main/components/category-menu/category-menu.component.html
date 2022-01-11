@@ -19,7 +19,7 @@
                 <ik-image
                     *ngIf="!!hoveredCategory"
                     class="category__image"
-                    [path]="hoveredCategory.img"
+                    [path]="hoveredCategory.img || '/public/not-found.png'"
                     [transformation]="[{ width: 250, height: 250, quality: 100 }]"
                 ></ik-image>
             </div>
@@ -39,7 +39,7 @@
                     <div class="category__item-profile">
                         <ik-image
                             class="category__image"
-                            [path]="category.img"
+                            [path]="category.img || '/public/not-found.png'"
                             [transformation]="[{ width: 20, height: 20, quality: 100 }]"
                         ></ik-image>
                         {{ category.name }}

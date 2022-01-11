@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { take, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ChatService } from '../../services/chat.service';
@@ -9,6 +9,7 @@ import { User } from '../../../../modules/user/models/user.entity';
 import { Product } from '../../../../modules/product/models/product.entity';
 import { UserService } from '../../../../modules/user/user.service';
 import { LoginService } from '../../../../modules/login/login.service';
+import { TABLET_VIEW_SIZE } from '../../../../utils';
 
 @Component({
     selector: 'app-chat',
@@ -20,8 +21,9 @@ export class ChatComponent implements OnDestroy, OnInit {
     loading: boolean;
     chats: Chat[];
     messages: ChatMessage[] = [];
-    activeChat: Chat;
+    activeChat: Chat | undefined;
     currentUser: User;
+    showChatsOnMobile = true;
 
     @Input()
     product: Product;
@@ -30,6 +32,7 @@ export class ChatComponent implements OnDestroy, OnInit {
     user: User;
 
     private destroy$ = new Subject();
+    private windowWidth = window.innerWidth;
 
     constructor(
         private chatService: ChatService,
@@ -42,6 +45,11 @@ export class ChatComponent implements OnDestroy, OnInit {
                 this.currentUser = user;
             }
         });
+    }
+
+    @HostListener('window:resize')
+    onResize() {
+        this.windowWidth = window.innerWidth;
     }
 
     ngOnInit(): void {
@@ -61,7 +69,7 @@ export class ChatComponent implements OnDestroy, OnInit {
         });
 
         this.chatService.newMessage$.pipe(takeUntil(this.destroy$)).subscribe(message => {
-            if (message.chatId === this.activeChat.id) {
+            if (message.chatId === this.activeChat?.id) {
                 this.messages = [...this.messages, message];
             } else {
                 const targetChat = this.chats.find(chat => chat.id === message.chatId);
@@ -93,28 +101,44 @@ export class ChatComponent implements OnDestroy, OnInit {
             this.chatService.getMessages({ chatId: this.activeChat.id });
             this.chatService.readChat({ chatId: this.activeChat.id });
         }
+        this.switchChatOnMobile(false);
+
         this.cdr.detectChanges();
     }
 
     sendMessage(content: string): void {
-        const message = new CreateChatMessageDto();
-        message.content = content;
+        if (this.activeChat) {
+            const message = new CreateChatMessageDto();
+            message.content = content;
 
-        if (!this.activeChat.id) {
-            this.chatService.createChat({ productId: this.product.id }).subscribe(chat => {
-                const indexOfActiveChat = this.chats.indexOf(this.activeChat);
-                this.chats[indexOfActiveChat] = chat;
-                this.activeChat = chat;
-                message.chatId = chat.id;
-                this.chats = [...this.chats];
-                this.chatService.sendMessage(message);
-                this.cdr.detectChanges();
-            });
-            return;
+            if (!this.activeChat.id) {
+                this.chatService.createChat({ productId: this.product.id }).subscribe(chat => {
+                    const indexOfActiveChat = this.chats.indexOf(this.activeChat as Chat);
+                    this.chats[indexOfActiveChat] = chat;
+                    this.activeChat = chat;
+                    message.chatId = chat.id;
+                    this.chats = [...this.chats];
+                    this.chatService.sendMessage(message);
+                    this.cdr.detectChanges();
+                });
+                return;
+            }
+
+            message.chatId = this.activeChat.id;
+            this.chatService.sendMessage(message);
         }
+    }
 
-        message.chatId = this.activeChat.id;
-        this.chatService.sendMessage(message);
+    isTablet(): boolean {
+        return this.windowWidth <= TABLET_VIEW_SIZE;
+    }
+
+    switchChatOnMobile(showChats: boolean): void {
+        if (showChats) {
+            this.activeChat = undefined;
+        }
+        this.showChatsOnMobile = showChats;
+        this.cdr.markForCheck();
     }
 
     private getInitialChats(): void {
@@ -133,8 +157,6 @@ export class ChatComponent implements OnDestroy, OnInit {
                         activeChat = emptyChat;
                         chats.unshift(emptyChat);
                     }
-                } else {
-                    activeChat = chats[0];
                 }
 
                 this.chats = chats;

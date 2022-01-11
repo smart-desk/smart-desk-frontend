@@ -1,13 +1,11 @@
 @import '../../../../../../../assets/styles/variables';
 
-.cell-action {
-    display: flex;
-
-    &__separate {
-        margin: 0 $base-unit;
+.profile {
+    &__section {
+        background: $primary-white;
+        border-radius: $border-radius;
+        box-shadow: $shadow;
+        margin-bottom: $base-unit * 2;
+        padding: $base-unit * 2;
     }
-}
-
-.profile-table {
-    margin: $base-unit * 9 0 $base-unit * 3 0;
 }

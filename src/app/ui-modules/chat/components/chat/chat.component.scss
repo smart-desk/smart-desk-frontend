@@ -1,4 +1,31 @@
+@import '~src/assets/styles/variables';
+
+:host {
+    @media screen and (max-width: $bp-tablet) {
+        display: block;
+        height: 100vh;
+    }
+}
+
 .chat {
     display: grid;
     grid-template-columns: 1fr 2fr;
+
+    @media screen and (max-width: $bp-tablet) {
+        grid-template-columns: 1fr;
+    }
+
+    &__back-to-list {
+        display: none;
+        position: absolute;
+        top: $base-unit * 2;
+        left: $base-unit * 2;
+        z-index: 1;
+        border: none;
+        box-shadow: $shadow;
+
+        @media screen and (max-width: $bp-tablet) {
+            display: block;
+        }
+    }
 }

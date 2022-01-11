@@ -6,11 +6,25 @@
     min-height: $base-unit * 70;
     padding: $base-unit * 2;
     padding-right: 0;
+    padding-top: 0;
+
+    @media screen and (max-width: $bp-tablet) {
+        display: block;
+        height: 100vh;
+        padding-bottom: 0;
+    }
 
     &__list {
         padding-bottom: $base-unit * 6;
         max-height: $base-unit * 100;
         overflow: auto;
+
+        @media screen and (max-width: $bp-tablet) {
+            max-height: 100vh;
+            padding-bottom: $base-unit * 8;
+            padding-top: $base-unit * 7;
+            height: 100vh;
+        }
     }
 
     &__input-group {
@@ -20,6 +34,8 @@
         left: 0;
         width: 100%;
         padding: $base-unit * 2;
+        background: $primary-white;
+        border-top: 1px solid $grey-light;
     }
 
     &__input {
