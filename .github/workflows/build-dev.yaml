@@ -20,10 +20,11 @@ jobs:
             - name: Build Project
               run: |
                   npm install -g yarn
+                  git checkout master
                   yarn
                   node --max-old-space-size=2048 ./node_modules/@angular/cli/bin/ng build --configuration=staging
 
-            - name: rsync deployments
+            - name: Copy Files
               uses: burnett01/rsync-deployments@5.2
               with:
                   switches: -avzr --delete
