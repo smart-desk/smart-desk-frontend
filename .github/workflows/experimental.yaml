@@ -1,6 +1,7 @@
 name: Copy Frontend Dev [EXP]
 on:
-  workflow_dispatch: {}
+  push:
+        branches: [experimental/deploy]
   
 jobs:
     deploy:
