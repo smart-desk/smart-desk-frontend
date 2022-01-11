@@ -12,12 +12,24 @@ jobs:
         steps:
             - uses: actions/checkout@v1
 
-            - name: Connect to Server via SSH
-              uses: appleboy/ssh-action@master
+            - name: Install Node.js
+              uses: actions/setup-node@v1
               with:
-                  host: ${{ secrets.SSH_HOST }}
-                  username: ${{ secrets.SSH_USERNAME }}
-                  key: ${{ secrets.SSH_KEY }}
-                  script: |
-                      cd /var/www
-                      ./deploy_frontend_dev.sh
+                  node-version: 14.x
+
+            - name: Build Project
+              run: |
+                  npm install -g yarn
+                  git checkout master
+                  yarn
+                  node --max-old-space-size=2048 ./node_modules/@angular/cli/bin/ng build --configuration=staging
+
+            - name: Copy Files
+              uses: burnett01/rsync-deployments@5.2
+              with:
+                  switches: -avzr --delete
+                  path: dist
+                  remote_path: /var/www/dev/smart-desk-frontend
+                  remote_host: ${{ secrets.SSH_HOST }}
+                  remote_user: ${{ secrets.SSH_USERNAME }}
+                  remote_key: ${{ secrets.SSH_KEY }}
