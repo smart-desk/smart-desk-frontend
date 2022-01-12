@@ -1,3 +1,10 @@
+<nz-alert
+    class="admin-menu__mobile-message"
+    nzType="info"
+    nzMessage="На данный момент админ панель не адаптирована под мобильные устройства"
+    nzShowIcon
+></nz-alert>
+
 <ul nz-menu nzMode="inline">
     <li nz-menu-item [nzMatchRouter]="true" routerLink="/admin/products" [queryParams]="{ status: 'pending' }">
         <i nz-icon nzType="unordered-list" nzTheme="outline"></i>
