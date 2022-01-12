@@ -1,0 +1,45 @@
+@import '~src/assets/styles/variables';
+
+::ng-deep {
+    .ant-modal.category__sorting-and-filters-modal .category__sorting-and-filters {
+        display: block;
+    }
+}
+
+.category {
+    &__title {
+        font-size: $font-32;
+        margin-bottom: 0;
+
+        @media screen and (max-width: $bp-tablet) {
+            font-size: $font-18;
+        }
+    }
+
+    &__title-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: $base-unit * 2;
+
+        @media screen and (max-width: $bp-tablet) {
+            margin-top: $base-unit * 2;
+        }
+    }
+
+    &__sorting-and-filters {
+        @media screen and (max-width: $bp-phone) {
+            display: none;
+        }
+    }
+
+    &__sorting-and-filters-button {
+        border: none;
+        box-shadow: $shadow;
+        display: none;
+
+        @media screen and (max-width: $bp-phone) {
+            display: block;
+        }
+    }
+}
