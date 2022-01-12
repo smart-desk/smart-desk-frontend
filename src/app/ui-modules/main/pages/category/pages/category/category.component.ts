@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, ParamMap, Router, RouterEvent } from '@angular/router';
 import { EMPTY, Subject } from 'rxjs';
 import { filter, pairwise, startWith, switchMap, takeUntil } from 'rxjs/operators';
@@ -7,12 +7,12 @@ import { GetProductsDto, GetProductsResponseDto } from '../../../../../../module
 import { Category } from '../../../../../../modules/category/models/category.entity';
 import { Model } from '../../../../../../modules/model/models/model.entity';
 import { CategoryStoreService } from '../../../../../../modules/category/category-store.service';
-import { ProductDataService } from '../../../../../../modules/product/product-data.service';
+import { ProductDataEvents, ProductDataService } from '../../../../../../modules/product/product-data.service';
 import { ModelService } from '../../../../../../modules/model/model.service';
-import { AdCampaignCurrentDto } from '../../../../../../modules/ad/models/ad-campaign-current.dto';
 import { Product } from '../../../../../../modules/product/models/product.entity';
 import { PromoService } from '../../../../../../modules/promo/promo.service';
 import { BreadcrumbsStep } from '../../../../components/breadcrumbs/breadcrumbs.component';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
     selector: 'app-category',
@@ -23,14 +23,16 @@ import { BreadcrumbsStep } from '../../../../components/breadcrumbs/breadcrumbs.
 export class CategoryComponent implements OnInit, OnDestroy {
     loading = false;
     productsResponse: GetProductsResponseDto;
-    sidebarAdCampaign: AdCampaignCurrentDto;
-    mainAdCampaign: AdCampaignCurrentDto;
     model: Model;
     category: Category;
     options: GetProductsDto;
     promoProducts: Product[];
     breadcrumbs: BreadcrumbsStep[] = [];
     private destroy$ = new Subject();
+    private sortingAndFiltersModal: NzModalRef;
+
+    @ViewChild('sortingAndFilters', { read: TemplateRef })
+    private sortingAndFiltersTmp: TemplateRef<any>;
 
     constructor(
         private promoService: PromoService,
@@ -39,11 +41,18 @@ export class CategoryComponent implements OnInit, OnDestroy {
         private modelService: ModelService,
         private cd: ChangeDetectorRef,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private modalService: NzModalService
     ) {}
 
     ngOnInit(): void {
-        this.productDataService.events$.pipe(takeUntil(this.destroy$)).subscribe(() => {
+        this.productDataService.events$.pipe(takeUntil(this.destroy$)).subscribe((event: ProductDataEvents) => {
+            if (
+                this.sortingAndFiltersModal &&
+                (event === ProductDataEvents.APPLY_FILTERS || event === ProductDataEvents.DROP_FILTERS || event === ProductDataEvents.SORT)
+            ) {
+                this.sortingAndFiltersModal.close();
+            }
             this.loading = true;
             this.cd.detectChanges();
         });
@@ -96,6 +105,20 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
     isEmptyObject(obj: object): boolean {
         return isEmpty(obj);
+    }
+
+    openFiltersModal(): void {
+        this.sortingAndFiltersModal = this.modalService.create<any>({
+            nzContent: this.sortingAndFiltersTmp,
+            nzClassName: 'category__sorting-and-filters-modal',
+            nzFooter: null,
+            nzStyle: { top: 0, left: 0, right: 0 },
+            nzBodyStyle: { 'padding-top': '56px' },
+        });
+    }
+
+    getAppliedFiltersLength(): number | undefined {
+        return this?.options?.filters?.length;
     }
 
     private getPromoProducts(categoryId: string): void {

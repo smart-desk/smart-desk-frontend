@@ -53,7 +53,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     @HostListener('document:click', ['$event'])
     clickOutsideCategoryMenu(event: MouseEvent) {
-        if (!this.menuElement.nativeElement.contains(event.target) && !this.buttonElement.nativeElement.contains(event.target)) {
+        if (!this.menuElement?.nativeElement?.contains(event.target) && !this.buttonElement?.nativeElement?.contains(event.target)) {
             this.isMenuOpen = false;
             this.cd.detectChanges();
         }
