@@ -71,7 +71,7 @@
     <div
         class="contacts"
         *ngIf="
-            product.status === productStatus.ACTIVE && (isContactAvailable(preferContact.PHONE) || isContactAvailable(preferContact.CHAT))
+            product?.status === productStatus.ACTIVE && (isContactAvailable(preferContact.PHONE) || isContactAvailable(preferContact.CHAT))
         "
     >
         <div class="contacts__phone" *ngIf="isContactAvailable(preferContact.PHONE) && this.user?.isPhoneVerified">
@@ -104,7 +104,7 @@
     <ng-template #ownerButtons>
         <div *ngIf="product" class="product__owner-buttons">
             <button
-                *ngIf="product.status !== productStatus.COMPLETED && product.status !== productStatus.BLOCKED"
+                *ngIf="product?.status !== productStatus.COMPLETED && product?.status !== productStatus.BLOCKED"
                 class="product__owner-buttons-item"
                 nz-button
                 nzBlock
@@ -124,7 +124,7 @@
                 Редактировать
             </button>
             <button
-                *ngIf="product.status === productStatus.ACTIVE"
+                *ngIf="product?.status === productStatus.ACTIVE"
                 class="product__owner-buttons-item"
                 nz-button
                 nzBlock
@@ -134,7 +134,7 @@
                 Поднять
             </button>
             <button
-                *ngIf="product.status === productStatus.ACTIVE"
+                *ngIf="product?.status === productStatus.ACTIVE"
                 class="product__owner-buttons-item"
                 nz-button
                 nzBlock
